@@ -4,8 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslations } from '@/lib/i18n';
 import LoanDetailsDialog from '@/components/LoanDetailsDialog';
+import AmortizationCalculator from '@/components/AmortizationCalculator';
+import { Wallet, Calculator } from 'lucide-react';
 
 interface Loan {
   id: string;
@@ -74,14 +77,27 @@ export default function IndividualLoans() {
     <>
       <div className="p-6 md:p-8 space-y-6">
         <div>
-          <h1 className="text-3xl md:text-4xl font-semibold mb-2">Tous mes prêts</h1>
+          <h1 className="text-3xl md:text-4xl font-semibold mb-2">Mes prêts</h1>
           <p className="text-muted-foreground">
-            Gérez et consultez tous vos prêts professionnels
+            Gérez vos prêts et simulez vos remboursements
           </p>
         </div>
 
-        {loans && loans.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Tabs defaultValue="loans" className="w-full" data-testid="tabs-loans">
+          <TabsList className="grid w-full grid-cols-2 max-w-md">
+            <TabsTrigger value="loans" data-testid="tab-my-loans">
+              <Wallet className="h-4 w-4 mr-2" />
+              Mes prêts
+            </TabsTrigger>
+            <TabsTrigger value="calculator" data-testid="tab-calculator">
+              <Calculator className="h-4 w-4 mr-2" />
+              Calculateur
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="loans" className="mt-6 space-y-6">
+            {loans && loans.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {loans.map((loan) => {
               const progress = (parseFloat(loan.totalRepaid) / parseFloat(loan.amount)) * 100;
               const remainingAmount = parseFloat(loan.amount) - parseFloat(loan.totalRepaid);
@@ -134,15 +150,21 @@ export default function IndividualLoans() {
                   </CardContent>
                 </Card>
               );
-            })}
-          </div>
-        ) : (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">Aucun prêt actif</p>
-            </CardContent>
-          </Card>
-        )}
+              })}
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="py-12 text-center">
+                  <p className="text-muted-foreground">Aucun prêt actif</p>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+
+          <TabsContent value="calculator" className="mt-6">
+            <AmortizationCalculator />
+          </TabsContent>
+        </Tabs>
       </div>
 
       <LoanDetailsDialog 

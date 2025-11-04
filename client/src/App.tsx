@@ -23,6 +23,7 @@ import IndividualLoans from '@/pages/IndividualLoans';
 import AppSidebar from '@/components/AppSidebar';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/ThemeToggle';
+import NotificationBanner from '@/components/NotificationBanner';
 
 function Router() {
   return (
@@ -79,6 +80,9 @@ function App() {
                       <ThemeToggle />
                     </div>
                   </header>
+                  <div className="p-4">
+                    <NotificationBanner />
+                  </div>
                   <main className="flex-1 overflow-auto">
                     <Router />
                   </main>
