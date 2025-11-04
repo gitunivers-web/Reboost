@@ -19,7 +19,19 @@ ALTUS is a multi-language professional loan management platform designed for bus
 
 ## Recent Changes (November 2025)
 
-1. **Unified Authentication Experience & UI Refinements** (Latest):
+1. **Loan Offer Filtering System** (Latest):
+   - **Centralized Loan Offers**: Created `shared/loan-offers.ts` with 12 distinct products (6 professional, 6 individual)
+   - **Account-Based Filtering**: Loan request page and dialogs now show only relevant offers based on user account type
+   - **Welcome Message System**: First-time users see a welcome message explaining their accessible loan products
+   - **Database Enhancement**: Added `hasSeenWelcomeMessage` field to track welcome message display
+   - **Smart Defaults**: NewLoanDialog automatically selects correct loan type based on user account
+   - **Professional Offers**: Business (6.5%-12%), Treasury Credit (4%-9%), Equipment Financing (3.9%-7.5%), Pro Mortgage (2.5%-4.5%), Credit Line (5%-10%), Pro Vehicle Credit (4.5%-8%)
+   - **Individual Offers**: Personal (7.5%-14.9%), Mortgage (3.2%-4.8%), Auto (5.8%-9.9%), Student (4.9%-7.5%), Green (3.5%-6%), Renovation (6.2%-10.5%)
+   - **Route Added**: `/loan-request` for dedicated loan request interface
+   - **API Endpoint**: POST `/api/user/welcome-message-seen` to track user acknowledgment
+   - **Architect Validated**: All filtering logic, welcome message, defaults, and database integration reviewed and approved
+
+2. **Unified Authentication Experience & UI Refinements**:
    - **Unified Auth Page**: Merged separate login and signup pages into a single Auth component with tabbed interface
    - **Smart Routing**: Both `/login` and `/signup` routes work seamlessly, auto-displaying the appropriate tab
    - **Header Redesign**: Replaced "Se connecter" and "S'inscrire" buttons with single "Mon espace" button
@@ -153,7 +165,7 @@ Preferred communication style: Simple, everyday language.
 
 **Database Schema:**
 ```
-users (id, username, password, email, fullName, accountType, role, status, kycStatus, maxLoanAmount, suspendedUntil, suspensionReason, externalTransfersBlocked, transferBlockReason, createdAt, updatedAt)
+users (id, username, password, email, fullName, accountType, role, status, kycStatus, maxLoanAmount, hasSeenWelcomeMessage, suspendedUntil, suspensionReason, externalTransfersBlocked, transferBlockReason, createdAt, updatedAt)
 loans (id, userId, loanType, amount, interestRate, duration, status, approvedAt, approvedBy, rejectedAt, rejectionReason, nextPaymentDate, totalRepaid, deletedAt, deletedBy, deletionReason, createdAt)
 transfers (id, userId, amount, recipient, status, currentStep, validationMethod, createdAt, updatedAt)
 fees (id, userId, feeType, reason, amount, relatedMessageId, isPaid, paidAt, createdAt)
