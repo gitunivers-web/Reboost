@@ -7,6 +7,7 @@ import PendingTransfers from '@/components/PendingTransfers';
 import AvailableFundsChart from '@/components/AvailableFundsChart';
 import UpcomingRepaymentsChart from '@/components/UpcomingRepaymentsChart';
 import NotificationsBox from '@/components/NotificationsBox';
+import WelcomeMessage from '@/components/WelcomeMessage';
 import { useTranslations } from '@/lib/i18n';
 import { useDashboard, useAvailableFundsChart, useUpcomingRepaymentsChart } from '@/hooks/use-dashboard';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -56,6 +57,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-blue-950 dark:to-indigo-950">
+      <WelcomeMessage />
       <div className="p-6 md:p-8 space-y-8">
         <div>
           <h1 className="text-3xl md:text-4xl font-semibold mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent" data-testid="text-welcome">{getGreeting()}</h1>

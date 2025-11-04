@@ -17,21 +17,38 @@ interface NewLoanDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const LOAN_TYPES = {
+const INDIVIDUAL_LOAN_TYPES = {
   personal: { name: 'Prêt personnel', minRate: 2.9, maxRate: 7.9 },
-  business: { name: 'Prêt professionnel', minRate: 3.5, maxRate: 8.5 },
   auto: { name: 'Prêt auto', minRate: 1.9, maxRate: 5.9 },
+  mortgage: { name: 'Prêt immobilier', minRate: 2.5, maxRate: 4.5 },
   green: { name: 'Prêt vert', minRate: 0.5, maxRate: 4.5 },
   renovation: { name: 'Prêt rénovation', minRate: 2.5, maxRate: 6.9 },
   student: { name: 'Prêt étudiant', minRate: 1.5, maxRate: 3.5 },
+} as const;
+
+const BUSINESS_LOAN_TYPES = {
+  business: { name: 'Prêt professionnel', minRate: 3.5, maxRate: 8.5 },
+  cashFlow: { name: 'Crédit de trésorerie', minRate: 4.0, maxRate: 9.0 },
+  equipment: { name: 'Financement équipement', minRate: 3.9, maxRate: 7.5 },
+  commercialProperty: { name: 'Prêt immobilier pro', minRate: 2.9, maxRate: 5.5 },
+  lineOfCredit: { name: 'Ligne de crédit', minRate: 5.0, maxRate: 9.5 },
+  vehicleFleet: { name: 'Crédit véhicule pro', minRate: 3.2, maxRate: 6.5 },
 } as const;
 
 export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps) {
   const t = useTranslations();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  const { data: user, isLoading: userLoading } = useQuery<User>({
+    queryKey: ['/api/user'],
+    enabled: open,
+  });
+
+  const LOAN_TYPES = user?.accountType === 'business' ? BUSINESS_LOAN_TYPES : INDIVIDUAL_LOAN_TYPES;
+  const defaultLoanType = user?.accountType === 'business' ? 'business' : 'personal';
   
-  const [loanType, setLoanType] = useState<keyof typeof LOAN_TYPES>('personal');
+  const [loanType, setLoanType] = useState<keyof typeof INDIVIDUAL_LOAN_TYPES | keyof typeof BUSINESS_LOAN_TYPES>(defaultLoanType as any);
   const [formData, setFormData] = useState({
     amount: '',
     interestRate: '',
@@ -40,20 +57,32 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [documentsUploaded, setDocumentsUploaded] = useState(false);
 
-  const { data: user, isLoading: userLoading } = useQuery<User>({
-    queryKey: ['/api/user'],
-    enabled: open,
-  });
-
   const needsKYC = user?.kycStatus === 'pending';
 
   useEffect(() => {
-    if (loanType) {
-      const selectedType = LOAN_TYPES[loanType];
-      const avgRate = ((selectedType.minRate + selectedType.maxRate) / 2).toFixed(1);
-      setFormData(prev => ({ ...prev, interestRate: avgRate }));
+    if (user?.accountType && open) {
+      const correctDefaultType = user.accountType === 'business' ? 'business' : 'personal';
+      setLoanType(correctDefaultType as any);
     }
-  }, [loanType]);
+  }, [user?.accountType, open]);
+
+  useEffect(() => {
+    if (loanType && user?.accountType) {
+      const isBusinessAccount = user.accountType === 'business';
+      let selectedType: { name: string; minRate: number; maxRate: number } | undefined;
+      
+      if (isBusinessAccount && loanType in BUSINESS_LOAN_TYPES) {
+        selectedType = BUSINESS_LOAN_TYPES[loanType as keyof typeof BUSINESS_LOAN_TYPES];
+      } else if (!isBusinessAccount && loanType in INDIVIDUAL_LOAN_TYPES) {
+        selectedType = INDIVIDUAL_LOAN_TYPES[loanType as keyof typeof INDIVIDUAL_LOAN_TYPES];
+      }
+      
+      if (selectedType) {
+        const avgRate = ((selectedType.minRate + selectedType.maxRate) / 2).toFixed(1);
+        setFormData(prev => ({ ...prev, interestRate: avgRate }));
+      }
+    }
+  }, [loanType, user?.accountType]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -125,7 +154,7 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
 
   const resetForm = () => {
     setFormData({ amount: '', interestRate: '', duration: '' });
-    setLoanType('personal');
+    setLoanType(defaultLoanType as any);
     setErrors({});
     setDocumentsUploaded(false);
   };
@@ -232,7 +261,7 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
             <TabsContent value="loan" className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="loanType">Type de prêt</Label>
-                <Select value={loanType} onValueChange={(value) => setLoanType(value as keyof typeof LOAN_TYPES)}>
+                <Select value={loanType} onValueChange={(value) => setLoanType(value as any)}>
                   <SelectTrigger id="loanType" data-testid="select-loan-type">
                     <SelectValue />
                   </SelectTrigger>

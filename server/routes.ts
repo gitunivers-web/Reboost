@@ -259,6 +259,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/user/mark-welcome-seen", async (req, res) => {
+    try {
+      await storage.markWelcomeMessageAsSeen(DEMO_USER_ID);
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error marking welcome message as seen:', error);
+      res.status(500).json({ error: 'Failed to mark welcome message as seen' });
+    }
+  });
+
   app.get("/api/loans", async (req, res) => {
     try {
       const loans = await storage.getUserLoans(DEMO_USER_ID);

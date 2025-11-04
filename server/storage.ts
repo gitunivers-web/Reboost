@@ -45,6 +45,7 @@ export interface IStorage {
   verifyUserEmail(userId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: string, updates: Partial<User>): Promise<User | undefined>;
+  markWelcomeMessageAsSeen(userId: string): Promise<User | undefined>;
   
   getUserLoans(userId: string): Promise<Loan[]>;
   getLoan(id: string): Promise<Loan | undefined>;
@@ -1485,6 +1486,11 @@ export class DatabaseStorage implements IStorage {
 
   async updateUser(id: string, updates: Partial<User>): Promise<User | undefined> {
     const result = await db.update(users).set({ ...updates, updatedAt: new Date() }).where(eq(users.id, id)).returning();
+    return result[0];
+  }
+
+  async markWelcomeMessageAsSeen(userId: string): Promise<User | undefined> {
+    const result = await db.update(users).set({ hasSeenWelcomeMessage: true, updatedAt: new Date() }).where(eq(users.id, userId)).returning();
     return result[0];
   }
 

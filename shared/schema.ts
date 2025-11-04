@@ -25,6 +25,7 @@ export const users = pgTable("users", {
   suspensionReason: text("suspension_reason"),
   externalTransfersBlocked: boolean("external_transfers_blocked").notNull().default(false),
   transferBlockReason: text("transfer_block_reason"),
+  hasSeenWelcomeMessage: boolean("has_seen_welcome_message").notNull().default(false),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
   updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
 });
