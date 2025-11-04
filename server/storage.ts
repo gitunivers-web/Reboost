@@ -92,6 +92,7 @@ export interface IStorage {
   getUserExternalAccounts(userId: string): Promise<ExternalAccount[]>;
   getExternalAccount(id: string): Promise<ExternalAccount | undefined>;
   createExternalAccount(account: InsertExternalAccount): Promise<ExternalAccount>;
+  deleteExternalAccount(id: string): Promise<boolean>;
   
   createValidationCode(code: InsertTransferValidationCode): Promise<TransferValidationCode>;
   getTransferValidationCodes(transferId: string): Promise<TransferValidationCode[]>;
@@ -156,10 +157,15 @@ export class MemStorage implements IStorage {
     const loan1: Loan = {
       id: "loan-001",
       userId: demoUserId,
+      loanType: "business",
       amount: "200000",
       interestRate: "3.5",
       duration: 60,
       status: "active",
+      approvedAt: new Date("2023-01-10"),
+      approvedBy: "admin-001",
+      rejectedAt: null,
+      rejectionReason: null,
       nextPaymentDate: new Date("2025-12-15"),
       totalRepaid: "75000",
       createdAt: new Date("2023-01-15"),
@@ -169,10 +175,15 @@ export class MemStorage implements IStorage {
     const loan2: Loan = {
       id: "loan-002",
       userId: demoUserId,
+      loanType: "personal",
       amount: "150000",
       interestRate: "4.2",
       duration: 48,
       status: "active",
+      approvedAt: new Date("2023-06-08"),
+      approvedBy: "admin-001",
+      rejectedAt: null,
+      rejectionReason: null,
       nextPaymentDate: new Date("2025-12-20"),
       totalRepaid: "50000",
       createdAt: new Date("2023-06-10"),
@@ -182,10 +193,15 @@ export class MemStorage implements IStorage {
     const loan3: Loan = {
       id: "loan-003",
       userId: demoUserId,
+      loanType: "business",
       amount: "100000",
       interestRate: "3.8",
       duration: 36,
       status: "active",
+      approvedAt: new Date("2024-02-18"),
+      approvedBy: "admin-001",
+      rejectedAt: null,
+      rejectionReason: null,
       nextPaymentDate: new Date("2025-12-28"),
       totalRepaid: "30000",
       createdAt: new Date("2024-02-20"),
@@ -348,8 +364,8 @@ export class MemStorage implements IStorage {
       {
         id: randomUUID(),
         settingKey: "validation_codes_count",
-        settingValue: { min: 1, max: 3, default: 2 },
-        description: "Nombre de codes de validation requis",
+        settingValue: { min: 5, max: 10, default: 5 },
+        description: "Nombre de codes de validation requis (minimum 5)",
         updatedAt: new Date(),
         updatedBy: "admin-001",
       },
@@ -358,6 +374,32 @@ export class MemStorage implements IStorage {
         settingKey: "validation_code_amount_threshold",
         settingValue: { amount: 50000, currency: "EUR" },
         description: "Montant déclenchant plusieurs codes de validation",
+        updatedAt: new Date(),
+        updatedBy: "admin-001",
+      },
+      {
+        id: randomUUID(),
+        settingKey: "interest_rate_tiers",
+        settingValue: {
+          business: [
+            { min: 0, max: 50000, rate: 4.5 },
+            { min: 50000, max: 100000, rate: 3.8 },
+            { min: 100000, max: 200000, rate: 3.5 },
+            { min: 200000, max: Infinity, rate: 3.2 }
+          ],
+          personal: [
+            { min: 0, max: 25000, rate: 5.5 },
+            { min: 25000, max: 50000, rate: 4.8 },
+            { min: 50000, max: 100000, rate: 4.2 },
+            { min: 100000, max: Infinity, rate: 3.9 }
+          ],
+          real_estate: [
+            { min: 0, max: 100000, rate: 3.2 },
+            { min: 100000, max: 300000, rate: 2.9 },
+            { min: 300000, max: Infinity, rate: 2.5 }
+          ]
+        },
+        description: "Barèmes de taux d'intérêt par type de prêt et montant",
         updatedAt: new Date(),
         updatedBy: "admin-001",
       },
@@ -494,6 +536,10 @@ export class MemStorage implements IStorage {
       ...insertLoan,
       id,
       status: insertLoan.status || 'pending',
+      approvedAt: insertLoan.approvedAt || null,
+      approvedBy: insertLoan.approvedBy || null,
+      rejectedAt: insertLoan.rejectedAt || null,
+      rejectionReason: insertLoan.rejectionReason || null,
       totalRepaid: insertLoan.totalRepaid || '0',
       nextPaymentDate: insertLoan.nextPaymentDate || null,
       createdAt: new Date(),
@@ -713,6 +759,10 @@ export class MemStorage implements IStorage {
     };
     this.externalAccounts.set(id, account);
     return account;
+  }
+
+  async deleteExternalAccount(id: string): Promise<boolean> {
+    return this.externalAccounts.delete(id);
   }
 
   async createValidationCode(insertCode: InsertTransferValidationCode): Promise<TransferValidationCode> {
@@ -977,6 +1027,11 @@ export class DbStorage implements IStorage {
   async createExternalAccount(insertAccount: InsertExternalAccount): Promise<ExternalAccount> {
     const result = await db.insert(externalAccounts).values(insertAccount).returning();
     return result[0];
+  }
+
+  async deleteExternalAccount(id: string): Promise<boolean> {
+    const result = await db.delete(externalAccounts).where(eq(externalAccounts.id, id)).returning();
+    return result.length > 0;
   }
 
   async createValidationCode(insertCode: InsertTransferValidationCode): Promise<TransferValidationCode> {

@@ -7,6 +7,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const DEMO_USER_ID = "demo-user-001";
   const ADMIN_ID = "admin-001";
 
+  const calculateInterestRate = async (loanType: string, amount: number): Promise<number> => {
+    const rateTiersSetting = await storage.getAdminSetting('interest_rate_tiers');
+    if (!rateTiersSetting) {
+      return loanType === 'business' ? 3.5 : loanType === 'personal' ? 4.5 : 3.0;
+    }
+
+    const tiers = (rateTiersSetting.settingValue as any)[loanType] || [];
+    const tier = tiers.find((t: any) => amount >= t.min && amount < t.max);
+    return tier ? tier.rate : 4.0;
+  };
+
   const requireAdmin = (req: any, res: any, next: any) => {
     const adminToken = req.headers['x-admin-token'];
     if (adminToken !== ADMIN_ID) {
@@ -108,13 +119,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/loans", async (req, res) => {
     try {
+      const { loanType, amount, duration } = req.body;
+      
+      const interestRate = await calculateInterestRate(loanType, parseFloat(amount));
+      
       const validated = insertLoanSchema.parse({
-        ...req.body,
         userId: DEMO_USER_ID,
+        loanType,
+        amount,
+        duration,
+        interestRate: interestRate.toString(),
+        status: 'pending',
       });
+      
       const loan = await storage.createLoan(validated);
-      res.status(201).json(loan);
+      
+      await storage.createAdminMessage({
+        userId: DEMO_USER_ID,
+        transferId: null,
+        subject: 'Demande de prêt en attente de validation',
+        content: `Votre demande de prêt ${loanType} de ${amount} EUR a été soumise et est en attente de validation par notre service. Nous vous contacterons dès que possible.`,
+        severity: 'info',
+      });
+      
+      res.status(201).json({ 
+        loan,
+        message: 'Votre demande de prêt a été soumise avec succès et est en attente de validation par notre service.'
+      });
     } catch (error) {
+      console.error('Loan creation error:', error);
       res.status(400).json({ error: 'Invalid loan data' });
     }
   });
@@ -674,6 +707,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(logs);
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch audit logs' });
+    }
+  });
+
+  app.get("/api/admin/loans", requireAdmin, async (req, res) => {
+    try {
+      const loans = await storage.getAllLoans();
+      const loansWithUsers = await Promise.all(
+        loans.map(async (loan) => {
+          const user = await storage.getUser(loan.userId);
+          return {
+            ...loan,
+            userName: user?.fullName || 'Unknown',
+            userEmail: user?.email || '',
+          };
+        })
+      );
+      res.json(loansWithUsers);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch loans' });
+    }
+  });
+
+  app.post("/api/admin/loans/:id/approve", requireAdmin, async (req, res) => {
+    try {
+      const loan = await storage.getLoan(req.params.id);
+      if (!loan) {
+        return res.status(404).json({ error: 'Loan not found' });
+      }
+
+      const updated = await storage.updateLoan(req.params.id, {
+        status: 'active',
+        approvedAt: new Date(),
+        approvedBy: ADMIN_ID,
+      });
+
+      await storage.createAdminMessage({
+        userId: loan.userId,
+        transferId: null,
+        subject: 'Demande de prêt approuvée',
+        content: `Félicitations! Votre demande de prêt de ${loan.amount} EUR a été approuvée. Les fonds seront disponibles sous peu.`,
+        severity: 'success',
+      });
+
+      await storage.createAuditLog({
+        actorId: ADMIN_ID,
+        actorRole: 'admin',
+        action: 'approve_loan',
+        entityType: 'loan',
+        entityId: req.params.id,
+        metadata: { amount: loan.amount, loanType: loan.loanType },
+      });
+
+      res.json(updated);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to approve loan' });
+    }
+  });
+
+  app.post("/api/admin/loans/:id/reject", requireAdmin, async (req, res) => {
+    try {
+      const { reason } = req.body;
+      const loan = await storage.getLoan(req.params.id);
+      if (!loan) {
+        return res.status(404).json({ error: 'Loan not found' });
+      }
+
+      const updated = await storage.updateLoan(req.params.id, {
+        status: 'rejected',
+        rejectedAt: new Date(),
+        rejectionReason: reason,
+      });
+
+      await storage.createAdminMessage({
+        userId: loan.userId,
+        transferId: null,
+        subject: 'Demande de prêt refusée',
+        content: `Nous sommes désolés de vous informer que votre demande de prêt de ${loan.amount} EUR a été refusée. Raison: ${reason}`,
+        severity: 'warning',
+      });
+
+      await storage.createAuditLog({
+        actorId: ADMIN_ID,
+        actorRole: 'admin',
+        action: 'reject_loan',
+        entityType: 'loan',
+        entityId: req.params.id,
+        metadata: { amount: loan.amount, loanType: loan.loanType, reason },
+      });
+
+      res.json(updated);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to reject loan' });
     }
   });
 
