@@ -27,6 +27,10 @@ type TranslationKeys = {
     cta1: string;
     cta2: string;
     trustIndicator: string;
+    slides: Array<{
+      title: string;
+      subtitle: string;
+    }>;
   };
   nav: {
     home: string;
@@ -247,6 +251,28 @@ export const translations: Record<Language, TranslationKeys> = {
       cta1: 'Demander un prêt',
       cta2: 'Mon espace',
       trustIndicator: 'Plus de 15 000 clients satisfaits nous font confiance',
+      slides: [
+        {
+          title: 'Réalisez vos projets avec Altus Group',
+          subtitle: 'Solutions de financement pour particuliers et professionnels - Taux compétitifs et processus transparent',
+        },
+        {
+          title: 'Des solutions financières sur mesure',
+          subtitle: 'Accompagnement personnalisé pour concrétiser tous vos projets professionnels et personnels',
+        },
+        {
+          title: 'Votre partenaire de confiance',
+          subtitle: 'Plus de 15 000 clients satisfaits nous font confiance pour leurs besoins de financement',
+        },
+        {
+          title: 'Financez vos ambitions',
+          subtitle: 'Des taux avantageux et un processus simple pour donner vie à vos projets',
+        },
+        {
+          title: 'Expertise et accompagnement',
+          subtitle: 'Une équipe dédiée pour vous guider à chaque étape de votre projet',
+        },
+      ],
     },
     nav: {
       home: 'Accueil',
@@ -529,6 +555,28 @@ export const translations: Record<Language, TranslationKeys> = {
       cta1: 'Request a Loan',
       cta2: 'My Account',
       trustIndicator: 'Trusted by 15,000+ satisfied clients',
+      slides: [
+        {
+          title: 'Make Your Projects a Reality with Altus Group',
+          subtitle: 'Financing solutions for individuals and businesses - Competitive rates and transparent process',
+        },
+        {
+          title: 'Tailored Financial Solutions',
+          subtitle: 'Personalized support to bring all your professional and personal projects to life',
+        },
+        {
+          title: 'Your Trusted Partner',
+          subtitle: 'Over 15,000 satisfied clients trust us for their financing needs',
+        },
+        {
+          title: 'Finance Your Ambitions',
+          subtitle: 'Competitive rates and a simple process to make your projects come true',
+        },
+        {
+          title: 'Expertise and Support',
+          subtitle: 'A dedicated team to guide you every step of the way',
+        },
+      ],
     },
     nav: {
       home: 'Home',
@@ -799,6 +847,28 @@ export const translations: Record<Language, TranslationKeys> = {
       cta1: 'Solicitar Préstamo',
       cta2: 'Mi Cuenta',
       trustIndicator: 'Más de 15,000 clientes satisfechos confían en nosotros',
+      slides: [
+        {
+          title: 'Haga Realidad sus Proyectos con Altus Group',
+          subtitle: 'Soluciones de financiamiento para particulares y empresas - Tasas competitivas y proceso transparente',
+        },
+        {
+          title: 'Soluciones Financieras a Medida',
+          subtitle: 'Acompañamiento personalizado para concretar todos sus proyectos profesionales y personales',
+        },
+        {
+          title: 'Su Socio de Confianza',
+          subtitle: 'Más de 15,000 clientes satisfechos confían en nosotros para sus necesidades de financiamiento',
+        },
+        {
+          title: 'Financie sus Ambiciones',
+          subtitle: 'Tasas ventajosas y un proceso simple para dar vida a sus proyectos',
+        },
+        {
+          title: 'Experiencia y Acompañamiento',
+          subtitle: 'Un equipo dedicado para guiarle en cada etapa de su proyecto',
+        },
+      ],
     },
     nav: {
       home: 'Inicio',
@@ -1064,6 +1134,28 @@ export const translations: Record<Language, TranslationKeys> = {
       cta1: 'Solicitar empréstimo',
       cta2: 'Meu espaço',
       trustIndicator: 'Mais de 15.000 clientes satisfeitos confiam em nós',
+      slides: [
+        {
+          title: 'Realize seus projetos com Altus Group',
+          subtitle: 'Soluções de financiamento para particulares e profissionais - Taxas competitivas e processo transparente',
+        },
+        {
+          title: 'Soluções Financeiras sob Medida',
+          subtitle: 'Acompanhamento personalizado para concretizar todos os seus projetos profissionais e pessoais',
+        },
+        {
+          title: 'Seu Parceiro de Confiança',
+          subtitle: 'Mais de 15.000 clientes satisfeitos confiam em nós para suas necessidades de financiamento',
+        },
+        {
+          title: 'Financie suas Ambições',
+          subtitle: 'Taxas vantajosas e um processo simples para dar vida aos seus projetos',
+        },
+        {
+          title: 'Experiência e Acompanhamento',
+          subtitle: 'Uma equipe dedicada para guiá-lo em cada etapa do seu projeto',
+        },
+      ],
     },
     nav: {
       home: 'Início',
@@ -1329,6 +1421,28 @@ export const translations: Record<Language, TranslationKeys> = {
       cta1: 'Richiedi un prestito',
       cta2: 'Il mio spazio',
       trustIndicator: 'Più di 15.000 clienti soddisfatti si fidano di noi',
+      slides: [
+        {
+          title: 'Realizza i tuoi progetti con Altus Group',
+          subtitle: 'Soluzioni di finanziamento per privati e professionisti - Tassi competitivi e processo trasparente',
+        },
+        {
+          title: 'Soluzioni Finanziarie su Misura',
+          subtitle: 'Accompagnamento personalizzato per concretizzare tutti i tuoi progetti professionali e personali',
+        },
+        {
+          title: 'Il Tuo Partner di Fiducia',
+          subtitle: 'Più di 15.000 clienti soddisfatti si fidano di noi per le loro esigenze di finanziamento',
+        },
+        {
+          title: 'Finanzia le Tue Ambizioni',
+          subtitle: 'Tassi vantaggiosi e un processo semplice per dare vita ai tuoi progetti',
+        },
+        {
+          title: 'Esperienza e Accompagnamento',
+          subtitle: 'Un team dedicato per guidarti in ogni fase del tuo progetto',
+        },
+      ],
     },
     nav: {
       home: 'Home',
@@ -1594,6 +1708,28 @@ export const translations: Record<Language, TranslationKeys> = {
       cta1: 'Kredit beantragen',
       cta2: 'Mein Bereich',
       trustIndicator: 'Mehr als 15.000 zufriedene Kunden vertrauen uns',
+      slides: [
+        {
+          title: 'Verwirklichen Sie Ihre Projekte mit Altus Group',
+          subtitle: 'Finanzierungslösungen für Privatpersonen und Unternehmen - Wettbewerbsfähige Zinsen und transparenter Prozess',
+        },
+        {
+          title: 'Maßgeschneiderte Finanzlösungen',
+          subtitle: 'Persönliche Betreuung zur Verwirklichung all Ihrer beruflichen und privaten Projekte',
+        },
+        {
+          title: 'Ihr vertrauenswürdiger Partner',
+          subtitle: 'Mehr als 15.000 zufriedene Kunden vertrauen uns für ihre Finanzierungsbedürfnisse',
+        },
+        {
+          title: 'Finanzieren Sie Ihre Ambitionen',
+          subtitle: 'Vorteilhafte Zinsen und ein einfacher Prozess, um Ihre Projekte zum Leben zu erwecken',
+        },
+        {
+          title: 'Expertise und Begleitung',
+          subtitle: 'Ein engagiertes Team, das Sie bei jedem Schritt Ihres Projekts begleitet',
+        },
+      ],
     },
     nav: {
       home: 'Startseite',
@@ -1859,6 +1995,28 @@ export const translations: Record<Language, TranslationKeys> = {
       cta1: 'Lening aanvragen',
       cta2: 'Mijn ruimte',
       trustIndicator: 'Meer dan 15.000 tevreden klanten vertrouwen ons',
+      slides: [
+        {
+          title: 'Realiseer uw projecten met Altus Group',
+          subtitle: 'Financieringsoplossingen voor particulieren en professionals - Concurrerende tarieven en transparant proces',
+        },
+        {
+          title: 'Financiële Oplossingen op Maat',
+          subtitle: 'Persoonlijke begeleiding om al uw professionele en persoonlijke projecten te realiseren',
+        },
+        {
+          title: 'Uw Vertrouwde Partner',
+          subtitle: 'Meer dan 15.000 tevreden klanten vertrouwen ons voor hun financieringsbehoeften',
+        },
+        {
+          title: 'Financier uw Ambities',
+          subtitle: 'Voordelige tarieven en een eenvoudig proces om uw projecten tot leven te brengen',
+        },
+        {
+          title: 'Expertise en Begeleiding',
+          subtitle: 'Een toegewijd team om u bij elke stap van uw project te begeleiden',
+        },
+      ],
     },
     nav: {
       home: 'Home',

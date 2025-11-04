@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useTranslations } from '@/lib/i18n';
@@ -9,37 +9,20 @@ import heroImage4 from '@assets/stock_images/professional_busines_02179932.jpg';
 import heroImage5 from '@assets/stock_images/modern_office_team_c_c1f316eb.jpg';
 import { Link } from 'wouter';
 
-const slides = [
-  {
-    image: heroImage1,
-    title: 'Réalisez vos projets avec Altus Group',
-    subtitle: 'Solutions de financement pour particuliers et professionnels - Taux compétitifs et processus transparent',
-  },
-  {
-    image: heroImage2,
-    title: 'Des solutions financières sur mesure',
-    subtitle: 'Accompagnement personnalisé pour concrétiser tous vos projets professionnels et personnels',
-  },
-  {
-    image: heroImage3,
-    title: 'Votre partenaire de confiance',
-    subtitle: 'Plus de 15 000 clients satisfaits nous font confiance pour leurs besoins de financement',
-  },
-  {
-    image: heroImage4,
-    title: 'Financez vos ambitions',
-    subtitle: 'Des taux avantageux et un processus simple pour donner vie à vos projets',
-  },
-  {
-    image: heroImage5,
-    title: 'Expertise et accompagnement',
-    subtitle: 'Une équipe dédiée pour vous guider à chaque étape de votre projet',
-  },
-];
+const heroImages = [heroImage1, heroImage2, heroImage3, heroImage4, heroImage5];
 
 export default function Hero() {
   const t = useTranslations();
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = useMemo(
+    () =>
+      t.hero.slides.map((slide, index) => ({
+        ...slide,
+        image: heroImages[index],
+      })),
+    [t.hero.slides]
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
