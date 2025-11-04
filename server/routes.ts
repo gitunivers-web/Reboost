@@ -215,11 +215,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  const ALLOWED_MIME_TYPES = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/webp',
+    'application/pdf'
+  ];
+
+  const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.pdf'];
+
+  const fileFilter = (req: any, file: any, cb: any) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    
+    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+      return cb(new Error('Type de fichier non autorisé. Seuls les formats JPEG, PNG, WebP et PDF sont acceptés.'), false);
+    }
+    
+    if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {
+      return cb(new Error('Type MIME non autorisé.'), false);
+    }
+    
+    cb(null, true);
+  };
+
   const upload = multer({
     storage: kycStorage,
     limits: {
       fileSize: 5 * 1024 * 1024,
-    }
+      files: 1,
+    },
+    fileFilter: fileFilter,
   });
 
 
