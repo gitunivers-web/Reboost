@@ -19,13 +19,22 @@ ProLoan is a multi-language professional loan management platform designed for b
 
 ## Recent Changes (November 2025)
 
-1. **Database Migration to PostgreSQL** (Latest):
+1. **Automatic Fee Payment Validation System** (Latest):
+   - **Atomic Transaction Architecture**: All fee creation and payment operations wrapped in database transactions
+   - **Auto-Payment on Code Usage**: Fees are automatically marked as paid when users successfully use validation codes
+   - **Concurrency Protection**: Race condition guards prevent duplicate fee payments from simultaneous code validations
+   - **Schema Enhancement**: Added `feeId` link in `transferValidationCodes` table for 1:1 fee-to-code relationship
+   - **Transactional Helper**: `issueCodeWithNotificationAndFee()` atomically creates code + notification + fee together
+   - **UI Simplification**: Removed manual "Marquer payé" button; fees now auto-validate via code consumption
+   - **Production-Ready**: Architect-approved implementation with full data integrity guarantees
+
+2. **Database Migration to PostgreSQL**:
    - Migrated from in-memory storage (`MemStorage`) to persistent PostgreSQL database (`DatabaseStorage`)
    - All data now persists across application restarts
    - Implemented using Drizzle ORM with Neon serverless PostgreSQL
    - Database initialization with comprehensive seed data for demo user
    
-2. **Comprehensive Admin Management Features**:
+3. **Comprehensive Admin Management Features**:
    - **Loan Management**: Approve, reject, and delete loan requests with audit logging
    - **User Account Control**: Suspend accounts, block users, adjust borrowing capacity dynamically
    - **Transfer Validation**: Issue validation codes for multi-step transfer workflows
@@ -33,25 +42,25 @@ ProLoan is a multi-language professional loan management platform designed for b
    - **External Transfer Control**: Block/unblock external transfers per user
    - All admin actions logged in audit trail with timestamps and admin identifiers
 
-3. **Enhanced Fee Management System**:
+4. **Enhanced Fee Management System**:
    - Auto-updating fees section with real-time display after admin notifications
    - Visual indicators for unpaid fees (badges, alerts, color coding)
-   - "Marquer payé" functionality with TanStack Query cache invalidation
    - Fee payment tracking with isPaid status and paidAt timestamps
    - Admin ability to attach fees to notifications automatically
+   - Automatic fee validation upon successful code usage (no manual payment required)
 
-4. **Dashboard Enhancements**:
+5. **Dashboard Enhancements**:
    - Streamlined amortization table (single instance in loans section)
    - Transfer status showing real validation code progress
    - Borrowing capacity now reflects user-specific maxLoanAmount settings
    - Auto-updating charts for available funds and upcoming repayments
 
-5. **Smart Loan Application**: 
+6. **Smart Loan Application**: 
    - Added loan type selector with auto-applied interest rates matching Products page offers
    - Implemented conditional KYC document upload (required only for first-time users)
    - Interest rates: Personal (7.5%), Mortgage (3.2%), Auto (5.8%), Student (4.9%), Green (3.5%), Renovation (6.2%)
 
-6. **Bank Account Management**: Created dedicated page (`/accounts`) for managing external bank accounts with IBAN/BIC validation and CRUD operations
+7. **Bank Account Management**: Created dedicated page (`/accounts`) for managing external bank accounts with IBAN/BIC validation and CRUD operations
 
 ## User Preferences
 
