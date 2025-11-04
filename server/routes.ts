@@ -158,12 +158,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/charts/available-funds", async (req, res) => {
     try {
       const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
-      const data = months.map((month, index) => ({
-        month,
-        available: 300000 + (index * 7000),
-        committed: 150000 - (index * 5000),
-        reserved: 50000 - (index * 1500),
-      }));
+      const dashboardData = await storage.getDashboardData(DEMO_USER_ID);
+      
+      const totalBorrowed = dashboardData.loans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0);
+      const totalRepaid = dashboardData.loans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0);
+      const currentBalance = totalBorrowed - totalRepaid;
+      const maxCapacity = 500000;
+      const availableCredit = maxCapacity - currentBalance;
+      
+      const data = months.map((month, index) => {
+        const monthlyVariation = Math.sin(index * 0.5) * 20000;
+        const transfersCommitted = dashboardData.transfers
+          .filter(t => t.status === 'in-progress' || t.status === 'pending')
+          .reduce((sum, t) => sum + parseFloat(t.amount), 0);
+        
+        return {
+          month,
+          available: Math.max(0, availableCredit + monthlyVariation),
+          committed: transfersCommitted + (index * 2000),
+          reserved: Math.max(0, 50000 - (index * 1000)),
+        };
+      });
+      
       res.json(data);
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch chart data' });
@@ -173,12 +189,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/charts/upcoming-repayments", async (req, res) => {
     try {
       const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
-      const data = months.map((month) => ({
-        month,
-        loan1: 8000,
-        loan2: 6000,
-        loan3: 4000,
-      }));
+      const userLoans = await storage.getUserLoans(DEMO_USER_ID);
+      
+      const activeLoans = userLoans.filter(loan => loan.status === 'active');
+      
+      const data = months.map((month, index) => {
+        const result: any = { month };
+        
+        activeLoans.forEach((loan, loanIndex) => {
+          const loanAmount = parseFloat(loan.amount);
+          const monthlyPayment = loanAmount / loan.duration;
+          const basePayment = monthlyPayment + (monthlyPayment * parseFloat(loan.interestRate) / 100 / 12);
+          
+          const monthlyVariation = Math.sin((index + loanIndex) * 0.7) * (basePayment * 0.1);
+          result[`loan${loanIndex + 1}`] = Math.round(basePayment + monthlyVariation);
+        });
+        
+        for (let i = activeLoans.length; i < 3; i++) {
+          result[`loan${i + 1}`] = 0;
+        }
+        
+        return result;
+      });
+      
       res.json(data);
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch chart data' });

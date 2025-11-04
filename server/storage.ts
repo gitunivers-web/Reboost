@@ -12,9 +12,18 @@ import {
   type AdminSetting,
   type InsertAdminSetting,
   type AuditLog,
-  type InsertAuditLog
+  type InsertAuditLog,
+  users,
+  loans,
+  transfers,
+  fees,
+  transactions,
+  adminSettings,
+  auditLogs,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { db } from "./db";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -617,4 +626,174 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DbStorage implements IStorage {
+  async getUser(id: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.id, id));
+    return result[0];
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.username, username));
+    return result[0];
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
+  }
+
+  async updateUser(id: string, updates: Partial<User>): Promise<User | undefined> {
+    const result = await db.update(users).set({ ...updates, updatedAt: new Date() }).where(eq(users.id, id)).returning();
+    return result[0];
+  }
+
+  async getUserLoans(userId: string): Promise<Loan[]> {
+    return await db.select().from(loans).where(eq(loans.userId, userId));
+  }
+
+  async getLoan(id: string): Promise<Loan | undefined> {
+    const result = await db.select().from(loans).where(eq(loans.id, id));
+    return result[0];
+  }
+
+  async createLoan(insertLoan: InsertLoan): Promise<Loan> {
+    const result = await db.insert(loans).values(insertLoan).returning();
+    return result[0];
+  }
+
+  async updateLoan(id: string, updates: Partial<Loan>): Promise<Loan | undefined> {
+    const result = await db.update(loans).set(updates).where(eq(loans.id, id)).returning();
+    return result[0];
+  }
+
+  async getUserTransfers(userId: string): Promise<Transfer[]> {
+    return await db.select().from(transfers).where(eq(transfers.userId, userId));
+  }
+
+  async getTransfer(id: string): Promise<Transfer | undefined> {
+    const result = await db.select().from(transfers).where(eq(transfers.id, id));
+    return result[0];
+  }
+
+  async createTransfer(insertTransfer: InsertTransfer): Promise<Transfer> {
+    const result = await db.insert(transfers).values(insertTransfer).returning();
+    return result[0];
+  }
+
+  async updateTransfer(id: string, updates: Partial<Transfer>): Promise<Transfer | undefined> {
+    const result = await db.update(transfers).set({ ...updates, updatedAt: new Date() }).where(eq(transfers.id, id)).returning();
+    return result[0];
+  }
+
+  async getUserFees(userId: string): Promise<Fee[]> {
+    return await db.select().from(fees).where(eq(fees.userId, userId));
+  }
+
+  async createFee(insertFee: InsertFee): Promise<Fee> {
+    const result = await db.insert(fees).values(insertFee).returning();
+    return result[0];
+  }
+
+  async getUserTransactions(userId: string): Promise<Transaction[]> {
+    return await db.select().from(transactions).where(eq(transactions.userId, userId)).orderBy(desc(transactions.createdAt));
+  }
+
+  async createTransaction(insertTransaction: InsertTransaction): Promise<Transaction> {
+    const result = await db.insert(transactions).values(insertTransaction).returning();
+    return result[0];
+  }
+
+  async getDashboardData(userId: string) {
+    const user = await this.getUser(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const userLoans = await this.getUserLoans(userId);
+    const userTransfers = await this.getUserTransfers(userId);
+    const userFees = await this.getUserFees(userId);
+    const userTransactions = await this.getUserTransactions(userId);
+
+    const totalBorrowed = userLoans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0);
+    const totalRepaid = userLoans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0);
+    const balance = totalBorrowed - totalRepaid;
+
+    return {
+      user,
+      balance,
+      loans: userLoans,
+      transfers: userTransfers,
+      fees: userFees,
+      transactions: userTransactions,
+    };
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return await db.select().from(users);
+  }
+
+  async getAllTransfers(): Promise<Transfer[]> {
+    return await db.select().from(transfers).orderBy(desc(transfers.createdAt));
+  }
+
+  async getAllLoans(): Promise<Loan[]> {
+    return await db.select().from(loans);
+  }
+
+  async deleteUser(id: string): Promise<boolean> {
+    const result = await db.delete(users).where(eq(users.id, id)).returning();
+    return result.length > 0;
+  }
+
+  async getAdminSettings(): Promise<AdminSetting[]> {
+    return await db.select().from(adminSettings);
+  }
+
+  async getAdminSetting(key: string): Promise<AdminSetting | undefined> {
+    const result = await db.select().from(adminSettings).where(eq(adminSettings.settingKey, key));
+    return result[0];
+  }
+
+  async updateAdminSetting(key: string, value: any, updatedBy: string): Promise<AdminSetting> {
+    const existing = await this.getAdminSetting(key);
+    
+    if (existing) {
+      const result = await db.update(adminSettings)
+        .set({ settingValue: value, updatedAt: new Date(), updatedBy })
+        .where(eq(adminSettings.settingKey, key))
+        .returning();
+      return result[0];
+    } else {
+      const result = await db.insert(adminSettings)
+        .values({ settingKey: key, settingValue: value, updatedBy })
+        .returning();
+      return result[0];
+    }
+  }
+
+  async getAuditLogs(limit: number = 100): Promise<AuditLog[]> {
+    return await db.select().from(auditLogs).orderBy(desc(auditLogs.createdAt)).limit(limit);
+  }
+
+  async createAuditLog(insertLog: InsertAuditLog): Promise<AuditLog> {
+    const result = await db.insert(auditLogs).values(insertLog).returning();
+    return result[0];
+  }
+
+  async getActivityStats() {
+    const allUsers = await db.select().from(users);
+    const allTransfers = await db.select().from(transfers);
+    const allLoans = await db.select().from(loans);
+
+    return {
+      totalUsers: allUsers.length,
+      activeUsers: allUsers.filter(u => u.status === 'active').length,
+      totalTransfers: allTransfers.length,
+      pendingTransfers: allTransfers.filter(t => t.status === 'pending' || t.status === 'in-progress').length,
+      totalLoans: allLoans.length,
+      activeLoans: allLoans.filter(l => l.status === 'active').length,
+    };
+  }
+}
+
+export const storage = new DbStorage();
