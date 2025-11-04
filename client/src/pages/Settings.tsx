@@ -46,24 +46,26 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 dark:from-background dark:via-background dark:to-muted/10">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-blue-50 to-cyan-50 dark:from-slate-950 dark:via-violet-950/30 dark:to-blue-950/30">
       <div className="max-w-6xl mx-auto p-6 md:p-8 lg:p-12 space-y-8">
         <div className="relative">
-          <div className="absolute -top-20 -left-20 w-72 h-72 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute -top-20 -left-20 w-72 h-72 bg-violet-400/20 dark:bg-violet-600/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-400/20 dark:bg-blue-600/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-300/10 dark:bg-cyan-500/10 rounded-full blur-3xl" />
           
-          <Card className="relative border-0 shadow-xl bg-card/80 backdrop-blur-sm dark:bg-card/50">
+          <Card className="relative border border-white/20 dark:border-white/10 shadow-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl">
             <CardContent className="p-8">
               <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 <div className="relative group">
-                  <Avatar className="h-24 w-24 border-4 border-background shadow-lg ring-2 ring-primary/10">
+                  <div className="absolute inset-0 bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                  <Avatar className="relative h-24 w-24 border-4 border-white dark:border-slate-800 shadow-2xl ring-4 ring-violet-500/30 dark:ring-violet-400/30">
                     <AvatarImage src="" alt="Profile" />
-                    <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-primary to-blue-600 text-primary-foreground">
+                    <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white">
                       JD
                     </AvatarFallback>
                   </Avatar>
                   <button 
-                    className="absolute bottom-0 right-0 p-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg transition-all transform hover:scale-110"
+                    className="absolute bottom-0 right-0 p-2 bg-gradient-to-br from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 text-white rounded-full shadow-xl transition-all transform hover:scale-110 ring-4 ring-white dark:ring-slate-900"
                     data-testid="button-change-avatar"
                   >
                     <Camera className="h-4 w-4" />
@@ -75,7 +77,7 @@ export default function Settings() {
                     <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
                       {profileData.fullName}
                     </h1>
-                    <div className="flex items-center gap-1 px-3 py-1 bg-green-500/10 dark:bg-green-500/20 text-green-700 dark:text-green-400 rounded-full text-sm font-medium">
+                    <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 dark:from-green-500/30 dark:to-emerald-500/30 border border-green-500/30 dark:border-green-400/30 text-green-700 dark:text-green-400 rounded-full text-sm font-semibold shadow-lg shadow-green-500/10">
                       <CheckCircle2 className="h-3.5 w-3.5" />
                       Vérifié
                     </div>
@@ -137,9 +139,17 @@ export default function Settings() {
           </TabsList>
 
           <TabsContent value="profile" className="space-y-6">
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl">Informations personnelles</CardTitle>
+          <Card className="relative border border-blue-200/50 dark:border-blue-500/30 shadow-xl shadow-blue-500/10 dark:shadow-blue-500/20 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 transition-all duration-300 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-transparent dark:from-blue-500/10 dark:via-cyan-500/10 pointer-events-none" />
+            <CardHeader className="relative space-y-1 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400">
+                  <User className="h-5 w-5" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
+                  Informations personnelles
+                </CardTitle>
+              </div>
               <CardDescription className="text-base">
                 Mettez à jour vos informations de profil
               </CardDescription>
@@ -201,22 +211,25 @@ export default function Settings() {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-primary/5 via-card/50 to-blue-500/5 dark:from-primary/10 dark:via-card/50 dark:to-blue-500/10 backdrop-blur-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl">Type de compte</CardTitle>
+          <Card className="relative border border-violet-200/50 dark:border-violet-500/30 shadow-xl shadow-violet-500/10 dark:shadow-violet-500/20 transition-all duration-300 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-purple-500/5 to-transparent dark:from-violet-500/10 dark:via-purple-500/10 pointer-events-none" />
+            <CardHeader className="relative space-y-1 pb-6">
+              <CardTitle className="text-2xl bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">
+                Type de compte
+              </CardTitle>
               <CardDescription className="text-base">
                 Votre compte professionnel ProLoan
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between p-6 bg-background/60 dark:bg-background/40 backdrop-blur-sm rounded-xl border-2 border-primary/20">
+            <CardContent className="relative">
+              <div className="flex items-center justify-between p-6 bg-gradient-to-br from-violet-500/10 to-purple-500/10 dark:from-violet-500/20 dark:to-purple-500/20 backdrop-blur-sm rounded-xl border-2 border-violet-300/30 dark:border-violet-500/30 shadow-lg">
                 <div className="space-y-1">
                   <p className="text-lg font-semibold">Compte Professionnel</p>
                   <p className="text-sm text-muted-foreground">
                     Accès complet aux services de financement d'entreprise
                   </p>
                 </div>
-                <div className="px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-primary-foreground rounded-full text-sm font-semibold shadow-lg">
+                <div className="px-4 py-2 bg-gradient-to-r from-violet-600 via-purple-600 to-blue-600 text-white rounded-full text-sm font-semibold shadow-xl shadow-violet-500/30">
                   Actif
                 </div>
               </div>
@@ -225,9 +238,17 @@ export default function Settings() {
         </TabsContent>
 
         <TabsContent value="notifications" className="space-y-6">
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl">Préférences de notification</CardTitle>
+          <Card className="relative border border-amber-200/50 dark:border-amber-500/30 shadow-xl shadow-amber-500/10 dark:shadow-amber-500/20 hover:shadow-2xl hover:shadow-amber-500/20 dark:hover:shadow-amber-500/30 transition-all duration-300 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-yellow-500/5 to-transparent dark:from-amber-500/10 dark:via-yellow-500/10 pointer-events-none" />
+            <CardHeader className="relative space-y-1 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400">
+                  <Bell className="h-5 w-5" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-amber-600 to-yellow-600 dark:from-amber-400 dark:to-yellow-400 bg-clip-text text-transparent">
+                  Préférences de notification
+                </CardTitle>
+              </div>
               <CardDescription className="text-base">
                 Choisissez comment vous souhaitez être notifié
               </CardDescription>
@@ -314,9 +335,17 @@ export default function Settings() {
         </TabsContent>
 
         <TabsContent value="security" className="space-y-6">
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl">Mot de passe</CardTitle>
+          <Card className="relative border border-green-200/50 dark:border-green-500/30 shadow-xl shadow-green-500/10 dark:shadow-green-500/20 hover:shadow-2xl hover:shadow-green-500/20 dark:hover:shadow-green-500/30 transition-all duration-300 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-500/5 to-transparent dark:from-green-500/10 dark:via-emerald-500/10 pointer-events-none" />
+            <CardHeader className="relative space-y-1 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400">
+                  <Shield className="h-5 w-5" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                  Mot de passe
+                </CardTitle>
+              </div>
               <CardDescription className="text-base">
                 Modifiez votre mot de passe
               </CardDescription>
@@ -360,15 +389,23 @@ export default function Settings() {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl">Authentification à deux facteurs</CardTitle>
+          <Card className="relative border border-green-200/50 dark:border-green-500/30 shadow-xl shadow-green-500/10 dark:shadow-green-500/20 hover:shadow-2xl hover:shadow-green-500/20 dark:hover:shadow-green-500/30 transition-all duration-300 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-500/5 to-transparent dark:from-green-500/10 dark:via-emerald-500/10 pointer-events-none" />
+            <CardHeader className="relative space-y-1 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400">
+                  <Shield className="h-5 w-5" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                  Authentification à deux facteurs
+                </CardTitle>
+              </div>
               <CardDescription className="text-base">
                 Ajoutez une couche de sécurité supplémentaire
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between p-6 bg-muted/30 dark:bg-muted/20 rounded-xl border hover:border-primary/30 transition-all">
+            <CardContent className="relative">
+              <div className="flex items-center justify-between p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20 rounded-xl border-2 border-green-300/30 dark:border-green-500/30 hover:border-green-400/50 dark:hover:border-green-400/50 transition-all shadow-lg">
                 <div className="space-y-1">
                   <p className="text-lg font-semibold">Activer 2FA</p>
                   <p className="text-sm text-muted-foreground">
@@ -377,7 +414,7 @@ export default function Settings() {
                 </div>
                 <Button 
                   variant="outline" 
-                  className="h-11 px-6 shadow-sm hover:shadow-md transition-all"
+                  className="h-11 px-6 border-green-500/50 text-green-700 dark:text-green-400 hover:bg-green-500/10 dark:hover:bg-green-500/20 shadow-md hover:shadow-lg transition-all"
                   data-testid="button-enable-2fa"
                 >
                   Configurer
@@ -388,9 +425,17 @@ export default function Settings() {
         </TabsContent>
 
         <TabsContent value="appearance" className="space-y-6">
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl">Thème</CardTitle>
+          <Card className="relative border border-pink-200/50 dark:border-pink-500/30 shadow-xl shadow-pink-500/10 dark:shadow-pink-500/20 hover:shadow-2xl hover:shadow-pink-500/20 dark:hover:shadow-pink-500/30 transition-all duration-300 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-rose-500/5 to-transparent dark:from-pink-500/10 dark:via-rose-500/10 pointer-events-none" />
+            <CardHeader className="relative space-y-1 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400">
+                  <Palette className="h-5 w-5" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent">
+                  Thème
+                </CardTitle>
+              </div>
               <CardDescription className="text-base">
                 Personnalisez l'apparence de l'interface
               </CardDescription>
@@ -399,27 +444,27 @@ export default function Settings() {
               <div className="grid grid-cols-2 gap-6">
                 <button
                   onClick={() => setTheme('light')}
-                  className={`group p-6 border-2 rounded-xl transition-all hover:shadow-lg ${
+                  className={`group p-6 border-2 rounded-xl transition-all hover:shadow-xl ${
                     theme === 'light' 
-                      ? 'border-primary bg-primary/5 shadow-md' 
-                      : 'border-muted hover:border-primary/30'
+                      ? 'border-pink-500/50 bg-gradient-to-br from-pink-500/10 to-rose-500/10 shadow-xl shadow-pink-500/20' 
+                      : 'border-pink-200/30 dark:border-pink-500/20 hover:border-pink-400/50 dark:hover:border-pink-400/40'
                   }`}
                   data-testid="button-theme-light"
                 >
-                  <div className="aspect-video bg-gradient-to-br from-white to-gray-100 rounded-lg mb-3 border-2 shadow-sm" />
+                  <div className="aspect-video bg-gradient-to-br from-white via-violet-50 to-blue-50 rounded-lg mb-3 border-2 border-violet-200/50 shadow-md" />
                   <p className="text-base font-semibold">Clair</p>
                   <p className="text-xs text-muted-foreground mt-1">Mode lumineux</p>
                 </button>
                 <button
                   onClick={() => setTheme('dark')}
-                  className={`group p-6 border-2 rounded-xl transition-all hover:shadow-lg ${
+                  className={`group p-6 border-2 rounded-xl transition-all hover:shadow-xl ${
                     theme === 'dark' 
-                      ? 'border-primary bg-primary/5 shadow-md' 
-                      : 'border-muted hover:border-primary/30'
+                      ? 'border-pink-500/50 bg-gradient-to-br from-pink-500/10 to-rose-500/10 shadow-xl shadow-pink-500/20' 
+                      : 'border-pink-200/30 dark:border-pink-500/20 hover:border-pink-400/50 dark:hover:border-pink-400/40'
                   }`}
                   data-testid="button-theme-dark"
                 >
-                  <div className="aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-lg mb-3 shadow-sm" />
+                  <div className="aspect-video bg-gradient-to-br from-slate-950 via-violet-950 to-blue-950 rounded-lg mb-3 border-2 border-violet-700/50 shadow-md" />
                   <p className="text-base font-semibold">Sombre</p>
                   <p className="text-xs text-muted-foreground mt-1">Mode nocturne</p>
                 </button>
@@ -427,49 +472,57 @@ export default function Settings() {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl">Langue</CardTitle>
+          <Card className="relative border border-purple-200/50 dark:border-purple-500/30 shadow-xl shadow-purple-500/10 dark:shadow-purple-500/20 hover:shadow-2xl hover:shadow-purple-500/20 dark:hover:shadow-purple-500/30 transition-all duration-300 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-indigo-500/5 to-transparent dark:from-purple-500/10 dark:via-indigo-500/10 pointer-events-none" />
+            <CardHeader className="relative space-y-1 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">
+                  <Globe className="h-5 w-5" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  Langue
+                </CardTitle>
+              </div>
               <CardDescription className="text-base">
                 Choisissez votre langue préférée
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="relative">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <button
                   onClick={() => setLanguage('fr')}
-                  className={`p-5 border-2 rounded-xl transition-all flex items-center gap-3 hover:shadow-md ${
+                  className={`p-5 border-2 rounded-xl transition-all flex items-center gap-3 hover:shadow-xl ${
                     language === 'fr' 
-                      ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-sm' 
-                      : 'border-muted hover:border-primary/30'
+                      ? 'border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 shadow-xl shadow-purple-500/20' 
+                      : 'border-purple-200/30 dark:border-purple-500/20 hover:border-purple-400/50 dark:hover:border-purple-400/40'
                   }`}
                   data-testid="button-lang-fr"
                 >
-                  <Globe className="h-5 w-5 text-primary" />
+                  <Globe className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   <span className="font-semibold">Français</span>
                 </button>
                 <button
                   onClick={() => setLanguage('en')}
-                  className={`p-5 border-2 rounded-xl transition-all flex items-center gap-3 hover:shadow-md ${
+                  className={`p-5 border-2 rounded-xl transition-all flex items-center gap-3 hover:shadow-xl ${
                     language === 'en' 
-                      ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-sm' 
-                      : 'border-muted hover:border-primary/30'
+                      ? 'border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 shadow-xl shadow-purple-500/20' 
+                      : 'border-purple-200/30 dark:border-purple-500/20 hover:border-purple-400/50 dark:hover:border-purple-400/40'
                   }`}
                   data-testid="button-lang-en"
                 >
-                  <Globe className="h-5 w-5 text-primary" />
+                  <Globe className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   <span className="font-semibold">English</span>
                 </button>
                 <button
                   onClick={() => setLanguage('es')}
-                  className={`p-5 border-2 rounded-xl transition-all flex items-center gap-3 hover:shadow-md ${
+                  className={`p-5 border-2 rounded-xl transition-all flex items-center gap-3 hover:shadow-xl ${
                     language === 'es' 
-                      ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-sm' 
-                      : 'border-muted hover:border-primary/30'
+                      ? 'border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 shadow-xl shadow-purple-500/20' 
+                      : 'border-purple-200/30 dark:border-purple-500/20 hover:border-purple-400/50 dark:hover:border-purple-400/40'
                   }`}
                   data-testid="button-lang-es"
                 >
-                  <Globe className="h-5 w-5 text-primary" />
+                  <Globe className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   <span className="font-semibold">Español</span>
                 </button>
               </div>
