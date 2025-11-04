@@ -32,34 +32,28 @@ export default function Header() {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
       scrolled 
         ? 'bg-white dark:bg-slate-900 shadow-md' 
-        : 'bg-gradient-to-r from-violet-600 via-purple-600 to-blue-600 dark:from-violet-800 dark:via-purple-800 dark:to-blue-800'
+        : 'bg-white dark:bg-slate-900 shadow-sm'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-all">
               <img src={logoUrl} alt="Altus Group" className="h-10 w-auto" />
-              <span className={`text-xl font-bold ${
-                scrolled ? 'text-primary' : 'text-white dark:text-white'
-              }`}>
+              <span className="text-xl font-bold text-primary">
                 Altus Group
               </span>
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`text-sm font-medium transition-colors ${
-              scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white dark:text-white/90 dark:hover:text-white'
-            }`}>
+            <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
               {t.nav.home}
             </Link>
             
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className={`text-sm font-medium ${
-                    scrolled ? '' : 'text-white dark:text-white'
-                  }`}>
+                  <NavigationMenuTrigger className="text-sm font-medium">
                     {t.nav.products}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -80,33 +74,25 @@ export default function Header() {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <Link href="/how-it-works" className={`text-sm font-medium transition-colors ${
-              scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white dark:text-white/90 dark:hover:text-white'
-            }`}>
+            <Link href="/how-it-works" className="text-sm font-medium transition-colors hover:text-primary">
               {t.nav.howItWorks}
             </Link>
-            <Link href="/resources" className={`text-sm font-medium transition-colors ${
-              scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white dark:text-white/90 dark:hover:text-white'
-            }`}>
+            <Link href="/resources" className="text-sm font-medium transition-colors hover:text-primary">
               {t.nav.resources}
             </Link>
-            <Link href="/about" className={`text-sm font-medium transition-colors ${
-              scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white dark:text-white/90 dark:hover:text-white'
-            }`}>
+            <Link href="/about" className="text-sm font-medium transition-colors hover:text-primary">
               {t.nav.about}
             </Link>
-            <Link href="/contact" className={`text-sm font-medium transition-colors ${
-              scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white dark:text-white/90 dark:hover:text-white'
-            }`}>
+            <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary">
               {t.nav.contact}
             </Link>
           </nav>
 
           <div className="hidden md:flex items-center gap-2">
-            <LanguageSwitcher scrolled={scrolled} />
+            <LanguageSwitcher scrolled={true} />
             <Link href="/login">
               <Button 
-                variant={scrolled ? "default" : "secondary"} 
+                variant="default" 
                 data-testid="button-mon-espace"
               >
                 Mon espace
@@ -116,23 +102,19 @@ export default function Header() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden p-2 rounded-md transition-colors ${
-              scrolled ? 'hover:bg-accent' : 'hover:bg-white/10'
-            }`}
+            className="md:hidden p-2 rounded-md transition-colors hover:bg-accent"
             data-testid="button-mobile-menu"
           >
-            {mobileMenuOpen ? <X size={24} className={scrolled ? '' : 'text-white'} /> : <Menu size={24} className={scrolled ? '' : 'text-white'} />}
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {mobileMenuOpen && (
-          <div className={`md:hidden py-4 border-t ${scrolled ? 'border-border' : 'border-white/20'}`}>
+          <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col space-y-4">
               <Link 
                 href="/" 
-                className={`text-sm font-medium transition-colors ${
-                  scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white'
-                }`}
+                className="text-sm font-medium transition-colors hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
                 data-testid="link-home-mobile"
               >
@@ -140,9 +122,7 @@ export default function Header() {
               </Link>
               <Link 
                 href="/products" 
-                className={`text-sm font-medium transition-colors ${
-                  scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white'
-                }`}
+                className="text-sm font-medium transition-colors hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
                 data-testid="link-products-mobile"
               >
@@ -150,9 +130,7 @@ export default function Header() {
               </Link>
               <Link 
                 href="/how-it-works" 
-                className={`text-sm font-medium transition-colors ${
-                  scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white'
-                }`}
+                className="text-sm font-medium transition-colors hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
                 data-testid="link-how-it-works-mobile"
               >
@@ -160,9 +138,7 @@ export default function Header() {
               </Link>
               <Link 
                 href="/resources" 
-                className={`text-sm font-medium transition-colors ${
-                  scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white'
-                }`}
+                className="text-sm font-medium transition-colors hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
                 data-testid="link-resources-mobile"
               >
@@ -170,9 +146,7 @@ export default function Header() {
               </Link>
               <Link 
                 href="/about" 
-                className={`text-sm font-medium transition-colors ${
-                  scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white'
-                }`}
+                className="text-sm font-medium transition-colors hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
                 data-testid="link-about-mobile"
               >
@@ -180,23 +154,21 @@ export default function Header() {
               </Link>
               <Link 
                 href="/contact" 
-                className={`text-sm font-medium transition-colors ${
-                  scrolled ? 'hover:text-primary' : 'text-white/90 hover:text-white'
-                }`}
+                className="text-sm font-medium transition-colors hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
                 data-testid="link-contact-mobile"
               >
                 {t.nav.contact}
               </Link>
               <div className="flex items-center gap-2 pt-2">
-                <LanguageSwitcher scrolled={scrolled} />
+                <LanguageSwitcher scrolled={true} />
               </div>
               <Link 
                 href="/login" 
                 onClick={() => setMobileMenuOpen(false)}
                 data-testid="link-mon-espace-mobile"
               >
-                <Button className="w-full" variant={scrolled ? "default" : "secondary"}>
+                <Button className="w-full" variant="default">
                   Mon espace
                 </Button>
               </Link>
