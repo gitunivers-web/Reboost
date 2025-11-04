@@ -1,26 +1,73 @@
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useTranslations } from '@/lib/i18n';
-import heroImage from '@assets/generated_images/Professional_business_handshake_hero_a876f666.png';
+import heroImage1 from '@assets/generated_images/Professional_business_handshake_hero_a876f666.png';
+import heroImage2 from '@assets/stock_images/professional_busines_f5be1226.jpg';
+import heroImage3 from '@assets/stock_images/modern_office_team_c_5fe4ebf4.jpg';
+import heroImage4 from '@assets/stock_images/professional_busines_02179932.jpg';
+import heroImage5 from '@assets/stock_images/modern_office_team_c_c1f316eb.jpg';
 import { Link } from 'wouter';
+
+const slides = [
+  {
+    image: heroImage1,
+    title: 'Réalisez vos projets avec Altus Group',
+    subtitle: 'Solutions de financement pour particuliers et professionnels - Taux compétitifs et processus transparent',
+  },
+  {
+    image: heroImage2,
+    title: 'Des solutions financières sur mesure',
+    subtitle: 'Accompagnement personnalisé pour concrétiser tous vos projets professionnels et personnels',
+  },
+  {
+    image: heroImage3,
+    title: 'Votre partenaire de confiance',
+    subtitle: 'Plus de 15 000 clients satisfaits nous font confiance pour leurs besoins de financement',
+  },
+  {
+    image: heroImage4,
+    title: 'Financez vos ambitions',
+    subtitle: 'Des taux avantageux et un processus simple pour donner vie à vos projets',
+  },
+  {
+    image: heroImage5,
+    title: 'Expertise et accompagnement',
+    subtitle: 'Une équipe dédiée pour vous guider à chaque étape de votre projet',
+  },
+];
 
 export default function Hero() {
   const t = useTranslations();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+            index === currentSlide ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ backgroundImage: `url(${slide.image})` }}
+        />
+      ))}
       <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/50" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 text-center">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
-          {t.hero.title}
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 transition-all duration-700">
+          {slides[currentSlide].title}
         </h1>
-        <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-          {t.hero.subtitle}
+        <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto transition-all duration-700">
+          {slides[currentSlide].subtitle}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -44,6 +91,22 @@ export default function Hero() {
               {t.hero.cta2}
             </Button>
           </Link>
+        </div>
+
+        <div className="flex gap-2 justify-center mb-8">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide
+                  ? 'bg-white w-8'
+                  : 'bg-white/40 hover:bg-white/60'
+              }`}
+              aria-label={`Aller à la diapositive ${index + 1}`}
+              data-testid={`slide-indicator-${index}`}
+            />
+          ))}
         </div>
 
         <div className="text-white/80 text-sm">
