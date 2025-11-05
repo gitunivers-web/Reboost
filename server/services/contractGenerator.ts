@@ -1,6 +1,7 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 import type { Loan, User } from '@shared/schema';
 
 interface ContractData {
@@ -365,13 +366,26 @@ export async function generateContractPDF(user: User, loan: Loan): Promise<strin
   const filename = `contrat_${loan.id}_${Date.now()}.pdf`;
   const filepath = path.join(uploadsDir, filename);
 
+  let chromiumPath = '/nix/store/qa9cnw4v5xkxyip6mb9kxqfq1z4x2dx1-chromium-138.0.7204.100/bin/chromium';
+  
+  try {
+    const whichResult = execSync('which chromium || which chromium-browser || which google-chrome', { encoding: 'utf-8' }).trim();
+    if (whichResult) {
+      chromiumPath = whichResult;
+    }
+  } catch (e) {
+  }
+
   const browser = await puppeteer.launch({
+    executablePath: chromiumPath,
     headless: true,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
-      '--disable-gpu'
+      '--disable-gpu',
+      '--disable-software-rasterizer',
+      '--disable-dev-tools'
     ]
   });
 

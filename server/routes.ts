@@ -1631,8 +1631,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: 'User not found' });
       }
 
-      const { generateContractPDF } = await import('./services/contractGenerator');
-      const contractUrl = await generateContractPDF(user, loan);
+      let contractUrl: string | null = null;
+      let contractGenerated = false;
+
+      try {
+        const { generateContractPDF } = await import('./services/contractGenerator');
+        contractUrl = await generateContractPDF(user, loan);
+        contractGenerated = true;
+      } catch (contractError) {
+        console.error('Failed to generate contract PDF, continuing with loan approval:', contractError);
+        contractGenerated = false;
+      }
 
       const updated = await storage.updateLoan(req.params.id, {
         status: 'approved',
@@ -1641,22 +1650,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         contractUrl,
       });
 
+      const messageContent = contractGenerated
+        ? `Félicitations! Votre demande de prêt de ${loan.amount} EUR a été approuvée. Votre contrat est maintenant disponible. Veuillez le télécharger, le signer et le retourner pour débloquer les fonds.`
+        : `Félicitations! Votre demande de prêt de ${loan.amount} EUR a été approuvée. Votre contrat sera disponible sous peu. Vous recevrez une notification dès qu'il sera prêt.`;
+
       await storage.createAdminMessage({
         userId: loan.userId,
         transferId: null,
-        subject: 'Demande de prêt approuvée - Contrat disponible',
-        content: `Félicitations! Votre demande de prêt de ${loan.amount} EUR a été approuvée. Votre contrat est maintenant disponible. Veuillez le télécharger, le signer et le retourner pour débloquer les fonds.`,
+        subject: 'Demande de prêt approuvée' + (contractGenerated ? ' - Contrat disponible' : ''),
+        content: messageContent,
         severity: 'success',
       });
 
-      const { sendContractEmail } = await import('./email');
-      await sendContractEmail(
-        user.email,
-        user.fullName,
-        loan.id,
-        loan.amount,
-        contractUrl
-      );
+      if (contractGenerated && contractUrl) {
+        try {
+          const { sendContractEmail } = await import('./email');
+          await sendContractEmail(
+            user.email,
+            user.fullName,
+            loan.id,
+            loan.amount,
+            contractUrl
+          );
+        } catch (emailError) {
+          console.error('Failed to send contract email, loan still approved:', emailError);
+        }
+      }
 
       await storage.createAuditLog({
         actorId: req.session.userId!,
@@ -1664,7 +1683,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         action: 'approve_loan',
         entityType: 'loan',
         entityId: req.params.id,
-        metadata: { amount: loan.amount, loanType: loan.loanType, contractGenerated: true },
+        metadata: { amount: loan.amount, loanType: loan.loanType, contractGenerated },
       });
 
       res.json(updated);
