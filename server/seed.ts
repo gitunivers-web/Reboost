@@ -33,6 +33,7 @@ async function seed() {
     {
       id: "loan-001",
       userId: demoUserId,
+      loanType: "Prêt Professionnel",
       amount: "200000",
       interestRate: "3.5",
       duration: 60,
@@ -43,6 +44,7 @@ async function seed() {
     {
       id: "loan-002",
       userId: demoUserId,
+      loanType: "Crédit de Trésorerie",
       amount: "150000",
       interestRate: "4.2",
       duration: 48,
@@ -53,6 +55,7 @@ async function seed() {
     {
       id: "loan-003",
       userId: demoUserId,
+      loanType: "Financement Équipement",
       amount: "100000",
       interestRate: "3.8",
       duration: 36,
