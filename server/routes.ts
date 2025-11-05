@@ -819,6 +819,173 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/loans/:id/contract", requireAuth, async (req, res) => {
+    try {
+      const loan = await storage.getLoan(req.params.id);
+      
+      if (!loan) {
+        return res.status(404).json({ error: 'Prêt non trouvé' });
+      }
+
+      if (loan.userId !== req.session.userId) {
+        const user = await storage.getUser(req.session.userId!);
+        if (!user || user.role !== 'admin') {
+          return res.status(403).json({ error: 'Accès refusé' });
+        }
+      }
+
+      if (!loan.contractUrl) {
+        return res.status(404).json({ error: 'Aucun contrat disponible pour ce prêt' });
+      }
+
+      const filePath = path.join(process.cwd(), loan.contractUrl);
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: 'Fichier de contrat non trouvé sur le serveur' });
+      }
+
+      const filename = `contrat_pret_${loan.id}.pdf`;
+      res.download(filePath, filename, (err) => {
+        if (err) {
+          console.error('Error downloading contract:', err);
+          if (!res.headersSent) {
+            res.status(500).json({ error: 'Erreur lors du téléchargement du contrat' });
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Contract download error:', error);
+      res.status(500).json({ error: 'Erreur lors du téléchargement du contrat' });
+    }
+  });
+
+  const signedContractsDir = path.join(process.cwd(), 'uploads', 'signed-contracts');
+  if (!fs.existsSync(signedContractsDir)) {
+    fs.mkdirSync(signedContractsDir, { recursive: true });
+  }
+
+  const signedContractStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, signedContractsDir);
+    },
+    filename: function (req, file, cb) {
+      const uniqueName = `signed_${req.params.id}_${Date.now()}${path.extname(file.originalname)}`;
+      cb(null, uniqueName);
+    }
+  });
+
+  const uploadSignedContract = multer({
+    storage: signedContractStorage,
+    limits: {
+      fileSize: 10 * 1024 * 1024,
+      files: 1,
+    },
+    fileFilter: (req: any, file: any, cb: any) => {
+      const ext = path.extname(file.originalname).toLowerCase();
+      if (ext !== '.pdf') {
+        return cb(new Error('Seuls les fichiers PDF sont acceptés pour les contrats signés.'), false);
+      }
+      cb(null, true);
+    },
+  });
+
+  app.post("/api/loans/:id/upload-signed-contract", requireAuth, requireCSRF, uploadLimiter, uploadSignedContract.single('signedContract'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'Aucun fichier fourni' });
+      }
+
+      const loan = await storage.getLoan(req.params.id);
+      if (!loan) {
+        if (req.file) {
+          try {
+            await fs.promises.unlink(req.file.path);
+          } catch (cleanupError) {
+            console.error('Error cleaning up file:', cleanupError);
+          }
+        }
+        return res.status(404).json({ error: 'Prêt non trouvé' });
+      }
+
+      if (loan.userId !== req.session.userId) {
+        if (req.file) {
+          try {
+            await fs.promises.unlink(req.file.path);
+          } catch (cleanupError) {
+            console.error('Error cleaning up file:', cleanupError);
+          }
+        }
+        return res.status(403).json({ error: 'Accès refusé' });
+      }
+
+      if (loan.status !== 'approved') {
+        if (req.file) {
+          try {
+            await fs.promises.unlink(req.file.path);
+          } catch (cleanupError) {
+            console.error('Error cleaning up file:', cleanupError);
+          }
+        }
+        return res.status(400).json({ error: 'Ce prêt n\'est pas en statut approuvé' });
+      }
+
+      const fileType = await fileTypeFromFile(req.file.path);
+      if (!fileType || fileType.ext !== 'pdf') {
+        try {
+          await fs.promises.unlink(req.file.path);
+        } catch (cleanupError) {
+          console.error('Error cleaning up file:', cleanupError);
+        }
+        return res.status(400).json({ error: 'Type de fichier invalide. Seuls les PDF sont acceptés.' });
+      }
+
+      const signedContractUrl = `/uploads/signed-contracts/${req.file.filename}`;
+      
+      const updated = await storage.updateLoan(req.params.id, {
+        signedContractUrl,
+        status: 'signed',
+      });
+
+      await storage.createAdminMessage({
+        userId: loan.userId,
+        transferId: null,
+        subject: 'Contrat signé reçu',
+        content: `Votre contrat signé a été reçu avec succès. Votre dossier est en cours de traitement final. Les fonds seront débloqués sous 5 jours ouvrés.`,
+        severity: 'success',
+      });
+
+      await storage.createAuditLog({
+        actorId: req.session.userId!,
+        actorRole: 'user',
+        action: 'upload_signed_contract',
+        entityType: 'loan',
+        entityId: req.params.id,
+        metadata: { filename: req.file.filename },
+      });
+
+      res.json({ 
+        success: true, 
+        loan: updated,
+        message: 'Contrat signé téléchargé avec succès'
+      });
+    } catch (error: any) {
+      if (req.file) {
+        try {
+          await fs.promises.unlink(req.file.path);
+        } catch (cleanupError) {
+          console.error('Error cleaning up file:', cleanupError);
+        }
+      }
+
+      if (error.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ error: 'Fichier trop volumineux. La taille maximale est de 10MB.' });
+      }
+
+      console.error('Signed contract upload error:', error);
+      res.status(500).json({ error: 'Erreur lors du téléchargement du contrat signé' });
+    }
+  });
+
   app.get("/api/transfers", requireAuth, async (req, res) => {
     try {
       const transfers = await storage.getUserTransfers(req.session.userId!);
@@ -1459,19 +1626,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: 'Loan not found' });
       }
 
+      const user = await storage.getUser(loan.userId);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      const { generateContractPDF } = await import('./services/contractGenerator');
+      const contractUrl = await generateContractPDF(user, loan);
+
       const updated = await storage.updateLoan(req.params.id, {
-        status: 'active',
+        status: 'approved',
         approvedAt: new Date(),
         approvedBy: req.session.userId!,
+        contractUrl,
       });
 
       await storage.createAdminMessage({
         userId: loan.userId,
         transferId: null,
-        subject: 'Demande de prêt approuvée',
-        content: `Félicitations! Votre demande de prêt de ${loan.amount} EUR a été approuvée. Les fonds seront disponibles sous peu.`,
+        subject: 'Demande de prêt approuvée - Contrat disponible',
+        content: `Félicitations! Votre demande de prêt de ${loan.amount} EUR a été approuvée. Votre contrat est maintenant disponible. Veuillez le télécharger, le signer et le retourner pour débloquer les fonds.`,
         severity: 'success',
       });
+
+      const { sendContractEmail } = await import('./email');
+      await sendContractEmail(
+        user.email,
+        user.fullName,
+        loan.id,
+        loan.amount,
+        contractUrl
+      );
 
       await storage.createAuditLog({
         actorId: req.session.userId!,
@@ -1479,11 +1664,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         action: 'approve_loan',
         entityType: 'loan',
         entityId: req.params.id,
-        metadata: { amount: loan.amount, loanType: loan.loanType },
+        metadata: { amount: loan.amount, loanType: loan.loanType, contractGenerated: true },
       });
 
       res.json(updated);
     } catch (error) {
+      console.error('Failed to approve loan:', error);
       res.status(500).json({ error: 'Failed to approve loan' });
     }
   });
