@@ -1,0 +1,91 @@
+2025-11-05T22:33:13.871579089Z ==> Cloning from https://github.com/gitunivers-web/Lepari1
+2025-11-05T22:33:14.656357554Z ==> Checking out commit a8816ab0434efda46e68d3dda272437464f6e5fd in branch main
+2025-11-05T22:33:18.958290831Z ==> Using Node.js version 22.16.0 (default)
+2025-11-05T22:33:18.982639626Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2025-11-05T22:33:21.834548546Z ==> Running build command 'npm install && npm run build'...
+2025-11-05T22:33:35.359762508Z 
+2025-11-05T22:33:35.359804319Z added 475 packages, and audited 476 packages in 13s
+2025-11-05T22:33:35.35981607Z 
+2025-11-05T22:33:35.359823Z 61 packages are looking for funding
+2025-11-05T22:33:35.359828701Z   run `npm fund` for details
+2025-11-05T22:33:35.361872013Z 
+2025-11-05T22:33:35.361883113Z 3 low severity vulnerabilities
+2025-11-05T22:33:35.361886713Z 
+2025-11-05T22:33:35.361890343Z To address all issues, run:
+2025-11-05T22:33:35.361893924Z   npm audit fix
+2025-11-05T22:33:35.361897354Z 
+2025-11-05T22:33:35.361900904Z Run `npm audit` for details.
+2025-11-05T22:33:35.682555392Z 
+2025-11-05T22:33:35.682581663Z > rest-express@1.0.0 build
+2025-11-05T22:33:35.682586434Z > npm install --include=dev && npm run build:frontend && npm run build:backend
+2025-11-05T22:33:35.682590104Z 
+2025-11-05T22:33:39.881310494Z 
+2025-11-05T22:33:39.881349886Z added 84 packages, and audited 560 packages in 4s
+2025-11-05T22:33:39.881354536Z 
+2025-11-05T22:33:39.881359446Z 73 packages are looking for funding
+2025-11-05T22:33:39.881363817Z   run `npm fund` for details
+2025-11-05T22:33:39.915373113Z 
+2025-11-05T22:33:39.915393304Z 8 vulnerabilities (3 low, 5 moderate)
+2025-11-05T22:33:39.915397655Z 
+2025-11-05T22:33:39.915402145Z To address issues that do not require attention, run:
+2025-11-05T22:33:39.915406145Z   npm audit fix
+2025-11-05T22:33:39.915410025Z 
+2025-11-05T22:33:39.915414035Z To address all issues (including breaking changes), run:
+2025-11-05T22:33:39.915417876Z   npm audit fix --force
+2025-11-05T22:33:39.915421786Z 
+2025-11-05T22:33:39.915426086Z Run `npm audit` for details.
+2025-11-05T22:33:40.084589776Z 
+2025-11-05T22:33:40.084618247Z > rest-express@1.0.0 build:frontend
+2025-11-05T22:33:40.084625247Z > vite build
+2025-11-05T22:33:40.084630968Z 
+2025-11-05T22:33:40.359893011Z vite v5.4.20 building for production...
+2025-11-05T22:33:40.432462852Z transforming...
+2025-11-05T22:33:41.851868987Z 
+2025-11-05T22:33:41.851894558Z A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2025-11-05T22:33:48.296110335Z ✓ 3467 modules transformed.
+2025-11-05T22:33:49.070988234Z rendering chunks...
+2025-11-05T22:33:49.094304508Z computing gzip size...
+2025-11-05T22:33:49.140978646Z ../dist/public/index.html                                                                        2.55 kB │ gzip:   0.97 kB
+2025-11-05T22:33:49.141096852Z ../dist/public/assets/Logo_1762278146504-Co7Z5DD7.jpeg                                          21.32 kB
+2025-11-05T22:33:49.141153595Z ../dist/public/assets/WhatsApp Image 2025-11-05 at 13.16.36_1762345203268-DaytfAEg.jpeg         36.29 kB
+2025-11-05T22:33:49.141317253Z ../dist/public/assets/WhatsApp Image 2025-11-05 at 13.16.36 (1)_1762345210880-BpdZc8e7.jpeg     37.02 kB
+2025-11-05T22:33:49.141352475Z ../dist/public/assets/professional_busines_02179932-Bk4D1CDa.jpg                               141.98 kB
+2025-11-05T22:33:49.141399197Z ../dist/public/assets/modern_office_team_c_5fe4ebf4-DLekMsr-.jpg                               180.53 kB
+2025-11-05T22:33:49.14144535Z ../dist/public/assets/professional_busines_f5be1226-N3jcV-0D.jpg                               200.10 kB
+2025-11-05T22:33:49.14144847Z ../dist/public/assets/modern_office_team_c_c1f316eb-ii2kPv4-.jpg                               216.65 kB
+2025-11-05T22:33:49.141470381Z ../dist/public/assets/Professional_business_handshake_hero_a876f666-CEAPllJr.png             1,275.51 kB
+2025-11-05T22:33:49.141516073Z ../dist/public/assets/index-xjuFXqzn.css                                                       144.09 kB │ gzip:  20.93 kB
+2025-11-05T22:33:49.141557595Z ../dist/public/assets/index-xZTYrVRc.js                                                      1,412.89 kB │ gzip: 395.80 kB
+2025-11-05T22:33:49.141665981Z 
+2025-11-05T22:33:49.141670931Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2025-11-05T22:33:49.141674371Z - Using dynamic import() to code-split the application
+2025-11-05T22:33:49.141677491Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2025-11-05T22:33:49.141680041Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2025-11-05T22:33:49.142310342Z ✓ built in 8.75s
+2025-11-05T22:33:49.389652782Z 
+2025-11-05T22:33:49.389678624Z > rest-express@1.0.0 build:backend
+2025-11-05T22:33:49.389682654Z > esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-11-05T22:33:49.389685194Z 
+2025-11-05T22:33:49.412424199Z 
+2025-11-05T22:33:49.4124442Z   dist/index.js  183.0kb
+2025-11-05T22:33:49.41244641Z 
+2025-11-05T22:33:49.41244833Z ⚡ Done in 14ms
+2025-11-05T22:33:53.237538605Z ==> Uploading build...
+2025-11-05T22:34:01.692348243Z ==> Uploaded in 5.0s. Compression took 3.4s
+2025-11-05T22:34:01.720106298Z ==> Build successful 🎉
+2025-11-05T22:34:06.277138841Z ==> Deploying...
+2025-11-05T22:34:24.811450742Z ==> Running 'npm start'
+2025-11-05T22:34:25.816417704Z 
+2025-11-05T22:34:25.816455926Z > rest-express@1.0.0 start
+2025-11-05T22:34:25.816462757Z > NODE_ENV=production node dist/index.js
+2025-11-05T22:34:25.816466647Z 
+2025-11-05T22:34:37.499351951Z ==> Your service is live 🎉
+2025-11-05T22:34:37.675949227Z ==> 
+2025-11-05T22:34:37.842361084Z ==> ///////////////////////////////////////////////////////////
+2025-11-05T22:34:38.01044188Z ==> 
+2025-11-05T22:34:38.177776758Z ==> Available at your primary URL https://altus.onrender.com
+2025-11-05T22:34:38.346071274Z ==> 
+2025-11-05T22:34:38.516136501Z ==> ///////////////////////////////////////////////////////////
+2025-11-05T22:34:36.225717232Z 10:34:36 PM [express] ✅ Backend API server listening on port 10000
+2025-11-05T22:34:36.226092379Z 10:34:36 PM [express] 🌍 Environment: production
+2025-11-05T22:34:36.227414067Z 10:34:36 PM [express] 🗄️ Database: Connected
