@@ -950,7 +950,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: loan.userId,
         transferId: null,
         subject: 'Contrat signé reçu',
-        content: `Votre contrat signé a été reçu avec succès. Votre dossier est en cours de traitement final. Les fonds seront débloqués sous 5 jours ouvrés.`,
+        content: `Votre contrat signé a été reçu avec succès. Votre dossier est en cours de traitement final. Les fonds seront débloqués dans un délai allant de quelques minutes à 24 heures maximum.`,
         severity: 'success',
       });
 

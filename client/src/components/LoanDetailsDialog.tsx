@@ -104,7 +104,7 @@ export default function LoanDetailsDialog({ open, onOpenChange, loan }: LoanDeta
 
       toast({
         title: 'Succès',
-        description: 'Contrat signé téléchargé avec succès. Les fonds seront débloqués sous 5 jours ouvrés.',
+        description: 'Contrat signé téléchargé avec succès. Les fonds seront débloqués dans un délai allant de quelques minutes à 24 heures maximum.',
       });
 
       onOpenChange(false);
@@ -204,7 +204,7 @@ export default function LoanDetailsDialog({ open, onOpenChange, loan }: LoanDeta
                     Contrat signé reçu
                   </h4>
                   <p className="text-sm text-green-700 dark:text-green-300 mt-1">
-                    Votre contrat signé a été reçu. Les fonds seront débloqués sous 5 jours ouvrés.
+                    Votre contrat signé a été reçu. Les fonds seront débloqués dans un délai allant de quelques minutes à 24 heures maximum.
                   </p>
                 </div>
               </div>

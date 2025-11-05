@@ -252,7 +252,7 @@ export async function sendContractEmail(toEmail: string, fullName: string, loanI
               </div>
 
               <p style="margin-top: 30px; padding: 15px; background: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
-                <strong>⚠️ Important :</strong> Les fonds seront débloqués sous 5 jours ouvrés après réception de votre contrat signé.
+                <strong>⚠️ Important :</strong> Les fonds seront débloqués dans un délai allant de quelques minutes à 24 heures maximum.
               </p>
 
               <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
@@ -279,7 +279,7 @@ export async function sendContractEmail(toEmail: string, fullName: string, loanI
         2. Imprimez et signez le document avec la mention "Lu et approuvé"
         3. Retournez le contrat signé via votre espace client ou par email à ${fromEmail}
         
-        Les fonds seront débloqués sous 5 jours ouvrés après réception de votre contrat signé.
+        Les fonds seront débloqués dans un délai allant de quelques minutes à 24 heures maximum.
         
         Vous pouvez également accéder à votre contrat depuis votre espace client.
         

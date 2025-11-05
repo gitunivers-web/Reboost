@@ -231,7 +231,7 @@ const getContractTemplate = (data: ContractData): string => {
     <div class="article-title">Article 4 - Déblocage des fonds</div>
     <p>
       Les fonds seront mis à disposition de l'Emprunteur sur le compte bancaire renseigné, 
-      dans un délai de 5 jours ouvrés suivant la réception du présent contrat dûment signé.
+      dans un délai allant de quelques minutes à 24 heures maximum suivant la réception du présent contrat dûment signé.
     </p>
   </div>
 
