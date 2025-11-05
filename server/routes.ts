@@ -945,14 +945,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const updated = await storage.updateLoan(req.params.id, {
         signedContractUrl,
-        status: 'signed',
+        status: 'active',
+      });
+
+      await storage.createTransaction({
+        userId: loan.userId,
+        type: 'credit',
+        amount: loan.amount,
+        description: `Déblocage des fonds - Prêt ${loan.loanType} approuvé`,
       });
 
       await storage.createAdminMessage({
         userId: loan.userId,
         transferId: null,
-        subject: 'Contrat signé reçu',
-        content: `Votre contrat signé a été reçu avec succès. Votre dossier est en cours de traitement final. Les fonds seront débloqués dans un délai allant de quelques minutes à 24 heures maximum.`,
+        subject: 'Fonds débloqués - Prêt actif',
+        content: `Votre contrat signé a été validé. Les fonds de ${loan.amount} EUR ont été débloqués et sont maintenant disponibles sur votre compte. Vous pouvez effectuer des transferts.`,
         severity: 'success',
       });
 
@@ -1003,6 +1010,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         userId: req.session.userId!,
       });
+
+      const transactions = await storage.getUserTransactions(req.session.userId!);
+      const balance = transactions.reduce((sum, tx) => {
+        if (tx.type === 'credit') {
+          return sum + parseFloat(tx.amount);
+        } else if (tx.type === 'debit') {
+          return sum - parseFloat(tx.amount);
+        }
+        return sum;
+      }, 0);
+
+      const transferAmount = parseFloat(validated.amount);
+      const feeAmount = 25;
+      const totalRequired = transferAmount + feeAmount;
+
+      if (balance < totalRequired) {
+        return res.status(400).json({ 
+          error: `Solde insuffisant. Disponible: ${balance.toFixed(2)} EUR, Requis: ${totalRequired.toFixed(2)} EUR (montant ${transferAmount} EUR + frais ${feeAmount} EUR)` 
+        });
+      }
+
+      const user = await storage.getUser(req.session.userId!);
+      if (!user) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      }
+
+      const activeLoans = await storage.getUserLoans(req.session.userId!);
+      const hasActiveLoan = activeLoans.some(loan => loan.status === 'active');
+      if (!hasActiveLoan) {
+        return res.status(400).json({ 
+          error: 'Aucun prêt actif trouvé. Vous devez avoir un prêt actif avec des fonds débloqués pour effectuer un transfert.' 
+        });
+      }
+
+      if (user.externalTransfersBlocked) {
+        return res.status(403).json({ 
+          error: `Les transferts externes sont bloqués pour votre compte. Raison: ${user.transferBlockReason || 'Non spécifiée'}` 
+        });
+      }
+
       const transfer = await storage.createTransfer(validated);
       
       await storage.createFee({
@@ -1014,6 +1061,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.status(201).json(transfer);
     } catch (error) {
+      console.error('Transfer creation error:', error);
       res.status(400).json({ error: 'Invalid transfer data' });
     }
   });
@@ -1631,6 +1679,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = await storage.getUser(loan.userId);
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
+      }
+
+      if (user.kycStatus !== 'verified') {
+        return res.status(400).json({ 
+          error: 'Cannot approve loan: User KYC must be verified first. Please verify KYC documents before approving the loan.' 
+        });
+      }
+
+      const kycDocuments = await storage.getUserKycDocuments(loan.userId);
+      const approvedDocs = kycDocuments.filter(doc => doc.status === 'approved');
+      if (approvedDocs.length === 0) {
+        const pendingCount = kycDocuments.filter(doc => doc.status === 'pending').length;
+        const rejectedCount = kycDocuments.filter(doc => doc.status === 'rejected').length;
+        return res.status(400).json({ 
+          error: `Cannot approve loan: No approved KYC documents found. Documents status: ${approvedDocs.length} approved, ${pendingCount} pending, ${rejectedCount} rejected. Please approve at least one KYC document before approving the loan.` 
+        });
       }
 
       let contractUrl: string | null = null;

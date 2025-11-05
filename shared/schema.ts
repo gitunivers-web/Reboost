@@ -176,7 +176,14 @@ export const auditLogs = pgTable("audit_logs", {
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
 });
 
-export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true, updatedAt: true });
+export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true, updatedAt: true }).extend({
+  password: z.string()
+    .min(12, 'Le mot de passe doit contenir au moins 12 caractères')
+    .regex(/[A-Z]/, 'Le mot de passe doit contenir au moins une majuscule')
+    .regex(/[a-z]/, 'Le mot de passe doit contenir au moins une minuscule')
+    .regex(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre')
+    .regex(/[^A-Za-z0-9]/, 'Le mot de passe doit contenir au moins un caractère spécial'),
+});
 export const insertLoanSchema = createInsertSchema(loans).omit({ id: true, createdAt: true });
 export const insertTransferSchema = createInsertSchema(transfers).omit({ id: true, createdAt: true, updatedAt: true });
 export const insertFeeSchema = createInsertSchema(fees).omit({ id: true, createdAt: true });
