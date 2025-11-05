@@ -95,10 +95,8 @@ export default function Dashboard() {
           <QuickActions />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-          <div className="lg:col-span-2">
-            <FeeSection fees={dashboardData.fees} />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <FeeSection fees={dashboardData.fees} />
           <BankCardOffer />
         </div>
       </div>
