@@ -59,74 +59,75 @@ export default function NotificationsBox() {
   const unreadCount = messages?.filter(m => !m.isRead).length || 0;
 
   return (
-    <Card className="shadow-xl border-2 border-violet-100 dark:border-violet-900 bg-gradient-to-br from-white via-violet-50/30 to-purple-50/30 dark:from-slate-800 dark:via-violet-950/30 dark:to-purple-950/30" data-testid="card-notifications">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span className="flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent font-bold">
-            <Bell className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+    <Card className="shadow-sm border bg-white dark:bg-slate-800" data-testid="card-notifications">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center justify-between text-sm font-medium text-muted-foreground">
+          <span className="flex items-center gap-2">
+            <Bell className="w-4 h-4" />
             Notifications
           </span>
           {unreadCount > 0 && (
-            <Badge variant="destructive" data-testid="badge-unread-count">
-              {unreadCount} non {unreadCount > 1 ? 'lues' : 'lue'}
+            <Badge variant="destructive" className="h-5 text-xs" data-testid="badge-unread-count">
+              {unreadCount}
             </Badge>
           )}
         </CardTitle>
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <div className="space-y-3">
-            <div className="h-20 bg-muted animate-pulse rounded" />
-            <div className="h-20 bg-muted animate-pulse rounded" />
+          <div className="space-y-2">
+            <div className="h-16 bg-muted animate-pulse rounded" />
+            <div className="h-16 bg-muted animate-pulse rounded" />
           </div>
         ) : messages && messages.length > 0 ? (
-          <ScrollArea className="h-[400px]">
-            <div className="space-y-3" data-testid="list-notifications">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`p-4 rounded-lg border transition-all ${
-                    message.isRead 
-                      ? 'bg-muted/50 border-muted' 
-                      : 'bg-background border-primary/50 shadow-sm'
-                  }`}
-                  data-testid={`notification-${message.id}`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center gap-2">
-                        {getSeverityIcon(message.severity)}
-                        <h4 className="font-semibold text-sm">{message.subject}</h4>
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {message.content}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(message.deliveredAt).toLocaleString('fr-FR')}
-                      </p>
-                    </div>
-                    {!message.isRead && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => markAsReadMutation.mutate(message.id)}
-                        disabled={markAsReadMutation.isPending}
-                        data-testid={`button-mark-read-${message.id}`}
-                      >
-                        Marquer lu
-                      </Button>
-                    )}
-                  </div>
-                  <Badge 
-                    variant="outline" 
-                    className={`mt-2 ${getSeverityColor(message.severity)}`}
+          <>
+            <ScrollArea className="h-[220px]">
+              <div className="space-y-2" data-testid="list-notifications">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`p-2 rounded-md border text-sm transition-all ${
+                      message.isRead 
+                        ? 'bg-muted/30 border-muted' 
+                        : 'bg-background border-primary/30'
+                    }`}
+                    data-testid={`notification-${message.id}`}
                   >
-                    {message.severity}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
+                    <div className="flex items-start gap-2">
+                      {getSeverityIcon(message.severity)}
+                      <div className="flex-1 space-y-1">
+                        <h4 className="font-medium text-xs">{message.subject}</h4>
+                        <p className="text-xs text-muted-foreground line-clamp-2">
+                          {message.content}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(message.deliveredAt).toLocaleDateString('fr-FR')}
+                        </p>
+                      </div>
+                      {!message.isRead && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 text-xs px-2"
+                          onClick={() => markAsReadMutation.mutate(message.id)}
+                          disabled={markAsReadMutation.isPending}
+                          data-testid={`button-mark-read-${message.id}`}
+                        >
+                          Lu
+                        </Button>
+                      )}
+                    </div>
+                    <Badge 
+                      variant="outline" 
+                      className={`mt-2 ${getSeverityColor(message.severity)}`}
+                    >
+                      {message.severity}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          </>
         ) : (
           <div className="text-center py-8 text-muted-foreground">
             <Bell className="w-12 h-12 mx-auto mb-3 opacity-50" />

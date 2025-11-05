@@ -26,39 +26,36 @@ export default function BalanceOverview({
   };
 
   return (
-    <Card className="lg:col-span-2 shadow-xl border-2 border-blue-100 dark:border-blue-900 bg-white dark:bg-slate-800">
-      <CardHeader>
-        <CardTitle className="text-xl md:text-2xl bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">{t.dashboard.currentBalance}</CardTitle>
+    <Card className="shadow-sm border bg-white dark:bg-slate-800">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-medium text-muted-foreground">{t.dashboard.currentBalance}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-2">
         <div>
-          <p className="text-4xl md:text-5xl font-mono font-bold" data-testid="text-current-balance">
+          <p className="text-lg font-bold" data-testid="text-current-balance">
             {formatCurrency(currentBalance)}
           </p>
-          <p className="text-sm text-muted-foreground mt-2">
-            {t.dashboard.lastUpdated}: {lastUpdated}
-          </p>
+          <p className="text-xs text-muted-foreground">{lastUpdated}</p>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">{t.dashboard.activeLoans}</p>
-            <p className="text-2xl md:text-3xl font-mono font-semibold" data-testid="text-active-loans">
+        <div className="grid grid-cols-2 gap-2 pt-2 border-t">
+          <div>
+            <p className="text-xs text-muted-foreground">{t.dashboard.activeLoans}</p>
+            <p className="text-sm font-semibold" data-testid="text-active-loans">
               {activeLoansCount}
             </p>
           </div>
-          <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">{t.dashboard.totalBorrowed}</p>
-            <p className="text-2xl md:text-3xl font-mono font-semibold" data-testid="text-total-borrowed">
+          <div>
+            <p className="text-xs text-muted-foreground">{t.dashboard.totalBorrowed}</p>
+            <p className="text-sm font-semibold" data-testid="text-total-borrowed">
               {formatCurrency(totalBorrowed)}
             </p>
           </div>
-          <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">{t.dashboard.availableCredit}</p>
-            <p className="text-2xl md:text-3xl font-mono font-semibold" data-testid="text-available-credit">
-              {formatCurrency(availableCredit)}
-            </p>
-          </div>
+        </div>
+        <div className="pt-1">
+          <p className="text-xs text-muted-foreground">{t.dashboard.availableCredit}</p>
+          <p className="text-sm font-medium text-green-600 dark:text-green-400" data-testid="text-available-credit">
+            {formatCurrency(availableCredit)}
+          </p>
         </div>
       </CardContent>
     </Card>

@@ -24,49 +24,24 @@ export default function BorrowingCapacity({
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <Card className="shadow-xl border-2 border-indigo-100 dark:border-indigo-900 bg-white dark:bg-slate-800">
-      <CardHeader>
-        <CardTitle className="text-xl md:text-2xl bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">{t.dashboard.borrowingCapacity}</CardTitle>
+    <Card className="shadow-sm border bg-white dark:bg-slate-800">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-sm font-medium text-muted-foreground">{t.dashboard.borrowingCapacity}</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col items-center space-y-6">
-        <div className="relative w-48 h-48">
-          <svg className="transform -rotate-90 w-48 h-48">
-            <circle
-              cx="96"
-              cy="96"
-              r="70"
-              stroke="hsl(var(--muted))"
-              strokeWidth="12"
-              fill="none"
-            />
-            <circle
-              cx="96"
-              cy="96"
-              r="70"
-              stroke="hsl(var(--primary))"
-              strokeWidth="12"
-              fill="none"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
-              strokeLinecap="round"
-              className="transition-all duration-500"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <p className="text-3xl font-mono font-bold">{Math.round(percentage)}%</p>
-              <p className="text-sm text-muted-foreground">disponible</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center space-y-2">
-          <p className="text-sm text-muted-foreground">{t.dashboard.canBorrowUpTo}</p>
-          <p className="text-3xl font-mono font-bold" data-testid="text-borrowing-capacity">
+      <CardContent className="space-y-3">
+        <div className="text-center">
+          <p className="text-2xl font-bold" data-testid="text-borrowing-capacity">
             {formatCurrency(currentCapacity)}
           </p>
-          <p className="text-xs text-muted-foreground">sur {formatCurrency(maxCapacity)}</p>
+          <p className="text-xs text-muted-foreground mt-1">disponible sur {formatCurrency(maxCapacity)}</p>
         </div>
+        <div className="w-full bg-muted rounded-full h-2">
+          <div 
+            className="bg-primary h-2 rounded-full transition-all"
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+        <p className="text-xs text-center text-muted-foreground">{Math.round(percentage)}% disponible</p>
       </CardContent>
     </Card>
   );

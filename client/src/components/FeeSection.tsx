@@ -87,20 +87,21 @@ export default function FeeSection({ fees }: FeeSectionProps) {
   };
 
   return (
-    <Card className="shadow-xl border-2 border-orange-100 dark:border-orange-900 bg-gradient-to-br from-white via-orange-50/30 to-amber-50/30 dark:from-slate-800 dark:via-orange-950/30 dark:to-amber-950/30">
-      <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-2">
+    <Card className="shadow-sm border bg-white dark:bg-slate-800">
+      <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-3">
         <div className="flex items-center gap-2">
-          <CardTitle className="text-xl md:text-2xl bg-gradient-to-r from-orange-600 to-amber-600 dark:from-orange-400 dark:to-amber-400 bg-clip-text text-transparent">{t.dashboard.fees}</CardTitle>
+          <CardTitle className="text-sm font-medium text-muted-foreground">{t.dashboard.fees}</CardTitle>
           {unpaidFees.length > 0 && (
-            <Badge variant="destructive" className="flex items-center gap-1">
+            <Badge variant="destructive" className="h-5 text-xs flex items-center gap-1">
               <AlertCircle className="h-3 w-3" />
-              {unpaidFees.length} impayé{unpaidFees.length > 1 ? 's' : ''}
+              {unpaidFees.length}
             </Badge>
           )}
         </div>
         <Button 
-          variant="outline" 
-          size="sm" 
+          variant="ghost" 
+          size="sm"
+          className="h-7 text-xs px-2"
           data-testid="button-download-statement"
           onClick={handleDownloadStatement}
         >

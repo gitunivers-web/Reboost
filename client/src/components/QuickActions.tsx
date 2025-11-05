@@ -15,36 +15,36 @@ export default function QuickActions() {
 
   return (
     <>
-      <Card className="shadow-xl border-2 border-purple-100 dark:border-purple-900 bg-white dark:bg-slate-800">
-        <CardHeader>
-          <CardTitle className="text-xl md:text-2xl bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">{t.dashboard.quickActions}</CardTitle>
+      <Card className="shadow-sm border bg-white dark:bg-slate-800">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm font-medium text-muted-foreground">{t.dashboard.quickActions}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2">
           <Button
-            className="w-full justify-start gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md hover:shadow-lg transition-all"
-            size="lg"
+            className="w-full justify-start gap-2 h-9 text-sm"
+            variant="default"
             data-testid="button-new-loan"
             onClick={() => setLoanDialogOpen(true)}
           >
-            <Plus className="h-5 w-5" />
+            <Plus className="h-4 w-4" />
             {t.dashboard.newLoan}
           </Button>
           <Button
-            className="w-full justify-start gap-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-md hover:shadow-lg transition-all"
-            size="lg"
+            className="w-full justify-start gap-2 h-9 text-sm"
+            variant="outline"
             data-testid="button-transfer-funds"
             onClick={() => setLocation('/transfer/new')}
           >
-            <ArrowRightLeft className="h-5 w-5" />
+            <ArrowRightLeft className="h-4 w-4" />
             {t.dashboard.transferFunds}
           </Button>
           <Button
-            className="w-full justify-start gap-3 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white shadow-md hover:shadow-lg transition-all"
-            size="lg"
+            className="w-full justify-start gap-2 h-9 text-sm"
+            variant="outline"
             data-testid="button-transaction-history"
             onClick={() => setHistoryDialogOpen(true)}
           >
-            <History className="h-5 w-5" />
+            <History className="h-4 w-4" />
             {t.dashboard.transactionHistory}
           </Button>
         </CardContent>

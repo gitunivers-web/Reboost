@@ -32,22 +32,24 @@ export default function ActiveLoans({ loans }: ActiveLoansProps) {
     }).format(amount);
   };
 
-  const displayedLoans = loans.slice(0, 3);
-
   const handleLoanClick = (loan: Loan) => {
     setSelectedLoan(loan);
     setDetailsOpen(true);
   };
 
+  const activeLoansCount = loans.filter(l => l.status === 'active').length;
+  const displayedLoans = loans.slice(0, 2);
+
   return (
     <>
-      <Card className="shadow-xl border-2 border-emerald-100 dark:border-emerald-900 bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/30 dark:from-slate-800 dark:via-emerald-950/30 dark:to-teal-950/30">
-        <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-2">
-          <CardTitle className="text-xl md:text-2xl bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">{t.dashboard.activeLoans}</CardTitle>
-          {loans.length > 3 && (
+      <Card className="shadow-sm border bg-white dark:bg-slate-800">
+        <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+          <CardTitle className="text-sm font-medium text-muted-foreground">{t.dashboard.activeLoans}</CardTitle>
+          {loans.length > 2 && (
             <Button 
               variant="ghost" 
               size="sm" 
+              className="h-7 text-xs px-2"
               data-testid="button-view-all-loans"
               onClick={() => setLocation('/loans')}
             >
@@ -55,36 +57,43 @@ export default function ActiveLoans({ loans }: ActiveLoansProps) {
             </Button>
           )}
         </CardHeader>
-        <CardContent className="space-y-4">
-          {displayedLoans.map((loan) => {
-            const progress = (loan.totalRepaid / loan.amount) * 100;
-            return (
-              <div
-                key={loan.id}
-                className="border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-white to-emerald-50/50 dark:from-slate-800 dark:to-emerald-950/50 rounded-xl p-4 space-y-3 hover:shadow-lg hover:border-emerald-400 dark:hover:border-emerald-600 transition-all duration-200 cursor-pointer"
-                data-testid={`card-loan-${loan.id}`}
-                onClick={() => handleLoanClick(loan)}
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-sm text-muted-foreground">{t.loan.amount}</p>
-                    <p className="text-2xl font-mono font-semibold">{formatCurrency(loan.amount)}</p>
+        <CardContent className="space-y-2">
+          {displayedLoans.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-2">Aucun prêt actif</p>
+          ) : (
+            displayedLoans.map((loan) => {
+              const progress = (loan.totalRepaid / loan.amount) * 100;
+              return (
+                <div
+                  key={loan.id}
+                  className="p-2 rounded-md border bg-muted/30 hover:bg-muted/50 cursor-pointer transition-colors space-y-1"
+                  data-testid={`card-loan-${loan.id}`}
+                  onClick={() => handleLoanClick(loan)}
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="text-sm font-medium">{formatCurrency(loan.amount)}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Remboursé: {formatCurrency(loan.totalRepaid)}
+                      </p>
+                    </div>
+                    <span className="text-xs text-muted-foreground">{loan.interestRate}%</span>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-muted-foreground">{t.loan.interestRate}</p>
-                    <p className="text-lg font-semibold">{loan.interestRate}%</p>
+                  <p className="text-xs text-muted-foreground">
+                    Prochain: {loan.nextPaymentDate || 'N/A'}
+                  </p>
+                  <div className="space-y-0.5">
+                    <Progress value={progress} className="h-1" />
+                    <p className="text-xs text-muted-foreground text-right">{Math.round(progress)}%</p>
                   </div>
                 </div>
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-muted-foreground">{t.loan.nextPayment}</span>
-                    <span>{loan.nextPaymentDate}</span>
-                  </div>
-                  <Progress value={progress} />
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
+          <div className="flex items-center justify-between pt-2 border-t text-xs">
+            <span className="text-muted-foreground">Total actifs</span>
+            <span className="font-semibold" data-testid="text-active-loans-total">{activeLoansCount}</span>
+          </div>
         </CardContent>
       </Card>
       

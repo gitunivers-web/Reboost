@@ -57,79 +57,50 @@ export default function PendingTransfers({ transfers }: PendingTransfersProps) {
   };
 
   return (
-    <Card className="lg:col-span-2 shadow-xl border-2 border-cyan-100 dark:border-cyan-900 bg-gradient-to-br from-white via-cyan-50/30 to-sky-50/30 dark:from-slate-800 dark:via-cyan-950/30 dark:to-sky-950/30">
-      <CardHeader>
-        <CardTitle className="text-xl md:text-2xl bg-gradient-to-r from-cyan-600 to-sky-600 dark:from-cyan-400 dark:to-sky-400 bg-clip-text text-transparent">{t.dashboard.pendingTransfers}</CardTitle>
+    <Card className="shadow-sm border bg-white dark:bg-slate-800">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-medium text-muted-foreground">{t.dashboard.pendingTransfers}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-2">
         {transfers.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <Send className="h-12 w-12 mx-auto mb-3 opacity-50" />
-            <p>Aucun transfert en cours</p>
-          </div>
+          <p className="text-sm text-muted-foreground py-4">Aucun transfert en cours</p>
         ) : (
-          transfers.map((transfer) => {
+          transfers.slice(0, 2).map((transfer) => {
             const statusInfo = getStatusInfo(transfer.status);
-            const progress = getProgressPercentage(transfer);
             const StatusIcon = statusInfo.icon;
-            
+            const progress = getProgressPercentage(transfer);
             return (
               <div
                 key={transfer.id}
-                className="border-2 border-cyan-200 dark:border-cyan-800 bg-gradient-to-br from-white to-cyan-50/50 dark:from-slate-800 dark:to-cyan-950/50 rounded-xl p-6 space-y-4 hover:shadow-lg transition-all duration-200"
+                className="p-2 rounded-md border space-y-1"
                 data-testid={`transfer-${transfer.id}`}
               >
-                <div className="flex flex-wrap justify-between items-start gap-4">
+                <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <p className="text-2xl md:text-3xl font-mono font-bold">
-                      {formatCurrency(transfer.amount)}
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Destinataire: {transfer.recipient}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Dernière mise à jour: {transfer.updatedAt}
-                    </p>
+                    <p className="text-sm font-medium">{formatCurrency(transfer.amount)}</p>
+                    <p className="text-xs text-muted-foreground">{transfer.recipient}</p>
                   </div>
-                  <Badge variant={statusInfo.variant} className="flex items-center gap-1.5">
-                    <StatusIcon className="h-3.5 w-3.5" />
+                  <Badge variant={statusInfo.variant} className="text-xs flex items-center gap-1">
+                    <StatusIcon className="h-3 w-3" />
                     {statusInfo.label}
                   </Badge>
                 </div>
-
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium">{getStepLabel(transfer)}</span>
-                    <span className="text-muted-foreground font-mono">{progress}%</span>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">{getStepLabel(transfer)}</span>
+                    <span className="font-mono">{progress}%</span>
                   </div>
-                  <Progress value={progress} className="h-2" />
-                  
-                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-1">
-                    <div className="flex items-center gap-1.5">
-                      <Send className="h-3.5 w-3.5" />
-                      <span>Initié</span>
-                    </div>
-                    {transfer.status === 'pending' && (
-                      <div className="flex items-center gap-1.5">
-                        <Shield className="h-3.5 w-3.5" />
-                        <span>Validation</span>
-                      </div>
-                    )}
-                    {(transfer.status === 'in-progress' || transfer.status === 'completed') && (
-                      <div className="flex items-center gap-1.5">
-                        <Banknote className="h-3.5 w-3.5" />
-                        <span>Traitement</span>
-                      </div>
-                    )}
-                    <div className="flex items-center gap-1.5">
-                      <CheckCircle2 className={`h-3.5 w-3.5 ${transfer.status === 'completed' ? 'text-primary' : ''}`} />
-                      <span>Complété</span>
-                    </div>
-                  </div>
+                  <Progress value={progress} className="h-1" />
                 </div>
+                <p className="text-xs text-muted-foreground">{transfer.updatedAt}</p>
               </div>
             );
           })
+        )}
+        {transfers.length > 2 && (
+          <p className="text-xs text-muted-foreground pt-2">
+            +{transfers.length - 2} autres transferts
+          </p>
         )}
       </CardContent>
     </Card>

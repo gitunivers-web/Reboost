@@ -15,24 +15,24 @@ export default function UpcomingRepaymentsChart({ data }: UpcomingRepaymentsChar
   const t = useTranslations();
 
   return (
-    <Card className="lg:col-span-2 shadow-xl border-2 border-pink-100 dark:border-pink-900 bg-gradient-to-br from-white via-pink-50/30 to-rose-50/30 dark:from-slate-800 dark:via-pink-950/30 dark:to-rose-950/30">
-      <CardHeader>
-        <CardTitle className="text-xl md:text-2xl bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent">{t.dashboard.upcomingRepayments}</CardTitle>
+    <Card className="shadow-sm border bg-white dark:bg-slate-800">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-sm font-medium text-muted-foreground">{t.dashboard.upcomingRepayments}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-80">
+        <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
               <XAxis
                 dataKey="month"
                 stroke="hsl(var(--muted-foreground))"
-                fontSize={12}
+                fontSize={10}
                 tickLine={false}
               />
               <YAxis
                 stroke="hsl(var(--muted-foreground))"
-                fontSize={12}
+                fontSize={10}
                 tickLine={false}
                 tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
               />
@@ -41,6 +41,7 @@ export default function UpcomingRepaymentsChart({ data }: UpcomingRepaymentsChar
                   backgroundColor: 'hsl(var(--popover))',
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '8px',
+                  fontSize: '12px',
                 }}
                 formatter={(value: number) =>
                   new Intl.NumberFormat('fr-FR', {
@@ -49,7 +50,7 @@ export default function UpcomingRepaymentsChart({ data }: UpcomingRepaymentsChar
                   }).format(value)
                 }
               />
-              <Bar dataKey="loan1" stackId="a" fill="hsl(var(--chart-1))" name="Prêt #1" />
+              <Bar dataKey="loan1" stackId="a" fill="hsl(var(--chart-1))" name="Prêt #1" radius={[4, 4, 0, 0]} />
               <Bar dataKey="loan2" stackId="a" fill="hsl(var(--chart-2))" name="Prêt #2" />
               <Bar dataKey="loan3" stackId="a" fill="hsl(var(--chart-3))" name="Prêt #3" />
             </BarChart>
