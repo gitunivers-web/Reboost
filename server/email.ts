@@ -48,12 +48,18 @@ async function getUncachableSendGridClient() {
   };
 }
 
+function getBaseUrl(): string {
+  return process.env.REPLIT_DEV_DOMAIN 
+    ? `https://${process.env.REPLIT_DEV_DOMAIN}` 
+    : 'http://localhost:5000';
+}
+
 export async function sendVerificationEmail(toEmail: string, fullName: string, token: string, accountType: string, language: string = 'fr') {
   try {
     const { client, fromEmail } = await getUncachableSendGridClient();
     const { getEmailTemplate } = await import('./emailTemplates');
     
-    const verificationUrl = `${process.env.REPLIT_DEV_DOMAIN || 'http://localhost:5000'}/verify/${token}`;
+    const verificationUrl = `${getBaseUrl()}/verify/${token}`;
     const accountTypeText = accountType === 'personal' ? 'personal' : 'business';
     
     const template = getEmailTemplate('verification', language as any, {
@@ -85,7 +91,7 @@ export async function sendWelcomeEmail(toEmail: string, fullName: string, accoun
     const { getEmailTemplate } = await import('./emailTemplates');
     
     const accountTypeText = accountType === 'personal' ? 'personal' : 'business';
-    const loginUrl = `${process.env.REPLIT_DEV_DOMAIN || 'http://localhost:5000'}/login`;
+    const loginUrl = `${getBaseUrl()}/login`;
     
     const template = getEmailTemplate('welcome', language as any, {
       fullName,
@@ -115,7 +121,7 @@ export async function sendContractEmail(toEmail: string, fullName: string, loanI
     const { client, fromEmail } = await getUncachableSendGridClient();
     const { getEmailTemplate } = await import('./emailTemplates');
     
-    const fullContractUrl = `${process.env.REPLIT_DEV_DOMAIN || 'http://localhost:5000'}${contractUrl}`;
+    const fullContractUrl = `${getBaseUrl()}${contractUrl}`;
     
     const template = getEmailTemplate('contract', language as any, {
       fullName,
