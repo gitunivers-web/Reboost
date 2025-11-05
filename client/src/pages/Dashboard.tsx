@@ -4,13 +4,12 @@ import BorrowingCapacity from '@/components/BorrowingCapacity';
 import QuickActions from '@/components/QuickActions';
 import FeeSection from '@/components/FeeSection';
 import PendingTransfers from '@/components/PendingTransfers';
-import AvailableFundsChart from '@/components/AvailableFundsChart';
 import UpcomingRepaymentsChart from '@/components/UpcomingRepaymentsChart';
 import NotificationsBox from '@/components/NotificationsBox';
 import WelcomeMessage from '@/components/WelcomeMessage';
 import BankCardOffer from '@/components/BankCardOffer';
 import { useTranslations } from '@/lib/i18n';
-import { useDashboard, useAvailableFundsChart, useUpcomingRepaymentsChart } from '@/hooks/use-dashboard';
+import { useDashboard, useUpcomingRepaymentsChart } from '@/hooks/use-dashboard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useUser } from '@/hooks/use-user';
 
@@ -32,7 +31,6 @@ function DashboardSkeleton() {
 export default function Dashboard() {
   const t = useTranslations();
   const { data: dashboardData, isLoading: isDashboardLoading } = useDashboard();
-  const { data: fundsData, isLoading: isFundsLoading } = useAvailableFundsChart();
   const { data: repaymentsData, isLoading: isRepaymentsLoading } = useUpcomingRepaymentsChart();
   const { data: user } = useUser();
   
@@ -102,14 +100,6 @@ export default function Dashboard() {
             <FeeSection fees={dashboardData.fees} />
           </div>
           <BankCardOffer />
-        </div>
-
-        <div className="grid grid-cols-1">
-          {isFundsLoading ? (
-            <Skeleton className="h-64" />
-          ) : fundsData ? (
-            <AvailableFundsChart data={fundsData} />
-          ) : null}
         </div>
       </div>
     </div>
