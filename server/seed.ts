@@ -174,6 +174,12 @@ async function seed() {
       description: "Montant déclenchant plusieurs codes de validation",
       updatedBy: "admin-001",
     },
+    {
+      settingKey: "validation_pause_percentages",
+      settingValue: [93, 96, 99],
+      description: "Pourcentages de progression où le transfert se met en pause et requiert un code de déblocage",
+      updatedBy: "admin-001",
+    },
   ]);
 
   await db.insert(users).values([

@@ -429,14 +429,25 @@ export default function TransferFlow() {
   if (step === 'progress') {
     const progress = transferData?.transfer?.progressPercent || 0;
     const status = transferData?.transfer?.status || 'in-progress';
+    const isPaused = transferData?.transfer?.isPaused || false;
+    const pausePercent = transferData?.transfer?.pausePercent;
 
     return (
       <div className="p-6 md:p-8 max-w-2xl mx-auto">
         <Card data-testid="card-progress">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Clock className="w-6 h-6 text-primary animate-pulse" />
-              Transfert en cours
+              {isPaused ? (
+                <>
+                  <AlertCircle className="w-6 h-6 text-orange-500" />
+                  Transfert en pause
+                </>
+              ) : (
+                <>
+                  <Clock className="w-6 h-6 text-primary animate-pulse" />
+                  Transfert en cours
+                </>
+              )}
             </CardTitle>
             <CardDescription>
               Montant: {transferData?.transfer?.amount} EUR vers {transferData?.transfer?.recipient}
@@ -451,14 +462,81 @@ export default function TransferFlow() {
               <Progress value={progress} className="h-3" />
             </div>
 
-            <div className="bg-muted p-4 rounded-lg space-y-2">
-              <p className="text-sm font-medium">État actuel</p>
-              <p className="text-sm text-muted-foreground" data-testid="text-status">
-                {status === 'completed' 
-                  ? 'Transfert terminé !' 
-                  : 'Traitement en cours par notre système bancaire...'}
-              </p>
-            </div>
+            {isPaused ? (
+              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 p-4 rounded-lg space-y-3">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
+                      Code de déblocage requis à {pausePercent}%
+                    </p>
+                    <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
+                      Veuillez contacter le service client pour obtenir le code de déblocage de votre transfert.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="pause-code" className="text-sm font-medium">
+                    Code de déblocage
+                  </label>
+                  <Input
+                    id="pause-code"
+                    type="text"
+                    value={validationCode}
+                    onChange={(e) => setValidationCode(e.target.value.toUpperCase())}
+                    placeholder="Entrez le code"
+                    className="font-mono"
+                    data-testid="input-pause-code"
+                  />
+                </div>
+
+                <Button
+                  onClick={() => {
+                    if (!validationCode) {
+                      toast({
+                        variant: 'destructive',
+                        title: 'Code requis',
+                        description: 'Veuillez entrer le code de déblocage',
+                      });
+                      return;
+                    }
+                    
+                    apiRequest('POST', `/api/transfers/${transferId}/validate-pause-code`, { code: validationCode })
+                      .then(async (response) => {
+                        const data = await response.json();
+                        setValidationCode('');
+                        toast({
+                          title: 'Transfert débloqué',
+                          description: data.message,
+                        });
+                        refetchTransfer();
+                      })
+                      .catch(() => {
+                        toast({
+                          variant: 'destructive',
+                          title: 'Code invalide',
+                          description: 'Le code est incorrect ou expiré',
+                        });
+                      });
+                  }}
+                  disabled={!validationCode}
+                  className="w-full"
+                  data-testid="button-validate-pause-code"
+                >
+                  Valider le code
+                </Button>
+              </div>
+            ) : (
+              <div className="bg-muted p-4 rounded-lg space-y-2">
+                <p className="text-sm font-medium">État actuel</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-status">
+                  {status === 'completed' 
+                    ? 'Transfert terminé !' 
+                    : 'Traitement en cours par notre système bancaire...'}
+                </p>
+              </div>
+            )}
 
             {transferData?.events && (
               <div className="space-y-2">

