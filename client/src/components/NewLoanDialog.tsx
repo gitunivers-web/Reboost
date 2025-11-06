@@ -118,7 +118,7 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
   };
 
   const createLoanMutation = useMutation({
-    mutationFn: async (data: typeof formData & { loanType: string }) => {
+    mutationFn: async (data: { amount: string; duration: number; loanType: string }) => {
       const response = await apiRequest('POST', '/api/loans', data);
       return response;
     },
@@ -145,7 +145,8 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
     e.preventDefault();
     if (validateForm()) {
       createLoanMutation.mutate({
-        ...formData,
+        amount: formData.amount,
+        duration: parseInt(formData.duration),
         loanType: loanType as string,
       });
     }
