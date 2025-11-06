@@ -34,30 +34,30 @@ export default function Header() {
         ? 'bg-white dark:bg-slate-900 shadow-md' 
         : 'bg-white dark:bg-slate-900 shadow-sm'
     }`}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-16">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-90 transition-all">
-              <img src={logoUrl} alt="Altus Finance Group" className="h-8 sm:h-10 w-auto" />
-              <span className="text-lg sm:text-xl font-bold text-primary hidden sm:inline">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-18">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-all">
+              <img src={logoUrl} alt="Altus Finance Group" className="h-8 sm:h-9 lg:h-10 w-auto" />
+              <span className="text-base sm:text-lg lg:text-xl font-bold text-primary hidden sm:inline whitespace-nowrap">
                 Altus Finance Group
               </span>
             </Link>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-2">
-            <Link href="/" className="text-sm font-medium transition-all px-4 py-2 rounded-md hover:bg-primary hover:text-white">
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+            <Link href="/" className="text-xs xl:text-sm font-medium transition-all px-2 xl:px-4 py-2 rounded-md hover:bg-primary hover:text-white whitespace-nowrap">
               {t.nav.home}
             </Link>
             
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium hover:bg-primary hover:text-white data-[state=open]:bg-primary data-[state=open]:text-white">
+                  <NavigationMenuTrigger className="text-xs xl:text-sm font-medium hover:bg-primary hover:text-white data-[state=open]:bg-primary data-[state=open]:text-white px-2 xl:px-4 whitespace-nowrap">
                     {t.nav.products}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4">
+                    <ul className="grid w-[350px] xl:w-[400px] gap-3 p-4">
                       <li>
                         <NavigationMenuLink asChild>
                           <Link href="/products" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
@@ -74,25 +74,26 @@ export default function Header() {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <Link href="/how-it-works" className="text-sm font-medium transition-all px-4 py-2 rounded-md hover:bg-primary hover:text-white">
+            <Link href="/how-it-works" className="text-xs xl:text-sm font-medium transition-all px-2 xl:px-4 py-2 rounded-md hover:bg-primary hover:text-white whitespace-nowrap">
               {t.nav.howItWorks}
             </Link>
-            <Link href="/resources" className="text-sm font-medium transition-all px-4 py-2 rounded-md hover:bg-primary hover:text-white">
+            <Link href="/resources" className="text-xs xl:text-sm font-medium transition-all px-2 xl:px-4 py-2 rounded-md hover:bg-primary hover:text-white whitespace-nowrap">
               {t.nav.resources}
             </Link>
-            <Link href="/about" className="text-sm font-medium transition-all px-4 py-2 rounded-md hover:bg-primary hover:text-white">
+            <Link href="/about" className="text-xs xl:text-sm font-medium transition-all px-2 xl:px-4 py-2 rounded-md hover:bg-primary hover:text-white whitespace-nowrap">
               {t.nav.about}
             </Link>
-            <Link href="/contact" className="text-sm font-medium transition-all px-4 py-2 rounded-md hover:bg-primary hover:text-white">
+            <Link href="/contact" className="text-xs xl:text-sm font-medium transition-all px-2 xl:px-4 py-2 rounded-md hover:bg-primary hover:text-white whitespace-nowrap">
               {t.nav.contact}
             </Link>
           </nav>
 
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink-0">
             <LanguageSwitcher scrolled={true} />
             <Link href="/login">
               <Button 
                 variant="default" 
+                className="text-xs xl:text-sm px-3 xl:px-4 whitespace-nowrap"
                 data-testid="button-mon-espace"
               >
                 {t.hero.cta2}
@@ -102,7 +103,7 @@ export default function Header() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-md transition-colors hover:bg-accent"
+            className="lg:hidden p-2 rounded-md transition-colors hover:bg-accent"
             data-testid="button-mobile-menu"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -110,7 +111,7 @@ export default function Header() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div className="lg:hidden py-4 border-t border-border">
             <nav className="flex flex-col space-y-2">
               <Link 
                 href="/" 
