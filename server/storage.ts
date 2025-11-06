@@ -1570,8 +1570,9 @@ export class DatabaseStorage implements IStorage {
     const userFees = await this.getUserFees(userId);
     const userTransactions = await this.getUserTransactions(userId);
 
-    const totalBorrowed = userLoans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0);
-    const totalRepaid = userLoans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0);
+    const activeLoans = userLoans.filter(loan => loan.status === 'active');
+    const totalBorrowed = activeLoans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0);
+    const totalRepaid = activeLoans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0);
     const balance = totalBorrowed - totalRepaid;
 
     return {
