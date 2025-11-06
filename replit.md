@@ -63,6 +63,22 @@ externalAccounts (id, userId, accountType, accountName, iban, bic, createdAt)
 
 **Authentication:** SendGrid for transactional email verification.
 
+## Production Deployment
+
+### Cross-Domain Configuration (Vercel + Render)
+- **Frontend:** Deployed on Vercel at `https://altusfinancegroup.com`
+- **Backend:** Deployed on Render at `https://api.altusfinancegroup.com`
+- **CORS:** Configured to allow frontend domain with credentials
+- **Cookies:** Cross-domain session cookies with `sameSite: 'none'` and `domain: '.altusfinancegroup.com'`
+- **CSRF Protection:** Applied to all mutating routes (POST/PUT/PATCH/DELETE)
+
+### Production Logging
+Comprehensive logging system for debugging production issues:
+- **CORS Debugging:** Logs all incoming requests with origin, method, and headers
+- **Error Tracking:** Detailed error messages with stack traces
+- **Configuration Display:** Shows critical settings at startup (allowed origins, cookie config)
+- **See:** `DEBUGGING_405_ERROR.md` for troubleshooting guide
+
 ## Documentation
 
 ### Security Documentation

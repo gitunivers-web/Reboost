@@ -48,13 +48,31 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [process.env.FRONTEND_URL || 'https://altusfinancegroup.com']
   : ['http://localhost:5000', 'http://localhost:5173', 'http://127.0.0.1:5000'];
 
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'production') {
+    console.log(`[CORS DEBUG] Incoming request: ${req.method} ${req.path}`);
+    console.log(`[CORS DEBUG] Origin: ${req.headers.origin || 'NO ORIGIN'}`);
+    console.log(`[CORS DEBUG] Headers: ${JSON.stringify({
+      'content-type': req.headers['content-type'],
+      'x-csrf-token': req.headers['x-csrf-token'] ? 'present' : 'missing',
+      'user-agent': req.headers['user-agent']?.substring(0, 50)
+    })}`);
+  }
+  next();
+});
+
 app.use(cors({
   origin: (origin, callback) => {
     if (process.env.NODE_ENV !== 'production') {
       callback(null, true);
     } else if (!origin || allowedOrigins.includes(origin)) {
+      if (process.env.NODE_ENV === 'production') {
+        console.log(`[CORS DEBUG] ✅ Origin allowed: ${origin || 'no-origin'}`);
+      }
       callback(null, true);
     } else {
+      console.error(`[CORS ERROR] ❌ Origin rejected: ${origin}`);
+      console.error(`[CORS ERROR] Allowed origins: ${JSON.stringify(allowedOrigins)}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -172,9 +190,16 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
+
+    console.error(`[ERROR] ${req.method} ${req.path} - Status: ${status}`);
+    console.error(`[ERROR] Message: ${message}`);
+    console.error(`[ERROR] Origin: ${req.headers.origin || 'NO ORIGIN'}`);
+    if (err.stack && process.env.NODE_ENV === 'production') {
+      console.error(`[ERROR] Stack: ${err.stack.split('\n').slice(0, 3).join('\n')}`);
+    }
 
     res.status(status).json({ message });
     throw err;
@@ -197,5 +222,13 @@ app.use((req, res, next) => {
     log(`✅ Backend API server listening on port ${port}`);
     log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
     log(`🗄️ Database: ${process.env.DATABASE_URL ? 'Connected' : 'No DATABASE_URL set'}`);
+    
+    if (process.env.NODE_ENV === 'production') {
+      console.log(`[CONFIG] FRONTEND_URL: ${process.env.FRONTEND_URL || 'NOT SET'}`);
+      console.log(`[CONFIG] Allowed Origins: ${JSON.stringify(allowedOrigins)}`);
+      console.log(`[CONFIG] Cookie Domain: .altusfinancegroup.com`);
+      console.log(`[CONFIG] Cookie Secure: true`);
+      console.log(`[CONFIG] Cookie SameSite: none`);
+    }
   });
 })();
