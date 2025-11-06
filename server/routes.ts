@@ -432,19 +432,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedInput = loginSchema.parse(req.body);
       const { email, password } = validatedInput;
       
-      console.log('[DEBUG] Login attempt for email:', email);
       const user = await storage.getUserByEmail(email);
-      console.log('[DEBUG] User found:', user ? 'YES' : 'NO');
       if (!user) {
-        console.log('[DEBUG] User not found in database');
         return res.status(401).json({ error: 'Identifiants invalides' });
       }
       
-      console.log('[DEBUG] Comparing password...');
       const isValidPassword = await bcrypt.compare(password, user.password);
-      console.log('[DEBUG] Password valid:', isValidPassword);
       if (!isValidPassword) {
-        console.log('[DEBUG] Invalid password');
         return res.status(401).json({ error: 'Identifiants invalides' });
       }
       
@@ -867,6 +861,111 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('KYC download error:', error);
       res.status(500).json({ error: 'Erreur lors du téléchargement du document' });
+    }
+  });
+
+  app.get("/api/admin/kyc/documents", requireAuth, requireAdmin, adminLimiter, async (req, res) => {
+    try {
+      const documents = await storage.getAllKycDocuments();
+      res.json(documents);
+    } catch (error) {
+      console.error('Admin KYC documents error:', error);
+      res.status(500).json({ error: 'Erreur lors de la récupération des documents' });
+    }
+  });
+
+  app.put("/api/admin/kyc/documents/:id/approve", requireAuth, requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      const approveSchema = z.object({
+        notes: z.string().optional(),
+      });
+      
+      const { notes } = approveSchema.parse(req.body);
+      const document = await storage.approveKycDocument(req.params.id, req.session.userId!, notes);
+      
+      if (!document) {
+        return res.status(404).json({ error: 'Document non trouvé' });
+      }
+
+      await storage.createAuditLog({
+        actorId: req.session.userId!,
+        actorRole: 'admin',
+        action: 'kyc_document_approved',
+        entityType: 'kyc_document',
+        entityId: document.id,
+        metadata: { userId: document.userId, documentType: document.documentType }
+      });
+
+      res.json({ message: 'Document approuvé avec succès', document });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('Approve KYC document error:', error);
+      res.status(500).json({ error: 'Erreur lors de l\'approbation du document' });
+    }
+  });
+
+  app.put("/api/admin/kyc/documents/:id/reject", requireAuth, requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      const rejectSchema = z.object({
+        notes: z.string().min(1, 'Raison du rejet requise'),
+      });
+      
+      const { notes } = rejectSchema.parse(req.body);
+      const document = await storage.rejectKycDocument(req.params.id, req.session.userId!, notes);
+      
+      if (!document) {
+        return res.status(404).json({ error: 'Document non trouvé' });
+      }
+
+      await storage.createAuditLog({
+        actorId: req.session.userId!,
+        actorRole: 'admin',
+        action: 'kyc_document_rejected',
+        entityType: 'kyc_document',
+        entityId: document.id,
+        metadata: { userId: document.userId, documentType: document.documentType, reason: notes }
+      });
+
+      res.json({ message: 'Document rejeté', document });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('Reject KYC document error:', error);
+      res.status(500).json({ error: 'Erreur lors du rejet du document' });
+    }
+  });
+
+  app.delete("/api/admin/kyc/documents/:id", requireAuth, requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      const document = await storage.getKycDocument(req.params.id);
+      if (!document) {
+        return res.status(404).json({ error: 'Document non trouvé' });
+      }
+
+      const deleted = await storage.deleteKycDocument(req.params.id);
+      
+      if (!deleted) {
+        return res.status(500).json({ error: 'Erreur lors de la suppression du document' });
+      }
+
+      await storage.createAuditLog({
+        actorId: req.session.userId!,
+        actorRole: 'admin',
+        action: 'kyc_document_deleted',
+        entityType: 'kyc_document',
+        entityId: req.params.id,
+        metadata: { userId: document.userId, documentType: document.documentType }
+      });
+
+      res.json({ message: 'Document supprimé avec succès' });
+    } catch (error) {
+      console.error('Delete KYC document error:', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression du document' });
     }
   });
 

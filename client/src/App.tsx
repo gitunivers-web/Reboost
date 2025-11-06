@@ -24,6 +24,7 @@ import AdminLoans from '@/pages/AdminLoans';
 import AdminTransfers from '@/pages/AdminTransfers';
 import AdminSettings from '@/pages/AdminSettings';
 import AdminReports from '@/pages/AdminReports';
+import AdminDocuments from '@/pages/AdminDocuments';
 import IndividualLoans from '@/pages/IndividualLoans';
 import LoanRequest from '@/pages/LoanRequest';
 import TransferFlow from '@/pages/TransferFlow';
@@ -60,6 +61,7 @@ function Router() {
       <Route path="/admin/users" component={AdminUsers} />
       <Route path="/admin/loans" component={AdminLoans} />
       <Route path="/admin/transfers" component={AdminTransfers} />
+      <Route path="/admin/documents" component={AdminDocuments} />
       <Route path="/admin/settings" component={AdminSettings} />
       <Route path="/admin/reports" component={AdminReports} />
       <Route component={NotFound} />

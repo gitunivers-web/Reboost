@@ -41,6 +41,7 @@ export default function AppSidebar() {
     { title: 'Utilisateurs', url: '/admin/users', icon: Users, hoverClass: 'hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-violet-500/10 hover:border-l-4 hover:border-purple-500' },
     { title: 'Prêts', url: '/admin/loans', icon: CreditCard, hoverClass: 'hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-teal-500/10 hover:border-l-4 hover:border-emerald-500' },
     { title: 'Transferts', url: '/admin/transfers', icon: ArrowRightLeft, hoverClass: 'hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-sky-500/10 hover:border-l-4 hover:border-cyan-500' },
+    { title: 'Documents KYC', url: '/admin/documents', icon: FileText, hoverClass: 'hover:bg-gradient-to-r hover:from-rose-500/10 hover:to-pink-500/10 hover:border-l-4 hover:border-rose-500' },
     { title: 'Paramètres', url: '/admin/settings', icon: Settings, hoverClass: 'hover:bg-gradient-to-r hover:from-slate-500/10 hover:to-gray-500/10 hover:border-l-4 hover:border-slate-500' },
     { title: 'Rapports', url: '/admin/reports', icon: BarChart, hoverClass: 'hover:bg-gradient-to-r hover:from-amber-500/10 hover:to-orange-500/10 hover:border-l-4 hover:border-amber-500' },
   ];

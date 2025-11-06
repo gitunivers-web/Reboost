@@ -39,6 +39,8 @@ import {
 import { randomUUID } from "crypto";
 import { db } from "./db";
 import { eq, desc, and, isNull, sql as sqlDrizzle } from "drizzle-orm";
+import path from "path";
+import fs from "fs";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -147,6 +149,10 @@ export interface IStorage {
   getKycDocument(id: string): Promise<KycDocument | undefined>;
   createKycDocument(document: InsertKycDocument): Promise<KycDocument>;
   updateKycDocumentStatus(id: string, status: string): Promise<KycDocument | undefined>;
+  getAllKycDocuments(): Promise<Array<KycDocument & { user: { id: string; fullName: string; email: string } }>>;
+  approveKycDocument(id: string, reviewerId: string, notes?: string): Promise<KycDocument | undefined>;
+  rejectKycDocument(id: string, reviewerId: string, notes: string): Promise<KycDocument | undefined>;
+  deleteKycDocument(id: string): Promise<boolean>;
 }
 
 // export class MemStorage implements IStorage {
@@ -2013,6 +2019,79 @@ export class DatabaseStorage implements IStorage {
       .where(eq(kycDocuments.id, id))
       .returning();
     return result[0];
+  }
+
+  async getAllKycDocuments(): Promise<Array<KycDocument & { user: { id: string; fullName: string; email: string } }>> {
+    const result = await db.select({
+      id: kycDocuments.id,
+      userId: kycDocuments.userId,
+      loanId: kycDocuments.loanId,
+      documentType: kycDocuments.documentType,
+      loanType: kycDocuments.loanType,
+      status: kycDocuments.status,
+      fileUrl: kycDocuments.fileUrl,
+      fileName: kycDocuments.fileName,
+      fileSize: kycDocuments.fileSize,
+      uploadedAt: kycDocuments.uploadedAt,
+      reviewedAt: kycDocuments.reviewedAt,
+      reviewerId: kycDocuments.reviewerId,
+      reviewNotes: kycDocuments.reviewNotes,
+      user: {
+        id: users.id,
+        fullName: users.fullName,
+        email: users.email,
+      }
+    })
+    .from(kycDocuments)
+    .leftJoin(users, eq(kycDocuments.userId, users.id))
+    .orderBy(desc(kycDocuments.uploadedAt));
+    
+    return result as Array<KycDocument & { user: { id: string; fullName: string; email: string } }>;
+  }
+
+  async approveKycDocument(id: string, reviewerId: string, notes?: string): Promise<KycDocument | undefined> {
+    const result = await db.update(kycDocuments)
+      .set({ 
+        status: 'approved',
+        reviewedAt: new Date(),
+        reviewerId,
+        reviewNotes: notes || null
+      })
+      .where(eq(kycDocuments.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async rejectKycDocument(id: string, reviewerId: string, notes: string): Promise<KycDocument | undefined> {
+    const result = await db.update(kycDocuments)
+      .set({ 
+        status: 'rejected',
+        reviewedAt: new Date(),
+        reviewerId,
+        reviewNotes: notes
+      })
+      .where(eq(kycDocuments.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteKycDocument(id: string): Promise<boolean> {
+    const doc = await this.getKycDocument(id);
+    if (!doc) return false;
+    
+    const filePath = path.join(process.cwd(), 'uploads', 'kyc', path.basename(doc.fileUrl));
+    try {
+      if (fs.existsSync(filePath)) {
+        await fs.promises.unlink(filePath);
+      }
+    } catch (error) {
+      console.error('Error deleting file:', error);
+    }
+    
+    const result = await db.delete(kycDocuments)
+      .where(eq(kycDocuments.id, id))
+      .returning();
+    return result.length > 0;
   }
 }
 
