@@ -3,6 +3,19 @@
   "outputDirectory": "dist/public",
   "framework": null,
   "installCommand": "npm install",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.altusfinancegroup.com"
+        }
+      ],
+      "destination": "https://altusfinancegroup.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
