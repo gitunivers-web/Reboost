@@ -2,6 +2,16 @@
 
 ## Recent Changes
 
+### November 6, 2025 - Critical Security & UX Improvements
+- **Bank Card Positioning:** Virtual bank card now positioned fixed in bottom-right corner of dashboard (matches design reference, hidden on mobile)
+- **CSRF Token Fix:** Eliminated intermittent "Failed to fetch" errors during signup by preloading CSRF tokens when Auth page loads
+- **Single Session Enforcement:** Implemented critical security feature preventing multiple simultaneous logins in same browser:
+  - Added `activeSessionId` field to users table
+  - Login saves current session ID to database
+  - Logout clears session ID from database
+  - `requireAuth` middleware validates session ID matches, destroying invalid sessions
+  - Users see clear message: "Votre compte est connecté sur un autre appareil. Veuillez vous reconnecter."
+
 ### November 6, 2025 - KYC Document Upload Fix
 - **Fixed:** Documents KYC uploaded by users now appear correctly in admin dashboard
 - **Issue:** The `NewLoanDialog` component was not actually sending files to the server; it only displayed a success message locally
@@ -47,7 +57,7 @@ Preferred communication style: Simple, everyday language.
 
 **Database Schema:**
 ```
-users (id, username, password, email, fullName, accountType, role, status, kycStatus, maxLoanAmount, hasSeenWelcomeMessage, suspendedUntil, suspensionReason, externalTransfersBlocked, transferBlockReason, createdAt, updatedAt)
+users (id, username, password, email, fullName, accountType, role, status, kycStatus, maxLoanAmount, hasSeenWelcomeMessage, suspendedUntil, suspensionReason, externalTransfersBlocked, transferBlockReason, activeSessionId, createdAt, updatedAt)
 loans (id, userId, loanType, amount, interestRate, duration, status, approvedAt, approvedBy, rejectedAt, rejectionReason, nextPaymentDate, totalRepaid, deletedAt, deletedBy, deletionReason, createdAt)
 transfers (id, userId, amount, recipient, status, currentStep, validationMethod, createdAt, updatedAt)
 fees (id, userId, feeType, reason, amount, relatedMessageId, isPaid, paidAt, createdAt)
