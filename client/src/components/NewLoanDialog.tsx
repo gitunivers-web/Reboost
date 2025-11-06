@@ -57,6 +57,8 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [documentsUploaded, setDocumentsUploaded] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadingFiles, setUploadingFiles] = useState(false);
 
   const needsKYC = user?.kycStatus === 'pending';
 
@@ -157,16 +159,68 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
     setLoanType(defaultLoanType as any);
     setErrors({});
     setDocumentsUploaded(false);
+    setUploadedFiles([]);
+    setUploadingFiles(false);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
-      setDocumentsUploaded(true);
-      toast({
-        title: 'Documents téléchargés',
-        description: `${files.length} document(s) ajouté(s) avec succès.`,
-      });
+    if (!files || files.length === 0) return;
+
+    setUploadingFiles(true);
+    const fileArray = Array.from(files);
+    const successfulFiles: File[] = [];
+    let errorCount = 0;
+
+    try {
+      for (const file of fileArray) {
+        try {
+          const formData = new FormData();
+          formData.append('document', file);
+          formData.append('documentType', 'identity');
+          formData.append('loanType', loanType as string);
+
+          const response = await fetch('/api/kyc/upload', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+          });
+
+          if (response.ok) {
+            successfulFiles.push(file);
+          } else {
+            errorCount++;
+            const error = await response.json();
+            console.error('Upload error:', error);
+          }
+        } catch (err) {
+          console.error('File upload error:', err);
+          errorCount++;
+        }
+      }
+
+      if (successfulFiles.length > 0) {
+        setUploadedFiles(prev => [...prev, ...successfulFiles]);
+        setDocumentsUploaded(true);
+        toast({
+          title: 'Documents téléchargés',
+          description: `${successfulFiles.length} document(s) envoyé(s) avec succès.`,
+        });
+      }
+
+      if (errorCount > 0) {
+        toast({
+          title: 'Erreur partielle',
+          description: `${errorCount} document(s) n'ont pas pu être téléchargés.`,
+          variant: 'destructive',
+        });
+      }
+
+      if (e.target) {
+        e.target.value = '';
+      }
+    } finally {
+      setUploadingFiles(false);
     }
   };
 
@@ -244,11 +298,20 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
                     onChange={handleFileUpload}
                     className="max-w-xs mx-auto"
                     data-testid="input-kyc-documents"
+                    disabled={uploadingFiles}
                   />
-                  {documentsUploaded && (
+                  {uploadingFiles && (
+                    <div className="flex items-center justify-center gap-2 text-blue-600">
+                      <div className="animate-spin h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                      <span className="text-sm font-medium">Envoi en cours...</span>
+                    </div>
+                  )}
+                  {documentsUploaded && !uploadingFiles && (
                     <div className="flex items-center justify-center gap-2 text-green-600">
                       <CheckCircle2 className="h-5 w-5" />
-                      <span className="text-sm font-medium">Documents téléchargés avec succès</span>
+                      <span className="text-sm font-medium">
+                        {uploadedFiles.length} document(s) téléchargé(s) avec succès
+                      </span>
                     </div>
                   )}
                 </div>
@@ -364,7 +427,7 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
             </Button>
             <Button 
               type="submit" 
-              disabled={createLoanMutation.isPending || (needsKYC && !documentsUploaded)} 
+              disabled={createLoanMutation.isPending || uploadingFiles || (needsKYC && !documentsUploaded)} 
               data-testid="button-submit-loan"
             >
               {createLoanMutation.isPending ? 'Envoi...' : 'Soumettre la demande'}
