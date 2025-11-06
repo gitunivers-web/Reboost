@@ -1,0 +1,87 @@
+2025-11-06T13:39:11.869884785Z ==> Available at your primary URL https://api.altusfinancegroup.com + 1 more domain
+2025-11-06T13:39:12.036691222Z ==> 
+2025-11-06T13:39:12.223495847Z ==> ///////////////////////////////////////////////////////////
+2025-11-06T13:46:30.134610291Z ==> Deploying...
+2025-11-06T13:46:47.936531802Z ==> Running 'npm start'
+2025-11-06T13:46:49.040241784Z 
+2025-11-06T13:46:49.040270105Z > rest-express@1.0.0 start
+2025-11-06T13:46:49.040275275Z > NODE_ENV=production node dist/index.js
+2025-11-06T13:46:49.040277975Z 
+2025-11-06T13:46:59.141173027Z 1:46:59 PM [express] ✅ Backend API server listening on port 5000
+2025-11-06T13:46:59.141202408Z 1:46:59 PM [express] 🌍 Environment: production
+2025-11-06T13:46:59.141205808Z 1:46:59 PM [express] 🗄️ Database: Connected
+2025-11-06T13:47:02.17113341Z ==> Your service is live 🎉
+2025-11-06T13:47:02.385139933Z ==> 
+2025-11-06T13:47:02.55418288Z ==> ///////////////////////////////////////////////////////////
+2025-11-06T13:47:02.719354277Z ==> 
+2025-11-06T13:47:02.884386294Z ==> Available at your primary URL https://api.altusfinancegroup.com + 1 more domain
+2025-11-06T13:47:03.0599667Z ==> 
+2025-11-06T13:47:03.230350047Z ==> ///////////////////////////////////////////////////////////
+2025-11-06T13:52:10.097517502Z ==> Detected service running on port 5000
+2025-11-06T13:52:10.803501325Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+2025-11-06T13:54:15.372772732Z ==> Deploying...
+2025-11-06T13:54:34.194800892Z ==> Running 'npm start'
+2025-11-06T13:54:35.290644029Z 
+2025-11-06T13:54:35.29067396Z > rest-express@1.0.0 start
+2025-11-06T13:54:35.29067836Z > NODE_ENV=production node dist/index.js
+2025-11-06T13:54:35.29068074Z 
+2025-11-06T13:54:45.68811248Z 1:54:45 PM [express] ✅ Backend API server listening on port 5000
+2025-11-06T13:54:45.688444137Z 1:54:45 PM [express] 🌍 Environment: production
+2025-11-06T13:54:45.688722733Z 1:54:45 PM [express] 🗄️ Database: Connected
+2025-11-06T13:54:45.688759154Z [CONFIG] FRONTEND_URL: https://altusfinancegroup.com
+2025-11-06T13:54:45.688789075Z [CONFIG] Allowed Origins: ["https://altusfinancegroup.com"]
+2025-11-06T13:54:45.688841456Z [CONFIG] Cookie Domain: .altusfinancegroup.com
+2025-11-06T13:54:45.688846656Z [CONFIG] Cookie Secure: true
+2025-11-06T13:54:45.688880957Z [CONFIG] Cookie SameSite: none
+2025-11-06T13:54:46.161137914Z [CORS DEBUG] Incoming request: HEAD /
+2025-11-06T13:54:46.161284217Z [CORS DEBUG] Origin: NO ORIGIN
+2025-11-06T13:54:46.161357828Z [CORS DEBUG] Headers: {"x-csrf-token":"missing","user-agent":"Go-http-client/1.1"}
+2025-11-06T13:54:46.161644015Z [CORS DEBUG] ✅ Origin allowed: no-origin
+2025-11-06T13:54:46.468129994Z ==> Your service is live 🎉
+2025-11-06T13:54:46.685160988Z ==> 
+2025-11-06T13:54:46.857680904Z ==> ///////////////////////////////////////////////////////////
+2025-11-06T13:54:47.021743301Z ==> 
+2025-11-06T13:54:47.189667208Z ==> Available at your primary URL https://api.altusfinancegroup.com + 1 more domain
+2025-11-06T13:54:47.355778785Z ==> 
+2025-11-06T13:54:47.530789171Z ==> ///////////////////////////////////////////////////////////
+2025-11-06T13:54:50.192338325Z [CORS DEBUG] Incoming request: GET /
+2025-11-06T13:54:50.192369206Z [CORS DEBUG] Origin: NO ORIGIN
+2025-11-06T13:54:50.192388536Z [CORS DEBUG] Headers: {"x-csrf-token":"missing","user-agent":"Go-http-client/2.0"}
+2025-11-06T13:54:50.192449357Z [CORS DEBUG] ✅ Origin allowed: no-origin
+2025-11-06T14:00:05.142386329Z ==> Deploying...
+2025-11-06T14:00:37.725352702Z ==> Running 'npm start'
+2025-11-06T14:00:38.84831992Z 
+2025-11-06T14:00:38.848365181Z > rest-express@1.0.0 start
+2025-11-06T14:00:38.848373201Z > NODE_ENV=production node dist/index.js
+2025-11-06T14:00:38.848377171Z 
+2025-11-06T14:00:59.064505181Z ==> Your service is live 🎉
+2025-11-06T14:00:59.290524184Z ==> 
+2025-11-06T14:00:59.46624758Z ==> ///////////////////////////////////////////////////////////
+2025-11-06T14:00:59.634548947Z ==> 
+2025-11-06T14:00:59.800139444Z ==> Available at your primary URL https://api.altusfinancegroup.com + 1 more domain
+2025-11-06T14:00:49.318459737Z 2:00:49 PM [express] ✅ Backend API server listening on port 5000
+2025-11-06T14:00:49.318814684Z 2:00:49 PM [express] 🌍 Environment: production
+2025-11-06T14:00:49.319051428Z 2:00:49 PM [express] 🗄️ Database: Connected
+2025-11-06T14:00:49.31916337Z [CONFIG] FRONTEND_URL: https://altusfinancegroup.com
+2025-11-06T14:00:49.319215491Z [CONFIG] Allowed Origins: ["https://altusfinancegroup.com"]
+2025-11-06T14:00:49.319223051Z [CONFIG] Cookie Domain: .altusfinancegroup.com
+2025-11-06T14:00:49.319227631Z [CONFIG] Cookie Secure: true
+2025-11-06T14:00:49.319241781Z [CONFIG] Cookie SameSite: none
+2025-11-06T14:00:49.823402168Z [CORS DEBUG] Incoming request: HEAD /
+2025-11-06T14:00:49.823538961Z [CORS DEBUG] Origin: NO ORIGIN
+2025-11-06T14:00:49.823634212Z [CORS DEBUG] Headers: {"x-csrf-token":"missing","user-agent":"Go-http-client/1.1"}
+2025-11-06T14:00:49.823864477Z [CORS DEBUG] ✅ Origin allowed: no-origin
+2025-11-06T14:01:01.224737942Z ==> 
+2025-11-06T14:01:01.392886699Z ==> ///////////////////////////////////////////////////////////
+2025-11-06T14:01:07.670096548Z [CORS DEBUG] Incoming request: GET /
+2025-11-06T14:01:07.670116348Z [CORS DEBUG] Origin: NO ORIGIN
+2025-11-06T14:01:07.670126028Z [CORS DEBUG] Headers: {"x-csrf-token":"missing","user-agent":"Go-http-client/2.0"}
+2025-11-06T14:01:07.67024902Z [CORS DEBUG] ✅ Origin allowed: no-origin
+2025-11-06T14:01:27.758374571Z [CORS DEBUG] Incoming request: GET /
+2025-11-06T14:01:27.758397502Z [CORS DEBUG] Origin: NO ORIGIN
+2025-11-06T14:01:27.758409082Z [CORS DEBUG] Headers: {"x-csrf-token":"missing","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb"}
+2025-11-06T14:01:27.758442652Z [CORS DEBUG] ✅ Origin allowed: no-origin
+2025-11-06T14:01:27.962578358Z [CORS DEBUG] Incoming request: GET /
+2025-11-06T14:01:27.962596689Z [CORS DEBUG] Origin: NO ORIGIN
+2025-11-06T14:01:27.962602479Z [CORS DEBUG] Headers: {"x-csrf-token":"missing","user-agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac O"}
+2025-11-06T14:01:27.962607289Z [CORS DEBUG] ✅ Origin allowed: no-origin
