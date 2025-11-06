@@ -2342,7 +2342,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Transfer is not paused' });
       }
 
-      const validatedCode = await storage.validateCode(transfer.id, code, transfer.pauseCodesValidated + 1);
+      const validatedCode = await storage.validateCode(transfer.id, code, transfer.pauseCodesValidated + 1, 'pause');
       if (!validatedCode) {
         await storage.createTransferEvent({
           transferId: transfer.id,

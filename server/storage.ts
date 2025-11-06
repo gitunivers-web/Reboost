@@ -103,7 +103,7 @@ export interface IStorage {
   
   createValidationCode(code: InsertTransferValidationCode): Promise<TransferValidationCode>;
   getTransferValidationCodes(transferId: string): Promise<TransferValidationCode[]>;
-  validateCode(transferId: string, code: string, sequence: number): Promise<TransferValidationCode | undefined>;
+  validateCode(transferId: string, code: string, sequence: number, codeType?: string): Promise<TransferValidationCode | undefined>;
   
   createTransferEvent(event: InsertTransferEvent): Promise<TransferEvent>;
   getTransferEvents(transferId: string): Promise<TransferEvent[]>;
@@ -1679,7 +1679,7 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(transferValidationCodes).where(eq(transferValidationCodes.transferId, transferId));
   }
 
-  async validateCode(transferId: string, code: string, sequence: number): Promise<TransferValidationCode | undefined> {
+  async validateCode(transferId: string, code: string, sequence: number, codeType: string = 'initial'): Promise<TransferValidationCode | undefined> {
     return await db.transaction(async (tx) => {
       const result = await tx.select()
         .from(transferValidationCodes)
@@ -1688,7 +1688,7 @@ export class DatabaseStorage implements IStorage {
         );
       
       const validationCode = result.find(
-        (vc) => vc.code === code && vc.sequence === sequence && !vc.consumedAt
+        (vc) => vc.code === code && vc.sequence === sequence && vc.codeType === codeType && !vc.consumedAt
       );
       
       if (!validationCode || new Date() > validationCode.expiresAt) {
