@@ -165,11 +165,11 @@ export interface IStorage {
   disable2FA(userId: string): Promise<User | undefined>;
   
   getUserNotifications(userId: string, limit?: number): Promise<Notification[]>;
-  getNotification(id: string): Promise<Notification | undefined>;
+  getNotification(id: string, userId: string): Promise<Notification | undefined>;
   createNotification(notification: InsertNotification): Promise<Notification>;
-  markNotificationAsRead(id: string): Promise<Notification | undefined>;
+  markNotificationAsRead(id: string, userId: string): Promise<Notification | undefined>;
   markAllNotificationsAsRead(userId: string): Promise<boolean>;
-  deleteNotification(id: string): Promise<boolean>;
+  deleteNotification(id: string, userId: string): Promise<boolean>;
   getUnreadNotificationCount(userId: string): Promise<number>;
 }
 
@@ -2189,10 +2189,10 @@ export class DatabaseStorage implements IStorage {
       .limit(limit);
   }
 
-  async getNotification(id: string): Promise<Notification | undefined> {
+  async getNotification(id: string, userId: string): Promise<Notification | undefined> {
     const result = await db.select()
       .from(notifications)
-      .where(eq(notifications.id, id));
+      .where(and(eq(notifications.id, id), eq(notifications.userId, userId)));
     return result[0];
   }
 
@@ -2203,13 +2203,13 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  async markNotificationAsRead(id: string): Promise<Notification | undefined> {
+  async markNotificationAsRead(id: string, userId: string): Promise<Notification | undefined> {
     const result = await db.update(notifications)
       .set({ 
         isRead: true,
         readAt: new Date()
       })
-      .where(eq(notifications.id, id))
+      .where(and(eq(notifications.id, id), eq(notifications.userId, userId)))
       .returning();
     return result[0];
   }
@@ -2225,9 +2225,9 @@ export class DatabaseStorage implements IStorage {
     return result.length > 0;
   }
 
-  async deleteNotification(id: string): Promise<boolean> {
+  async deleteNotification(id: string, userId: string): Promise<boolean> {
     const result = await db.delete(notifications)
-      .where(eq(notifications.id, id))
+      .where(and(eq(notifications.id, id), eq(notifications.userId, userId)))
       .returning();
     return result.length > 0;
   }

@@ -15,6 +15,7 @@ import { fileTypeFromFile } from "file-type";
 import { db } from "./db";
 import { generateAndSendOTP, verifyOTP } from "./services/otp";
 import { generateTwoFactorSecret, generateQRCode, verifyTwoFactorToken } from "./services/twoFactor";
+import { notifyLoanApproved, notifyLoanRejected, notifyLoanDisbursed, notifyTransferCompleted, notifyCodeIssued } from "./notification-helper";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
@@ -2063,16 +2064,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/notifications/:id/read", requireAuth, requireCSRF, async (req, res) => {
     try {
-      const notification = await storage.getNotification(req.params.id);
-      if (!notification) {
+      const updatedNotif = await storage.markNotificationAsRead(req.params.id, req.session.userId!);
+      if (!updatedNotif) {
         return res.status(404).json({ error: 'Notification not found' });
       }
-
-      if (notification.userId !== req.session.userId) {
-        return res.status(403).json({ error: 'Accès refusé' });
-      }
-
-      const updatedNotif = await storage.markNotificationAsRead(req.params.id);
       res.json(updatedNotif);
     } catch (error) {
       res.status(500).json({ error: 'Failed to mark notification as read' });
@@ -2090,16 +2085,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete("/api/notifications/:id", requireAuth, requireCSRF, async (req, res) => {
     try {
-      const notification = await storage.getNotification(req.params.id);
-      if (!notification) {
-        return res.status(404).json({ error: 'Notification not found' });
-      }
-
-      if (notification.userId !== req.session.userId) {
-        return res.status(403).json({ error: 'Accès refusé' });
-      }
-
-      const deleted = await storage.deleteNotification(req.params.id);
+      const deleted = await storage.deleteNotification(req.params.id, req.session.userId!);
       if (!deleted) {
         return res.status(404).json({ error: 'Notification not found' });
       }
@@ -2489,6 +2475,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         severity: 'success',
       });
 
+      await notifyLoanApproved(loan.userId, loan.id, loan.amount);
+
       if (contractGenerated && contractUrl) {
         try {
           const { sendContractEmail } = await import('./email');
@@ -2542,6 +2530,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         content: `Nous sommes désolés de vous informer que votre demande de prêt de ${loan.amount} EUR a été refusée. Raison: ${validatedData.reason}`,
         severity: 'warning',
       });
+
+      await notifyLoanRejected(loan.userId, loan.id, validatedData.reason);
 
       await storage.createAuditLog({
         actorId: req.session.userId!,
@@ -2599,6 +2589,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         content: `Votre contrat signé a été validé. Les fonds de ${loan.amount} EUR ont été débloqués et sont maintenant disponibles sur votre compte. Vous pouvez effectuer des transferts.`,
         severity: 'success',
       });
+
+      await notifyLoanDisbursed(loan.userId, loan.id, loan.amount);
 
       await storage.createAuditLog({
         actorId: req.session.userId!,
@@ -2850,6 +2842,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         content: `Votre code de validation pour l'étape ${validatedData.sequence} est: ${code.code}. Ce code expire dans 30 minutes.`,
         severity: 'info',
       });
+
+      await notifyCodeIssued(transfer.userId, req.params.id, validatedData.sequence);
 
       await storage.createAuditLog({
         actorId: req.session.userId!,
