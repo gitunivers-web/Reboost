@@ -60,6 +60,8 @@ export async function generateAndSendOTP(userId: string, userEmail: string, full
   }
 }
 
+const MAX_OTP_ATTEMPTS = 3;
+
 export async function verifyOTP(userId: string, code: string): Promise<boolean> {
   try {
     const now = new Date();
@@ -67,9 +69,9 @@ export async function verifyOTP(userId: string, code: string): Promise<boolean> 
     const record = await db.query.userOtps.findFirst({
       where: and(
         eq(userOtps.userId, userId),
-        eq(userOtps.otpCode, code),
         eq(userOtps.used, false),
       ),
+      orderBy: (userOtps, { desc }) => [desc(userOtps.createdAt)],
     });
 
     if (!record) {
@@ -80,12 +82,25 @@ export async function verifyOTP(userId: string, code: string): Promise<boolean> 
       return false;
     }
 
-    await db
-      .update(userOtps)
-      .set({ used: true })
-      .where(eq(userOtps.id, record.id));
+    if (record.attempts >= MAX_OTP_ATTEMPTS) {
+      return false;
+    }
 
-    return true;
+    const isValidCode = record.otpCode === code;
+    
+    if (isValidCode) {
+      await db
+        .update(userOtps)
+        .set({ used: true })
+        .where(eq(userOtps.id, record.id));
+      return true;
+    } else {
+      await db
+        .update(userOtps)
+        .set({ attempts: record.attempts + 1 })
+        .where(eq(userOtps.id, record.id));
+      return false;
+    }
   } catch (error) {
     console.error('Error verifying OTP:', error);
     throw error;
