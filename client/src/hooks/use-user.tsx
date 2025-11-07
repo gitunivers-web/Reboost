@@ -19,10 +19,15 @@ export function useUserProfilePhotoUrl(): string | null {
 
   const queryState = queryClient.getQueryState(['/api/user']);
   const timestamp = queryState?.dataUpdatedAt || Date.now();
-  const photoUrl = `${getApiUrl(user.profilePhoto)}?t=${timestamp}`;
+  
+  const isFullUrl = user.profilePhoto.startsWith('http://') || user.profilePhoto.startsWith('https://');
+  const photoUrl = isFullUrl 
+    ? `${user.profilePhoto}?t=${timestamp}`
+    : `${getApiUrl(user.profilePhoto)}?t=${timestamp}`;
   
   console.log('[useUserProfilePhotoUrl]', {
     profilePhoto: user.profilePhoto,
+    isFullUrl,
     timestamp,
     finalUrl: photoUrl,
   });
