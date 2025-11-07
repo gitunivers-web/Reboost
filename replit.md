@@ -71,6 +71,15 @@ Preferred communication style: Simple, everyday language.
     - Encrypted 2FA secrets.
 - **Loan Disbursement Workflow:** Multi-step approval: Request -> Admin Approval -> Contract Signing -> Manual Admin Fund Disbursement (`active` status). Requires explicit admin action for disbursement, logs all actions, and validates loan status.
 - **KYC Document Upload:** Real file upload via FormData to `/api/kyc/upload` with loading states, error handling, and input clearing.
+- **Profile Photo Upload (Cloudinary Integration - November 2025):**
+    - Cloud-based image storage using Cloudinary for persistent profile photos in production
+    - Memory-based upload (no local disk storage) via multer.memoryStorage()
+    - Automatic image transformations: 500x500 face-centered crop, quality optimization, auto-format
+    - Secure HTTPS URLs stored in PostgreSQL database
+    - Automatic cleanup of old photos from Cloudinary when users update their profile picture
+    - Cross-domain compatible: works with frontend on Vercel and backend on Render
+    - Environment variables: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
+    - Images organized in `user_profiles/` folder with unique public IDs
 - **Notification System (November 2025):**
     - Database-backed persistent notifications replacing temporary toast messages.
     - PostgreSQL table (`notifications`) with fields: userId, type, title, message, severity, isRead, metadata, createdAt, readAt.
@@ -103,3 +112,4 @@ Preferred communication style: Simple, everyday language.
 **Development Tools:** Replit Plugins, TypeScript, ESBuild.
 **Authentication:** SendGrid for transactional email verification.
 **Two-Factor Authentication:** Speakeasy and qrcode libraries for TOTP.
+**Cloud Storage:** Cloudinary for persistent profile photo storage and delivery.
