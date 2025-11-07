@@ -13,13 +13,21 @@ export function useUserProfilePhotoUrl(): string | null {
   const { data: user } = useUser();
   
   if (!user?.profilePhoto) {
+    console.log('[useUserProfilePhotoUrl] No profile photo in user data:', user);
     return null;
   }
 
   const queryState = queryClient.getQueryState(['/api/user']);
   const timestamp = queryState?.dataUpdatedAt || Date.now();
+  const photoUrl = `${getApiUrl(user.profilePhoto)}?t=${timestamp}`;
   
-  return `${getApiUrl(user.profilePhoto)}?t=${timestamp}`;
+  console.log('[useUserProfilePhotoUrl]', {
+    profilePhoto: user.profilePhoto,
+    timestamp,
+    finalUrl: photoUrl,
+  });
+  
+  return photoUrl;
 }
 
 export function getUserInitials(fullName: string): string {

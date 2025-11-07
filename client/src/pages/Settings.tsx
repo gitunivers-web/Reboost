@@ -209,7 +209,12 @@ export default function Settings() {
         throw new Error('Upload failed');
       }
 
-      queryClient.invalidateQueries({ queryKey: ['/api/user'] });
+      const responseData = await response.json();
+      console.log('Upload response:', responseData);
+      
+      await queryClient.invalidateQueries({ queryKey: ['/api/user'] });
+      await queryClient.refetchQueries({ queryKey: ['/api/user'] });
+      
       toast({
         title: t.messages.avatarUpdated,
         description: t.messages.avatarUpdatedDesc,
