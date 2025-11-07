@@ -80,7 +80,7 @@ Preferred communication style: Simple, everyday language.
     - Cross-domain compatible: works with frontend on Vercel and backend on Render
     - Environment variables: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
     - Images organized in `user_profiles/` folder with unique public IDs
-- **Notification System (November 2025):**
+- **Notification System (November 2025 - Extended):**
     - Database-backed persistent notifications replacing temporary toast messages.
     - PostgreSQL table (`notifications`) with fields: userId, type, title, message, severity, isRead, metadata, createdAt, readAt.
     - RESTful API endpoints with full CSRF protection and defense-in-depth IDOR protection.
@@ -92,15 +92,15 @@ Preferred communication style: Simple, everyday language.
         - Uses `hasNotificationByType` to check all notifications (read/unread) preventing duplicates.
         - Auto-removes via `deleteAllNotificationsByType` when user enables 2FA.
     - Real-time loan request notifications for admins with 5s polling and audio alerts.
-    - Notification helper utilities (`notification-helper.ts`) for automatic notification generation on key events:
-        - Loan approved/rejected/disbursed
-        - Loan requests (admin notification with sound)
-        - Transfer completed/approved/suspended
-        - Validation code issued
-        - KYC approved/rejected
-        - Fee added
-        - 2FA activation suggestion
+    - **Comprehensive notification coverage (November 2025):**
+        - Notification helper utilities (`notification-helper.ts`) generate notifications for ALL critical events:
+        - **Loan lifecycle**: Request submitted, under review, approved, contract generated, contract signed, rejected, funds disbursed
+        - **Transfer lifecycle**: Transfer initiated, transfer completed, transfer approved, transfer suspended, validation code issued
+        - **KYC events**: KYC approved, KYC rejected
+        - **Admin actions**: Admin messages sent, fees added, account status changes
+        - **18 distinct notification types** covering every important user action
     - Notifications persist across page refreshes and logout/login cycles.
+    - Notifications remain visible even after being marked as read.
     - Security: SQL-level user ownership validation prevents cross-user access even if route checks are bypassed.
 
 ## External Dependencies
