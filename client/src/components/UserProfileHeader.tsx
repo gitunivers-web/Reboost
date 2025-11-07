@@ -106,7 +106,7 @@ export default function UserProfileHeader() {
   }
 
   const finalPhotoUrl = user.profilePhoto 
-    ? `${user.profilePhoto}?t=${photoCacheBuster}` 
+    ? `${getApiUrl(user.profilePhoto)}?t=${photoCacheBuster}` 
     : null;
 
   return (

@@ -245,7 +245,7 @@ export default function Settings() {
                 <div className="relative group">
                   <div className="absolute inset-0 bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
                   <Avatar className="relative h-24 w-24 border-4 border-white dark:border-slate-800 shadow-2xl ring-4 ring-violet-500/30 dark:ring-violet-400/30">
-                    <AvatarImage src={user.profilePhoto || ''} alt="Profile" />
+                    <AvatarImage src={user.profilePhoto ? getApiUrl(user.profilePhoto) : ''} alt="Profile" />
                     <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white">
                       {getUserInitials(user.fullName)}
                     </AvatarFallback>
