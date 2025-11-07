@@ -468,12 +468,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      await generateAndSendOTP(user.id, user.email, user.fullName);
+      await new Promise<void>((resolve, reject) => {
+        req.session.regenerate((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+      
+      req.session.userId = user.id;
+      req.session.userRole = user.role;
+      req.session.csrfToken = generateCSRFToken();
+
+      await new Promise<void>((resolve, reject) => {
+        req.session.save((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+      
+      await storage.updateUserSessionId(user.id, req.session.id);
+      
+      const { password: _, verificationToken: __, twoFactorSecret: ___, ...userWithoutSensitive } = user;
+      
+      await storage.createAuditLog({
+        actorId: user.id,
+        actorRole: user.role,
+        action: 'user_login',
+        entityType: 'user',
+        entityId: user.id,
+        ipAddress: req.ip || req.headers['x-forwarded-for'] as string || 'unknown',
+        userAgent: req.headers['user-agent'] || 'unknown',
+      });
+      
+      if (process.env.NODE_ENV === 'production') {
+        const cookieDomain = process.env.COOKIE_DOMAIN || '.altusfinancegroup.com';
+        console.log(`[AUTH SUCCESS] User authenticated successfully`);
+        console.log(`[AUTH SUCCESS] Session created and will be sent as cookie`);
+        console.log(`[AUTH SUCCESS] Cookie domain: ${cookieDomain}`);
+      }
       
       res.json({
-        message: 'Un code de vérification a été envoyé à votre email',
-        requiresOtp: true,
-        userId: user.id
+        message: 'Connexion réussie',
+        user: userWithoutSensitive
       });
     } catch (error: any) {
       if (error.name === 'ZodError') {

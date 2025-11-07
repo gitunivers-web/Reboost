@@ -1,0 +1,111 @@
+Prompt à envoyer à Replit :
+
+🔧 Objectif : Corriger et améliorer la logique d’authentification complète (backend + frontend)
+
+Le projet utilise :
+
+Frontend : altusfinancegroup.com (Vercel)
+
+Backend : api.altusfinancegroup.com (Render, Express + PostgreSQL)
+
+🚨 Problème actuel :
+
+Après inscription et validation du mail, la redirection vers le tableau de bord fonctionne mal.
+
+Parfois l’utilisateur a accès au dashboard dans un onglet, mais pas dans un autre (la session n’est pas reconnue).
+
+La double authentification (2FA) est demandée alors qu’elle ne devrait pas l’être pour les nouveaux utilisateurs.
+
+Le navigateur ne partage pas correctement la session entre les onglets (cookies cross-domain).
+
+🎯 But recherché :
+
+Implémenter une logique d’authentification propre et réaliste :
+
+1. Inscription
+
+L’utilisateur s’inscrit via email + mot de passe.
+
+Il reçoit un mail de validation (emailVerified = false).
+
+Une fois le lien validé → emailVerified = true.
+
+Redirection automatique vers la page de connexion.
+
+Connexion directe (sans 2FA) et accès au tableau de bord.
+
+2. Activation 2FA (dans paramètres)
+
+Dans l’espace utilisateur, il y a une section "Sécurité" avec une option “Activer la double authentification”.
+
+Lorsque l’utilisateur clique :
+
+Le backend génère un secret via speakeasy + un QR code (API /api/2fa/setup).
+
+Le frontend affiche le QR code (Google Authenticator compatible).
+
+L’utilisateur scanne et saisit un code 6 chiffres pour vérifier.
+
+Si le code est correct :
+user.twoFactorEnabled = true et user.twoFactorSecret (crypté) enregistrés en DB.
+
+3. Connexion avec 2FA activé
+
+Si twoFactorEnabled = false → connexion directe.
+
+Si twoFactorEnabled = true :
+
+Après saisie email + mot de passe, le backend répond :
+
+{ "requires2FA": true }
+
+
+Le frontend affiche un champ “Code 2FA”.
+
+Le code est validé via /api/2fa/verify.
+
+Si correct → session créée → accès tableau de bord.
+
+4. Déconnexion
+
+Suppression de session (cookie invalidé).
+
+Lors de la prochaine connexion, si twoFactorEnabled = true, le code sera à nouveau exigé.
+
+🧩 Détails techniques à vérifier :
+
+Cookies cross-domain : configurer sameSite: "none", secure: true, et domain: ".altusfinancegroup.com".
+
+Le backend doit accepter les requêtes CORS depuis https://altusfinancegroup.com.
+
+Utiliser express-session avec connect-pg-simple pour stocker les sessions dans PostgreSQL.
+
+Si non déjà présent : installer speakeasy et qrcode pour la génération et la validation du 2FA.
+
+📦 Résumé des endpoints à vérifier/créer :
+
+POST /api/auth/register
+
+GET /api/auth/verify-email
+
+POST /api/auth/login
+
+POST /api/2fa/setup → génère secret + QR code
+
+POST /api/2fa/verify → vérifie code 2FA
+
+POST /api/auth/logout
+
+✅ Objectif final :
+
+Expérience fluide :
+
+✅ Validation email → redirection → connexion directe → dashboard
+
+✅ Si 2FA activé → code requis à la connexion
+
+✅ Cookies/session reconnus entre onglets et sur les domaines .altusfinancegroup.com
+
+Aucun problème de double login, ni de déconnexion entre pages.
+
+Merci d’appliquer la correction complète et de tester la logique en environnement Render + Vercel.
