@@ -11,6 +11,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { apiRequest, queryClient } from '@/lib/queryClient';
+import { useEffect, useRef } from 'react';
 
 interface Notification {
   id: string;
@@ -26,15 +27,34 @@ interface Notification {
 }
 
 export default function NotificationBell() {
+  const previousCountRef = useRef<number | null>(null);
+  
   const { data: notifications = [], isLoading } = useQuery<Notification[]>({
     queryKey: ['/api/notifications'],
-    refetchInterval: 30000,
+    refetchInterval: 5000,
   });
 
   const { data: unreadData } = useQuery<{ count: number }>({
     queryKey: ['/api/notifications/unread-count'],
-    refetchInterval: 30000,
+    refetchInterval: 5000,
   });
+
+  useEffect(() => {
+    const currentCount = unreadData?.count || 0;
+    
+    if (previousCountRef.current === null) {
+      previousCountRef.current = currentCount;
+      return;
+    }
+    
+    if (currentCount > previousCountRef.current) {
+      const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEgxGn+DyvmwhBSl+zO/bgjMGHm7A7+OZSA0OWrLp6KRSEg==');
+      audio.volume = 0.3;
+      audio.play().catch(() => {});
+    }
+    
+    previousCountRef.current = currentCount;
+  }, [unreadData?.count]);
 
   const markAsReadMutation = useMutation({
     mutationFn: async (id: string) => {

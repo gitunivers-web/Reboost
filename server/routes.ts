@@ -600,6 +600,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       await storage.enable2FA(userId, secret);
 
+      await storage.deleteAllNotificationsByType(userId, '2fa_suggestion');
+
       await storage.createAuditLog({
         actorId: userId,
         actorRole: req.session.userRole || 'user',
@@ -983,6 +985,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user) {
         return res.status(404).json({ error: 'Utilisateur non trouvé' });
       }
+      
+      if (!user.twoFactorEnabled) {
+        const has2FANotification = await storage.hasNotificationByType(user.id, '2fa_suggestion');
+        
+        if (!has2FANotification) {
+          await storage.createNotification({
+            userId: user.id,
+            type: '2fa_suggestion',
+            title: 'Sécurisez votre compte',
+            message: 'Activez l\'authentification à deux facteurs pour renforcer la sécurité de votre compte. Rendez-vous dans les paramètres pour l\'activer.',
+            severity: 'warning',
+            metadata: { action: 'enable_2fa' },
+          });
+        }
+      }
+      
       const { password: _, verificationToken: __, ...userWithoutSensitive } = user;
       res.json(userWithoutSensitive);
     } catch (error) {
@@ -1038,6 +1056,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       await storage.updateUser(req.session.userId!, {
         profilePhoto: photoUrl,
+        updatedAt: new Date(),
       });
 
       await storage.createAuditLog({
@@ -1463,6 +1482,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const loan = await storage.createLoan(validated);
       
+      await storage.createNotification({
+        userId: req.session.userId!,
+        type: 'loan_request',
+        title: 'Demande de prêt soumise',
+        message: `Votre demande de prêt ${loanType} de ${amount} EUR a été soumise avec succès. Notre équipe examinera votre demande dans les plus brefs délais.`,
+        severity: 'success',
+        metadata: { loanId: loan.id, loanType, amount },
+      });
+
       await storage.createAdminMessage({
         userId: req.session.userId!,
         transferId: null,

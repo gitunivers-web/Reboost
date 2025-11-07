@@ -170,7 +170,10 @@ export interface IStorage {
   markNotificationAsRead(id: string, userId: string): Promise<Notification | undefined>;
   markAllNotificationsAsRead(userId: string): Promise<boolean>;
   deleteNotification(id: string, userId: string): Promise<boolean>;
+  deleteAllNotificationsByType(userId: string, type: string): Promise<boolean>;
   getUnreadNotificationCount(userId: string): Promise<number>;
+  hasUnreadNotificationByType(userId: string, type: string): Promise<boolean>;
+  hasNotificationByType(userId: string, type: string): Promise<boolean>;
 }
 
 // export class MemStorage implements IStorage {
@@ -2237,6 +2240,36 @@ export class DatabaseStorage implements IStorage {
       .from(notifications)
       .where(and(eq(notifications.userId, userId), eq(notifications.isRead, false)));
     return result[0]?.count || 0;
+  }
+
+  async hasUnreadNotificationByType(userId: string, type: string): Promise<boolean> {
+    const result = await db.select({ count: sqlDrizzle<number>`count(*)::int` })
+      .from(notifications)
+      .where(and(
+        eq(notifications.userId, userId),
+        eq(notifications.type, type),
+        eq(notifications.isRead, false)
+      ));
+    return (result[0]?.count || 0) > 0;
+  }
+
+  async hasNotificationByType(userId: string, type: string): Promise<boolean> {
+    const result = await db.select({ count: sqlDrizzle<number>`count(*)::int` })
+      .from(notifications)
+      .where(and(
+        eq(notifications.userId, userId),
+        eq(notifications.type, type)
+      ));
+    return (result[0]?.count || 0) > 0;
+  }
+
+  async deleteAllNotificationsByType(userId: string, type: string): Promise<boolean> {
+    const result = await db.delete(notifications)
+      .where(and(
+        eq(notifications.userId, userId),
+        eq(notifications.type, type)
+      ));
+    return true;
   }
 }
 
