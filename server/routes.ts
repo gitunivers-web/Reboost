@@ -14,6 +14,7 @@ import fs from "fs";
 import { fileTypeFromFile } from "file-type";
 import { db } from "./db";
 import { generateAndSendOTP, verifyOTP } from "./services/otp";
+import { generateTwoFactorSecret, generateQRCode, verifyTwoFactorToken } from "./services/twoFactor";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
@@ -458,6 +459,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      if (user.twoFactorEnabled) {
+        return res.json({
+          message: 'Veuillez entrer votre code d\'authentification à deux facteurs',
+          requires2FA: true,
+          userId: user.id
+        });
+      }
+
       await generateAndSendOTP(user.id, user.email, user.fullName);
       
       res.json({
@@ -539,6 +548,171 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error('OTP verification error:', error);
       res.status(500).json({ error: 'Erreur lors de la vérification du code' });
+    }
+  });
+
+  app.post("/api/2fa/setup", requireAuth, requireCSRF, async (req, res) => {
+    try {
+      const userId = req.session.userId;
+      if (!userId) {
+        return res.status(401).json({ error: 'Authentification requise' });
+      }
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      }
+
+      const { secret, otpauthUrl } = generateTwoFactorSecret(user.email);
+      const qrCodeDataUrl = await generateQRCode(otpauthUrl);
+
+      res.json({
+        secret,
+        qrCode: qrCodeDataUrl,
+        otpauthUrl,
+      });
+    } catch (error) {
+      console.error('2FA setup error:', error);
+      res.status(500).json({ error: 'Erreur lors de la configuration 2FA' });
+    }
+  });
+
+  const verify2FASchema = z.object({
+    token: z.string().length(6, 'Le code doit contenir 6 chiffres'),
+    secret: z.string().min(1, 'Secret requis'),
+  });
+
+  app.post("/api/2fa/verify", requireAuth, requireCSRF, async (req, res) => {
+    try {
+      const userId = req.session.userId;
+      if (!userId) {
+        return res.status(401).json({ error: 'Authentification requise' });
+      }
+
+      const validatedInput = verify2FASchema.parse(req.body);
+      const { token, secret } = validatedInput;
+
+      const isValid = verifyTwoFactorToken(secret, token);
+      if (!isValid) {
+        return res.status(401).json({ error: 'Code invalide' });
+      }
+
+      await storage.enable2FA(userId, secret);
+
+      await storage.createAuditLog({
+        actorId: userId,
+        actorRole: req.session.userRole || 'user',
+        action: '2fa_enabled',
+        entityType: 'user',
+        entityId: userId,
+        ipAddress: req.ip || req.headers['x-forwarded-for'] as string || 'unknown',
+        userAgent: req.headers['user-agent'] || 'unknown',
+      });
+
+      res.json({ message: 'Authentification à deux facteurs activée avec succès' });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('2FA verification error:', error);
+      res.status(500).json({ error: 'Erreur lors de la vérification du code 2FA' });
+    }
+  });
+
+  const validate2FASchema = z.object({
+    userId: z.string(),
+    token: z.string().length(6, 'Le code doit contenir 6 chiffres'),
+  });
+
+  app.post("/api/2fa/validate", authLimiter, requireCSRF, async (req, res) => {
+    try {
+      const validatedInput = validate2FASchema.parse(req.body);
+      const { userId, token } = validatedInput;
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      }
+
+      if (!user.twoFactorEnabled || !user.twoFactorSecret) {
+        return res.status(400).json({ error: '2FA non activé pour cet utilisateur' });
+      }
+
+      const isValid = verifyTwoFactorToken(user.twoFactorSecret, token);
+      if (!isValid) {
+        return res.status(401).json({ error: 'Code invalide' });
+      }
+
+      await new Promise<void>((resolve, reject) => {
+        req.session.regenerate((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      req.session.userId = user.id;
+      req.session.userRole = user.role;
+      req.session.csrfToken = generateCSRFToken();
+
+      await new Promise<void>((resolve, reject) => {
+        req.session.save((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      await storage.updateUserSessionId(user.id, req.session.id);
+
+      const { password: _, verificationToken: __, twoFactorSecret: ___, ...userWithoutSensitive } = user;
+
+      await storage.createAuditLog({
+        actorId: user.id,
+        actorRole: user.role,
+        action: 'user_login_2fa',
+        entityType: 'user',
+        entityId: user.id,
+        ipAddress: req.ip || req.headers['x-forwarded-for'] as string || 'unknown',
+        userAgent: req.headers['user-agent'] || 'unknown',
+      });
+
+      res.json({
+        message: 'Connexion réussie',
+        user: userWithoutSensitive
+      });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('2FA validation error:', error);
+      res.status(500).json({ error: 'Erreur lors de la validation du code 2FA' });
+    }
+  });
+
+  app.post("/api/2fa/disable", requireAuth, requireCSRF, async (req, res) => {
+    try {
+      const userId = req.session.userId;
+      if (!userId) {
+        return res.status(401).json({ error: 'Authentification requise' });
+      }
+
+      await storage.disable2FA(userId);
+
+      await storage.createAuditLog({
+        actorId: userId,
+        actorRole: req.session.userRole || 'user',
+        action: '2fa_disabled',
+        entityType: 'user',
+        entityId: userId,
+        ipAddress: req.ip || req.headers['x-forwarded-for'] as string || 'unknown',
+        userAgent: req.headers['user-agent'] || 'unknown',
+      });
+
+      res.json({ message: 'Authentification à deux facteurs désactivée' });
+    } catch (error) {
+      console.error('2FA disable error:', error);
+      res.status(500).json({ error: 'Erreur lors de la désactivation 2FA' });
     }
   });
 

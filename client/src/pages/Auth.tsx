@@ -99,7 +99,13 @@ export default function Auth() {
       return response.json();
     },
     onSuccess: (data) => {
-      if (data.requiresOtp) {
+      if (data.requires2FA) {
+        toast({
+          title: t.common.success,
+          description: data.message || 'Veuillez entrer votre code d\'authentification à deux facteurs',
+        });
+        setLocation(`/verify-2fa?userId=${data.userId}`);
+      } else if (data.requiresOtp) {
         toast({
           title: t.common.success,
           description: data.message || 'Code de vérification envoyé',

@@ -154,6 +154,9 @@ export interface IStorage {
   approveKycDocument(id: string, reviewerId: string, notes?: string): Promise<KycDocument | undefined>;
   rejectKycDocument(id: string, reviewerId: string, notes: string): Promise<KycDocument | undefined>;
   deleteKycDocument(id: string): Promise<boolean>;
+  
+  enable2FA(userId: string, secret: string): Promise<User | undefined>;
+  disable2FA(userId: string): Promise<User | undefined>;
 }
 
 // export class MemStorage implements IStorage {
@@ -2108,6 +2111,30 @@ export class DatabaseStorage implements IStorage {
       .where(eq(kycDocuments.id, id))
       .returning();
     return result.length > 0;
+  }
+
+  async enable2FA(userId: string, secret: string): Promise<User | undefined> {
+    const result = await db.update(users)
+      .set({ 
+        twoFactorSecret: secret,
+        twoFactorEnabled: true,
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    return result[0];
+  }
+
+  async disable2FA(userId: string): Promise<User | undefined> {
+    const result = await db.update(users)
+      .set({ 
+        twoFactorSecret: null,
+        twoFactorEnabled: false,
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    return result[0];
   }
 }
 

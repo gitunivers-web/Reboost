@@ -1,0 +1,51 @@
+« Implémente dans le projet suivant une authentification à deux facteurs (2FA) via Google Authenticator (TOTP), compatible avec Express.js, PostgreSQL, et un frontend sur Vercel.
+
+Le backend est hébergé sur Render à https://api.altusfinancegroup.com, la base est PostgreSQL, et le frontend est sur Vercel (https://altusfinancegroup.com).
+
+Le système actuel utilise déjà une authentification avec e-mail et OTP, donc ajoute une option alternative 2FA via Google Authenticator pour les utilisateurs qui veulent renforcer leur sécurité.
+
+⚙️ Spécifications techniques :
+
+Utilise les librairies speakeasy (pour générer les secrets TOTP) et qrcode (pour afficher le QR code côté frontend).
+
+Ajoute dans la base de données une colonne two_factor_secret (texte, nullable) et two_factor_enabled (booléen, false par défaut) dans la table users.
+
+Crée trois routes dans le backend :
+
+POST /api/2fa/setup → génère un secret et renvoie l’URL de QR code à afficher dans l’application Google Authenticator.
+
+POST /api/2fa/verify → vérifie le code saisi par l’utilisateur et active two_factor_enabled s’il est correct.
+
+POST /api/2fa/validate → vérifie le code TOTP à chaque connexion si 2FA est activé pour cet utilisateur.
+
+Assure-toi que les CORS et CSRF sont compatibles avec le frontend Vercel (https://altusfinancegroup.com).
+
+Si l’utilisateur a activé le 2FA, la connexion ne doit être validée qu’après vérification du TOTP.
+
+Si non activé, la connexion classique par OTP email continue de fonctionner.
+
+Toutes les erreurs doivent être gérées avec un message clair ("Code invalide", "Session expirée", "2FA requis", etc.).
+
+💻 Frontend :
+
+Ajoute une page /security/2fa accessible depuis le profil.
+
+Cette page doit afficher :
+
+Le QR code à scanner.
+
+Un champ pour saisir le code à 6 chiffres.
+
+Un bouton “Activer la vérification en deux étapes”.
+
+Lors de la connexion, si le 2FA est activé, redirige l’utilisateur vers /verify-2fa pour saisir son code.
+
+✅ Résultat attendu :
+
+L’utilisateur peut activer la 2FA dans son profil.
+
+À chaque nouvelle connexion, il doit saisir son code Google Authenticator.
+
+Le système continue de supporter l’OTP email comme méthode alternative.
+
+Tout est compatible avec Render (backend) et Vercel (frontend).

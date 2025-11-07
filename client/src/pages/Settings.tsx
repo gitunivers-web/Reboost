@@ -624,32 +624,63 @@ export default function Settings() {
               <div className="flex flex-col gap-4 p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20 rounded-xl border-2 border-green-300/30 dark:border-green-500/30 shadow-lg">
                 <div className="flex items-start justify-between gap-4">
                   <div className="space-y-2 flex-1">
-                    <p className="text-lg font-semibold text-foreground">Activer 2FA</p>
+                    <p className="text-lg font-semibold text-foreground">
+                      {user?.twoFactorEnabled ? 'Authentification à deux facteurs activée' : 'Activer 2FA'}
+                    </p>
                     <p className="text-sm text-muted-foreground">
-                      Protégez votre compte avec une vérification en deux étapes
+                      {user?.twoFactorEnabled 
+                        ? 'Votre compte est protégé par l\'authentification à deux facteurs' 
+                        : 'Protégez votre compte avec une vérification en deux étapes via Google Authenticator'}
                     </p>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    className="h-11 px-6 border-green-500/50 text-green-700 dark:text-green-400 cursor-not-allowed"
-                    data-testid="button-enable-2fa"
-                    disabled
-                    aria-describedby="2fa-status-message"
+                  {user?.twoFactorEnabled ? (
+                    <Button 
+                      variant="outline" 
+                      className="h-11 px-6 border-red-500/50 text-red-700 dark:text-red-400"
+                      data-testid="button-disable-2fa"
+                      onClick={async () => {
+                        try {
+                          await apiRequest('POST', '/api/2fa/disable');
+                          queryClient.invalidateQueries({ queryKey: ['/api/user'] });
+                          toast({
+                            title: 'Succès',
+                            description: '2FA désactivée avec succès',
+                          });
+                        } catch (error: any) {
+                          toast({
+                            title: 'Erreur',
+                            description: error.message || 'Erreur lors de la désactivation 2FA',
+                            variant: 'destructive',
+                          });
+                        }
+                      }}
+                    >
+                      Désactiver
+                    </Button>
+                  ) : (
+                    <Button 
+                      variant="outline" 
+                      className="h-11 px-6 border-green-500/50 text-green-700 dark:text-green-400"
+                      data-testid="button-enable-2fa"
+                      onClick={() => window.location.href = '/security/2fa'}
+                    >
+                      Configurer
+                    </Button>
+                  )}
+                </div>
+                {user?.twoFactorEnabled && (
+                  <div 
+                    className="flex items-start gap-3 p-4 bg-green-50 dark:bg-green-950/30 border-2 border-green-300 dark:border-green-700 rounded-lg"
+                    role="status"
                   >
-                    Configurer
-                  </Button>
-                </div>
-                <div 
-                  className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 border-2 border-amber-300 dark:border-amber-700 rounded-lg"
-                  role="status"
-                >
-                  <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-amber-500 dark:bg-amber-600 text-white shadow-sm">
-                    Bientôt disponible
-                  </span>
-                  <p id="2fa-status-message" className="text-sm font-medium text-amber-900 dark:text-amber-200 leading-relaxed">
-                    Nous travaillons actuellement à l'implémentation de l'authentification à deux facteurs. Cette fonctionnalité de sécurité renforcée sera disponible dans une prochaine mise à jour.
-                  </p>
-                </div>
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-green-500 dark:bg-green-600 text-white shadow-sm">
+                      Activé
+                    </span>
+                    <p className="text-sm font-medium text-green-900 dark:text-green-200 leading-relaxed">
+                      Votre compte est sécurisé avec Google Authenticator. Un code sera demandé à chaque connexion.
+                    </p>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

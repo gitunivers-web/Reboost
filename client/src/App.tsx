@@ -19,6 +19,8 @@ import Privacy from '@/pages/Privacy';
 import Auth from '@/pages/Auth';
 import Verify from '@/pages/Verify';
 import VerifyOtp from '@/pages/VerifyOtp';
+import TwoFactorSetup from '@/pages/TwoFactorSetup';
+import VerifyTwoFactor from '@/pages/VerifyTwoFactor';
 import AdminDashboard from '@/pages/AdminDashboard';
 import AdminUsers from '@/pages/AdminUsers';
 import AdminLoans from '@/pages/AdminLoans';
@@ -59,6 +61,7 @@ function Router() {
       <Route path="/accounts" component={BankAccounts} />
       <Route path="/history" component={History} />
       <Route path="/settings" component={Settings} />
+      <Route path="/security/2fa" component={TwoFactorSetup} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/users" component={AdminUsers} />
       <Route path="/admin/loans" component={AdminLoans} />
@@ -94,6 +97,7 @@ function App() {
             <Route path="/signup" component={Auth} />
             <Route path="/verify/:token" component={Verify} />
             <Route path="/verify-otp/:userId" component={VerifyOtp} />
+            <Route path="/verify-2fa" component={VerifyTwoFactor} />
             <Route path="/loan-request" component={LoanRequest} />
             <Route>
               <SidebarProvider style={style as React.CSSProperties}>

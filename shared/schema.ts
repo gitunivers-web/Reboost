@@ -34,6 +34,8 @@ export const users = pgTable("users", {
   notificationLoanReminders: boolean("notification_loan_reminders").notNull().default(true),
   notificationMarketingEmails: boolean("notification_marketing_emails").notNull().default(false),
   activeSessionId: text("active_session_id"),
+  twoFactorSecret: text("two_factor_secret"),
+  twoFactorEnabled: boolean("two_factor_enabled").notNull().default(false),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
   updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
 });
