@@ -13,6 +13,7 @@ import path from "path";
 import fs from "fs";
 import { fileTypeFromFile } from "file-type";
 import { db } from "./db";
+import { generateAndSendOTP, verifyOTP } from "./services/otp";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
@@ -457,6 +458,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      await generateAndSendOTP(user.id, user.email, user.fullName);
+      
+      res.json({
+        message: 'Un code de vérification a été envoyé à votre email',
+        requiresOtp: true,
+        userId: user.id
+      });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('Login error:', error);
+      res.status(500).json({ error: 'Erreur lors de la connexion' });
+    }
+  });
+
+  const verifyOtpSchema = z.object({
+    userId: z.string(),
+    code: z.string().length(6, 'Le code doit contenir 6 chiffres')
+  });
+
+  app.post("/api/auth/verify-otp", authLimiter, requireCSRF, async (req, res) => {
+    try {
+      const validatedInput = verifyOtpSchema.parse(req.body);
+      const { userId, code } = validatedInput;
+      
+      const isValid = await verifyOTP(userId, code);
+      
+      if (!isValid) {
+        return res.status(401).json({ error: 'Code invalide ou expiré' });
+      }
+      
+      const user = await storage.getUserById(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      }
+
       await new Promise<void>((resolve, reject) => {
         req.session.regenerate((err) => {
           if (err) reject(err);
@@ -498,8 +537,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const firstError = error.errors[0];
         return res.status(400).json({ error: firstError.message });
       }
-      console.error('Login error:', error);
-      res.status(500).json({ error: 'Erreur lors de la connexion' });
+      console.error('OTP verification error:', error);
+      res.status(500).json({ error: 'Erreur lors de la vérification du code' });
     }
   });
 
