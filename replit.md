@@ -92,6 +92,16 @@ Preferred communication style: Simple, everyday language.
         - Uses `hasNotificationByType` to check all notifications (read/unread) preventing duplicates.
         - Auto-removes via `deleteAllNotificationsByType` when user enables 2FA.
     - Real-time loan request notifications for admins with 5s polling and audio alerts.
+    - **Multilingual Notification System with Metadata Interpolation (November 2025):**
+        - Complete internationalization support for all notifications across French (default), English, and Spanish.
+        - Backend stores generic English messages + structured metadata (amounts, reasons, loan types, recipients, sequences, etc.).
+        - Frontend `interpolateMessage()` function replaces placeholders ({amount}, {reason}, {loanType}, etc.) with actual metadata values.
+        - Translation keys in `i18n.ts` include placeholders for dynamic content in all 3 languages.
+        - Notifications dynamically adapt to user's selected language with contextual data properly displayed.
+        - Fallback mechanism: Uses backend title/message (generic English) if translation key not found.
+        - Example FR: "Votre demande de prêt {loanType} de {amount} € a été soumise..."
+        - Example EN: "Your {loanType} loan request for £{amount} has been successfully submitted..."
+        - Example ES: "Su solicitud de préstamo {loanType} por {amount} € ha sido enviada..."
     - **Comprehensive notification coverage (November 2025):**
         - Notification helper utilities (`notification-helper.ts`) generate notifications for ALL critical events:
         - **Loan lifecycle**: Request submitted, under review, approved, contract generated, contract signed, rejected, funds disbursed
