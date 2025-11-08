@@ -209,6 +209,8 @@ type TranslationKeys = {
     systemMode: string;
     languageSettings: string;
     chooseLanguage: string;
+    changePhoto: string;
+    uploading: string;
   };
   messages: {
     profileUpdated: string;
@@ -967,6 +969,8 @@ export const translations: Record<Language, TranslationKeys> = {
       systemMode: 'Système',
       languageSettings: 'Paramètres de langue',
       chooseLanguage: 'Sélectionnez votre langue',
+      changePhoto: 'Changer la photo',
+      uploading: 'Téléchargement...',
     },
     messages: {
       profileUpdated: 'Profil mis à jour',
@@ -2031,6 +2035,8 @@ export const translations: Record<Language, TranslationKeys> = {
       systemMode: 'System',
       languageSettings: 'Language settings',
       chooseLanguage: 'Select your language',
+      changePhoto: 'Change photo',
+      uploading: 'Uploading...',
     },
     messages: {
       profileUpdated: 'Profile updated',
@@ -2834,6 +2840,8 @@ export const translations: Record<Language, TranslationKeys> = {
       systemMode: 'Sistema',
       languageSettings: 'Configuración de idioma',
       chooseLanguage: 'Seleccione su idioma',
+      changePhoto: 'Cambiar foto',
+      uploading: 'Subiendo...',
     },
     messages: {
       profileUpdated: 'Perfil actualizado',
@@ -3637,6 +3645,8 @@ export const translations: Record<Language, TranslationKeys> = {
       systemMode: 'Sistema',
       languageSettings: 'Configurações de Idioma',
       chooseLanguage: 'Selecione seu idioma',
+      changePhoto: 'Alterar foto',
+      uploading: 'Carregando...',
     },
     messages: {
       profileUpdated: 'Perfil atualizado',
@@ -4201,6 +4211,8 @@ export const translations: Record<Language, TranslationKeys> = {
       systemMode: 'Sistema',
       languageSettings: 'Impostazioni lingua',
       chooseLanguage: 'Seleziona la tua lingua',
+      changePhoto: 'Cambia foto',
+      uploading: 'Caricamento...',
     },
     messages: {
       profileUpdated: 'Profilo aggiornato',
@@ -5006,6 +5018,8 @@ export const translations: Record<Language, TranslationKeys> = {
       systemMode: 'System',
       languageSettings: 'Spracheinstellungen',
       chooseLanguage: 'Wählen Sie Ihre Sprache',
+      changePhoto: 'Foto ändern',
+      uploading: 'Hochladen...',
     },
     messages: {
       profileUpdated: 'Profil aktualisiert',
@@ -5811,6 +5825,8 @@ export const translations: Record<Language, TranslationKeys> = {
       systemMode: 'Systeem',
       languageSettings: 'Taalinstellingen',
       chooseLanguage: 'Selecteer uw taal',
+      changePhoto: 'Foto wijzigen',
+      uploading: 'Uploaden...',
     },
     messages: {
       profileUpdated: 'Profiel bijgewerkt',

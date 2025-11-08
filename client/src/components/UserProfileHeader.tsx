@@ -14,12 +14,14 @@ import { useLocation } from 'wouter';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient, getApiUrl } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslations } from '@/lib/i18n';
 
 export default function UserProfileHeader() {
   const { data: user } = useUser();
   const profilePhotoUrl = useUserProfilePhotoUrl();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const t = useTranslations();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -47,7 +49,7 @@ export default function UserProfileHeader() {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Échec de l\'upload');
+        throw new Error(error.error || t.messages.errorUploadingAvatar);
       }
 
       return await response.json();
@@ -55,14 +57,14 @@ export default function UserProfileHeader() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/user'] });
       toast({
-        title: 'Photo mise à jour',
-        description: 'Votre photo de profil a été mise à jour avec succès.',
+        title: t.messages.avatarUpdated,
+        description: t.messages.avatarUpdatedDesc,
       });
       setIsUploading(false);
     },
     onError: (error: Error) => {
       toast({
-        title: 'Erreur',
+        title: t.common.error,
         description: error.message,
         variant: 'destructive',
       });
@@ -79,8 +81,8 @@ export default function UserProfileHeader() {
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
         toast({
-          title: 'Fichier trop volumineux',
-          description: 'La taille maximale est de 5 Mo.',
+          title: t.common.error,
+          description: t.messages.fileTooLarge,
           variant: 'destructive',
         });
         return;
@@ -88,8 +90,8 @@ export default function UserProfileHeader() {
 
       if (!file.type.startsWith('image/')) {
         toast({
-          title: 'Format invalide',
-          description: 'Veuillez sélectionner une image.',
+          title: t.common.error,
+          description: t.messages.invalidFileType,
           variant: 'destructive',
         });
         return;
@@ -163,16 +165,16 @@ export default function UserProfileHeader() {
             data-testid="button-change-photo"
           >
             <Upload className="mr-2 h-4 w-4" />
-            {isUploading ? 'Téléchargement...' : 'Changer la photo'}
+            {isUploading ? t.settings.uploading : t.settings.changePhoto}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setLocation('/settings')} data-testid="button-settings">
             <User className="mr-2 h-4 w-4" />
-            Paramètres
+            {t.nav.settings}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout} className="text-red-600" data-testid="button-logout">
             <LogOut className="mr-2 h-4 w-4" />
-            Déconnexion
+            {t.nav.logout}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
