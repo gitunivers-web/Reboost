@@ -112,17 +112,19 @@ function App() {
                 <div className="flex h-screen w-full">
                   <AppSidebar />
                   <div className="flex flex-col flex-1">
-                    <header className="flex items-center justify-between p-4 border-b bg-white dark:bg-slate-900">
-                      <SidebarTrigger data-testid="button-sidebar-toggle" />
-                      <div className="flex items-center gap-3">
-                        <LanguageSwitcher />
-                        <ThemeToggle />
-                        <NotificationBell />
-                        <UserProfileHeader />
+                    <header className="flex flex-col">
+                      <div className="flex items-center justify-between p-4 border-b bg-white dark:bg-slate-900">
+                        <SidebarTrigger data-testid="button-sidebar-toggle" />
+                        <div className="flex items-center gap-3">
+                          <LanguageSwitcher />
+                          <ThemeToggle />
+                          <NotificationBell />
+                          <UserProfileHeader />
+                        </div>
                       </div>
+                      <InfoBanner />
                     </header>
-                    <InfoBanner />
-                    <div className="p-4">
+                    <div className="px-4 pt-4">
                       <NotificationBanner />
                     </div>
                     <main className="flex-1 overflow-auto">
