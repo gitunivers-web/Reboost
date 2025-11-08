@@ -7669,7 +7669,7 @@ export const translations: Record<Language, TranslationKeys> = {
         },
         {
           question: 'Wie werden die Zinssätze berechnet?',
-          answer: 'Unsere Zinssätze werden von einem Algorithmus berechnet, der mehrere Faktoren analysiert: Ihre Kreditwürdigkeit, die Kreditlaufzeit, den geliehenen Betrag, Ihr Einkommen und Ihre Belastungen, Ihre Rückzahlungshistorie und die finanzielle Gesundheit (für Unternehmen). Die Zinssätze liegen zwischen 3,5% und 9,0% effektiver Jahreszins je nach Profil. Unsere Zinssätze gehören dank unseres Netzwerks von Finanzpartnern zu den wettbewerbsfähigsten auf dem Markt.',
+          answer: 'Unsere Zinssätze werden von einem Algorithmus berechnet, der mehrere Faktoren analysiert: Ihre Kreditwürdigkeit, die Kreditlaufzeit, den geliehenen Betrag, Ihr Einkommen und Ihre Belastungen, Ihre Rückzahlungshistorie und die finanzielle Gesundheit (für Unternehmen). Die Zinssätze liegen zwischen 0,5% und 9,0% effektiver Jahreszins je nach Profil und Kreditart. Unsere Zinssätze gehören dank unseres Netzwerks von Finanzpartnern zu den wettbewerbsfähigsten auf dem Markt.',
         },
         {
           question: 'Gibt es Bearbeitungsgebühren oder versteckte Kosten?',
@@ -7764,7 +7764,7 @@ export const translations: Record<Language, TranslationKeys> = {
       fast: 'Express-Antwort - Minuten bis 24h',
       fastDesc: 'Unsere KI-Technologie analysiert Ihren Fall in Echtzeit. Genehmigungsantwort in Minuten bis maximal 24 Stunden. Mittel sofort auf Ihr sicheres Altus-Konto freigegeben. Dann auf Ihr Bankkonto überweisen, wann Sie möchten. 100% digital, null Papierkram.',
       competitive: 'Zu den niedrigsten Zinsen auf dem Markt',
-      competitiveDesc: 'Dank unserem Netzwerk von 50+ Finanzpartnern und optimierter Bewertungstechnologie verhandeln wir die besten Zinsen für Sie: von 1,5% bis 9,0% je nach Profil. Automatischer Vergleich, um das beste Angebot zu garantieren.',
+      competitiveDesc: 'Dank unserem Netzwerk von 50+ Finanzpartnern und optimierter Bewertungstechnologie verhandeln wir die besten Zinsen für Sie: von 0,5% bis 9,0% effektiver Jahreszins je nach Profil und Kreditart. Automatischer Vergleich, um das beste Angebot zu garantieren.',
       flexible: 'Maximale Flexibilität ohne Strafe',
       flexibleDesc: 'Kostenlose vorzeitige Rückzahlung jederzeit. Mögliche Ratenmodulierung entsprechend Ihrer Situation. Ratenstundung bei Schwierigkeiten. Wahl des Abbuchungsdatums. Sie behalten die volle Kontrolle über Ihren Kredit.',
     },
@@ -8869,7 +8869,7 @@ export const translations: Record<Language, TranslationKeys> = {
         },
         {
           question: 'Hoe worden de rentetarieven berekend?',
-          answer: 'Onze tarieven worden berekend door een algoritme dat verschillende factoren analyseert: uw kredietscore, de looptijd van de lening, het geleende bedrag, uw inkomsten en lasten, uw terugbetalingsgeschiedenis en de financiële gezondheid (voor bedrijven). De tarieven variëren van 3,5% tot 9,0% JKP volgens profiel. Onze tarieven behoren tot de meest concurrerende op de markt dankzij ons netwerk van financiële partners.',
+          answer: 'Onze tarieven worden berekend door een algoritme dat verschillende factoren analyseert: uw kredietscore, de looptijd van de lening, het geleende bedrag, uw inkomsten en lasten, uw terugbetalingsgeschiedenis en de financiële gezondheid (voor bedrijven). De tarieven variëren van 0,5% tot 9,0% JKP volgens profiel en type lening. Onze tarieven behoren tot de meest concurrerende op de markt dankzij ons netwerk van financiële partners.',
         },
         {
           question: 'Zijn er administratiekosten of verborgen kosten?',
@@ -8964,7 +8964,7 @@ export const translations: Record<Language, TranslationKeys> = {
       fast: 'Express reactie - Minuten tot 24u',
       fastDesc: 'Onze AI-technologie analyseert uw dossier in realtime. Goedkeuringsantwoord in minuten tot maximaal 24 uur. Middelen direct vrijgegeven op uw beveiligde Altus-account. Vervolgens overmaken naar uw bankrekening wanneer u wilt. 100% digitaal, nul papierwerk.',
       competitive: 'Tot de laagste tarieven op de markt',
-      competitiveDesc: 'Dankzij ons netwerk van 50+ financiële partners en geoptimaliseerde beoordelingstechnologie onderhandelen we de beste tarieven voor u: van 1,5% tot 9,0% volgens profiel. Automatische vergelijking om het beste aanbod te garanderen.',
+      competitiveDesc: 'Dankzij ons netwerk van 50+ financiële partners en geoptimaliseerde beoordelingstechnologie onderhandelen we de beste tarieven voor u: van 0,5% tot 9,0% JKP volgens profiel en type lening. Automatische vergelijking om het beste aanbod te garanderen.',
       flexible: 'Maximale flexibiliteit zonder boete',
       flexibleDesc: 'Gratis vervroegde terugbetaling op elk moment. Mogelijke modulering van termijnen volgens uw situatie. Uitstel van termijn bij moeilijkheden. Keuze van afschrijvingsdatum. U behoudt de volledige controle over uw lening.',
     },
