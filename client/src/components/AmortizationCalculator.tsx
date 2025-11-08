@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
+import { useTranslations } from '@/lib/i18n';
 import {
   LineChart,
   Line,
@@ -105,6 +106,7 @@ function calculateInterestRate(amount: number, loanType: string): number {
 }
 
 export default function AmortizationCalculator() {
+  const t = useTranslations();
   const { toast } = useToast();
   const [loanAmount, setLoanAmount] = useState(100000);
   const [loanType, setLoanType] = useState<string>('personal');
@@ -133,16 +135,16 @@ export default function AmortizationCalculator() {
     },
     onSuccess: () => {
       toast({
-        title: 'Demande de prêt soumise',
-        description: 'Votre demande est en attente d\'approbation par un administrateur. Vous recevrez une notification dès qu\'elle sera traitée.',
+        title: t.loans.requestSubmitted,
+        description: t.loans.requestSubmittedDesc,
       });
       queryClient.invalidateQueries({ queryKey: ['/api/loans'] });
     },
     onError: () => {
       toast({
         variant: 'destructive',
-        title: 'Erreur',
-        description: 'Échec de la soumission de la demande de prêt',
+        title: t.common.error,
+        description: t.loans.requestError,
       });
     },
   });
@@ -151,8 +153,8 @@ export default function AmortizationCalculator() {
 
   const pieData = amortization
     ? [
-        { name: 'Principal', value: amortization.loanAmount, color: '#3b82f6' },
-        { name: 'Intérêts', value: amortization.totalInterest, color: '#ef4444' },
+        { name: t.amortization.principal, value: amortization.loanAmount, color: '#3b82f6' },
+        { name: t.amortization.interest, value: amortization.totalInterest, color: '#ef4444' },
       ]
     : [];
 
@@ -162,29 +164,29 @@ export default function AmortizationCalculator() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator className="h-5 w-5" />
-            Calculateur d'Amortissement Interactif
+            {t.amortization.calculatorTitle}
           </CardTitle>
           <CardDescription>
-            Simulez votre plan de remboursement et visualisez l'évolution de votre prêt
+            {t.amortization.calculatorDescription}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-2">
-              <Label htmlFor="loan-type">Type de prêt</Label>
+              <Label htmlFor="loan-type">{t.amortization.loanType}</Label>
               <Select value={loanType} onValueChange={setLoanType}>
                 <SelectTrigger data-testid="select-loan-type">
-                  <SelectValue placeholder="Sélectionnez le type" />
+                  <SelectValue placeholder={t.amortization.selectType} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="personal">Personnel</SelectItem>
-                  <SelectItem value="business">Professionnel</SelectItem>
-                  <SelectItem value="real_estate">Immobilier</SelectItem>
+                  <SelectItem value="personal">{t.amortization.personal}</SelectItem>
+                  <SelectItem value="business">{t.amortization.business}</SelectItem>
+                  <SelectItem value="real_estate">{t.amortization.realEstate}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="loan-amount">Montant du prêt (€)</Label>
+              <Label htmlFor="loan-amount">{t.amortization.loanAmount}</Label>
               <Input
                 id="loan-amount"
                 type="number"
@@ -196,7 +198,7 @@ export default function AmortizationCalculator() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="interest-rate">Taux d'intérêt annuel (%)</Label>
+              <Label htmlFor="interest-rate">{t.amortization.annualInterestRate}</Label>
               <Input
                 id="interest-rate"
                 type="number"
@@ -209,10 +211,10 @@ export default function AmortizationCalculator() {
                 className="bg-muted"
                 data-testid="input-interest-rate"
               />
-              <p className="text-xs text-muted-foreground">Calculé automatiquement</p>
+              <p className="text-xs text-muted-foreground">{t.amortization.automaticallyCalculated}</p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="loan-term">Durée (années)</Label>
+              <Label htmlFor="loan-term">{t.amortization.duration}</Label>
               <Input
                 id="loan-term"
                 type="number"
@@ -229,14 +231,13 @@ export default function AmortizationCalculator() {
           <Alert data-testid="alert-info">
             <Info className="h-4 w-4" />
             <AlertDescription>
-              Le taux d'intérêt est calculé automatiquement en fonction du montant et du type de prêt.
-              Toutes les demandes de prêt nécessitent une approbation administrative.
+              {t.amortization.rateInfo}
             </AlertDescription>
           </Alert>
 
           <div className="flex gap-3">
             <Button onClick={handleCalculate} className="flex-1" data-testid="button-calculate">
-              Calculer le plan d'amortissement
+              {t.amortization.calculatePlan}
             </Button>
             <Button 
               onClick={() => requestLoanMutation.mutate()}
@@ -245,7 +246,7 @@ export default function AmortizationCalculator() {
               className="flex-1"
               data-testid="button-request-loan"
             >
-              {requestLoanMutation.isPending ? 'Envoi...' : 'Demander ce prêt'}
+              {requestLoanMutation.isPending ? t.amortization.sending : t.amortization.requestLoan}
             </Button>
           </div>
 
@@ -254,7 +255,7 @@ export default function AmortizationCalculator() {
               <div className="grid gap-4 md:grid-cols-3">
                 <Card className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
                   <CardContent className="pt-6">
-                    <div className="text-sm text-muted-foreground">Mensualité</div>
+                    <div className="text-sm text-muted-foreground">{t.amortization.monthlyPayment}</div>
                     <div className="text-2xl font-bold text-blue-600 dark:text-blue-400" data-testid="text-monthly-payment">
                       {amortization.monthlyPayment.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                     </div>
@@ -262,7 +263,7 @@ export default function AmortizationCalculator() {
                 </Card>
                 <Card className="bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
                   <CardContent className="pt-6">
-                    <div className="text-sm text-muted-foreground">Paiement total</div>
+                    <div className="text-sm text-muted-foreground">{t.amortization.totalPayment}</div>
                     <div className="text-2xl font-bold text-green-600 dark:text-green-400" data-testid="text-total-payment">
                       {amortization.totalPayment.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                     </div>
@@ -270,7 +271,7 @@ export default function AmortizationCalculator() {
                 </Card>
                 <Card className="bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-800">
                   <CardContent className="pt-6">
-                    <div className="text-sm text-muted-foreground">Total des intérêts</div>
+                    <div className="text-sm text-muted-foreground">{t.amortization.totalInterest}</div>
                     <div className="text-2xl font-bold text-red-600 dark:text-red-400" data-testid="text-total-interest">
                       {amortization.totalInterest.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
                     </div>
@@ -282,21 +283,21 @@ export default function AmortizationCalculator() {
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="chart" data-testid="tab-chart">
                     <TrendingUp className="h-4 w-4 mr-2" />
-                    Graphique
+                    {t.amortization.chart}
                   </TabsTrigger>
                   <TabsTrigger value="breakdown" data-testid="tab-breakdown">
                     <PieChartIcon className="h-4 w-4 mr-2" />
-                    Répartition
+                    {t.amortization.breakdown}
                   </TabsTrigger>
                   <TabsTrigger value="schedule" data-testid="tab-schedule">
-                    Tableau
+                    {t.amortization.table}
                   </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="chart" className="space-y-4">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Évolution du solde et des paiements</CardTitle>
+                      <CardTitle>{t.amortization.balanceEvolution}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={350}>
@@ -304,9 +305,9 @@ export default function AmortizationCalculator() {
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis
                             dataKey="month"
-                            label={{ value: 'Mois', position: 'insideBottom', offset: -5 }}
+                            label={{ value: t.amortization.monthLabel, position: 'insideBottom', offset: -5 }}
                           />
-                          <YAxis label={{ value: 'Montant (€)', angle: -90, position: 'insideLeft' }} />
+                          <YAxis label={{ value: t.amortization.amount, angle: -90, position: 'insideLeft' }} />
                           <Tooltip
                             formatter={(value: number) =>
                               value.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
@@ -319,7 +320,7 @@ export default function AmortizationCalculator() {
                             stackId="1"
                             stroke="#3b82f6"
                             fill="#3b82f6"
-                            name="Principal"
+                            name={t.amortization.principal}
                           />
                           <Area
                             type="monotone"
@@ -327,14 +328,14 @@ export default function AmortizationCalculator() {
                             stackId="1"
                             stroke="#ef4444"
                             fill="#ef4444"
-                            name="Intérêts"
+                            name={t.amortization.interest}
                           />
                           <Line
                             type="monotone"
                             dataKey="balance"
                             stroke="#10b981"
                             strokeWidth={2}
-                            name="Solde restant"
+                            name={t.amortization.remainingBalance}
                           />
                         </AreaChart>
                       </ResponsiveContainer>
@@ -345,7 +346,7 @@ export default function AmortizationCalculator() {
                 <TabsContent value="breakdown" className="space-y-4">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Répartition Principal vs Intérêts</CardTitle>
+                      <CardTitle>{t.amortization.principalVsInterest}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={350}>
@@ -378,18 +379,18 @@ export default function AmortizationCalculator() {
                 <TabsContent value="schedule" className="space-y-4">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Plan de remboursement mensuel</CardTitle>
+                      <CardTitle>{t.amortization.monthlyRepaymentPlan}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="max-h-[400px] overflow-auto">
                         <table className="w-full text-sm" data-testid="table-schedule">
                           <thead className="sticky top-0 bg-background border-b">
                             <tr>
-                              <th className="text-left p-2">Mois</th>
-                              <th className="text-right p-2">Paiement</th>
-                              <th className="text-right p-2">Principal</th>
-                              <th className="text-right p-2">Intérêts</th>
-                              <th className="text-right p-2">Solde</th>
+                              <th className="text-left p-2">{t.amortization.month}</th>
+                              <th className="text-right p-2">{t.amortization.payment}</th>
+                              <th className="text-right p-2">{t.amortization.principal}</th>
+                              <th className="text-right p-2">{t.amortization.interest}</th>
+                              <th className="text-right p-2">{t.amortization.balance}</th>
                             </tr>
                           </thead>
                           <tbody>
