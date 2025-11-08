@@ -44,7 +44,6 @@ import NotificationBanner from '@/components/NotificationBanner';
 import UserProfileHeader from '@/components/UserProfileHeader';
 import NotificationBell from '@/components/NotificationBell';
 import SessionMonitor from '@/components/SessionMonitor';
-import InfoBanner from '@/components/InfoBanner';
 
 function Router() {
   return (
@@ -112,17 +111,14 @@ function App() {
                 <div className="flex h-screen w-full">
                   <AppSidebar />
                   <div className="flex flex-col flex-1">
-                    <header className="flex flex-col">
-                      <div className="flex items-center justify-between p-4 border-b bg-white dark:bg-slate-900">
-                        <SidebarTrigger data-testid="button-sidebar-toggle" />
-                        <div className="flex items-center gap-3">
-                          <LanguageSwitcher />
-                          <ThemeToggle />
-                          <NotificationBell />
-                          <UserProfileHeader />
-                        </div>
+                    <header className="flex items-center justify-between p-4 border-b bg-white dark:bg-slate-900 sticky top-0 z-50">
+                      <SidebarTrigger data-testid="button-sidebar-toggle" />
+                      <div className="flex items-center gap-3">
+                        <LanguageSwitcher />
+                        <ThemeToggle />
+                        <NotificationBell />
+                        <UserProfileHeader />
                       </div>
-                      <InfoBanner />
                     </header>
                     <div className="px-4 pt-4">
                       <NotificationBanner />
