@@ -558,6 +558,8 @@ type TranslationKeys = {
     newLoan: {
       title: string;
       subtitle: string;
+      subtitleFirstRequest: string;
+      subtitleRegular: string;
       loanType: string;
       selectLoanType: string;
       amount: string;
@@ -583,12 +585,19 @@ type TranslationKeys = {
       uploadDocuments: string;
       kycDocumentsTab: string;
       additionalDocumentsTab: string;
+      loanDetailsTab: string;
       identity: string;
       proof_of_address: string;
       income_proof: string;
       business_registration: string;
       financial_statements: string;
       tax_returns: string;
+      requiredDocuments: string;
+      identityDoc: string;
+      addressProof: string;
+      bankStatement: string;
+      uploadingInProgress: string;
+      documentsUploadedSuccess: string;
       submit: string;
       submitting: string;
       cancel: string;
@@ -605,6 +614,27 @@ type TranslationKeys = {
         commercialProperty: string;
         lineOfCredit: string;
         vehicleFleet: string;
+      };
+      errors: {
+        amountMustBePositive: string;
+        amountMaxExceeded: string;
+        rateMustBePositive: string;
+        rateMaxExceeded: string;
+        durationMustBePositive: string;
+        durationMaxExceeded: string;
+        documentsRequired: string;
+      };
+      success: {
+        loanSubmitted: string;
+        loanSubmittedDesc: string;
+        documentsUploaded: string;
+        documentsUploadedDesc: string;
+      };
+      error: {
+        loanError: string;
+        loanErrorDesc: string;
+        partialUploadError: string;
+        partialUploadErrorDesc: string;
       };
     };
     transfer: {
@@ -1435,6 +1465,8 @@ export const translations: Record<Language, TranslationKeys> = {
       newLoan: {
         title: 'Nouvelle demande de prêt',
         subtitle: 'Complétez les informations pour votre demande',
+        subtitleFirstRequest: 'Première demande : veuillez fournir vos documents d\'identité et compléter le formulaire',
+        subtitleRegular: 'Remplissez le formulaire pour soumettre une nouvelle demande de prêt',
         loanType: 'Type de prêt',
         selectLoanType: 'Sélectionnez le type de prêt',
         amount: 'Montant',
@@ -1460,12 +1492,19 @@ export const translations: Record<Language, TranslationKeys> = {
         uploadDocuments: 'Télécharger vos documents',
         kycDocumentsTab: 'Documents KYC',
         additionalDocumentsTab: 'Documents supplémentaires',
+        loanDetailsTab: 'Détails du prêt',
         identity: 'Pièce d\'identité',
         proof_of_address: 'Justificatif de domicile',
         income_proof: 'Justificatif de revenus',
         business_registration: 'Extrait Kbis',
         financial_statements: 'Bilans financiers',
         tax_returns: 'Déclaration d\'impôts',
+        requiredDocuments: 'Documents requis',
+        identityDoc: 'Pièce d\'identité (Carte d\'identité ou Passeport)',
+        addressProof: 'Justificatif de domicile (moins de 3 mois)',
+        bankStatement: 'Relevé bancaire (derniers 3 mois)',
+        uploadingInProgress: 'Envoi en cours...',
+        documentsUploadedSuccess: 'document(s) téléchargé(s) avec succès',
         submit: 'Soumettre la demande',
         submitting: 'Soumission...',
         cancel: 'Annuler',
@@ -1482,6 +1521,27 @@ export const translations: Record<Language, TranslationKeys> = {
           commercialProperty: 'Prêt immobilier pro',
           lineOfCredit: 'Ligne de crédit',
           vehicleFleet: 'Crédit véhicule pro',
+        },
+        errors: {
+          amountMustBePositive: 'Le montant doit être supérieur à 0',
+          amountMaxExceeded: 'Le montant ne peut pas dépasser 1 000 000 €',
+          rateMustBePositive: 'Le taux doit être positif',
+          rateMaxExceeded: 'Le taux ne peut pas dépasser 20%',
+          durationMustBePositive: 'La durée doit être supérieure à 0',
+          durationMaxExceeded: 'La durée ne peut pas dépasser 360 mois',
+          documentsRequired: 'Vous devez télécharger vos documents KYC pour votre première demande',
+        },
+        success: {
+          loanSubmitted: 'Demande de prêt envoyée',
+          loanSubmittedDesc: 'Votre demande de prêt a été soumise avec succès.',
+          documentsUploaded: 'Documents téléchargés',
+          documentsUploadedDesc: 'document(s) envoyé(s) avec succès.',
+        },
+        error: {
+          loanError: 'Erreur',
+          loanErrorDesc: 'Impossible de créer la demande de prêt.',
+          partialUploadError: 'Erreur partielle',
+          partialUploadErrorDesc: 'document(s) n\'ont pas pu être téléchargés.',
         },
       },
       transfer: {
@@ -2298,6 +2358,8 @@ export const translations: Record<Language, TranslationKeys> = {
       newLoan: {
         title: 'New Loan Request',
         subtitle: 'Complete the information for your request',
+        subtitleFirstRequest: 'First request: please provide your identity documents and complete the form',
+        subtitleRegular: 'Fill out the form to submit a new loan request',
         loanType: 'Loan Type',
         selectLoanType: 'Select loan type',
         amount: 'Amount',
@@ -2323,12 +2385,19 @@ export const translations: Record<Language, TranslationKeys> = {
         uploadDocuments: 'Upload Your Documents',
         kycDocumentsTab: 'KYC Documents',
         additionalDocumentsTab: 'Additional Documents',
+        loanDetailsTab: 'Loan Details',
         identity: 'Identity Document',
         proof_of_address: 'Proof of Address',
         income_proof: 'Proof of Income',
         business_registration: 'Business Registration',
         financial_statements: 'Financial Statements',
         tax_returns: 'Tax Returns',
+        requiredDocuments: 'Required Documents',
+        identityDoc: 'Identity Document (ID Card or Passport)',
+        addressProof: 'Proof of Address (less than 3 months old)',
+        bankStatement: 'Bank Statement (last 3 months)',
+        uploadingInProgress: 'Uploading...',
+        documentsUploadedSuccess: 'document(s) uploaded successfully',
         submit: 'Submit Request',
         submitting: 'Submitting...',
         cancel: 'Cancel',
@@ -2345,6 +2414,27 @@ export const translations: Record<Language, TranslationKeys> = {
           commercialProperty: 'Commercial Property Loan',
           lineOfCredit: 'Line of Credit',
           vehicleFleet: 'Fleet Vehicle Credit',
+        },
+        errors: {
+          amountMustBePositive: 'Amount must be greater than 0',
+          amountMaxExceeded: 'Amount cannot exceed £1,000,000',
+          rateMustBePositive: 'Rate must be positive',
+          rateMaxExceeded: 'Rate cannot exceed 20%',
+          durationMustBePositive: 'Duration must be greater than 0',
+          durationMaxExceeded: 'Duration cannot exceed 360 months',
+          documentsRequired: 'You must upload your KYC documents for your first request',
+        },
+        success: {
+          loanSubmitted: 'Loan Request Submitted',
+          loanSubmittedDesc: 'Your loan request has been successfully submitted.',
+          documentsUploaded: 'Documents Uploaded',
+          documentsUploadedDesc: 'document(s) sent successfully.',
+        },
+        error: {
+          loanError: 'Error',
+          loanErrorDesc: 'Unable to create the loan request.',
+          partialUploadError: 'Partial Error',
+          partialUploadErrorDesc: 'document(s) could not be uploaded.',
         },
       },
       transfer: {
@@ -3156,6 +3246,8 @@ export const translations: Record<Language, TranslationKeys> = {
       newLoan: {
         title: 'Nueva Solicitud de Préstamo',
         subtitle: 'Complete la información para su solicitud',
+        subtitleFirstRequest: 'Primera solicitud: proporcione sus documentos de identidad y complete el formulario',
+        subtitleRegular: 'Complete el formulario para enviar una nueva solicitud de préstamo',
         loanType: 'Tipo de Préstamo',
         selectLoanType: 'Seleccione el tipo de préstamo',
         amount: 'Monto',
@@ -3181,12 +3273,19 @@ export const translations: Record<Language, TranslationKeys> = {
         uploadDocuments: 'Subir Sus Documentos',
         kycDocumentsTab: 'Documentos KYC',
         additionalDocumentsTab: 'Documentos Adicionales',
+        loanDetailsTab: 'Detalles del Préstamo',
         identity: 'Documento de Identidad',
         proof_of_address: 'Comprobante de Domicilio',
         income_proof: 'Comprobante de Ingresos',
         business_registration: 'Registro Mercantil',
         financial_statements: 'Estados Financieros',
         tax_returns: 'Declaración de Impuestos',
+        requiredDocuments: 'Documentos Requeridos',
+        identityDoc: 'Documento de Identidad (Cédula o Pasaporte)',
+        addressProof: 'Comprobante de Domicilio (menos de 3 meses)',
+        bankStatement: 'Estado de Cuenta Bancaria (últimos 3 meses)',
+        uploadingInProgress: 'Subiendo...',
+        documentsUploadedSuccess: 'documento(s) cargado(s) exitosamente',
         submit: 'Enviar Solicitud',
         submitting: 'Enviando...',
         cancel: 'Cancelar',
@@ -3203,6 +3302,27 @@ export const translations: Record<Language, TranslationKeys> = {
           commercialProperty: 'Préstamo Inmobiliario Comercial',
           lineOfCredit: 'Línea de Crédito',
           vehicleFleet: 'Crédito Flota de Vehículos',
+        },
+        errors: {
+          amountMustBePositive: 'El monto debe ser mayor que 0',
+          amountMaxExceeded: 'El monto no puede exceder 1.000.000 €',
+          rateMustBePositive: 'La tasa debe ser positiva',
+          rateMaxExceeded: 'La tasa no puede exceder el 20%',
+          durationMustBePositive: 'La duración debe ser mayor que 0',
+          durationMaxExceeded: 'La duración no puede exceder 360 meses',
+          documentsRequired: 'Debe cargar sus documentos KYC para su primera solicitud',
+        },
+        success: {
+          loanSubmitted: 'Solicitud de Préstamo Enviada',
+          loanSubmittedDesc: 'Su solicitud de préstamo ha sido enviada exitosamente.',
+          documentsUploaded: 'Documentos Cargados',
+          documentsUploadedDesc: 'documento(s) enviado(s) exitosamente.',
+        },
+        error: {
+          loanError: 'Error',
+          loanErrorDesc: 'No se pudo crear la solicitud de préstamo.',
+          partialUploadError: 'Error Parcial',
+          partialUploadErrorDesc: 'documento(s) no se pudieron cargar.',
         },
       },
       transfer: {
@@ -4014,6 +4134,8 @@ export const translations: Record<Language, TranslationKeys> = {
       newLoan: {
         title: 'Nova Solicitação de Empréstimo',
         subtitle: 'Preencha o formulário abaixo para solicitar um empréstimo',
+        subtitleFirstRequest: 'Primeira solicitação: forneça seus documentos de identidade e preencha o formulário',
+        subtitleRegular: 'Preencha o formulário para enviar uma nova solicitação de empréstimo',
         loanType: 'Tipo de Empréstimo',
         selectLoanType: 'Selecione o tipo',
         amount: 'Valor',
@@ -4039,12 +4161,19 @@ export const translations: Record<Language, TranslationKeys> = {
         uploadDocuments: 'Enviar Documentos',
         kycDocumentsTab: 'Documentos KYC',
         additionalDocumentsTab: 'Documentos Adicionais',
+        loanDetailsTab: 'Detalhes do Empréstimo',
         identity: 'Documento de Identidade',
         proof_of_address: 'Comprovante de Residência',
         income_proof: 'Comprovante de Renda',
         business_registration: 'Registro Comercial',
         financial_statements: 'Demonstrações Financeiras',
         tax_returns: 'Declaração de Imposto de Renda',
+        requiredDocuments: 'Documentos Requeridos',
+        identityDoc: 'Documento de Identidade (RG ou Passaporte)',
+        addressProof: 'Comprovante de Residência (menos de 3 meses)',
+        bankStatement: 'Extrato Bancário (últimos 3 meses)',
+        uploadingInProgress: 'Enviando...',
+        documentsUploadedSuccess: 'documento(s) carregado(s) com sucesso',
         submit: 'Enviar Solicitação',
         submitting: 'Enviando...',
         cancel: 'Cancelar',
@@ -4061,6 +4190,27 @@ export const translations: Record<Language, TranslationKeys> = {
           commercialProperty: 'Imóvel Comercial',
           lineOfCredit: 'Linha de Crédito',
           vehicleFleet: 'Frota de Veículos',
+        },
+        errors: {
+          amountMustBePositive: 'O valor deve ser maior que 0',
+          amountMaxExceeded: 'O valor não pode exceder €1.000.000',
+          rateMustBePositive: 'A taxa deve ser positiva',
+          rateMaxExceeded: 'A taxa não pode exceder 20%',
+          durationMustBePositive: 'A duração deve ser maior que 0',
+          durationMaxExceeded: 'A duração não pode exceder 360 meses',
+          documentsRequired: 'Você deve enviar seus documentos KYC para sua primeira solicitação',
+        },
+        success: {
+          loanSubmitted: 'Solicitação de Empréstimo Enviada',
+          loanSubmittedDesc: 'Sua solicitação de empréstimo foi enviada com sucesso.',
+          documentsUploaded: 'Documentos Carregados',
+          documentsUploadedDesc: 'documento(s) enviado(s) com sucesso.',
+        },
+        error: {
+          loanError: 'Erro',
+          loanErrorDesc: 'Não foi possível criar a solicitação de empréstimo.',
+          partialUploadError: 'Erro Parcial',
+          partialUploadErrorDesc: 'documento(s) não puderam ser carregados.',
         },
       },
       transfer: {
@@ -4874,6 +5024,8 @@ export const translations: Record<Language, TranslationKeys> = {
       newLoan: {
         title: 'Nuova richiesta di prestito',
         subtitle: 'Compila il modulo qui sotto per richiedere un prestito',
+        subtitleFirstRequest: 'Prima richiesta: fornisci i tuoi documenti di identità e compila il modulo',
+        subtitleRegular: 'Compila il modulo per inviare una nuova richiesta di prestito',
         loanType: 'Tipo di prestito',
         selectLoanType: 'Seleziona il tipo',
         amount: 'Importo',
@@ -4899,12 +5051,19 @@ export const translations: Record<Language, TranslationKeys> = {
         uploadDocuments: 'Carica documenti',
         kycDocumentsTab: 'Documenti KYC',
         additionalDocumentsTab: 'Documenti aggiuntivi',
+        loanDetailsTab: 'Dettagli del Prestito',
         identity: 'Documento d\'identità',
         proof_of_address: 'Attestazione di residenza',
         income_proof: 'Prova di reddito',
         business_registration: 'Registro commerciale',
         financial_statements: 'Bilanci finanziari',
         tax_returns: 'Dichiarazione fiscale',
+        requiredDocuments: 'Documenti Richiesti',
+        identityDoc: 'Documento d\'identità (Carta d\'identità o Passaporto)',
+        addressProof: 'Attestazione di residenza (meno di 3 mesi)',
+        bankStatement: 'Estratto Conto Bancario (ultimi 3 mesi)',
+        uploadingInProgress: 'Caricamento in corso...',
+        documentsUploadedSuccess: 'documento(i) caricato(i) con successo',
         submit: 'Invia richiesta',
         submitting: 'Invio in corso...',
         cancel: 'Annulla',
@@ -4921,6 +5080,27 @@ export const translations: Record<Language, TranslationKeys> = {
           commercialProperty: 'Immobile commerciale',
           lineOfCredit: 'Linea di credito',
           vehicleFleet: 'Flotta veicoli',
+        },
+        errors: {
+          amountMustBePositive: 'L\'importo deve essere maggiore di 0',
+          amountMaxExceeded: 'L\'importo non può superare €1.000.000',
+          rateMustBePositive: 'Il tasso deve essere positivo',
+          rateMaxExceeded: 'Il tasso non può superare il 20%',
+          durationMustBePositive: 'La durata deve essere maggiore di 0',
+          durationMaxExceeded: 'La durata non può superare 360 mesi',
+          documentsRequired: 'Devi caricare i tuoi documenti KYC per la tua prima richiesta',
+        },
+        success: {
+          loanSubmitted: 'Richiesta di Prestito Inviata',
+          loanSubmittedDesc: 'La tua richiesta di prestito è stata inviata con successo.',
+          documentsUploaded: 'Documenti Caricati',
+          documentsUploadedDesc: 'documento(i) inviato(i) con successo.',
+        },
+        error: {
+          loanError: 'Errore',
+          loanErrorDesc: 'Impossibile creare la richiesta di prestito.',
+          partialUploadError: 'Errore Parziale',
+          partialUploadErrorDesc: 'documento(i) non è stato possibile caricare.',
         },
       },
       transfer: {
