@@ -479,8 +479,11 @@ type TranslationKeys = {
     title: string;
     subtitle: string;
     learnMore: string;
+    viewDetails: string;
     orderNow: string;
     orderCard: string;
+    orderSuccess: string;
+    orderSuccessDesc: string;
     modalTitle: string;
     modalSubtitle: string;
     advantagesTitle: string;
@@ -497,6 +500,14 @@ type TranslationKeys = {
       globalDesc: string;
       support: string;
       supportDesc: string;
+      maxSecurity: string;
+      maxSecurityDesc: string;
+      instantActivation: string;
+      instantActivationDesc: string;
+      noFeesEuro: string;
+      noFeesEuroDesc: string;
+      globallyAccepted: string;
+      globallyAcceptedDesc: string;
     };
     usageZonesTitle: string;
     usageZones: {
@@ -650,11 +661,20 @@ type TranslationKeys = {
       noAccountsAvailable: string;
       amount: string;
       enterAmount: string;
+      recipient: string;
+      recipientPlaceholder: string;
+      feesDescription: string;
       availableFunds: string;
       feesAndProcessing: string;
       submit: string;
       submitting: string;
+      creating: string;
+      createTransfer: string;
       cancel: string;
+      transferSuccess: string;
+      transferSuccessDesc: string;
+      transferError: string;
+      transferErrorDesc: string;
     };
     cardTerms: {
       title: string;
@@ -1573,8 +1593,11 @@ export const translations: Record<Language, TranslationKeys> = {
       title: 'Carte Bancaire Professionnelle',
       subtitle: 'Profitez d\'une carte bancaire dédiée à vos transactions professionnelles',
       learnMore: 'En savoir plus',
+      viewDetails: 'Voir les détails',
       orderNow: 'Commander maintenant',
       orderCard: 'Commander ma carte',
+      orderSuccess: 'Commande de carte virtuelle',
+      orderSuccessDesc: 'Votre carte virtuelle est en cours d\'activation. Vous recevrez les détails par email dans quelques instants.',
       modalTitle: 'Carte Bancaire Professionnelle Altus',
       modalSubtitle: 'Une carte bancaire complète pour tous vos besoins professionnels',
       advantagesTitle: 'Avantages de la carte',
@@ -1591,6 +1614,14 @@ export const translations: Record<Language, TranslationKeys> = {
         globalDesc: 'Utilisable dans plus de 200 pays et territoires',
         support: 'Support 24/7',
         supportDesc: 'Service client disponible à tout moment',
+        maxSecurity: 'Sécurité maximale',
+        maxSecurityDesc: 'Numéros temporaires avec protection totale',
+        instantActivation: 'Activation instantanée',
+        instantActivationDesc: 'Utilisable immédiatement',
+        noFeesEuro: 'Sans frais',
+        noFeesEuroDesc: '0% de frais en zone euro',
+        globallyAccepted: 'Acceptée mondialement',
+        globallyAcceptedDesc: 'Compatible Apple Pay & Google Pay',
       },
       usageZonesTitle: 'Zones d\'utilisation',
       usageZones: {
@@ -1744,11 +1775,20 @@ export const translations: Record<Language, TranslationKeys> = {
         noAccountsAvailable: 'Aucun compte bancaire disponible',
         amount: 'Montant',
         enterAmount: 'Entrez le montant',
+        recipient: 'Destinataire',
+        recipientPlaceholder: 'Nom de l\'entreprise ou du bénéficiaire',
+        feesDescription: 'Des frais de transfert de 25€ seront appliqués. Votre transfert sera traité dans les 2-3 jours ouvrables.',
         availableFunds: 'Fonds disponibles',
         feesAndProcessing: 'Frais de 2% • Traitement sous 24-48h',
         submit: 'Initier le transfert',
         submitting: 'Traitement...',
+        creating: 'Création...',
+        createTransfer: 'Créer le transfert',
         cancel: 'Annuler',
+        transferSuccess: 'Transfert initié',
+        transferSuccessDesc: 'Votre demande de transfert a été créée avec succès.',
+        transferError: 'Erreur',
+        transferErrorDesc: 'Impossible de créer le transfert.',
       },
       cardTerms: {
         title: 'Conditions générales de la carte bancaire',
@@ -2693,8 +2733,11 @@ export const translations: Record<Language, TranslationKeys> = {
       title: 'Professional Bank Card',
       subtitle: 'Enjoy a bank card dedicated to your professional transactions',
       learnMore: 'Learn more',
+      viewDetails: 'View details',
       orderNow: 'Order now',
       orderCard: 'Order my card',
+      orderSuccess: 'Virtual card order',
+      orderSuccessDesc: 'Your virtual card is being activated. You will receive details by email shortly.',
       modalTitle: 'Altus Professional Bank Card',
       modalSubtitle: 'A complete bank card for all your professional needs',
       advantagesTitle: 'Card Benefits',
@@ -2711,6 +2754,14 @@ export const translations: Record<Language, TranslationKeys> = {
         globalDesc: 'Usable in over 200 countries and territories',
         support: '24/7 Support',
         supportDesc: 'Customer service available at all times',
+        maxSecurity: 'Max security',
+        maxSecurityDesc: 'Temporary numbers with total protection',
+        instantActivation: 'Instant activation',
+        instantActivationDesc: 'Usable immediately',
+        noFeesEuro: 'No fees',
+        noFeesEuroDesc: '0% fees in euro zone',
+        globallyAccepted: 'Globally accepted',
+        globallyAcceptedDesc: 'Compatible with Apple Pay & Google Pay',
       },
       usageZonesTitle: 'Usage Zones',
       usageZones: {
@@ -2864,11 +2915,20 @@ export const translations: Record<Language, TranslationKeys> = {
         noAccountsAvailable: 'No bank accounts available',
         amount: 'Amount',
         enterAmount: 'Enter amount',
+        recipient: 'Recipient',
+        recipientPlaceholder: 'Recipient name or company',
+        feesDescription: 'Transfer fees of 25€ will apply',
         availableFunds: 'Available Funds',
         feesAndProcessing: '2% fee • Processing within 24-48h',
         submit: 'Initiate Transfer',
         submitting: 'Processing...',
+        creating: 'Creating...',
+        createTransfer: 'Create transfer',
         cancel: 'Cancel',
+        transferSuccess: 'Transfer initiated',
+        transferSuccessDesc: 'Your transfer request has been created successfully',
+        transferError: 'Error',
+        transferErrorDesc: 'Unable to create transfer',
       },
       cardTerms: {
         title: 'Bank Card Terms and Conditions',
@@ -3808,8 +3868,11 @@ export const translations: Record<Language, TranslationKeys> = {
       title: 'Tarjeta Bancaria Profesional',
       subtitle: 'Disfrute de una tarjeta bancaria dedicada a sus transacciones profesionales',
       learnMore: 'Más información',
+      viewDetails: 'Ver detalles',
       orderNow: 'Ordenar ahora',
       orderCard: 'Ordenar mi tarjeta',
+      orderSuccess: 'Pedido de tarjeta virtual',
+      orderSuccessDesc: 'Su tarjeta virtual se está activando. Recibirá los detalles por correo en breve.',
       modalTitle: 'Tarjeta Bancaria Profesional Altus',
       modalSubtitle: 'Una tarjeta bancaria completa para todas sus necesidades profesionales',
       advantagesTitle: 'Ventajas de la tarjeta',
@@ -3826,6 +3889,14 @@ export const translations: Record<Language, TranslationKeys> = {
         globalDesc: 'Utilizable en más de 200 países y territorios',
         support: 'Soporte 24/7',
         supportDesc: 'Servicio al cliente disponible en todo momento',
+        maxSecurity: 'Seguridad máxima',
+        maxSecurityDesc: 'Números temporales con protección total',
+        instantActivation: 'Activación instantánea',
+        instantActivationDesc: 'Utilizable inmediatamente',
+        noFeesEuro: 'Sin comisiones',
+        noFeesEuroDesc: '0% de comisiones en zona euro',
+        globallyAccepted: 'Aceptada mundialmente',
+        globallyAcceptedDesc: 'Compatible con Apple Pay y Google Pay',
       },
       usageZonesTitle: 'Zonas de uso',
       usageZones: {
@@ -3979,11 +4050,20 @@ export const translations: Record<Language, TranslationKeys> = {
         noAccountsAvailable: 'No hay cuentas bancarias disponibles',
         amount: 'Monto',
         enterAmount: 'Ingrese el monto',
+        recipient: 'Destinatario',
+        recipientPlaceholder: 'Nombre de la empresa o beneficiario',
+        feesDescription: 'Se aplicarán tarifas de transferencia de 25€',
         availableFunds: 'Fondos Disponibles',
         feesAndProcessing: 'Tarifa del 2% • Procesamiento en 24-48h',
         submit: 'Iniciar Transferencia',
         submitting: 'Procesando...',
+        creating: 'Creando...',
+        createTransfer: 'Crear transferencia',
         cancel: 'Cancelar',
+        transferSuccess: 'Transferencia iniciada',
+        transferSuccessDesc: 'Su solicitud de transferencia ha sido creada exitosamente',
+        transferError: 'Error',
+        transferErrorDesc: 'No se pudo crear la transferencia',
       },
       cardTerms: {
         title: 'Términos y Condiciones de la Tarjeta Bancaria',
@@ -4923,8 +5003,11 @@ export const translations: Record<Language, TranslationKeys> = {
       title: 'Cartão Bancário Premium Altus',
       subtitle: 'Peça seu cartão exclusivo e aproveite vantagens excepcionais',
       learnMore: 'Saiba Mais',
+      viewDetails: 'Ver detalhes',
       orderNow: 'Pedir Agora',
       orderCard: 'Pedir Cartão',
+      orderSuccess: 'Pedido de cartão virtual',
+      orderSuccessDesc: 'Seu cartão virtual está sendo ativado. Você receberá detalhes por e-mail em breve.',
       modalTitle: 'Cartão Bancário Premium Altus',
       modalSubtitle: 'Descubra todas as vantagens do nosso cartão exclusivo',
       advantagesTitle: 'Vantagens Exclusivas',
@@ -4941,6 +5024,14 @@ export const translations: Record<Language, TranslationKeys> = {
         globalDesc: 'Aceito em milhões de estabelecimentos em todo o mundo',
         support: 'Suporte 24/7',
         supportDesc: 'Assistência dedicada disponível a qualquer momento',
+        maxSecurity: 'Segurança máxima',
+        maxSecurityDesc: 'Números temporários com proteção total',
+        instantActivation: 'Ativação instantânea',
+        instantActivationDesc: 'Utilizável imediatamente',
+        noFeesEuro: 'Sem taxas',
+        noFeesEuroDesc: '0% de taxas em zona euro',
+        globallyAccepted: 'Aceita globalmente',
+        globallyAcceptedDesc: 'Compatível com Apple Pay e Google Pay',
       },
       usageZonesTitle: 'Zonas de Uso',
       usageZones: {
@@ -5094,11 +5185,20 @@ export const translations: Record<Language, TranslationKeys> = {
         noAccountsAvailable: 'Nenhuma conta bancária disponível. Adicione uma conta primeiro.',
         amount: 'Valor',
         enterAmount: 'Digite o valor',
+        recipient: 'Destinatário',
+        recipientPlaceholder: 'Nome da empresa ou beneficiário',
+        feesDescription: 'Taxas de transferência de 25€ serão aplicadas',
         availableFunds: 'Fundos Disponíveis',
         feesAndProcessing: 'Taxas e Processamento',
         submit: 'Iniciar Transferência',
         submitting: 'Processando...',
+        creating: 'Criando...',
+        createTransfer: 'Criar transferência',
         cancel: 'Cancelar',
+        transferSuccess: 'Transferência iniciada',
+        transferSuccessDesc: 'Sua solicitação de transferência foi criada com sucesso',
+        transferError: 'Erro',
+        transferErrorDesc: 'Não foi possível criar a transferência',
       },
       cardTerms: {
         title: 'Termos e Condições do Cartão Premium Altus',
@@ -6040,8 +6140,11 @@ export const translations: Record<Language, TranslationKeys> = {
       title: 'Carta bancaria Premium Altus',
       subtitle: 'Richiedi la tua carta esclusiva e approfitta di vantaggi eccezionali',
       learnMore: 'Scopri di più',
+      viewDetails: 'Visualizza dettagli',
       orderNow: 'Richiedi ora',
       orderCard: 'Richiedi carta',
+      orderSuccess: 'Ordine carta virtuale',
+      orderSuccessDesc: 'La tua carta virtuale è in attivazione. Riceverai i dettagli via email a breve.',
       modalTitle: 'Carta bancaria Premium Altus',
       modalSubtitle: 'Scopri tutti i vantaggi della nostra carta esclusiva',
       advantagesTitle: 'Vantaggi esclusivi',
@@ -6058,6 +6161,14 @@ export const translations: Record<Language, TranslationKeys> = {
         globalDesc: 'Accettata in milioni di esercizi in tutto il mondo',
         support: 'Supporto 24/7',
         supportDesc: 'Assistenza dedicata disponibile in qualsiasi momento',
+        maxSecurity: 'Massima sicurezza',
+        maxSecurityDesc: 'Numeri temporanei con protezione totale',
+        instantActivation: 'Attivazione istantanea',
+        instantActivationDesc: 'Utilizzabile immediatamente',
+        noFeesEuro: 'Senza commissioni',
+        noFeesEuroDesc: '0% di commissioni in zona euro',
+        globallyAccepted: 'Accettata in tutto il mondo',
+        globallyAcceptedDesc: 'Compatibile con Apple Pay e Google Pay',
       },
       usageZonesTitle: 'Zone d\'uso',
       usageZones: {
@@ -6211,11 +6322,20 @@ export const translations: Record<Language, TranslationKeys> = {
         noAccountsAvailable: 'Nessun conto bancario disponibile. Aggiungi prima un conto.',
         amount: 'Importo',
         enterAmount: 'Inserisci l\'importo',
+        recipient: 'Destinatario',
+        recipientPlaceholder: 'Nome dell\'azienda o beneficiario',
+        feesDescription: 'Verranno applicate commissioni di trasferimento di 25€',
         availableFunds: 'Fondi disponibili',
         feesAndProcessing: 'Commissioni e elaborazione',
         submit: 'Avvia trasferimento',
         submitting: 'Elaborazione in corso...',
+        creating: 'Creazione...',
+        createTransfer: 'Crea trasferimento',
         cancel: 'Annulla',
+        transferSuccess: 'Trasferimento avviato',
+        transferSuccessDesc: 'La richiesta di trasferimento è stata creata con successo',
+        transferError: 'Errore',
+        transferErrorDesc: 'Impossibile creare il trasferimento',
       },
       cardTerms: {
         title: 'Termini e condizioni della carta Premium Altus',
@@ -7157,8 +7277,11 @@ export const translations: Record<Language, TranslationKeys> = {
       title: 'Altus Premium-Bankkarte',
       subtitle: 'Bestellen Sie Ihre exklusive Karte und profitieren Sie von außergewöhnlichen Vorteilen',
       learnMore: 'Mehr erfahren',
+      viewDetails: 'Details anzeigen',
       orderNow: 'Jetzt bestellen',
       orderCard: 'Karte bestellen',
+      orderSuccess: 'Virtuelle Karte bestellen',
+      orderSuccessDesc: 'Ihre virtuelle Karte wird aktiviert. Sie erhalten die Details in Kürze per E-Mail.',
       modalTitle: 'Altus Premium-Bankkarte',
       modalSubtitle: 'Entdecken Sie alle Vorteile unserer exklusiven Karte',
       advantagesTitle: 'Exklusive Vorteile',
@@ -7175,6 +7298,14 @@ export const translations: Record<Language, TranslationKeys> = {
         globalDesc: 'Akzeptiert bei Millionen von Händlern weltweit',
         support: '24/7-Support',
         supportDesc: 'Dedizierter Support jederzeit verfügbar',
+        maxSecurity: 'Maximale Sicherheit',
+        maxSecurityDesc: 'Temporäre Nummern mit vollständigem Schutz',
+        instantActivation: 'Sofortige Aktivierung',
+        instantActivationDesc: 'Sofort verwendbar',
+        noFeesEuro: 'Keine Gebühren',
+        noFeesEuroDesc: '0% Gebühren in der Eurozone',
+        globallyAccepted: 'Weltweit akzeptiert',
+        globallyAcceptedDesc: 'Kompatibel mit Apple Pay & Google Pay',
       },
       usageZonesTitle: 'Nutzungsbereiche',
       usageZones: {
@@ -7298,11 +7429,20 @@ export const translations: Record<Language, TranslationKeys> = {
         noAccountsAvailable: 'Kein Bankkonto verfügbar. Fügen Sie zuerst ein Konto hinzu.',
         amount: 'Betrag',
         enterAmount: 'Betrag eingeben',
+        recipient: 'Empfänger',
+        recipientPlaceholder: 'Name des Unternehmens oder Begünstigten',
+        feesDescription: 'Es fallen Überweisungsgebühren von 25€ an',
         availableFunds: 'Verfügbare Mittel',
         feesAndProcessing: 'Gebühren und Bearbeitung',
         submit: 'Überweisung starten',
         submitting: 'Wird bearbeitet...',
+        creating: 'Wird erstellt...',
+        createTransfer: 'Überweisung erstellen',
         cancel: 'Abbrechen',
+        transferSuccess: 'Überweisung eingeleitet',
+        transferSuccessDesc: 'Ihre Überweisungsanfrage wurde erfolgreich erstellt',
+        transferError: 'Fehler',
+        transferErrorDesc: 'Überweisung konnte nicht erstellt werden',
       },
       cardTerms: {
         title: 'Allgemeine Geschäftsbedingungen der Altus Premium-Karte',
@@ -8244,8 +8384,11 @@ export const translations: Record<Language, TranslationKeys> = {
       title: 'Altus Premium bankkaart',
       subtitle: 'Bestel uw exclusieve kaart en profiteer van uitzonderlijke voordelen',
       learnMore: 'Meer informatie',
+      viewDetails: 'Details bekijken',
       orderNow: 'Nu bestellen',
       orderCard: 'Kaart bestellen',
+      orderSuccess: 'Virtuele kaart bestellen',
+      orderSuccessDesc: 'Uw virtuele kaart wordt geactiveerd. U ontvangt de details binnenkort per e-mail.',
       modalTitle: 'Altus Premium bankkaart',
       modalSubtitle: 'Ontdek alle voordelen van onze exclusieve kaart',
       advantagesTitle: 'Exclusieve voordelen',
@@ -8262,6 +8405,14 @@ export const translations: Record<Language, TranslationKeys> = {
         globalDesc: 'Geaccepteerd bij miljoenen winkels wereldwijd',
         support: '24/7 ondersteuning',
         supportDesc: 'Toegewijde ondersteuning op elk moment beschikbaar',
+        maxSecurity: 'Maximale beveiliging',
+        maxSecurityDesc: 'Tijdelijke nummers met volledige bescherming',
+        instantActivation: 'Directe activering',
+        instantActivationDesc: 'Direct bruikbaar',
+        noFeesEuro: 'Geen kosten',
+        noFeesEuroDesc: '0% kosten in eurozone',
+        globallyAccepted: 'Wereldwijd geaccepteerd',
+        globallyAcceptedDesc: 'Compatibel met Apple Pay & Google Pay',
       },
       usageZonesTitle: 'Gebruikszones',
       usageZones: {
@@ -8385,11 +8536,20 @@ export const translations: Record<Language, TranslationKeys> = {
         noAccountsAvailable: 'Geen bankrekening beschikbaar. Voeg eerst een rekening toe.',
         amount: 'Bedrag',
         enterAmount: 'Bedrag invoeren',
+        recipient: 'Ontvanger',
+        recipientPlaceholder: 'Naam van bedrijf of begunstigde',
+        feesDescription: 'Er zijn overboekingskosten van 25€ van toepassing',
         availableFunds: 'Beschikbare middelen',
         feesAndProcessing: 'Kosten en verwerking',
         submit: 'Overschrijving starten',
         submitting: 'Verwerken...',
+        creating: 'Wordt gemaakt...',
+        createTransfer: 'Overboeking maken',
         cancel: 'Annuleren',
+        transferSuccess: 'Overboeking gestart',
+        transferSuccessDesc: 'Uw overboekingsverzoek is succesvol aangemaakt',
+        transferError: 'Fout',
+        transferErrorDesc: 'Kan overboeking niet maken',
       },
       cardTerms: {
         title: 'Algemene voorwaarden van de Altus Premium kaart',
@@ -8880,6 +9040,9 @@ translations.it.nav = {
   history: 'Storico',
   settings: 'Impostazioni',
   logout: 'Esci',
+  users: 'Utenti',
+  documents: 'Documenti KYC',
+  reports: 'Rapporti',
 };
 translations.it.dashboard = {
   ...translations.en.dashboard,
@@ -8966,6 +9129,9 @@ translations.de.nav = {
   history: 'Verlauf',
   settings: 'Einstellungen',
   logout: 'Abmelden',
+  users: 'Benutzer',
+  documents: 'KYC-Dokumente',
+  reports: 'Berichte',
 };
 translations.de.dashboard = {
   ...translations.en.dashboard,
@@ -9052,6 +9218,9 @@ translations.nl.nav = {
   history: 'Geschiedenis',
   settings: 'Instellingen',
   logout: 'Uitloggen',
+  users: 'Gebruikers',
+  documents: 'KYC-Documenten',
+  reports: 'Rapporten',
 };
 translations.nl.dashboard = {
   ...translations.en.dashboard,

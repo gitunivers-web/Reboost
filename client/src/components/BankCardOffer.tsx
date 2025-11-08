@@ -28,7 +28,7 @@ export default function BankCardOffer() {
             data-testid="button-card-details"
           >
             <Info className="h-4 w-4 mr-2" />
-            Voir les détails
+            {t.bankCard.viewDetails}
           </Button>
         </CardContent>
       </Card>
@@ -54,29 +54,29 @@ export default function BankCardOffer() {
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-950">
                   <Shield className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-sm" data-testid="text-advantage-security">Sécurité maximale</p>
-                    <p className="text-xs text-muted-foreground">Numéros temporaires avec protection totale</p>
+                    <p className="font-medium text-sm" data-testid="text-advantage-security">{t.bankCard.advantages.maxSecurity}</p>
+                    <p className="text-xs text-muted-foreground">{t.bankCard.advantages.maxSecurityDesc}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-950">
                   <Zap className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-sm" data-testid="text-advantage-instant">Activation instantanée</p>
-                    <p className="text-xs text-muted-foreground">Utilisable immédiatement</p>
+                    <p className="font-medium text-sm" data-testid="text-advantage-instant">{t.bankCard.advantages.instantActivation}</p>
+                    <p className="text-xs text-muted-foreground">{t.bankCard.advantages.instantActivationDesc}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-950">
                   <Check className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-sm" data-testid="text-advantage-nofees">Sans frais</p>
-                    <p className="text-xs text-muted-foreground">0% de frais en zone euro</p>
+                    <p className="font-medium text-sm" data-testid="text-advantage-nofees">{t.bankCard.advantages.noFeesEuro}</p>
+                    <p className="text-xs text-muted-foreground">{t.bankCard.advantages.noFeesEuroDesc}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-950">
                   <Globe className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-sm" data-testid="text-advantage-global">Acceptée mondialement</p>
-                    <p className="text-xs text-muted-foreground">Compatible Apple Pay & Google Pay</p>
+                    <p className="font-medium text-sm" data-testid="text-advantage-global">{t.bankCard.advantages.globallyAccepted}</p>
+                    <p className="text-xs text-muted-foreground">{t.bankCard.advantages.globallyAcceptedDesc}</p>
                   </div>
                 </div>
               </div>
@@ -140,8 +140,8 @@ export default function BankCardOffer() {
                 data-testid="button-order-modal"
                 onClick={() => {
                   toast({
-                    title: "Commande de carte virtuelle",
-                    description: "Votre carte virtuelle est en cours d'activation. Vous recevrez les détails par email dans quelques instants.",
+                    title: t.bankCard.orderSuccess,
+                    description: t.bankCard.orderSuccessDesc,
                   });
                   setIsModalOpen(false);
                 }}

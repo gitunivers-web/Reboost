@@ -37,16 +37,16 @@ export default function NewTransferDialog({ open, onOpenChange }: NewTransferDia
       queryClient.invalidateQueries({ queryKey: ['/api/dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['/api/transfers'] });
       toast({
-        title: 'Transfert initié',
-        description: 'Votre demande de transfert a été créée avec succès.',
+        title: t.dialogs.transfer.transferSuccess,
+        description: t.dialogs.transfer.transferSuccessDesc,
       });
       onOpenChange(false);
       setFormData({ amount: '', recipient: '' });
     },
     onError: () => {
       toast({
-        title: 'Erreur',
-        description: 'Impossible de créer le transfert.',
+        title: t.dialogs.transfer.transferError,
+        description: t.dialogs.transfer.transferErrorDesc,
         variant: 'destructive',
       });
     },
@@ -65,18 +65,18 @@ export default function NewTransferDialog({ open, onOpenChange }: NewTransferDia
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           <div className="space-y-2">
-            <Label htmlFor="recipient">Destinataire</Label>
+            <Label htmlFor="recipient">{t.dialogs.transfer.recipient}</Label>
             <Input
               id="recipient"
               type="text"
-              placeholder="Nom de l'entreprise ou du bénéficiaire"
+              placeholder={t.dialogs.transfer.recipientPlaceholder}
               value={formData.recipient}
               onChange={(e) => setFormData({ ...formData, recipient: e.target.value })}
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="amount">Montant (€)</Label>
+            <Label htmlFor="amount">{t.dialogs.transfer.amount}</Label>
             <Input
               id="amount"
               type="number"
@@ -88,15 +88,15 @@ export default function NewTransferDialog({ open, onOpenChange }: NewTransferDia
           </div>
           <div className="bg-muted p-4 rounded-md text-sm">
             <p className="text-muted-foreground">
-              Des frais de transfert de 25€ seront appliqués. Votre transfert sera traité dans les 2-3 jours ouvrables.
+              {t.dialogs.transfer.feesDescription}
             </p>
           </div>
           <div className="flex justify-end gap-3">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Annuler
+              {t.dialogs.transfer.cancel}
             </Button>
             <Button type="submit" disabled={createTransferMutation.isPending}>
-              {createTransferMutation.isPending ? 'Création...' : 'Créer le transfert'}
+              {createTransferMutation.isPending ? t.dialogs.transfer.creating : t.dialogs.transfer.createTransfer}
             </Button>
           </div>
         </form>
