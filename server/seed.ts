@@ -2,6 +2,10 @@ import { db } from "./db";
 import { users, loans, transfers, fees, transactions, adminSettings } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
+// Test credentials for demo users:
+// Email: jean.dupont@entreprise.fr, marie.martin@societe.fr, pierre.bernard@company.fr
+// Password: Password123! (same for all test users)
+
 async function seed() {
   console.log("🌱 Seeding database...");
 
@@ -14,10 +18,13 @@ async function seed() {
     return;
   }
 
+  // bcrypt hash for "Password123!" (bcrypt rounds=10)
+  const testPasswordHash = "$2b$10$fpS/SSaQILwimXFx4DVUberqRiusOyvBPJ2XBbSV6YPDAzByp0I6K";
+
   await db.insert(users).values({
     id: demoUserId,
     username: "jean.dupont",
-    password: "hashed_password",
+    password: testPasswordHash,
     email: "jean.dupont@entreprise.fr",
     fullName: "Jean Dupont",
     phone: "+33612345678",
@@ -186,7 +193,7 @@ async function seed() {
     {
       id: "user-002",
       username: "marie.martin",
-      password: "hashed_password_2",
+      password: testPasswordHash,
       email: "marie.martin@societe.fr",
       fullName: "Marie Martin",
       phone: "+33698765432",
@@ -200,7 +207,7 @@ async function seed() {
     {
       id: "user-003",
       username: "pierre.bernard",
-      password: "hashed_password_3",
+      password: testPasswordHash,
       email: "pierre.bernard@company.fr",
       fullName: "Pierre Bernard",
       phone: "+33687654321",
