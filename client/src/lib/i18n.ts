@@ -3806,6 +3806,130 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       note: 'By activating your ALTUS Virtual Card, you acknowledge having read, understood, and accepted all of these Terms and Conditions.',
     },
+    processTimeline: {
+      title: 'Financing Process',
+      subtitle: 'From your request to fund disbursement: a simplified and fast journey',
+      step1Title: 'Online Application',
+      step1Duration: '5 minutes',
+      step1Description: 'Fill out our secure form and upload your supporting documents',
+      step1Docs: [
+        'Company registration less than 3 months old',
+        'Manager\'s ID',
+        'Latest financial statements',
+        'Bank statements (3 months)'
+      ],
+      step2Title: 'File Analysis',
+      step2Duration: '24-48h',
+      step2Description: 'Our expert team reviews your request and repayment capacity',
+      step2Docs: [
+        'Document verification',
+        'Financial analysis',
+        'Creditworthiness assessment',
+        'Personalized rate calculation'
+      ],
+      step3Title: 'Approval in Principle',
+      step3Duration: '48h',
+      step3Description: 'Receipt of your detailed loan offer with final conditions',
+      step3Docs: [
+        'Approved amount',
+        'APR and monthly payments',
+        'Required guarantees',
+        'Suspensive conditions'
+      ],
+      step4Title: 'Fund Disbursement',
+      step4Duration: '7-15 days',
+      step4Description: 'Electronic contract signature and payment within 7 to 15 days after guarantee implementation',
+      step4Docs: [
+        'Loan contract signature',
+        'Guarantee implementation',
+        'Borrower insurance',
+        'Fund transfer'
+      ],
+      documentsTitle: 'Documents to Prepare Based on Your Project',
+      creationTitle: 'Business Creation',
+      creationDocs: [
+        'Detailed business plan',
+        '3-year financial forecast',
+        'Financing plan',
+        'Manager\'s CV and experience',
+        'Proof of personal contribution'
+      ],
+      repriseTitle: 'Business Acquisition',
+      repriseDocs: [
+        'Acquisition agreement protocol',
+        'Last 3 years\' financial statements',
+        'Business valuation',
+        'Commercial lease',
+        'No-lien certificate'
+      ],
+      developmentTitle: 'Development',
+      developmentDocs: [
+        'Last 3 years\' financial statements',
+        'Complete tax package',
+        'Supplier quotes (equipment)',
+        'Business bank statements (6 months)',
+        'Business forecast'
+      ],
+      incompleteTitle: 'Incomplete file? Don\'t panic!',
+      incompleteDescription: 'Our team helps you build your file. We assist you in obtaining missing documents.',
+      needHelp: 'Need help?',
+      averageTime: 'Average total time:',
+      averageTimeValue: '2 to 3 weeks from file submission to fund disbursement',
+      startApplication: 'Start my application'
+    },
+    guaranteesSection: {
+      title: 'Guarantees & Security',
+      subtitle: 'Multiple options to secure your financing and optimize your taxes',
+      organizationalTitle: 'Organizational Guarantees',
+      organizationalItems: [
+        'BPI France (40-70% of loan)',
+        'SIAGI (craftsmen/merchants guarantee)',
+        'France Active (social economy)',
+        'SOCAMA (farmers)'
+      ],
+      realTitle: 'Real Guarantees',
+      realItems: [
+        'Real estate mortgage',
+        'Business pledge',
+        'Equipment/material lien',
+        'Money lender\'s privilege'
+      ],
+      personalTitle: 'Personal Guarantees',
+      personalItems: [
+        'Manager\'s joint surety',
+        'Professional bank guarantee',
+        'First demand guarantee',
+        'Group comfort letter'
+      ],
+      insuranceTitle: 'Borrower Insurance',
+      insuranceItems: [
+        'Death / PTIA (mandatory)',
+        'Permanent disability (IPT/IPP)',
+        'Temporary incapacity (ITT)',
+        'Tax-deductible premiums'
+      ],
+      taxBenefitsTitle: 'Professional Loan Tax Benefits',
+      taxBenefit1Title: 'Interest deductibility',
+      taxBenefit1Description: 'Loan interest is deductible from your company\'s taxable income, thus reducing your profit tax.',
+      taxBenefit2Title: 'Accelerated depreciation',
+      taxBenefit2Description: 'For financed equipment, accelerated depreciation is possible under certain conditions (new, ecological equipment, etc.).',
+      taxBenefit3Title: 'Tax credit',
+      taxBenefit3Description: 'Certain investments qualify for tax credits (energy transition, digital, training).',
+      taxBenefit4Title: 'Recoverable VAT',
+      taxBenefit4Description: 'VAT on interest and processing fees is recoverable for taxable companies.',
+      taxAdvice: 'Tax advice: Consult your accountant to optimize loan deductibility and maximize your tax benefits.',
+      contributionTitle: 'Required Personal Contribution',
+      equipmentPercentage: '10-15%',
+      equipmentLabel: 'Equipment',
+      equipmentDescription: 'Equipment, vehicles',
+      creationPercentage: '20-30%',
+      creationLabel: 'Creation / Acquisition',
+      creationDescription: 'Business assets',
+      realEstatePercentage: '20-25%',
+      realEstateLabel: 'Commercial Real Estate',
+      realEstateDescription: 'Premises, offices',
+      contributionDisclaimer: '* Indicative percentages may vary depending on your project and profile'
+    },
     footer: {
       description: 'Your trusted partner for all your financing projects. Loan solutions tailored to individuals and professionals.',
       phone: '+33 1 23 45 67 89',
@@ -5034,6 +5158,130 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       note: 'Al activar su Tarjeta Virtual ALTUS, usted reconoce haber leído, comprendido y aceptado la totalidad de las presentes Condiciones Generales de Uso.',
     },
+    processTimeline: {
+      title: 'Proceso de Financiamiento',
+      subtitle: 'Desde su solicitud hasta el desembolso de fondos: un recorrido simplificado y rápido',
+      step1Title: 'Solicitud en línea',
+      step1Duration: '5 minutos',
+      step1Description: 'Complete nuestro formulario seguro y cargue sus documentos justificativos',
+      step1Docs: [
+        'Registro de empresa de menos de 3 meses',
+        'Documento de identidad del gerente',
+        'Últimos estados financieros',
+        'Estados de cuenta bancarios (3 meses)'
+      ],
+      step2Title: 'Análisis del expediente',
+      step2Duration: '24-48h',
+      step2Description: 'Nuestro equipo de expertos estudia su solicitud y capacidad de reembolso',
+      step2Docs: [
+        'Verificación de documentos',
+        'Análisis financiero',
+        'Estudio de solvencia',
+        'Cálculo de tasa personalizada'
+      ],
+      step3Title: 'Aprobación preliminar',
+      step3Duration: '48h',
+      step3Description: 'Recepción de su oferta de préstamo detallada con condiciones definitivas',
+      step3Docs: [
+        'Monto aprobado',
+        'TAE y mensualidades',
+        'Garantías requeridas',
+        'Condiciones suspensivas'
+      ],
+      step4Title: 'Desembolso de fondos',
+      step4Duration: '7-15 días',
+      step4Description: 'Firma electrónica del contrato y pago en 7 a 15 días después de implementar las garantías',
+      step4Docs: [
+        'Firma del contrato de préstamo',
+        'Implementación de garantías',
+        'Seguro del prestatario',
+        'Transferencia de fondos'
+      ],
+      documentsTitle: 'Documentos a Preparar según su Proyecto',
+      creationTitle: 'Creación de empresa',
+      creationDocs: [
+        'Plan de negocio detallado',
+        'Previsión financiera a 3 años',
+        'Plan de financiamiento',
+        'CV del gerente y experiencia',
+        'Justificante de aporte personal'
+      ],
+      repriseTitle: 'Adquisición de empresa',
+      repriseDocs: [
+        'Protocolo de acuerdo de adquisición',
+        'Balances de los últimos 3 ejercicios',
+        'Valoración del fondo de comercio',
+        'Contrato de arrendamiento comercial',
+        'Certificado sin gravámenes'
+      ],
+      developmentTitle: 'Desarrollo',
+      developmentDocs: [
+        'Balances de los últimos 3 ejercicios',
+        'Paquete fiscal completo',
+        'Cotizaciones de proveedores (equipo)',
+        'Estados de cuenta bancarios profesionales (6 meses)',
+        'Previsión de actividad'
+      ],
+      incompleteTitle: '¿Expediente incompleto? ¡No se preocupe!',
+      incompleteDescription: 'Nuestro equipo le ayuda a constituir su expediente. Le asistimos para obtener los documentos faltantes.',
+      needHelp: '¿Necesita ayuda?',
+      averageTime: 'Tiempo total promedio:',
+      averageTimeValue: '2 a 3 semanas desde la presentación del expediente hasta el desembolso de fondos',
+      startApplication: 'Comenzar mi solicitud'
+    },
+    guaranteesSection: {
+      title: 'Garantías y Seguridad',
+      subtitle: 'Múltiples opciones para asegurar su financiamiento y optimizar sus impuestos',
+      organizationalTitle: 'Garantías Organizacionales',
+      organizationalItems: [
+        'BPI France (40-70% del préstamo)',
+        'SIAGI (garantía artesanos/comerciantes)',
+        'France Active (economía social)',
+        'SOCAMA (agricultores)'
+      ],
+      realTitle: 'Garantías Reales',
+      realItems: [
+        'Hipoteca sobre bienes inmobiliarios',
+        'Prenda del fondo de comercio',
+        'Prenda sobre material/equipo',
+        'Privilegio del prestamista de dinero'
+      ],
+      personalTitle: 'Garantías Personales',
+      personalItems: [
+        'Fianza solidaria del gerente',
+        'Fianza bancaria profesional',
+        'Garantía a primera solicitud',
+        'Carta de confort del grupo'
+      ],
+      insuranceTitle: 'Seguro del Prestatario',
+      insuranceItems: [
+        'Fallecimiento / PTIA (obligatorio)',
+        'Invalidez permanente (IPT/IPP)',
+        'Incapacidad temporal (ITT)',
+        'Cotizaciones fiscalmente deducibles'
+      ],
+      taxBenefitsTitle: 'Ventajas Fiscales del Préstamo Profesional',
+      taxBenefit1Title: 'Deducibilidad de intereses',
+      taxBenefit1Description: 'Los intereses del préstamo son deducibles del resultado fiscal de su empresa, reduciendo así su impuesto sobre los beneficios.',
+      taxBenefit2Title: 'Depreciación acelerada',
+      taxBenefit2Description: 'Para equipos financiados, posibilidad de depreciación acelerada bajo ciertas condiciones (equipo nuevo, ecológico, etc.).',
+      taxBenefit3Title: 'Crédito fiscal',
+      taxBenefit3Description: 'Ciertas inversiones dan derecho a créditos fiscales (transición energética, digital, formación).',
+      taxBenefit4Title: 'IVA recuperable',
+      taxBenefit4Description: 'El IVA sobre intereses y gastos de tramitación es recuperable para empresas sujetas.',
+      taxAdvice: 'Consejo fiscal: Consulte a su contador para optimizar la deducibilidad de sus préstamos y maximizar sus ventajas fiscales.',
+      contributionTitle: 'Aporte Personal Requerido',
+      equipmentPercentage: '10-15%',
+      equipmentLabel: 'Equipo',
+      equipmentDescription: 'Material, vehículos',
+      creationPercentage: '20-30%',
+      creationLabel: 'Creación / Adquisición',
+      creationDescription: 'Fondo de comercio',
+      realEstatePercentage: '20-25%',
+      realEstateLabel: 'Inmobiliario Profesional',
+      realEstateDescription: 'Locales, oficinas',
+      contributionDisclaimer: '* Porcentajes indicativos que pueden variar según su proyecto y perfil'
+    },
     footer: {
       description: 'Su socio de confianza para todos sus proyectos de financiamiento. Soluciones de préstamo adaptadas a particulares y profesionales.',
       phone: '+33 1 23 45 67 89',
@@ -6261,6 +6509,130 @@ export const translations: Record<Language, TranslationKeys> = {
         content: 'Os presentes TCG são regidos pela lei portuguesa. Qualquer litígio relativo à sua interpretação ou execução é da competência exclusiva dos tribunais portugueses.',
       },
       note: 'Ao ativar o seu Cartão Virtual ALTUS, você reconhece ter lido, compreendido e aceitado a totalidade dos presentes Termos e Condições de Uso.',
+    },
+    processTimeline: {
+      title: 'Processo de Financiamento',
+      subtitle: 'Do seu pedido ao desembolso dos fundos: um percurso simplificado e rápido',
+      step1Title: 'Pedido online',
+      step1Duration: '5 minutos',
+      step1Description: 'Preencha nosso formulário seguro e carregue seus documentos comprovativos',
+      step1Docs: [
+        'Registro da empresa com menos de 3 meses',
+        'Documento de identidade do gerente',
+        'Últimas demonstrações financeiras',
+        'Extratos bancários (3 meses)'
+      ],
+      step2Title: 'Análise do dossiê',
+      step2Duration: '24-48h',
+      step2Description: 'Nossa equipe de especialistas estuda seu pedido e capacidade de reembolso',
+      step2Docs: [
+        'Verificação de documentos',
+        'Análise financeira',
+        'Estudo de solvabilidade',
+        'Cálculo de taxa personalizada'
+      ],
+      step3Title: 'Aprovação preliminar',
+      step3Duration: '48h',
+      step3Description: 'Recepção da sua oferta de empréstimo detalhada com condições definitivas',
+      step3Docs: [
+        'Montante aprovado',
+        'TAEG e mensalidades',
+        'Garantias necessárias',
+        'Condições suspensivas'
+      ],
+      step4Title: 'Desembolso de fundos',
+      step4Duration: '7-15 dias',
+      step4Description: 'Assinatura eletrônica do contrato e pagamento em 7 a 15 dias após implementação das garantias',
+      step4Docs: [
+        'Assinatura do contrato de empréstimo',
+        'Implementação de garantias',
+        'Seguro do mutuário',
+        'Transferência de fundos'
+      ],
+      documentsTitle: 'Documentos a Preparar de Acordo com Seu Projeto',
+      creationTitle: 'Criação de empresa',
+      creationDocs: [
+        'Plano de negócios detalhado',
+        'Previsão financeira de 3 anos',
+        'Plano de financiamento',
+        'CV do gerente e experiência',
+        'Comprovante de aporte pessoal'
+      ],
+      repriseTitle: 'Aquisição de empresa',
+      repriseDocs: [
+        'Protocolo de acordo de aquisição',
+        'Balanços dos últimos 3 exercícios',
+        'Avaliação do fundo de comércio',
+        'Contrato de arrendamento comercial',
+        'Certificado sem ônus'
+      ],
+      developmentTitle: 'Desenvolvimento',
+      developmentDocs: [
+        'Balanços dos últimos 3 exercícios',
+        'Pacote fiscal completo',
+        'Orçamentos de fornecedores (equipamento)',
+        'Extratos bancários empresariais (6 meses)',
+        'Previsão de atividade'
+      ],
+      incompleteTitle: 'Dossiê incompleto? Não entre em pânico!',
+      incompleteDescription: 'Nossa equipe ajuda você a constituir seu dossiê. Ajudamos você a obter os documentos faltantes.',
+      needHelp: 'Precisa de ajuda?',
+      averageTime: 'Prazo total médio:',
+      averageTimeValue: '2 a 3 semanas desde a apresentação do dossiê até o desembolso dos fundos',
+      startApplication: 'Começar meu pedido'
+    },
+    guaranteesSection: {
+      title: 'Garantias e Segurança',
+      subtitle: 'Múltiplas opções para garantir seu financiamento e otimizar seus impostos',
+      organizationalTitle: 'Garantias Organizacionais',
+      organizationalItems: [
+        'BPI France (40-70% do empréstimo)',
+        'SIAGI (garantia artesãos/comerciantes)',
+        'France Active (economia social)',
+        'SOCAMA (agricultores)'
+      ],
+      realTitle: 'Garantias Reais',
+      realItems: [
+        'Hipoteca sobre bens imobiliários',
+        'Penhor do fundo de comércio',
+        'Penhor sobre material/equipamento',
+        'Privilégio do credor de dinheiro'
+      ],
+      personalTitle: 'Garantias Pessoais',
+      personalItems: [
+        'Fiança solidária do gerente',
+        'Fiança bancária profissional',
+        'Garantia à primeira solicitação',
+        'Carta de conforto do grupo'
+      ],
+      insuranceTitle: 'Seguro do Mutuário',
+      insuranceItems: [
+        'Morte / PTIA (obrigatório)',
+        'Invalidez permanente (IPT/IPP)',
+        'Incapacidade temporária (ITT)',
+        'Cotizações fiscalmente dedutíveis'
+      ],
+      taxBenefitsTitle: 'Benefícios Fiscais do Empréstimo Profissional',
+      taxBenefit1Title: 'Dedutibilidade de juros',
+      taxBenefit1Description: 'Os juros do empréstimo são dedutíveis do resultado fiscal da sua empresa, reduzindo assim seu imposto sobre os lucros.',
+      taxBenefit2Title: 'Depreciação acelerada',
+      taxBenefit2Description: 'Para equipamentos financiados, possibilidade de depreciação acelerada sob certas condições (equipamento novo, ecológico, etc.).',
+      taxBenefit3Title: 'Crédito fiscal',
+      taxBenefit3Description: 'Certos investimentos dão direito a créditos fiscais (transição energética, digital, formação).',
+      taxBenefit4Title: 'IVA recuperável',
+      taxBenefit4Description: 'O IVA sobre juros e taxas de processamento é recuperável para empresas sujeitas.',
+      taxAdvice: 'Conselho fiscal: Consulte seu contador para otimizar a dedutibilidade de seus empréstimos e maximizar seus benefícios fiscais.',
+      contributionTitle: 'Aporte Pessoal Necessário',
+      equipmentPercentage: '10-15%',
+      equipmentLabel: 'Equipamento',
+      equipmentDescription: 'Material, veículos',
+      creationPercentage: '20-30%',
+      creationLabel: 'Criação / Aquisição',
+      creationDescription: 'Fundo de comércio',
+      realEstatePercentage: '20-25%',
+      realEstateLabel: 'Imobiliário Profissional',
+      realEstateDescription: 'Locais, escritórios',
+      contributionDisclaimer: '* Porcentagens indicativas que podem variar de acordo com seu projeto e perfil'
     },
     footer: {
       description: 'Seu parceiro de confiança para todos os seus projetos de financiamento. Soluções de empréstimo adaptadas a particulares e profissionais.',
@@ -7492,6 +7864,130 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       note: 'Attivando la vostra Carta Virtuale ALTUS, riconoscete di aver letto, compreso e accettato l\'interezza delle presenti Condizioni Generali d\'Uso.',
     },
+    processTimeline: {
+      title: 'Processo di Finanziamento',
+      subtitle: 'Dalla vostra richiesta all\'erogazione dei fondi: un percorso semplificato e rapido',
+      step1Title: 'Richiesta online',
+      step1Duration: '5 minuti',
+      step1Description: 'Compilate il nostro modulo sicuro e caricate i vostri documenti giustificativi',
+      step1Docs: [
+        'Visura camerale di meno di 3 mesi',
+        'Documento d\'identità del dirigente',
+        'Ultimi bilanci contabili',
+        'Estratti conto bancari (3 mesi)'
+      ],
+      step2Title: 'Analisi del dossier',
+      step2Duration: '24-48h',
+      step2Description: 'Il nostro team di esperti studia la vostra richiesta e capacità di rimborso',
+      step2Docs: [
+        'Verifica dei documenti',
+        'Analisi finanziaria',
+        'Studio della solvibilità',
+        'Calcolo del tasso personalizzato'
+      ],
+      step3Title: 'Accordo di principio',
+      step3Duration: '48h',
+      step3Description: 'Ricezione della vostra offerta di prestito dettagliata con condizioni definitive',
+      step3Docs: [
+        'Importo accordato',
+        'TAEG e rate mensili',
+        'Garanzie richieste',
+        'Condizioni sospensive'
+      ],
+      step4Title: 'Erogazione dei fondi',
+      step4Duration: '7-15 giorni',
+      step4Description: 'Firma elettronica del contratto e versamento entro 7-15 giorni dopo l\'implementazione delle garanzie',
+      step4Docs: [
+        'Firma del contratto di prestito',
+        'Implementazione garanzie',
+        'Assicurazione mutuatario',
+        'Bonifico dei fondi'
+      ],
+      documentsTitle: 'Documenti da Preparare secondo il Vostro Progetto',
+      creationTitle: 'Creazione d\'impresa',
+      creationDocs: [
+        'Business plan dettagliato',
+        'Previsione finanziaria a 3 anni',
+        'Piano di finanziamento',
+        'CV del dirigente ed esperienza',
+        'Giustificativo apporto personale'
+      ],
+      repriseTitle: 'Acquisizione d\'impresa',
+      repriseDocs: [
+        'Protocollo di accordo di acquisizione',
+        'Bilanci degli ultimi 3 esercizi',
+        'Valutazione dell\'avviamento',
+        'Contratto di locazione commerciale',
+        'Attestazione senza gravami'
+      ],
+      developmentTitle: 'Sviluppo',
+      developmentDocs: [
+        'Bilanci degli ultimi 3 esercizi',
+        'Pacchetto fiscale completo',
+        'Preventivi fornitori (attrezzature)',
+        'Estratti conto bancari professionali (6 mesi)',
+        'Previsione di attività'
+      ],
+      incompleteTitle: 'Dossier incompleto? Niente panico!',
+      incompleteDescription: 'Il nostro team vi aiuta a costituire il vostro dossier. Vi assistiamo nell\'ottenere i documenti mancanti.',
+      needHelp: 'Bisogno di aiuto?',
+      averageTime: 'Tempo totale medio:',
+      averageTimeValue: '2-3 settimane dal deposito del dossier all\'erogazione dei fondi',
+      startApplication: 'Iniziare la mia richiesta'
+    },
+    guaranteesSection: {
+      title: 'Garanzie e Sicurezza',
+      subtitle: 'Molteplici opzioni per garantire il vostro finanziamento e ottimizzare la fiscalità',
+      organizationalTitle: 'Garanzie Organizzative',
+      organizationalItems: [
+        'BPI France (40-70% del prestito)',
+        'SIAGI (garanzia artigiani/commercianti)',
+        'France Active (economia sociale)',
+        'SOCAMA (agricoltori)'
+      ],
+      realTitle: 'Garanzie Reali',
+      realItems: [
+        'Ipoteca su beni immobiliari',
+        'Pegno sull\'avviamento',
+        'Pegno su materiali/attrezzature',
+        'Privilegio del prestatore di denaro'
+      ],
+      personalTitle: 'Garanzie Personali',
+      personalItems: [
+        'Fideiussione solidale del dirigente',
+        'Fideiussione bancaria professionale',
+        'Garanzia a prima richiesta',
+        'Lettera di conforto del gruppo'
+      ],
+      insuranceTitle: 'Assicurazione Mutuatario',
+      insuranceItems: [
+        'Decesso / PTIA (obbligatoria)',
+        'Invalidità permanente (IPT/IPP)',
+        'Incapacità temporanea (ITT)',
+        'Contributi fiscalmente deducibili'
+      ],
+      taxBenefitsTitle: 'Vantaggi Fiscali del Prestito Professionale',
+      taxBenefit1Title: 'Deducibilità degli interessi',
+      taxBenefit1Description: 'Gli interessi del prestito sono deducibili dal risultato fiscale della vostra impresa, riducendo così l\'imposta sui benefici.',
+      taxBenefit2Title: 'Ammortamento accelerato',
+      taxBenefit2Description: 'Per le attrezzature finanziate, possibilità di ammortamento accelerato secondo certe condizioni (materiale nuovo, ecologico, ecc.).',
+      taxBenefit3Title: 'Credito d\'imposta',
+      taxBenefit3Description: 'Certi investimenti danno diritto a crediti d\'imposta (transizione energetica, digitale, formazione).',
+      taxBenefit4Title: 'IVA recuperabile',
+      taxBenefit4Description: 'L\'IVA sugli interessi e sulle spese di pratica è recuperabile per le imprese soggette.',
+      taxAdvice: 'Consiglio fiscale: Consultate il vostro commercialista per ottimizzare la deducibilità dei vostri prestiti e massimizzare i vostri vantaggi fiscali.',
+      contributionTitle: 'Apporto Personale Richiesto',
+      equipmentPercentage: '10-15%',
+      equipmentLabel: 'Attrezzature',
+      equipmentDescription: 'Materiali, veicoli',
+      creationPercentage: '20-30%',
+      creationLabel: 'Creazione / Acquisizione',
+      creationDescription: 'Avviamento',
+      realEstatePercentage: '20-25%',
+      realEstateLabel: 'Immobiliare Professionale',
+      realEstateDescription: 'Locali, uffici',
+      contributionDisclaimer: '* Percentuali indicative che possono variare secondo il vostro progetto e profilo'
+    },
     footer: {
       description: 'Il vostro partner di fiducia per tutti i vostri progetti di finanziamento. Soluzioni di prestito adattate a privati e professionisti.',
       phone: '+33 1 23 45 67 89',
@@ -8692,6 +9188,130 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       note: 'Durch Aktivierung Ihrer ALTUS Virtuellen Karte bestätigen Sie, dass Sie die gesamten Allgemeinen Nutzungsbedingungen gelesen, verstanden und akzeptiert haben.',
     },
+    processTimeline: {
+      title: 'Finanzierungsprozess',
+      subtitle: 'Von Ihrem Antrag bis zur Auszahlung: ein vereinfachter und schneller Ablauf',
+      step1Title: 'Online-Antrag',
+      step1Duration: '5 Minuten',
+      step1Description: 'Füllen Sie unser sicheres Formular aus und laden Sie Ihre Unterlagen hoch',
+      step1Docs: [
+        'Handelsregisterauszug unter 3 Monaten',
+        'Ausweis des Geschäftsführers',
+        'Letzte Jahresabschlüsse',
+        'Kontoauszüge (3 Monate)'
+      ],
+      step2Title: 'Prüfung der Unterlagen',
+      step2Duration: '24-48h',
+      step2Description: 'Unser Expertenteam prüft Ihren Antrag und Ihre Rückzahlungsfähigkeit',
+      step2Docs: [
+        'Prüfung der Dokumente',
+        'Finanzanalyse',
+        'Bonitätsprüfung',
+        'Berechnung des persönlichen Zinssatzes'
+      ],
+      step3Title: 'Grundsätzliche Zusage',
+      step3Duration: '48h',
+      step3Description: 'Erhalt Ihres detaillierten Kreditangebots mit endgültigen Konditionen',
+      step3Docs: [
+        'Bewilligter Betrag',
+        'Effektivzins und Monatsraten',
+        'Erforderliche Sicherheiten',
+        'Aufschiebende Bedingungen'
+      ],
+      step4Title: 'Auszahlung',
+      step4Duration: '7-15 Tage',
+      step4Description: 'Elektronische Vertragsunterzeichnung und Zahlung innerhalb von 7-15 Tagen nach Implementierung der Sicherheiten',
+      step4Docs: [
+        'Unterzeichnung des Kreditvertrags',
+        'Implementierung der Sicherheiten',
+        'Kreditnehmerversicherung',
+        'Überweisung der Mittel'
+      ],
+      documentsTitle: 'Vorzubereitende Dokumente je nach Projekt',
+      creationTitle: 'Unternehmensgründung',
+      creationDocs: [
+        'Detaillierter Businessplan',
+        '3-Jahres-Finanzprognose',
+        'Finanzierungsplan',
+        'Lebenslauf des Geschäftsführers und Erfahrung',
+        'Nachweis des Eigenkapitals'
+      ],
+      repriseTitle: 'Unternehmensübernahme',
+      repriseDocs: [
+        'Übernahmevertrag',
+        'Jahresabschlüsse der letzten 3 Jahre',
+        'Bewertung des Geschäftswerts',
+        'Gewerbemietvertrag',
+        'Unbedenklichkeitsbescheinigung'
+      ],
+      developmentTitle: 'Entwicklung',
+      developmentDocs: [
+        'Jahresabschlüsse der letzten 3 Jahre',
+        'Vollständiges Steuerpaket',
+        'Lieferantenangebote (Ausrüstung)',
+        'Geschäftskontoauszüge (6 Monate)',
+        'Geschäftsprognose'
+      ],
+      incompleteTitle: 'Unvollständige Unterlagen? Kein Problem!',
+      incompleteDescription: 'Unser Team hilft Ihnen bei der Zusammenstellung Ihrer Unterlagen. Wir unterstützen Sie beim Erhalt fehlender Dokumente.',
+      needHelp: 'Brauchen Sie Hilfe?',
+      averageTime: 'Durchschnittliche Gesamtdauer:',
+      averageTimeValue: '2-3 Wochen von der Einreichung bis zur Auszahlung',
+      startApplication: 'Meinen Antrag starten'
+    },
+    guaranteesSection: {
+      title: 'Sicherheiten und Absicherung',
+      subtitle: 'Mehrere Optionen zur Absicherung Ihrer Finanzierung und Optimierung Ihrer Steuern',
+      organizationalTitle: 'Organisatorische Sicherheiten',
+      organizationalItems: [
+        'BPI France (40-70% des Kredits)',
+        'SIAGI (Handwerker-/Händlergarantie)',
+        'France Active (Sozialwirtschaft)',
+        'SOCAMA (Landwirte)'
+      ],
+      realTitle: 'Dingliche Sicherheiten',
+      realItems: [
+        'Hypothek auf Immobilien',
+        'Verpfändung des Geschäftswerts',
+        'Pfandrecht an Material/Ausrüstung',
+        'Darlehensgeber-Privileg'
+      ],
+      personalTitle: 'Persönliche Sicherheiten',
+      personalItems: [
+        'Gesamtschuldnerische Bürgschaft des Geschäftsführers',
+        'Professionelle Bankbürgschaft',
+        'Garantie auf erste Anforderung',
+        'Patronatserklärung der Gruppe'
+      ],
+      insuranceTitle: 'Kreditnehmerversicherung',
+      insuranceItems: [
+        'Tod / PTIA (obligatorisch)',
+        'Dauerhafte Invalidität (IPT/IPP)',
+        'Zeitweilige Arbeitsunfähigkeit (ITT)',
+        'Steuerlich absetzbare Beiträge'
+      ],
+      taxBenefitsTitle: 'Steuervorteile des Geschäftskredits',
+      taxBenefit1Title: 'Absetzbarkeit der Zinsen',
+      taxBenefit1Description: 'Die Darlehenszinsen sind vom steuerlichen Ergebnis Ihres Unternehmens absetzbar und reduzieren somit Ihre Gewinnsteuer.',
+      taxBenefit2Title: 'Beschleunigte Abschreibung',
+      taxBenefit2Description: 'Für finanzierte Ausrüstung ist unter bestimmten Bedingungen eine beschleunigte Abschreibung möglich (neue, ökologische Ausrüstung usw.).',
+      taxBenefit3Title: 'Steuergutschrift',
+      taxBenefit3Description: 'Bestimmte Investitionen berechtigen zu Steuergutschriften (Energiewende, Digital, Ausbildung).',
+      taxBenefit4Title: 'Erstattungsfähige Mehrwertsteuer',
+      taxBenefit4Description: 'Die Mehrwertsteuer auf Zinsen und Bearbeitungsgebühren ist für steuerpflichtige Unternehmen erstattungsfähig.',
+      taxAdvice: 'Steuerberatung: Konsultieren Sie Ihren Steuerberater, um die Absetzbarkeit Ihrer Kredite zu optimieren und Ihre Steuervorteile zu maximieren.',
+      contributionTitle: 'Erforderliches Eigenkapital',
+      equipmentPercentage: '10-15%',
+      equipmentLabel: 'Ausrüstung',
+      equipmentDescription: 'Material, Fahrzeuge',
+      creationPercentage: '20-30%',
+      creationLabel: 'Gründung / Übernahme',
+      creationDescription: 'Geschäftswert',
+      realEstatePercentage: '20-25%',
+      realEstateLabel: 'Gewerbeimmobilien',
+      realEstateDescription: 'Räumlichkeiten, Büros',
+      contributionDisclaimer: '* Richtwerte, die je nach Projekt und Profil variieren können'
+    },
     footer: {
       description: 'Ihr vertrauenswürdiger Partner für alle Ihre Finanzierungsprojekte. Kreditlösungen für Privat- und Geschäftskunden.',
       phone: '+33 1 23 45 67 89',
@@ -9891,6 +10511,165 @@ export const translations: Record<Language, TranslationKeys> = {
         content: 'Deze AV worden beheerst door Nederlands recht. Alle geschillen met betrekking tot hun interpretatie of uitvoering vallen onder de exclusieve bevoegdheid van de Nederlandse rechtbanken.',
       },
       note: 'Door uw ALTUS Virtuele Kaart te activeren, erkent u dat u de volledige Algemene Gebruiksvoorwaarden hebt gelezen, begrepen en geaccepteerd.',
+    },
+    processTimeline: {
+      title: 'Financieringsproces',
+      subtitle: 'Van uw aanvraag tot uitbetaling: een vereenvoudigd en snel traject',
+      step1Title: 'Online aanvraag',
+      step1Duration: '5 minuten',
+      step1Description: 'Vul ons beveiligde formulier in en upload uw documenten',
+      step1Docs: [
+        'Handelsregisteruittreksel jonger dan 3 maanden',
+        'Identiteitsbewijs van de directeur',
+        'Laatste jaarrekeningen',
+        'Bankafschriften (3 maanden)'
+      ],
+      step2Title: 'Dossieranalyse',
+      step2Duration: '24-48u',
+      step2Description: 'Ons expertenteam bestudeert uw aanvraag en terugbetalingscapaciteit',
+      step2Docs: [
+        'Verificatie van documenten',
+        'Financiële analyse',
+        'Solvabiliteitsonderzoek',
+        'Berekening van persoonlijk tarief'
+      ],
+      step3Title: 'Principe-akkoord',
+      step3Duration: '48u',
+      step3Description: 'Ontvangst van uw gedetailleerde leningaanbieding met definitieve voorwaarden',
+      step3Docs: [
+        'Toegekend bedrag',
+        'JKP en maandelijkse aflossingen',
+        'Vereiste garanties',
+        'Opschortende voorwaarden'
+      ],
+      step4Title: 'Uitbetaling van fondsen',
+      step4Duration: '7-15 dagen',
+      step4Description: 'Elektronische ondertekening van het contract en uitbetaling binnen 7-15 dagen na implementatie van garanties',
+      step4Docs: [
+        'Ondertekening leningscontract',
+        'Implementatie garanties',
+        'Kredietnemersverzekering',
+        'Overboeking van fondsen'
+      ],
+      documentsTitle: 'Voor te bereiden documenten volgens uw project',
+      creationTitle: 'Bedrijfsoprichting',
+      creationDocs: [
+        'Gedetailleerd businessplan',
+        '3-jarige financiële prognose',
+        'Financieringsplan',
+        'CV van de directeur en ervaring',
+        'Bewijs van persoonlijke inbreng'
+      ],
+      repriseTitle: 'Bedrijfsovername',
+      repriseDocs: [
+        'Overnameprotocol',
+        'Jaarrekeningen van de laatste 3 jaar',
+        'Waardering van de handelszaak',
+        'Commerciële huurovereenkomst',
+        'Verklaring van geen bezwaar'
+      ],
+      developmentTitle: 'Ontwikkeling',
+      developmentDocs: [
+        'Jaarrekeningen van de laatste 3 jaar',
+        'Volledig fiscaal pakket',
+        'Leveranciersoffertes (apparatuur)',
+        'Zakelijke bankafschriften (6 maanden)',
+        'Activiteitenprognose'
+      ],
+      incompleteTitle: 'Onvolledig dossier? Geen paniek!',
+      incompleteDescription: 'Ons team helpt u bij het samenstellen van uw dossier. Wij helpen u bij het verkrijgen van ontbrekende documenten.',
+      needHelp: 'Hulp nodig?',
+      averageTime: 'Gemiddelde totale doorlooptijd:',
+      averageTimeValue: '2-3 weken van indiening van het dossier tot uitbetaling van fondsen',
+      startApplication: 'Mijn aanvraag starten'
+    },
+    guaranteesSection: {
+      title: 'Garanties en Beveiliging',
+      subtitle: 'Meerdere opties om uw financiering veilig te stellen en uw belastingen te optimaliseren',
+      organizationalTitle: 'Organisatorische Garanties',
+      organizationalItems: [
+        'BPI France (40-70% van de lening)',
+        'SIAGI (garantie ambachtslieden/handelaren)',
+        'France Active (sociale economie)',
+        'SOCAMA (boeren)'
+      ],
+      realTitle: 'Zakelijke Garanties',
+      realItems: [
+        'Hypotheek op onroerend goed',
+        'Verpanding van handelszaak',
+        'Pandrecht op materieel/apparatuur',
+        'Privilege van geldschieter'
+      ],
+      personalTitle: 'Persoonlijke Garanties',
+      personalItems: [
+        'Hoofdelijke borg van de directeur',
+        'Professionele bankgarantie',
+        'Garantie op eerste verzoek',
+        'Comfort letter van de groep'
+      ],
+      insuranceTitle: 'Kredietnemersverzekering',
+      insuranceItems: [
+        'Overlijden / PTIA (verplicht)',
+        'Permanente invaliditeit (IPT/IPP)',
+        'Tijdelijke arbeidsongeschiktheid (ITT)',
+        'Fiscaal aftrekbare premies'
+      ],
+      taxBenefitsTitle: 'Fiscale Voordelen van de Zakelijke Lening',
+      taxBenefit1Title: 'Aftrekbaarheid van rente',
+      taxBenefit1Description: 'Leningsrente is aftrekbaar van het fiscale resultaat van uw bedrijf, waardoor uw winstbelasting wordt verlaagd.',
+      taxBenefit2Title: 'Versnelde afschrijving',
+      taxBenefit2Description: 'Voor gefinancierde apparatuur is versnelde afschrijving mogelijk onder bepaalde voorwaarden (nieuwe, ecologische apparatuur, enz.).',
+      taxBenefit3Title: 'Belastingkrediet',
+      taxBenefit3Description: 'Bepaalde investeringen geven recht op belastingkredieten (energietransitie, digitaal, training).',
+      taxBenefit4Title: 'Terugvorderbare BTW',
+      taxBenefit4Description: 'BTW op rente en dossiertkosten is terugvorderbaar voor belastingplichtige bedrijven.',
+      taxAdvice: 'Fiscaal advies: Raadpleeg uw accountant om de aftrekbaarheid van uw leningen te optimaliseren en uw fiscale voordelen te maximaliseren.',
+      contributionTitle: 'Vereiste Persoonlijke Inbreng',
+      equipmentPercentage: '10-15%',
+      equipmentLabel: 'Apparatuur',
+      equipmentDescription: 'Materieel, voertuigen',
+      creationPercentage: '20-30%',
+      creationLabel: 'Oprichting / Overname',
+      creationDescription: 'Handelszaak',
+      realEstatePercentage: '20-25%',
+      realEstateLabel: 'Zakelijk Onroerend Goed',
+      realEstateDescription: 'Panden, kantoren',
+      contributionDisclaimer: '* Indicatieve percentages die kunnen variëren afhankelijk van uw project en profiel'
+    },
+    footer: {
+      description: 'Uw betrouwbare partner voor al uw financieringsprojecten. Leningsoplossingen aangepast aan particulieren en professionals.',
+      phone: '+33 1 23 45 67 89',
+      email: 'contact@altus-group.fr',
+      address: '75 Avenue des Champs-Élysées, 75008 Parijs',
+      productsTitle: 'Onze Producten',
+      products: {
+        personal: 'Persoonlijke Leningen',
+        business: 'Zakelijke Leningen',
+        mortgage: 'Hypothecaire Lening',
+        auto: 'Autokrediet',
+        renovation: 'Renovatielening',
+      },
+      companyTitle: 'Bedrijf',
+      careers: 'Carrières',
+      legalTitle: 'Juridisch',
+      legalLinks: {
+        terms: 'Juridische Kennisgeving',
+        privacy: 'Privacybeleid',
+        cgu: 'AV',
+        cookies: 'Cookies',
+        gdpr: 'AVG',
+      },
+      helpTitle: 'Hulp',
+      helpLinks: {
+        faq: 'FAQ',
+        userGuide: 'Gebruikershandleiding',
+        support: 'Klantondersteuning',
+        simulator: 'Leningsimulator',
+        contactUs: 'Neem contact met ons op',
+      },
+      copyright: 'Altus Finance Group. Alle rechten voorbehouden.',
+      regulatory: 'Altus Finance Group is een financieringsmerk goedgekeurd door de ACPR. Kredietinstelling onder toezicht van de Banque de France.',
+      disclaimer: 'Let op, geld lenen kost ook geld. De informatie op deze pagina is uitsluitend voor informatieve doeleinden en vormt geen contractueel aanbod. Alle kredietaanvragen zijn onderworpen aan beoordeling en aanvaarding van het dossier. Een krediet verplicht u en moet worden terugbetaald. Controleer uw terugbetalingscapaciteit voordat u zich verbindt.',
     },
   } as TranslationKeys,
 };
