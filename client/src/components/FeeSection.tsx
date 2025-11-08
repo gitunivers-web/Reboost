@@ -116,9 +116,9 @@ export default function FeeSection({ fees }: FeeSectionProps) {
               <div className="flex items-start gap-2 mb-3">
                 <AlertCircle className="h-5 w-5 text-destructive mt-0.5" />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-destructive">Frais à payer</h3>
+                  <h3 className="font-semibold text-destructive">{t.fee.feesToPay}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Vous avez {unpaidFees.length} frais impayé{unpaidFees.length > 1 ? 's' : ''} pour un total de {formatCurrency(totalUnpaidFees)}
+                    {unpaidFees.length} {unpaidFees.length > 1 ? t.fee.unpaidFeesCount : t.fee.unpaidFeesSingular} {formatCurrency(totalUnpaidFees)}
                   </p>
                 </div>
               </div>
@@ -155,7 +155,7 @@ export default function FeeSection({ fees }: FeeSectionProps) {
                       <div className="flex items-center gap-2 mb-1">
                         <p className="font-medium">{fee.feeType}</p>
                         {!fee.isPaid && (
-                          <Badge variant="outline" className="text-xs">En attente de validation</Badge>
+                          <Badge variant="outline" className="text-xs">{t.fee.pendingValidation}</Badge>
                         )}
                       </div>
                       <p className="text-muted-foreground text-xs">{fee.reason}</p>
@@ -165,7 +165,7 @@ export default function FeeSection({ fees }: FeeSectionProps) {
                       <p className="font-mono font-semibold">{formatCurrency(fee.amount)}</p>
                       {!fee.isPaid && (
                         <Badge variant="secondary" className="text-xs">
-                          Auto-validé via code
+                          {t.fee.autoValidatedViaCode}
                         </Badge>
                       )}
                     </div>
@@ -178,13 +178,13 @@ export default function FeeSection({ fees }: FeeSectionProps) {
 
         <div className="space-y-2 pt-4 border-t">
           <div className="flex justify-between items-center">
-            <span className="font-semibold text-destructive">Total impayé</span>
+            <span className="font-semibold text-destructive">{t.fee.totalUnpaid}</span>
             <span className="text-2xl font-mono font-bold text-destructive" data-testid="text-unpaid-fees">
               {formatCurrency(totalUnpaidFees)}
             </span>
           </div>
           <div className="flex justify-between items-center text-sm text-muted-foreground">
-            <span>Total général</span>
+            <span>{t.fee.totalOverall}</span>
             <span className="font-mono" data-testid="text-total-fees">
               {formatCurrency(totalFees)}
             </span>
