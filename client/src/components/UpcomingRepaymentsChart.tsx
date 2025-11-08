@@ -50,9 +50,9 @@ export default function UpcomingRepaymentsChart({ data }: UpcomingRepaymentsChar
                   }).format(value)
                 }
               />
-              <Bar dataKey="loan1" stackId="a" fill="hsl(var(--chart-1))" name="Prêt #1" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="loan2" stackId="a" fill="hsl(var(--chart-2))" name="Prêt #2" />
-              <Bar dataKey="loan3" stackId="a" fill="hsl(var(--chart-3))" name="Prêt #3" />
+              <Bar dataKey="loan1" stackId="a" fill="hsl(var(--chart-1))" name={`${t.loan.loanNumber} #1`} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="loan2" stackId="a" fill="hsl(var(--chart-2))" name={`${t.loan.loanNumber} #2`} />
+              <Bar dataKey="loan3" stackId="a" fill="hsl(var(--chart-3))" name={`${t.loan.loanNumber} #3`} />
             </BarChart>
           </ResponsiveContainer>
         </div>
