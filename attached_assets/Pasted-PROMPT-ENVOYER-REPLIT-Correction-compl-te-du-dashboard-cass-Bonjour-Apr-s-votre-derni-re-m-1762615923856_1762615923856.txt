@@ -1,0 +1,119 @@
+PROMPT À ENVOYER À REPLIT — Correction complète du dashboard cassé
+
+Bonjour,
+
+Après votre dernière modification concernant l’ajout d’un bandeau d’informations défilantes et quelques ajustements visuels, le dashboard utilisateur de mon site a perdu toute sa mise en page.
+
+Voici ce que vous devez corriger, étape par étape, avec les précisions sur les fichiers à vérifier.
+
+🎯 Objectif principal :
+
+Rétablir l’affichage normal du tableau de bord utilisateur sans casser la structure responsive d’origine, tout en gardant les couleurs et éléments esthétiques ajoutés (comme la barre d’informations défilantes, mais bien intégrée).
+
+🧩 Contexte technique :
+
+Frontend hébergé sur Vercel : altusfinancegroup.com
+
+Backend sur Render : api.altusfinancegroup.com
+
+Le dashboard se situe probablement dans :
+
+/components/dashboard
+
+/components/layout
+
+/pages/dashboard.tsx ou /src/pages/dashboard/index.tsx
+
+Fichiers CSS ou Tailwind concernés : /styles/globals.css ou dashboard.module.css
+
+⚙️ Étapes de correction :
+1. Supprimer ou corriger le bandeau défilant ajouté
+
+Le bandeau ajouté en haut de la page a cassé la mise en page (oblige à zoomer/dézoomer à 25 % pour voir la page entière).
+
+Supprime toute section qui aurait été ajoutée au-dessus du composant <DashboardLayout>.
+
+Si tu veux conserver un bandeau d’informations :
+
+Déplace-le à l’intérieur du header ou du TopBar du tableau de bord.
+
+Le texte doit défiler horizontalement et être court (ex. : “Sécurité renforcée – Nouveaux avantages – Assistance 24h/24”).
+
+Ne pas modifier le height ou le padding global du container principal.
+
+2. Corriger la mise à l’échelle du dashboard
+
+Vérifie dans les fichiers CSS globaux (globals.css, app.css ou layout.css) qu’aucune règle n’a été ajoutée du type :
+
+html, body {
+  transform: scale();
+  zoom: 0.25;
+}
+
+
+ou
+
+width: 400%;
+height: auto;
+
+
+Supprime ou ajuste toute règle de zoom, transform, scale, ou overflow sur le container principal.
+
+Le dashboard doit redevenir responsive et centré sur tous les écrans.
+
+3. Restauration visuelle
+
+Les sections comme :
+
+Solde actuel
+
+Crédit disponible
+
+Capacité d’emprunt
+
+Prêts actifs
+doivent retrouver leur apparence initiale (cartes bien espacées, avec fond blanc et ombre légère).
+
+Les couleurs à appliquer :
+
+Titres et chiffres clés : bleu marine (#002855)
+
+Boutons principaux : bleu #0056D2, hover : #0041A8
+
+Rouge vif (ex. “Total impayé”) → remplacer par rouge atténué (#C62828)
+
+Le fond global de la page reste blanc (#FFFFFF).
+
+4. Logo et barre latérale
+
+Le logo dans la barre latérale doit être légèrement agrandi mais pas étiré.
+
+Assurez-vous qu’il reste centré verticalement dans la sidebar.
+
+Vérifiez dans le fichier :
+
+/components/Sidebar.tsx ou /components/Layout/Sidebar.tsx
+
+Ne pas modifier la largeur de la barre latérale (w-64 ou 250px si en CSS pur).
+
+5. Nettoyage global
+
+Vérifiez qu’aucun container parent du dashboard (<main>, <div id="__next">, etc.) n’a été modifié.
+
+Si des composants ont été insérés en dehors du <DashboardLayout> ou du <MainContainer>, replacez-les correctement.
+
+Vérifiez le layout global dans :
+
+/components/Layout/DashboardLayout.tsx
+
+/components/Layout/MainContainer.tsx
+
+🧠 But final :
+
+Le dashboard doit à nouveau s’afficher normalement à 100 % (sans zoom manuel).
+
+La barre d’informations défilantes doit rester discrète, intégrée dans le header, pas au-dessus.
+
+Les éléments du dashboard doivent redevenir propres, lisibles et professionnels, avec les couleurs et espacements adaptés à une application bancaire.
+
+Merci de vérifier les propriétés CSS globales et le positionnement des composants dans le layout principal avant de redéployer.
