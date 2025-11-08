@@ -12,7 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import logoUrl from '@assets/Logo_1762278146504.jpeg';
+import logoUrl from '@assets/Logo_1762606366224.png';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -29,19 +29,16 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-primary/20 ${
       scrolled 
-        ? 'bg-white dark:bg-slate-900 shadow-md' 
-        : 'bg-white dark:bg-slate-900 shadow-sm'
+        ? 'bg-white dark:bg-[#003D6F] shadow-md' 
+        : 'bg-white dark:bg-[#003D6F] shadow-sm'
     }`}>
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-18">
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-all">
-              <img src={logoUrl} alt="Altus Finance Group" className="h-8 sm:h-9 lg:h-10 w-auto" />
-              <span className="text-base sm:text-lg lg:text-xl font-bold text-primary hidden sm:inline whitespace-nowrap">
-                Altus Finance Group
-              </span>
+              <img src={logoUrl} alt="Altus Finance Group" className="h-7 sm:h-8 lg:h-9 w-auto" />
             </Link>
           </div>
 

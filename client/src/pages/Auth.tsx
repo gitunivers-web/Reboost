@@ -187,10 +187,10 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-3 sm:p-4 md:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-[#002d52] dark:via-[#003d6f] dark:to-[#004b87] flex items-center justify-center p-3 sm:p-4 md:p-6">
       <Card className="w-full max-w-2xl shadow-2xl">
         <CardHeader className="text-center space-y-2 px-4 sm:px-6">
-          <CardTitle className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">
+          <CardTitle className="text-2xl sm:text-3xl font-bold text-primary">
             {t.auth.title}
           </CardTitle>
           <CardDescription className="text-sm sm:text-base">
@@ -211,7 +211,7 @@ export default function Auth() {
                     <Button
                       type="button"
                       variant="ghost"
-                      className="mb-4 -mt-2 text-violet-600 hover:text-violet-700 hover:bg-violet-50 dark:hover:bg-violet-950"
+                      className="mb-4 -mt-2"
                       data-testid="button-back-login"
                     >
                       <ArrowLeft className="mr-2 h-4 w-4" />
@@ -269,7 +269,7 @@ export default function Auth() {
                     <Link href="/forgot-password">
                       <button
                         type="button"
-                        className="text-sm text-violet-600 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300 hover:underline"
+                        className="text-sm text-accent hover:text-accent/80 hover:underline"
                         data-testid="link-forgot-password"
                       >
                         Mot de passe oublié ?
@@ -279,7 +279,7 @@ export default function Auth() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700"
+                    className="w-full"
                     disabled={loginMutation.isPending}
                     data-testid="button-submit-login"
                   >
@@ -296,7 +296,7 @@ export default function Auth() {
                     <Button
                       type="button"
                       variant="ghost"
-                      className="mb-4 -mt-2 text-violet-600 hover:text-violet-700 hover:bg-violet-50 dark:hover:bg-violet-950"
+                      className="mb-4 -mt-2"
                       data-testid="button-back-signup"
                     >
                       <ArrowLeft className="mr-2 h-4 w-4" />
@@ -535,7 +535,7 @@ export default function Auth() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700"
+                    className="w-full"
                     disabled={signupMutation.isPending}
                     data-testid="button-submit-signup"
                   >

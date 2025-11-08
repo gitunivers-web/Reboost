@@ -15,6 +15,7 @@ import { useTranslations } from '@/lib/i18n';
 import { useLocation } from 'wouter';
 import { useUser, getUserInitials, getAccountTypeLabel, useUserProfilePhotoUrl } from '@/hooks/use-user';
 import { Skeleton } from '@/components/ui/skeleton';
+import logoUrl from '@assets/Logo_1762606366224.png';
 
 export default function AppSidebar() {
   const t = useTranslations();
@@ -29,43 +30,38 @@ export default function AppSidebar() {
   };
 
   const menuItems = [
-    { title: t.nav.dashboard, url: '/dashboard', icon: Home, hoverClass: 'hover:bg-gradient-to-r hover:from-blue-500/10 hover:to-indigo-500/10 hover:border-l-4 hover:border-blue-500' },
-    { title: t.nav.loans, url: '/loans', icon: CreditCard, hoverClass: 'hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-teal-500/10 hover:border-l-4 hover:border-emerald-500' },
-    { title: t.nav.transfers, url: '/transfers', icon: ArrowRightLeft, hoverClass: 'hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-sky-500/10 hover:border-l-4 hover:border-cyan-500' },
-    { title: t.bankAccounts.title, url: '/accounts', icon: Building2, hoverClass: 'hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-violet-500/10 hover:border-l-4 hover:border-purple-500' },
-    { title: t.nav.history, url: '/history', icon: History, hoverClass: 'hover:bg-gradient-to-r hover:from-amber-500/10 hover:to-orange-500/10 hover:border-l-4 hover:border-amber-500' },
-    { title: t.nav.settings, url: '/settings', icon: Settings, hoverClass: 'hover:bg-gradient-to-r hover:from-slate-500/10 hover:to-gray-500/10 hover:border-l-4 hover:border-slate-500' },
+    { title: t.nav.dashboard, url: '/dashboard', icon: Home },
+    { title: t.nav.loans, url: '/loans', icon: CreditCard },
+    { title: t.nav.transfers, url: '/transfers', icon: ArrowRightLeft },
+    { title: t.bankAccounts.title, url: '/accounts', icon: Building2 },
+    { title: t.nav.history, url: '/history', icon: History },
+    { title: t.nav.settings, url: '/settings', icon: Settings },
   ];
 
   const adminMenuItems = [
-    { title: t.nav.dashboard, url: '/admin', icon: ShieldCheck, hoverClass: 'hover:bg-gradient-to-r hover:from-blue-500/10 hover:to-indigo-500/10 hover:border-l-4 hover:border-blue-500' },
-    { title: t.nav.users, url: '/admin/users', icon: Users, hoverClass: 'hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-violet-500/10 hover:border-l-4 hover:border-purple-500' },
-    { title: t.nav.loans, url: '/admin/loans', icon: CreditCard, hoverClass: 'hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-teal-500/10 hover:border-l-4 hover:border-emerald-500' },
-    { title: t.nav.transfers, url: '/admin/transfers', icon: ArrowRightLeft, hoverClass: 'hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-sky-500/10 hover:border-l-4 hover:border-cyan-500' },
-    { title: t.nav.documents, url: '/admin/documents', icon: FileText, hoverClass: 'hover:bg-gradient-to-r hover:from-rose-500/10 hover:to-pink-500/10 hover:border-l-4 hover:border-rose-500' },
-    { title: t.nav.settings, url: '/admin/settings', icon: Settings, hoverClass: 'hover:bg-gradient-to-r hover:from-slate-500/10 hover:to-gray-500/10 hover:border-l-4 hover:border-slate-500' },
-    { title: t.nav.reports, url: '/admin/reports', icon: BarChart, hoverClass: 'hover:bg-gradient-to-r hover:from-amber-500/10 hover:to-orange-500/10 hover:border-l-4 hover:border-amber-500' },
+    { title: t.nav.dashboard, url: '/admin', icon: ShieldCheck },
+    { title: t.nav.users, url: '/admin/users', icon: Users },
+    { title: t.nav.loans, url: '/admin/loans', icon: CreditCard },
+    { title: t.nav.transfers, url: '/admin/transfers', icon: ArrowRightLeft },
+    { title: t.nav.documents, url: '/admin/documents', icon: FileText },
+    { title: t.nav.settings, url: '/admin/settings', icon: Settings },
+    { title: t.nav.reports, url: '/admin/reports', icon: BarChart },
   ];
 
   const currentMenuItems = isAdminPath ? adminMenuItems : menuItems;
 
   return (
-    <Sidebar className="border-r-2 border-blue-100 dark:border-blue-900 bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-blue-950 dark:to-indigo-950">
+    <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <div className="px-4 py-4 mb-2 flex items-center gap-3" data-testid="sidebar-logo">
+          <div className="px-4 py-4 mb-2 flex items-center justify-center" data-testid="sidebar-logo">
             <img 
-              src="/logo.png" 
+              src={logoUrl} 
               alt="Altus Finance Group Logo" 
-              className="w-12 h-12 object-contain"
+              className="w-32 h-auto object-contain"
             />
-            <div>
-              <div className="text-base font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                ALTUS FINANCE GROUP
-              </div>
-            </div>
           </div>
-          <SidebarGroupLabel className="text-sm font-semibold px-4 py-2 text-blue-700 dark:text-blue-300">
+          <SidebarGroupLabel className="text-sm font-semibold px-4 py-2">
             {t.nav.dashboard}
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -76,7 +72,7 @@ export default function AppSidebar() {
                     asChild
                     isActive={location === item.url}
                     onClick={() => setLocation(item.url)}
-                    className={`transition-all duration-200 rounded-lg mx-2 ${item.hoverClass || ''}`}
+                    className="transition-all duration-200 mx-2"
                   >
                     <a href={item.url} data-testid={`link-${item.url.slice(1)}`}>
                       <item.icon />
@@ -101,8 +97,8 @@ export default function AppSidebar() {
                 </div>
               </div>
             ) : user ? (
-              <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-indigo-500/20 rounded-lg mx-2 border-2 border-blue-200 dark:border-blue-800">
-                <Avatar className="bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 border-2 border-blue-200 dark:border-blue-800">
+              <div className="flex items-center gap-3 px-4 py-3 bg-sidebar-accent rounded-md mx-2">
+                <Avatar className="bg-accent">
                   {profilePhotoUrl ? (
                     <AvatarImage 
                       src={profilePhotoUrl} 
@@ -112,8 +108,8 @@ export default function AppSidebar() {
                   <AvatarFallback className="bg-transparent text-white font-bold" data-testid="text-user-initials">{getUserInitials(user.fullName)}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold truncate bg-gradient-to-r from-blue-700 to-indigo-700 dark:from-blue-300 dark:to-indigo-300 bg-clip-text text-transparent" data-testid="text-user-name">{user.fullName}</p>
-                  <p className="text-xs text-blue-600 dark:text-blue-400 font-medium truncate" data-testid="text-user-account-type">
+                  <p className="text-sm font-bold truncate" data-testid="text-user-name">{user.fullName}</p>
+                  <p className="text-xs text-sidebar-foreground/80 truncate" data-testid="text-user-account-type">
                     {getAccountTypeLabel(user.accountType)}
                   </p>
                 </div>
