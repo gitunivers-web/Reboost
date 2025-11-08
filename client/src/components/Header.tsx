@@ -35,10 +35,13 @@ export default function Header() {
         : 'bg-white dark:bg-[#003D6F] shadow-sm'
     }`}>
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-18">
+        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-all">
-              <img src={logoUrl} alt="Altus Finance Group" className="h-9 sm:h-11 lg:h-12 w-auto" />
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-90 transition-all">
+              <span className="text-base sm:text-lg lg:text-xl font-bold text-primary whitespace-nowrap hidden sm:block">
+                Altus Finance Group
+              </span>
+              <img src={logoUrl} alt="Altus Finance Group" className="h-10 sm:h-12 lg:h-16 w-auto" />
             </Link>
           </div>
 
