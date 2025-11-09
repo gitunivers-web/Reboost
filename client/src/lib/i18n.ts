@@ -9,6 +9,10 @@ interface LanguageStore {
 }
 
 function detectBrowserLanguage(): Language {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return 'fr';
+  }
+  
   const browserLang = navigator.language.toLowerCase();
   
   if (browserLang.startsWith('fr')) return 'fr';
@@ -23,6 +27,10 @@ function detectBrowserLanguage(): Language {
 }
 
 function getInitialLanguage(): Language {
+  if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    return 'fr';
+  }
+  
   const stored = localStorage.getItem('language-storage');
   if (stored) {
     try {
