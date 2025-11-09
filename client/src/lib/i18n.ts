@@ -63,7 +63,23 @@ type TranslationKeys = {
     subtitle: string;
     cta1: string;
     cta2: string;
+    learnMore: string;
     trustIndicator: string;
+    trustBadges: {
+      response24h: string;
+      swissSecurity: string;
+      fastApproval: string;
+    };
+    calculator: {
+      title: string;
+      subtitle: string;
+      loanAmount: string;
+      duration: string;
+      monthlyPayment: string;
+      perMonth: string;
+      applyNow: string;
+      disclaimer: string;
+    };
     slides: Array<{
       title: string;
       subtitle: string;
@@ -1626,7 +1642,23 @@ export const translations: Record<Language, TranslationKeys> = {
       subtitle: 'Solutions de financement pour particuliers et professionnels - Taux compétitifs et processus transparent',
       cta1: 'Demander un prêt',
       cta2: 'Mon espace',
+      learnMore: 'En savoir plus',
       trustIndicator: 'Plus de 15 000 clients satisfaits nous font confiance',
+      trustBadges: {
+        response24h: 'Réponse en 24h',
+        swissSecurity: 'Sécurité bancaire suisse',
+        fastApproval: 'Approbation rapide',
+      },
+      calculator: {
+        title: 'Calculez votre budget',
+        subtitle: 'Obtenez une estimation instantanée',
+        loanAmount: 'Montant du prêt',
+        duration: 'Durée (mois)',
+        monthlyPayment: 'Paiement mensuel',
+        perMonth: 'par mois',
+        applyNow: 'Faire une demande',
+        disclaimer: 'Demande gratuite - Sans engagement - Processus confidentiel',
+      },
       slides: [
         {
           title: 'Réalisez vos projets avec Altus Finance Group',
@@ -3391,7 +3423,23 @@ export const translations: Record<Language, TranslationKeys> = {
       subtitle: 'Financing solutions for individuals and businesses - Competitive rates and transparent process',
       cta1: 'Request a Loan',
       cta2: 'My Account',
+      learnMore: 'Learn More',
       trustIndicator: 'Trusted by 15,000+ satisfied clients',
+      trustBadges: {
+        response24h: '24h Response Time',
+        swissSecurity: 'Swiss Bank Security',
+        fastApproval: 'Fast Approval',
+      },
+      calculator: {
+        title: 'Calculate Your Budget',
+        subtitle: 'Get an instant estimate',
+        loanAmount: 'Loan Amount',
+        duration: 'Duration (months)',
+        monthlyPayment: 'Monthly Payment',
+        perMonth: 'per month',
+        applyNow: 'Apply Now',
+        disclaimer: 'Free application - No commitment - Confidential process',
+      },
       slides: [
         {
           title: 'Make Your Projects a Reality with Altus Finance Group',
@@ -5140,7 +5188,23 @@ export const translations: Record<Language, TranslationKeys> = {
       subtitle: 'Soluciones de financiamiento para particulares y empresas - Tasas competitivas y proceso transparente',
       cta1: 'Solicitar Préstamo',
       cta2: 'Mi Cuenta',
+      learnMore: 'Saber Más',
       trustIndicator: 'Más de 15,000 clientes satisfechos confían en nosotros',
+      trustBadges: {
+        response24h: 'Respuesta en 24h',
+        swissSecurity: 'Seguridad bancaria suiza',
+        fastApproval: 'Aprobación rápida',
+      },
+      calculator: {
+        title: 'Calcule su Presupuesto',
+        subtitle: 'Obtenga una estimación instantánea',
+        loanAmount: 'Monto del Préstamo',
+        duration: 'Duración (meses)',
+        monthlyPayment: 'Pago Mensual',
+        perMonth: 'por mes',
+        applyNow: 'Solicitar Ahora',
+        disclaimer: 'Solicitud gratuita - Sin compromiso - Proceso confidencial',
+      },
       slides: [
         {
           title: 'Haga Realidad sus Proyectos con Altus Finance Group',
@@ -6884,7 +6948,23 @@ export const translations: Record<Language, TranslationKeys> = {
       subtitle: 'Soluções de financiamento para particulares e empresas - Taxas competitivas e processo transparente',
       cta1: 'Solicitar Empréstimo',
       cta2: 'Minha Conta',
+      learnMore: 'Saiba Mais',
       trustIndicator: 'Mais de 15.000 clientes satisfeitos confiam em nós',
+      trustBadges: {
+        response24h: 'Resposta em 24h',
+        swissSecurity: 'Segurança bancária suíça',
+        fastApproval: 'Aprovação rápida',
+      },
+      calculator: {
+        title: 'Calcule seu Orçamento',
+        subtitle: 'Obtenha uma estimativa instantânea',
+        loanAmount: 'Valor do Empréstimo',
+        duration: 'Duração (meses)',
+        monthlyPayment: 'Pagamento Mensal',
+        perMonth: 'por mês',
+        applyNow: 'Solicitar Agora',
+        disclaimer: 'Solicitação gratuita - Sem compromisso - Processo confidencial',
+      },
       slides: [
         {
           title: 'Realize seus Projetos com Altus Finance Group',
@@ -8442,7 +8522,23 @@ export const translations: Record<Language, TranslationKeys> = {
       subtitle: 'Soluzioni di finanziamento per privati e aziende - Tassi competitivi e processo trasparente',
       cta1: 'Richiedi un prestito',
       cta2: 'La mia area',
+      learnMore: 'Scopri di più',
       trustIndicator: 'Più di 15.000 clienti soddisfatti si fidano di noi',
+      trustBadges: {
+        response24h: 'Risposta in 24h',
+        swissSecurity: 'Sicurezza bancaria svizzera',
+        fastApproval: 'Approvazione rapida',
+      },
+      calculator: {
+        title: 'Calcola il tuo Budget',
+        subtitle: 'Ottieni una stima istantanea',
+        loanAmount: 'Importo del Prestito',
+        duration: 'Durata (mesi)',
+        monthlyPayment: 'Pagamento Mensile',
+        perMonth: 'al mese',
+        applyNow: 'Richiedi Ora',
+        disclaimer: 'Richiesta gratuita - Senza impegno - Processo confidenziale',
+      },
       slides: [
         {
           title: 'Realizza i tuoi progetti con Altus Finance Group',
@@ -10002,7 +10098,23 @@ export const translations: Record<Language, TranslationKeys> = {
       subtitle: 'Finanzierungslösungen für Privat- und Geschäftskunden - Wettbewerbsfähige Zinsen und transparenter Prozess',
       cta1: 'Kredit beantragen',
       cta2: 'Mein Bereich',
+      learnMore: 'Mehr erfahren',
       trustIndicator: 'Mehr als 15.000 zufriedene Kunden vertrauen uns',
+      trustBadges: {
+        response24h: 'Antwort in 24h',
+        swissSecurity: 'Schweizer Banksicherheit',
+        fastApproval: 'Schnelle Genehmigung',
+      },
+      calculator: {
+        title: 'Berechnen Sie Ihr Budget',
+        subtitle: 'Erhalten Sie eine sofortige Schätzung',
+        loanAmount: 'Kreditbetrag',
+        duration: 'Laufzeit (Monate)',
+        monthlyPayment: 'Monatliche Zahlung',
+        perMonth: 'pro Monat',
+        applyNow: 'Jetzt beantragen',
+        disclaimer: 'Kostenlose Anfrage - Keine Verpflichtung - Vertraulicher Prozess',
+      },
       slides: [
         {
           title: 'Verwirklichen Sie Ihre Projekte mit der Altus Finance Group',
@@ -11532,7 +11644,23 @@ export const translations: Record<Language, TranslationKeys> = {
       subtitle: 'Financieringsoplossingen voor particulieren en bedrijven - Concurrerende tarieven en transparant proces',
       cta1: 'Lening aanvragen',
       cta2: 'Mijn gebied',
+      learnMore: 'Meer weten',
       trustIndicator: 'Meer dan 15.000 tevreden klanten vertrouwen ons',
+      trustBadges: {
+        response24h: 'Reactie binnen 24u',
+        swissSecurity: 'Zwitserse bankbeveiliging',
+        fastApproval: 'Snelle goedkeuring',
+      },
+      calculator: {
+        title: 'Bereken uw Budget',
+        subtitle: 'Krijg direct een schatting',
+        loanAmount: 'Leningbedrag',
+        duration: 'Looptijd (maanden)',
+        monthlyPayment: 'Maandelijkse Betaling',
+        perMonth: 'per maand',
+        applyNow: 'Nu aanvragen',
+        disclaimer: 'Gratis aanvraag - Geen verplichting - Vertrouwelijk proces',
+      },
       slides: [
         {
           title: 'Realiseer uw projecten met Altus Finance Group',
