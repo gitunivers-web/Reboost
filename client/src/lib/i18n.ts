@@ -1360,6 +1360,125 @@ type TranslationKeys = {
       description: string;
     };
   };
+  admin: {
+    common: {
+      status: {
+        pending: string;
+        active: string;
+        approved: string;
+        rejected: string;
+        suspended: string;
+        completed: string;
+        signed: string;
+        inProgress: string;
+      };
+      actions: {
+        approve: string;
+        reject: string;
+        delete: string;
+        suspend: string;
+        save: string;
+        download: string;
+        upload: string;
+        send: string;
+        edit: string;
+        cancel: string;
+        disburse: string;
+      };
+      labels: {
+        user: string;
+        userName: string;
+        userEmail: string;
+        amount: string;
+        type: string;
+        rate: string;
+        duration: string;
+        status: string;
+        date: string;
+        createdAt: string;
+        actions: string;
+        fees: string;
+        progress: string;
+        codes: string;
+        recipient: string;
+        contract: string;
+        months: string;
+        total: string;
+        active: string;
+        pending: string;
+        recent: string;
+        all: string;
+        noData: string;
+        loading: string;
+        error: string;
+        success: string;
+        balance: string;
+        loans: string;
+      };
+      messages: {
+        error: string;
+        success: string;
+        updated: string;
+        approved: string;
+        rejected: string;
+        deleted: string;
+        disbursed: string;
+        cannotApprove: string;
+        cannotReject: string;
+        cannotDelete: string;
+        cannotUpdate: string;
+        loadError: string;
+      };
+      empty: {
+        noResults: string;
+        noData: string;
+      };
+    };
+    dashboard: {
+      title: string;
+      description: string;
+      totalUsers: string;
+      activeUsers: string;
+      pendingUsers: string;
+      transfers: string;
+      transfersPending: string;
+      loans: string;
+      loansActive: string;
+      totalVolume: string;
+      volumeDescription: string;
+      recentUsers: string;
+      recentUsersDescription: string;
+      recentTransfers: string;
+      recentTransfersDescription: string;
+    };
+    loans: {
+      title: string;
+      description: string;
+      allLoans: string;
+      allLoansDescription: string;
+      loanApproved: string;
+      loanApprovedDesc: string;
+      loanRejected: string;
+      loanRejectedDesc: string;
+      loanDeleted: string;
+      loanDeletedDesc: string;
+      fundsDisbursed: string;
+      fundsDisbursedDesc: string;
+      contractGenerated: string;
+      contractSigned: string;
+      approveReason: string;
+      rejectReason: string;
+      deleteReason: string;
+    };
+    transfers: {
+      title: string;
+      description: string;
+      allTransfers: string;
+      allTransfersDescription: string;
+      transferUpdated: string;
+      transferUpdatedDesc: string;
+    };
+  };
 };
 
 export const translations: Record<Language, TranslationKeys> = {
@@ -2928,6 +3047,125 @@ export const translations: Record<Language, TranslationKeys> = {
         description: 'Vérification à deux facteurs',
       },
     },
+    admin: {
+      common: {
+        status: {
+          pending: 'En attente',
+          active: 'Actif',
+          approved: 'Approuvé',
+          rejected: 'Refusé',
+          suspended: 'Suspendu',
+          completed: 'Terminé',
+          signed: 'Signé',
+          inProgress: 'En cours',
+        },
+        actions: {
+          approve: 'Approuver',
+          reject: 'Rejeter',
+          delete: 'Supprimer',
+          suspend: 'Suspendre',
+          save: 'Enregistrer',
+          download: 'Télécharger',
+          upload: 'Téléverser',
+          send: 'Envoyer',
+          edit: 'Modifier',
+          cancel: 'Annuler',
+          disburse: 'Débloquer',
+        },
+        labels: {
+          user: 'Utilisateur',
+          userName: 'Nom d\'utilisateur',
+          userEmail: 'Email utilisateur',
+          amount: 'Montant',
+          type: 'Type',
+          rate: 'Taux',
+          duration: 'Durée',
+          status: 'Statut',
+          date: 'Date',
+          createdAt: 'Créé',
+          actions: 'Actions',
+          fees: 'Frais',
+          progress: 'Progression',
+          codes: 'Codes',
+          recipient: 'Destinataire',
+          contract: 'Contrat',
+          months: 'mois',
+          total: 'Total',
+          active: 'actifs',
+          pending: 'en attente',
+          recent: 'Récents',
+          all: 'Tous',
+          noData: 'Aucune donnée',
+          loading: 'Chargement...',
+          error: 'Erreur',
+          success: 'Succès',
+          balance: 'Solde',
+          loans: 'Prêts',
+        },
+        messages: {
+          error: 'Erreur',
+          success: 'Succès',
+          updated: 'Mis à jour',
+          approved: 'Approuvé',
+          rejected: 'Rejeté',
+          deleted: 'Supprimé',
+          disbursed: 'Débloqué',
+          cannotApprove: 'Impossible d\'approuver',
+          cannotReject: 'Impossible de rejeter',
+          cannotDelete: 'Impossible de supprimer',
+          cannotUpdate: 'Impossible de mettre à jour',
+          loadError: 'Erreur de chargement',
+        },
+        empty: {
+          noResults: 'Aucun résultat',
+          noData: 'Aucune donnée disponible',
+        },
+      },
+      dashboard: {
+        title: 'Console Admin',
+        description: 'Vue d\'ensemble de la plateforme et gestion des utilisateurs',
+        totalUsers: 'Total Utilisateurs',
+        activeUsers: 'actifs',
+        pendingUsers: 'en attente',
+        transfers: 'Transferts',
+        transfersPending: 'en cours',
+        loans: 'Prêts',
+        loansActive: 'actifs',
+        totalVolume: 'Volume Total',
+        volumeDescription: 'Transferts totaux',
+        recentUsers: 'Utilisateurs Récents',
+        recentUsersDescription: 'Dernières inscriptions',
+        recentTransfers: 'Transferts Récents',
+        recentTransfersDescription: 'Dernières opérations',
+      },
+      loans: {
+        title: 'Gestion des Prêts',
+        description: 'Gérer toutes les demandes de prêts de la plateforme',
+        allLoans: 'Tous les Prêts',
+        allLoansDescription: 'Liste complète des demandes de prêts',
+        loanApproved: 'Prêt approuvé',
+        loanApprovedDesc: 'Le prêt a été approuvé avec succès. Le contrat a été généré.',
+        loanRejected: 'Prêt rejeté',
+        loanRejectedDesc: 'Le prêt a été rejeté avec succès',
+        loanDeleted: 'Prêt supprimé',
+        loanDeletedDesc: 'Le prêt a été supprimé avec succès',
+        fundsDisbursed: 'Fonds débloqués',
+        fundsDisbursedDesc: 'Les fonds ont été débloqués avec succès. L\'utilisateur a été notifié.',
+        contractGenerated: '📄 Généré',
+        contractSigned: '✅ Signé',
+        approveReason: 'Raison d\'approbation',
+        rejectReason: 'Raison du refus',
+        deleteReason: 'Raison de la suppression',
+      },
+      transfers: {
+        title: 'Gestion des Transferts',
+        description: 'Valider ou suspendre les demandes de transfert',
+        allTransfers: 'Tous les Transferts',
+        allTransfersDescription: 'Liste complète des transferts de fonds',
+        transferUpdated: 'Transfert mis à jour',
+        transferUpdatedDesc: 'Le statut du transfert a été modifié avec succès',
+      },
+    },
   },
   en: {
     hero: {
@@ -4478,6 +4716,125 @@ export const translations: Record<Language, TranslationKeys> = {
         description: 'Two-factor verification',
       },
     },
+    admin: {
+      common: {
+        status: {
+          pending: 'Pending',
+          active: 'Active',
+          approved: 'Approved',
+          rejected: 'Rejected',
+          suspended: 'Suspended',
+          completed: 'Completed',
+          signed: 'Signed',
+          inProgress: 'In Progress',
+        },
+        actions: {
+          approve: 'Approve',
+          reject: 'Reject',
+          delete: 'Delete',
+          suspend: 'Suspend',
+          save: 'Save',
+          download: 'Download',
+          upload: 'Upload',
+          send: 'Send',
+          edit: 'Edit',
+          cancel: 'Cancel',
+          disburse: 'Disburse',
+        },
+        labels: {
+          user: 'User',
+          userName: 'User Name',
+          userEmail: 'User Email',
+          amount: 'Amount',
+          type: 'Type',
+          rate: 'Rate',
+          duration: 'Duration',
+          status: 'Status',
+          date: 'Date',
+          createdAt: 'Created',
+          actions: 'Actions',
+          fees: 'Fees',
+          progress: 'Progress',
+          codes: 'Codes',
+          recipient: 'Recipient',
+          contract: 'Contract',
+          months: 'months',
+          total: 'Total',
+          active: 'active',
+          pending: 'pending',
+          recent: 'Recent',
+          all: 'All',
+          noData: 'No data',
+          loading: 'Loading...',
+          error: 'Error',
+          success: 'Success',
+          balance: 'Balance',
+          loans: 'Loans',
+        },
+        messages: {
+          error: 'Error',
+          success: 'Success',
+          updated: 'Updated',
+          approved: 'Approved',
+          rejected: 'Rejected',
+          deleted: 'Deleted',
+          disbursed: 'Disbursed',
+          cannotApprove: 'Cannot approve',
+          cannotReject: 'Cannot reject',
+          cannotDelete: 'Cannot delete',
+          cannotUpdate: 'Cannot update',
+          loadError: 'Loading error',
+        },
+        empty: {
+          noResults: 'No results',
+          noData: 'No data available',
+        },
+      },
+      dashboard: {
+        title: 'Admin Console',
+        description: 'Platform overview and user management',
+        totalUsers: 'Total Users',
+        activeUsers: 'active',
+        pendingUsers: 'pending',
+        transfers: 'Transfers',
+        transfersPending: 'in progress',
+        loans: 'Loans',
+        loansActive: 'active',
+        totalVolume: 'Total Volume',
+        volumeDescription: 'Total transfers',
+        recentUsers: 'Recent Users',
+        recentUsersDescription: 'Latest registrations',
+        recentTransfers: 'Recent Transfers',
+        recentTransfersDescription: 'Latest transactions',
+      },
+      loans: {
+        title: 'Loan Management',
+        description: 'Manage all platform loan requests',
+        allLoans: 'All Loans',
+        allLoansDescription: 'Complete list of loan applications',
+        loanApproved: 'Loan approved',
+        loanApprovedDesc: 'The loan has been successfully approved. The contract has been generated.',
+        loanRejected: 'Loan rejected',
+        loanRejectedDesc: 'The loan has been successfully rejected',
+        loanDeleted: 'Loan deleted',
+        loanDeletedDesc: 'The loan has been successfully deleted',
+        fundsDisbursed: 'Funds disbursed',
+        fundsDisbursedDesc: 'The funds have been successfully disbursed. The user has been notified.',
+        contractGenerated: '📄 Generated',
+        contractSigned: '✅ Signed',
+        approveReason: 'Approval reason',
+        rejectReason: 'Rejection reason',
+        deleteReason: 'Deletion reason',
+      },
+      transfers: {
+        title: 'Transfer Management',
+        description: 'Approve or suspend transfer requests',
+        allTransfers: 'All Transfers',
+        allTransfersDescription: 'Complete list of fund transfers',
+        transferUpdated: 'Transfer updated',
+        transferUpdatedDesc: 'The transfer status has been successfully updated',
+      },
+    },
   },
   es: {
     hero: {
@@ -6022,6 +6379,125 @@ export const translations: Record<Language, TranslationKeys> = {
       notFoundDesc: 'Our team of experts is available Monday to Friday from 9am to 7pm',
       contactUs: 'Contact us',
       helpCenter: 'Help center',
+    },
+    admin: {
+      common: {
+        status: {
+          pending: 'Pendiente',
+          active: 'Activo',
+          approved: 'Aprobado',
+          rejected: 'Rechazado',
+          suspended: 'Suspendido',
+          completed: 'Completado',
+          signed: 'Firmado',
+          inProgress: 'En progreso',
+        },
+        actions: {
+          approve: 'Aprobar',
+          reject: 'Rechazar',
+          delete: 'Eliminar',
+          suspend: 'Suspender',
+          save: 'Guardar',
+          download: 'Descargar',
+          upload: 'Subir',
+          send: 'Enviar',
+          edit: 'Editar',
+          cancel: 'Cancelar',
+          disburse: 'Desembolsar',
+        },
+        labels: {
+          user: 'Usuario',
+          userName: 'Nombre de usuario',
+          userEmail: 'Email del usuario',
+          amount: 'Monto',
+          type: 'Tipo',
+          rate: 'Tasa',
+          duration: 'Duración',
+          status: 'Estado',
+          date: 'Fecha',
+          createdAt: 'Creado',
+          actions: 'Acciones',
+          fees: 'Comisiones',
+          progress: 'Progreso',
+          codes: 'Códigos',
+          recipient: 'Destinatario',
+          contract: 'Contrato',
+          months: 'meses',
+          total: 'Total',
+          active: 'activos',
+          pending: 'pendientes',
+          recent: 'Recientes',
+          all: 'Todos',
+          noData: 'Sin datos',
+          loading: 'Cargando...',
+          error: 'Error',
+          success: 'Éxito',
+          balance: 'Saldo',
+          loans: 'Préstamos',
+        },
+        messages: {
+          error: 'Error',
+          success: 'Éxito',
+          updated: 'Actualizado',
+          approved: 'Aprobado',
+          rejected: 'Rechazado',
+          deleted: 'Eliminado',
+          disbursed: 'Desembolsado',
+          cannotApprove: 'No se puede aprobar',
+          cannotReject: 'No se puede rechazar',
+          cannotDelete: 'No se puede eliminar',
+          cannotUpdate: 'No se puede actualizar',
+          loadError: 'Error de carga',
+        },
+        empty: {
+          noResults: 'Sin resultados',
+          noData: 'No hay datos disponibles',
+        },
+      },
+      dashboard: {
+        title: 'Consola de Administración',
+        description: 'Vista general de la plataforma y gestión de usuarios',
+        totalUsers: 'Total de Usuarios',
+        activeUsers: 'activos',
+        pendingUsers: 'pendientes',
+        transfers: 'Transferencias',
+        transfersPending: 'en curso',
+        loans: 'Préstamos',
+        loansActive: 'activos',
+        totalVolume: 'Volumen Total',
+        volumeDescription: 'Transferencias totales',
+        recentUsers: 'Usuarios Recientes',
+        recentUsersDescription: 'Últimas inscripciones',
+        recentTransfers: 'Transferencias Recientes',
+        recentTransfersDescription: 'Últimas operaciones',
+      },
+      loans: {
+        title: 'Gestión de Préstamos',
+        description: 'Gestionar todas las solicitudes de préstamos de la plataforma',
+        allLoans: 'Todos los Préstamos',
+        allLoansDescription: 'Lista completa de solicitudes de préstamos',
+        loanApproved: 'Préstamo aprobado',
+        loanApprovedDesc: 'El préstamo ha sido aprobado exitosamente. Se ha generado el contrato.',
+        loanRejected: 'Préstamo rechazado',
+        loanRejectedDesc: 'El préstamo ha sido rechazado exitosamente',
+        loanDeleted: 'Préstamo eliminado',
+        loanDeletedDesc: 'El préstamo ha sido eliminado exitosamente',
+        fundsDisbursed: 'Fondos desembolsados',
+        fundsDisbursedDesc: 'Los fondos han sido desembolsados exitosamente. El usuario ha sido notificado.',
+        contractGenerated: '📄 Generado',
+        contractSigned: '✅ Firmado',
+        approveReason: 'Razón de aprobación',
+        rejectReason: 'Razón de rechazo',
+        deleteReason: 'Razón de eliminación',
+      },
+      transfers: {
+        title: 'Gestión de Transferencias',
+        description: 'Aprobar o suspender solicitudes de transferencia',
+        allTransfers: 'Todas las Transferencias',
+        allTransfersDescription: 'Lista completa de transferencias de fondos',
+        transferUpdated: 'Transferencia actualizada',
+        transferUpdatedDesc: 'El estado de la transferencia se ha actualizado exitosamente',
+      },
     },
   },
   pt: {
