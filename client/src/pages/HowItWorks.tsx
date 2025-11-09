@@ -52,44 +52,6 @@ export default function HowItWorks() {
     },
   ];
 
-  const eligibilityCriteria = {
-    personal: [
-      { label: 'Adult and French resident', required: true },
-      { label: 'Verifiable regular income', required: true },
-      { label: 'No banking ban', required: true },
-      { label: 'Debt ratio < 35%', required: true },
-      { label: 'Acceptable credit score', required: false }
-    ],
-    professional: [
-      { label: 'Company registered in France', required: true },
-      { label: 'Operating for +6 months', required: true },
-      { label: 'Up-to-date financial statements', required: true },
-      { label: 'No collective proceedings', required: true },
-      { label: 'Personal contribution 10-30%', required: true }
-    ]
-  };
-
-  const documents = {
-    personal: [
-      'Valid ID (national ID card, passport)',
-      'Proof of address (less than 3 months)',
-      'Last 3 pay slips',
-      'Latest tax assessment',
-      'Bank statements (3 months)',
-      'Project justification (quotes, invoices)'
-    ],
-    professional: [
-      'Kbis less than 3 months old',
-      'Manager\'s ID document',
-      'Company bylaws',
-      'Financial statements (last 3 years)',
-      'Complete tax package',
-      'Professional bank statements (6 months)',
-      'Business plan (startup/takeover)',
-      '3-year financial forecast',
-      'Quotes or proforma invoices (equipment)'
-    ]
-  };
 
   return (
     <div className="min-h-screen">
@@ -135,26 +97,26 @@ export default function HowItWorks() {
             </div>
             <div className="mt-8 text-center">
               <p className="text-sm text-muted-foreground">
-                ⏱️ <strong>Average total time:</strong> 2 to 3 weeks from application submission to fund disbursement
+                ⏱️ <strong>{t.howItWorks.averageTimePrefix}</strong> {t.howItWorks.averageTimeValue}
               </p>
             </div>
           </div>
 
           <div className="max-w-6xl mx-auto mb-20">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Required Documents</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">{t.howItWorks.requiredDocumentsTitle}</h2>
               <p className="text-lg text-muted-foreground">
-                Prepare these documents to expedite your application
+                {t.howItWorks.requiredDocumentsSubtitle}
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-8">
               <Card className="p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <Users className="w-8 h-8 text-primary" />
-                  <h3 className="text-2xl font-bold">Personal Loan</h3>
+                  <h3 className="text-2xl font-bold">{t.howItWorks.personalLoanTitle}</h3>
                 </div>
                 <ul className="space-y-3">
-                  {documents.personal.map((doc, idx) => (
+                  {t.howItWorks.documents.personal.map((doc, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <span className="text-sm">{doc}</span>
@@ -165,10 +127,10 @@ export default function HowItWorks() {
               <Card className="p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <Briefcase className="w-8 h-8 text-primary" />
-                  <h3 className="text-2xl font-bold">Business Loan</h3>
+                  <h3 className="text-2xl font-bold">{t.howItWorks.businessLoanTitle}</h3>
                 </div>
                 <ul className="space-y-3">
-                  {documents.professional.map((doc, idx) => (
+                  {t.howItWorks.documents.professional.map((doc, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <span className="text-sm">{doc}</span>
@@ -179,9 +141,9 @@ export default function HowItWorks() {
             </div>
             <div className="mt-6 p-6 bg-gradient-to-r from-primary/10 to-transparent rounded-lg border border-primary/20">
               <p className="text-sm text-muted-foreground text-center">
-                💡 <strong>Tip:</strong> Missing documents? Our team will help you complete your file. 
+                💡 <strong>{t.howItWorks.tipTitle}</strong> {t.howItWorks.tipMessage}
                 <Link href="/contact" className="text-primary font-semibold ml-2 hover:underline">
-                  Contact us →
+                  {t.howItWorks.tipContactCta}
                 </Link>
               </p>
             </div>
@@ -189,26 +151,26 @@ export default function HowItWorks() {
 
           <div className="max-w-6xl mx-auto mb-20">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Eligibility Criteria</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">{t.howItWorks.eligibilityTitle}</h2>
               <p className="text-lg text-muted-foreground">
-                Check if you meet the requirements for your loan
+                {t.howItWorks.eligibilitySubtitle}
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-8">
               <Card className="p-8 border-2 border-primary/20">
                 <div className="flex items-center gap-3 mb-6">
                   <Users className="w-8 h-8 text-primary" />
-                  <h3 className="text-2xl font-bold">Individuals</h3>
+                  <h3 className="text-2xl font-bold">{t.howItWorks.individualsTitle}</h3>
                 </div>
                 <ul className="space-y-4">
-                  {eligibilityCriteria.personal.map((criteria, idx) => (
+                  {t.howItWorks.eligibility.personal.map((criteria, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${criteria.required ? 'bg-primary text-white' : 'bg-muted text-muted-foreground'}`}>
                         {criteria.required ? '✓' : '◯'}
                       </div>
                       <div>
                         <span className="text-sm font-medium">{criteria.label}</span>
-                        {criteria.required && <span className="text-xs text-primary ml-2">(Required)</span>}
+                        {criteria.required && <span className="text-xs text-primary ml-2">({t.howItWorks.requiredTag})</span>}
                       </div>
                     </li>
                   ))}
@@ -217,17 +179,17 @@ export default function HowItWorks() {
               <Card className="p-8 border-2 border-primary/20">
                 <div className="flex items-center gap-3 mb-6">
                   <Building className="w-8 h-8 text-primary" />
-                  <h3 className="text-2xl font-bold">Professionals</h3>
+                  <h3 className="text-2xl font-bold">{t.howItWorks.professionalsTitle}</h3>
                 </div>
                 <ul className="space-y-4">
-                  {eligibilityCriteria.professional.map((criteria, idx) => (
+                  {t.howItWorks.eligibility.professional.map((criteria, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${criteria.required ? 'bg-primary text-white' : 'bg-muted text-muted-foreground'}`}>
                         {criteria.required ? '✓' : '◯'}
                       </div>
                       <div>
                         <span className="text-sm font-medium">{criteria.label}</span>
-                        {criteria.required && <span className="text-xs text-primary ml-2">(Required)</span>}
+                        {criteria.required && <span className="text-xs text-primary ml-2">({t.howItWorks.requiredTag})</span>}
                       </div>
                     </li>
                   ))}
@@ -240,49 +202,29 @@ export default function HowItWorks() {
             <Card className="p-8 bg-gradient-to-br from-primary/5 to-transparent">
               <div className="flex items-center gap-3 mb-6">
                 <Shield className="w-10 h-10 text-primary" />
-                <h3 className="text-3xl font-bold">Security & Guarantees</h3>
+                <h3 className="text-3xl font-bold">{t.howItWorks.securityTitle}</h3>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold mb-3 text-lg">Your Protected Data</h4>
+                  <h4 className="font-semibold mb-3 text-lg">{t.howItWorks.security.dataProtectionTitle}</h4>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>256-bit SSL encryption</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>GDPR and ACPR compliance</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>Secure servers in France</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>Two-factor authentication</span>
-                    </li>
+                    {t.howItWorks.security.dataProtectionItems.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-3 text-lg">Guarantee Organizations</h4>
+                  <h4 className="font-semibold mb-3 text-lg">{t.howItWorks.security.guaranteesTitle}</h4>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>BPI France (40-70% of loan)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>SIAGI (craftsmen/merchants)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>France Active (social economy)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
-                      <span>Mandatory borrower insurance</span>
-                    </li>
+                    {t.howItWorks.security.guaranteesItems.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-primary rounded-full mt-1.5"></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -292,19 +234,19 @@ export default function HowItWorks() {
           <div className="max-w-4xl mx-auto text-center">
             <Card className="p-12 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent">
               <TrendingUp className="w-16 h-16 text-primary mx-auto mb-6" />
-              <h3 className="text-3xl font-bold mb-4">Ready to Get Started?</h3>
+              <h3 className="text-3xl font-bold mb-4">{t.howItWorks.ctaTitle}</h3>
               <p className="text-lg text-muted-foreground mb-8">
-                Submit your online application in minutes and get a quick response
+                {t.howItWorks.ctaSubtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/loan-request">
                   <Button size="lg" className="min-w-[200px]" data-testid="button-start-request">
-                    Request a Loan
+                    {t.howItWorks.ctaRequestButton}
                   </Button>
                 </Link>
                 <Link href="/contact">
                   <Button size="lg" variant="outline" className="min-w-[200px]" data-testid="button-talk-advisor">
-                    Talk to an Advisor
+                    {t.howItWorks.ctaContactButton}
                   </Button>
                 </Link>
               </div>
