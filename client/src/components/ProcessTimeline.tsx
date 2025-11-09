@@ -45,16 +45,16 @@ export default function ProcessTimeline() {
   };
 
   return (
-    <section className="py-24 bg-muted/30">
+    <section className="py-16 sm:py-20 md:py-24 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-            <Clock className="w-8 h-8 text-primary" />
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14 md:mb-16">
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 mb-4">
+            <Clock className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             {t.processTimeline.title}
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg sm:text-xl text-muted-foreground">
             {t.processTimeline.subtitle}
           </p>
         </div>
@@ -95,10 +95,10 @@ export default function ProcessTimeline() {
         </div>
 
         <div className="max-w-5xl mx-auto">
-          <h3 className="text-3xl font-bold mb-8 text-center">{t.processTimeline.documentsTitle}</h3>
-          <div className="grid md:grid-cols-3 gap-6">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center">{t.processTimeline.documentsTitle}</h3>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             <Card className="p-6">
-              <h4 className="text-xl font-bold mb-4 text-primary">{t.processTimeline.creationTitle}</h4>
+              <h4 className="text-lg sm:text-xl font-bold mb-4 text-primary">{t.processTimeline.creationTitle}</h4>
               <ul className="space-y-3">
                 {requiredDocuments.creation.map((doc, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">
@@ -109,7 +109,7 @@ export default function ProcessTimeline() {
               </ul>
             </Card>
             <Card className="p-6">
-              <h4 className="text-xl font-bold mb-4 text-primary">{t.processTimeline.repriseTitle}</h4>
+              <h4 className="text-lg sm:text-xl font-bold mb-4 text-primary">{t.processTimeline.repriseTitle}</h4>
               <ul className="space-y-3">
                 {requiredDocuments.reprise.map((doc, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">
@@ -120,7 +120,7 @@ export default function ProcessTimeline() {
               </ul>
             </Card>
             <Card className="p-6">
-              <h4 className="text-xl font-bold mb-4 text-primary">{t.processTimeline.developmentTitle}</h4>
+              <h4 className="text-lg sm:text-xl font-bold mb-4 text-primary">{t.processTimeline.developmentTitle}</h4>
               <ul className="space-y-3">
                 {requiredDocuments.developpement.map((doc, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">

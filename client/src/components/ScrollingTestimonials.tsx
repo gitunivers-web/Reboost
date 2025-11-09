@@ -49,13 +49,13 @@ export default function ScrollingTestimonials() {
   }, [t.testimonials.reviews]);
 
   return (
-    <section className="py-16 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+    <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10 md:mb-12">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
             {t.testimonials.title}
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg sm:text-xl text-muted-foreground">
             {t.testimonials.subtitle}
           </p>
         </div>

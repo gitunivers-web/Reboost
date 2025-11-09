@@ -46,14 +46,14 @@ export default function Footer() {
 
   return (
     <footer className="bg-muted/30 border-t">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Brand and Contact */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="text-2xl font-bold text-primary hover:opacity-90 transition-opacity inline-block mb-4">
+          <div className="sm:col-span-2 md:col-span-3 lg:col-span-2">
+            <Link href="/" className="text-xl sm:text-2xl font-bold text-primary hover:opacity-90 transition-opacity inline-block mb-3 sm:mb-4">
               Altus Finance Group
             </Link>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground mb-3 sm:mb-4">
               {t.footer.description}
             </p>
             <div className="space-y-2 text-sm">
@@ -130,7 +130,7 @@ export default function Footer() {
         </div>
 
         {/* Social Links */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-6 sm:pt-8 border-t gap-4">
           <div className="text-sm text-muted-foreground text-center md:text-left">
             <p>© {currentYear} {t.footer.copyright}</p>
             <p className="text-xs mt-1">
@@ -138,7 +138,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-3 sm:gap-4">
             {socialLinks.map((social, index) => {
               const Icon = social.icon;
               return (
@@ -146,10 +146,10 @@ export default function Footer() {
                   key={index}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
                   data-testid={`link-social-${social.label.toLowerCase()}`}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </a>
               );
             })}
@@ -157,7 +157,7 @@ export default function Footer() {
         </div>
 
         {/* Regulatory Information */}
-        <div className="mt-6 pt-6 border-t">
+        <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t">
           <p className="text-xs text-muted-foreground text-center max-w-4xl mx-auto">
             {t.footer.disclaimer}
           </p>

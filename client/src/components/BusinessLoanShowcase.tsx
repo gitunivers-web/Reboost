@@ -10,13 +10,13 @@ export default function BusinessLoanShowcase() {
   const businessLoans = getBusinessLoans(t);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-muted/30 to-background">
+    <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-muted/30 to-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             {t.businessLoans.title}
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg sm:text-xl text-muted-foreground">
             {t.businessLoans.subtitle}
           </p>
         </div>
@@ -77,11 +77,11 @@ export default function BusinessLoanShowcase() {
           })}
         </div>
 
-        <div className="mt-16 max-w-4xl mx-auto">
-          <Card className="p-8 bg-gradient-to-br from-primary/5 to-transparent">
-            <div className="grid md:grid-cols-2 gap-8">
+        <div className="mt-12 sm:mt-14 md:mt-16 max-w-4xl mx-auto">
+          <Card className="p-6 sm:p-8 bg-gradient-to-br from-primary/5 to-transparent">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
               <div>
-                <h3 className="text-2xl font-bold mb-4">{t.businessLoans.advantagesTitle}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold mb-4">{t.businessLoans.advantagesTitle}</h3>
                 <ul className="space-y-3 text-sm">
                   {t.businessLoans.advantages.map((advantage: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-2">
@@ -92,7 +92,7 @@ export default function BusinessLoanShowcase() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-2xl font-bold mb-4">{t.businessLoans.eligibilityTitle}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold mb-4">{t.businessLoans.eligibilityTitle}</h3>
                 <ul className="space-y-3 text-sm text-muted-foreground">
                   {t.businessLoans.eligibility.map((criterion: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-2">
@@ -111,13 +111,13 @@ export default function BusinessLoanShowcase() {
             {t.businessLoans.rateDisclaimer}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/loan-request">
-              <Button size="lg" data-testid="button-simulate-business-loan">
+            <Link href="/loan-request" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto" data-testid="button-simulate-business-loan">
                 {t.businessLoans.simulateLoan}
               </Button>
             </Link>
-            <Link href="/contact">
-              <Button size="lg" variant="outline" data-testid="button-contact-advisor">
+            <Link href="/contact" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto" data-testid="button-contact-advisor">
                 {t.businessLoans.contactAdvisor}
               </Button>
             </Link>
