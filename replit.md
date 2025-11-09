@@ -23,6 +23,13 @@ Preferred communication style: Simple, everyday language.
   - useTranslations hook for component-level translation access
 **Theming:** Light/dark mode toggle via Zustand with localStorage persistence and CSS variables.
 **Component Architecture:** Atomic design approach for UI, feature, and page components.
+**Loan Product Catalog (November 2025):** Centralized loan product data in `client/src/lib/loan-catalog.ts` serving as single source of truth:
+  - `getIndividualLoans()`: Returns all individual loan products (Personal Loan, Mortgage Loan, Auto/Motorcycle Loan, Education Loan, Wedding Loan, etc.)
+  - `getBusinessLoans()`: Returns all business loan products (Business Loan, Cash Flow Credit, Equipment Financing, Real Estate Project Financing, Business Startup Loan, etc.)
+  - Each product includes icon, colors, titleKey, descKey, featuresKey for i18n integration
+  - Marketing components: `IndividualLoanShowcase.tsx` and `BusinessLoanShowcase.tsx` consume catalog data
+  - Prevents data duplication across Home page and Products page
+  - Consistent CTA behavior across all loan presentations
 
 ### Backend Architecture
 
