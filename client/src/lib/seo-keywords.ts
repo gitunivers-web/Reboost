@@ -281,12 +281,12 @@ export function getKeywordsByPage(page: 'home' | 'loans' | 'business' | 'persona
   const baseKeywords = getAllKeywords();
   
   const pageSpecificKeywords = {
-    home: 'meilleur prêt, comparateur crédit, solution financement',
-    loans: 'tous les prêts, types de crédit, offres de prêt',
-    business: 'prêt professionnel, crédit entreprise, financement PME, business loan',
-    personal: 'prêt personnel, crédit personnel, personal loan',
-    auto: 'crédit auto, prêt automobile, car loan',
-    student: 'prêt étudiant, crédit étudiant, student loan'
+    home: 'best loan, credit comparison, financing solution',
+    loans: 'all loans, credit types, loan offers',
+    business: 'business loan, enterprise credit, SME financing, professional loan',
+    personal: 'personal loan, personal credit, consumer loan',
+    auto: 'car loan, auto credit, automobile financing',
+    student: 'student loan, student credit, education financing'
   };
   
   return `${baseKeywords}, ${pageSpecificKeywords[page]}`;

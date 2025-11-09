@@ -211,6 +211,8 @@ type TranslationKeys = {
     save: string;
     close: string;
     noData: string;
+    months: string;
+    years: string;
   };
   settings: {
     title: string;
@@ -1541,6 +1543,8 @@ export const translations: Record<Language, TranslationKeys> = {
       save: 'Enregistrer',
       close: 'Fermer',
       noData: 'Aucune donnée disponible',
+      months: 'mois',
+      years: 'ans',
     },
     settings: {
       title: 'Paramètres',
@@ -3105,6 +3109,8 @@ export const translations: Record<Language, TranslationKeys> = {
       save: 'Save',
       close: 'Close',
       noData: 'No data available',
+      months: 'months',
+      years: 'years',
     },
     about: {
       title: 'About Altus Finance Group',
@@ -4653,6 +4659,8 @@ export const translations: Record<Language, TranslationKeys> = {
       save: 'Guardar',
       close: 'Cerrar',
       noData: 'Sin datos disponibles',
+      months: 'meses',
+      years: 'años',
     },
     about: {
       title: 'Acerca de Altus Finance Group',
@@ -6196,6 +6204,8 @@ export const translations: Record<Language, TranslationKeys> = {
       save: 'Salvar',
       close: 'Fechar',
       noData: 'Sem dados disponíveis',
+      months: 'meses',
+      years: 'anos',
     },
     about: {
       title: 'Sobre Altus Finance Group',
@@ -7739,6 +7749,8 @@ export const translations: Record<Language, TranslationKeys> = {
       save: 'Salva',
       close: 'Chiudi',
       noData: 'Nessun dato disponibile',
+      months: 'mesi',
+      years: 'anni',
     },
     settings: {
       title: 'Impostazioni',
@@ -9284,6 +9296,8 @@ export const translations: Record<Language, TranslationKeys> = {
       save: 'Speichern',
       close: 'Schließen',
       noData: 'Keine Daten verfügbar',
+      months: 'Monate',
+      years: 'Jahre',
     },
     settings: {
       title: 'Einstellungen',
@@ -10799,6 +10813,8 @@ export const translations: Record<Language, TranslationKeys> = {
       save: 'Opslaan',
       close: 'Sluiten',
       noData: 'Geen gegevens beschikbaar',
+      months: 'maanden',
+      years: 'jaren',
     },
     settings: {
       title: 'Instellingen',

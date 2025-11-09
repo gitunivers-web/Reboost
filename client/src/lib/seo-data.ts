@@ -4,7 +4,7 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "FinancialService",
   "name": seoConfig.siteName,
-  "description": "Solutions de prêt professionnel pour particuliers et professionnels avec des taux compétitifs et un processus transparent",
+  "description": "Professional loan solutions for individuals and businesses with competitive rates and a transparent process",
   "url": seoConfig.siteUrl,
   "logo": {
     "@type": "ImageObject",
@@ -31,7 +31,7 @@ export const organizationSchema = {
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": seoConfig.organization.telephone,
-    "contactType": "Service Client",
+    "contactType": "Customer Service",
     "availableLanguage": ["French", "English", "Spanish", "Portuguese", "Italian", "German"]
   }
 };
@@ -62,8 +62,8 @@ export const breadcrumbSchema = (items: Array<{name: string, path: string}>) => 
 
 export const loanProductSchema = {
   "@type": "LoanOrCredit",
-  "name": "Prêt Professionnel Altus Finance Group",
-  "description": "Prêt professionnel flexible avec des taux compétitifs",
+  "name": "Altus Finance Group Professional Loan",
+  "description": "Flexible professional loan with competitive rates",
   "provider": {
     "@type": "FinancialService",
     "name": seoConfig.siteName
@@ -90,6 +90,6 @@ export const faqSchema = (faqs: Array<{question: string, answer: string}>) => ({
 export const contactPageSchema = {
   "@type": "ContactPage",
   "name": "Contact Altus Finance Group",
-  "description": "Contactez-nous pour toutes vos questions sur nos solutions de financement",
+  "description": "Contact us for all your questions about our financing solutions",
   "url": `${seoConfig.siteUrl}/contact`
 };
