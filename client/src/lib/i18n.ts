@@ -319,6 +319,39 @@ type TranslationKeys = {
     step3Desc: string;
     step4Title: string;
     step4Desc: string;
+    averageTimePrefix: string;
+    averageTimeValue: string;
+    requiredDocumentsTitle: string;
+    requiredDocumentsSubtitle: string;
+    personalLoanTitle: string;
+    businessLoanTitle: string;
+    documents: {
+      personal: string[];
+      professional: string[];
+    };
+    tipTitle: string;
+    tipMessage: string;
+    tipContactCta: string;
+    eligibilityTitle: string;
+    eligibilitySubtitle: string;
+    individualsTitle: string;
+    professionalsTitle: string;
+    requiredTag: string;
+    eligibility: {
+      personal: Array<{ label: string; required: boolean }>;
+      professional: Array<{ label: string; required: boolean }>;
+    };
+    securityTitle: string;
+    security: {
+      dataProtectionTitle: string;
+      dataProtectionItems: string[];
+      guaranteesTitle: string;
+      guaranteesItems: string[];
+    };
+    ctaTitle: string;
+    ctaSubtitle: string;
+    ctaRequestButton: string;
+    ctaContactButton: string;
   };
   products: {
     title: string;
@@ -1770,6 +1803,78 @@ export const translations: Record<Language, TranslationKeys> = {
       step3Desc: 'Une fois votre demande approuvée, les fonds sont immédiatement débloqués sur votre compte sécurisé Altus Finance Group. Vous gardez le contrôle total de vos fonds avec accès 24/7 depuis votre espace client.',
       step4Title: 'Transfert vers votre compte - À votre rythme',
       step4Desc: 'Transférez vos fonds quand vous le souhaitez vers votre compte bancaire personnel ou professionnel directement depuis votre espace Altus Finance Group. Transferts instantanés ou programmés selon vos besoins, sans frais supplémentaires.',
+      averageTimePrefix: 'Temps total moyen :',
+      averageTimeValue: '2 à 3 semaines de la soumission de la demande au déblocage des fonds',
+      requiredDocumentsTitle: 'Documents requis',
+      requiredDocumentsSubtitle: 'Préparez ces documents pour accélérer votre demande',
+      personalLoanTitle: 'Prêt Personnel',
+      businessLoanTitle: 'Prêt Professionnel',
+      documents: {
+        personal: [
+          'Pièce d\'identité valide (carte d\'identité, passeport)',
+          'Justificatif de domicile (moins de 3 mois)',
+          'Les 3 derniers bulletins de salaire',
+          'Dernier avis d\'imposition',
+          'Relevés bancaires (3 mois)',
+          'Justification du projet (devis, factures)'
+        ],
+        professional: [
+          'Kbis de moins de 3 mois',
+          'Pièce d\'identité du dirigeant',
+          'Statuts de la société',
+          'Bilans financiers (3 dernières années)',
+          'Liasse fiscale complète',
+          'Relevés bancaires professionnels (6 mois)',
+          'Business plan (création/reprise)',
+          'Prévisionnel financier sur 3 ans',
+          'Devis ou factures pro forma (équipements)'
+        ]
+      },
+      tipTitle: 'Astuce :',
+      tipMessage: 'Documents manquants ? Notre équipe vous aidera à compléter votre dossier.',
+      tipContactCta: 'Contactez-nous →',
+      eligibilityTitle: 'Critères d\'éligibilité',
+      eligibilitySubtitle: 'Vérifiez si vous remplissez les conditions pour votre prêt',
+      individualsTitle: 'Particuliers',
+      professionalsTitle: 'Professionnels',
+      requiredTag: 'Obligatoire',
+      eligibility: {
+        personal: [
+          { label: 'Majeur et résident français', required: true },
+          { label: 'Revenus réguliers vérifiables', required: true },
+          { label: 'Pas d\'interdiction bancaire', required: true },
+          { label: 'Taux d\'endettement < 35%', required: true },
+          { label: 'Score de crédit acceptable', required: false }
+        ],
+        professional: [
+          { label: 'Entreprise immatriculée en France', required: true },
+          { label: 'En activité depuis +6 mois', required: true },
+          { label: 'Bilans financiers à jour', required: true },
+          { label: 'Pas de procédure collective', required: true },
+          { label: 'Apport personnel 10-30%', required: true }
+        ]
+      },
+      securityTitle: 'Sécurité et Garanties',
+      security: {
+        dataProtectionTitle: 'Vos Données Protégées',
+        dataProtectionItems: [
+          'Cryptage SSL 256 bits',
+          'Conformité RGPD et ACPR',
+          'Serveurs sécurisés en France',
+          'Authentification à deux facteurs'
+        ],
+        guaranteesTitle: 'Organismes de Garantie',
+        guaranteesItems: [
+          'BPI France (40-70% du prêt)',
+          'SIAGI (artisans/commerçants)',
+          'France Active (économie sociale)',
+          'Assurance emprunteur obligatoire'
+        ]
+      },
+      ctaTitle: 'Prêt à commencer ?',
+      ctaSubtitle: 'Soumettez votre demande en ligne en quelques minutes et obtenez une réponse rapide',
+      ctaRequestButton: 'Demander un prêt',
+      ctaContactButton: 'Parler à un conseiller'
     },
     products: {
       title: 'Nos Solutions de Prêts',
@@ -5058,6 +5163,78 @@ export const translations: Record<Language, TranslationKeys> = {
       step3Desc: 'Una vez aprobada su solicitud, los fondos se desbloquean inmediatamente en su cuenta segura de Altus Finance Group. Mantiene el control total de sus fondos con acceso 24/7 desde su panel de cliente.',
       step4Title: 'Transferencia a su cuenta - A su ritmo',
       step4Desc: 'Transfiera sus fondos cuando lo desee a su cuenta bancaria personal o empresarial directamente desde su panel de Altus. Transferencias instantáneas o programadas según sus necesidades, sin cargos adicionales.',
+      averageTimePrefix: 'Tiempo total promedio:',
+      averageTimeValue: '2 a 3 semanas desde la presentación de la solicitud hasta el desembolso de fondos',
+      requiredDocumentsTitle: 'Documentos Requeridos',
+      requiredDocumentsSubtitle: 'Prepare estos documentos para agilizar su solicitud',
+      personalLoanTitle: 'Préstamo Personal',
+      businessLoanTitle: 'Préstamo Empresarial',
+      documents: {
+        personal: [
+          'Identificación válida (DNI, pasaporte)',
+          'Comprobante de domicilio (menos de 3 meses)',
+          'Últimos 3 recibos de nómina',
+          'Última declaración de impuestos',
+          'Estados de cuenta bancarios (3 meses)',
+          'Justificación del proyecto (presupuestos, facturas)'
+        ],
+        professional: [
+          'Registro mercantil de menos de 3 meses',
+          'Documento de identidad del gerente',
+          'Estatutos de la empresa',
+          'Estados financieros (últimos 3 años)',
+          'Paquete fiscal completo',
+          'Estados de cuenta bancarios profesionales (6 meses)',
+          'Plan de negocios (inicio/adquisición)',
+          'Proyección financiera a 3 años',
+          'Presupuestos o facturas proforma (equipos)'
+        ]
+      },
+      tipTitle: 'Consejo:',
+      tipMessage: '¿Faltan documentos? Nuestro equipo le ayudará a completar su expediente.',
+      tipContactCta: 'Contáctenos →',
+      eligibilityTitle: 'Criterios de Elegibilidad',
+      eligibilitySubtitle: 'Verifique si cumple con los requisitos para su préstamo',
+      individualsTitle: 'Particulares',
+      professionalsTitle: 'Profesionales',
+      requiredTag: 'Obligatorio',
+      eligibility: {
+        personal: [
+          { label: 'Mayor de edad y residente francés', required: true },
+          { label: 'Ingresos regulares verificables', required: true },
+          { label: 'Sin prohibición bancaria', required: true },
+          { label: 'Tasa de endeudamiento < 35%', required: true },
+          { label: 'Puntaje crediticio aceptable', required: false }
+        ],
+        professional: [
+          { label: 'Empresa registrada en Francia', required: true },
+          { label: 'En operación por +6 meses', required: true },
+          { label: 'Estados financieros actualizados', required: true },
+          { label: 'Sin procedimientos colectivos', required: true },
+          { label: 'Aporte personal 10-30%', required: true }
+        ]
+      },
+      securityTitle: 'Seguridad y Garantías',
+      security: {
+        dataProtectionTitle: 'Sus Datos Protegidos',
+        dataProtectionItems: [
+          'Cifrado SSL de 256 bits',
+          'Cumplimiento de RGPD y ACPR',
+          'Servidores seguros en Francia',
+          'Autenticación de dos factores'
+        ],
+        guaranteesTitle: 'Organizaciones de Garantía',
+        guaranteesItems: [
+          'BPI France (40-70% del préstamo)',
+          'SIAGI (artesanos/comerciantes)',
+          'France Active (economía social)',
+          'Seguro de prestatario obligatorio'
+        ]
+      },
+      ctaTitle: '¿Listo para Comenzar?',
+      ctaSubtitle: 'Presente su solicitud en línea en minutos y obtenga una respuesta rápida',
+      ctaRequestButton: 'Solicitar un Préstamo',
+      ctaContactButton: 'Hablar con un Asesor'
     },
     products: {
       title: 'Nuestras Soluciones de Préstamos',
