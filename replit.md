@@ -2,7 +2,7 @@
 
 ## Overview
 
-ALTUS is a multi-language professional loan management platform for business clients, offering a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. It emphasizes trust, clarity, and data-driven decision-making, incorporating professional design patterns. Key features include multi-language support (French, English, Spanish), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. The platform aims to serve business professionals and enterprises seeking robust loan financing and financial management tools.
+ALTUS is a multi-language professional loan management platform designed for business clients. It provides a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. The platform emphasizes trust, clarity, and data-driven decision-making, offering features such as multi-language support (French, English, Spanish, Portuguese, Italian, German, Dutch), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. Its purpose is to serve business professionals and enterprises with robust loan financing and financial management tools. The platform also includes a "How It Works" section detailing the loan application process from registration to fund disbursement, with a timeline of approximately 2-3 weeks for personal loans up to €75,000.
 
 ## User Preferences
 
@@ -13,130 +13,40 @@ Preferred communication style: Simple, everyday language.
 ### Frontend Architecture
 
 **Technology Stack:** React 18 with TypeScript, Wouter for routing, Tailwind CSS with shadcn/ui for styling, Zustand for client-side state, TanStack Query for server state, React Hook Form with Zod for forms, and Vite for building.
-**Design System:** Radix UI primitives, custom design tokens (HSL color system), Google Fonts, and a responsive mobile-first design.
-**Internationalization (i18n):** Custom implementation with Zustand, supporting 7 languages: French (FR - default), English (EN), Spanish (ES), Portuguese (PT), Italian (IT), German (DE), and Dutch (NL). Extended i18n coverage (November 2025) includes:
-  - `transferFlow` namespace: Complete transfer workflow internationalization (form, verification, validation, progress, completion steps)
-  - `loanOffers` namespace: Loan request page with all tabs and offer types
-  - `cardTermsContent` namespace: 13-section bank card terms & conditions document
-  - All namespaces include placeholder support for dynamic content interpolation
-  - Type-safe translation keys with TypeScript TranslationKeys interface
-  - useTranslations hook for component-level translation access
-  - **IP-Based Automatic Language Detection (November 2025):**
-    - Backend endpoint `/api/detect-language` detects user's country from IP address using FreeIPAPI (HTTPS)
-    - Comprehensive country-to-language mapping covering 30+ countries across all 7 supported languages
-    - Auto-detection occurs on first visit; respects manual language selection thereafter
-    - Secure implementation with rate limiting, proper error handling, and fallbacks
-    - Development mode defaults to French for localhost/internal IPs
-**Theming:** Light/dark mode toggle via Zustand with localStorage persistence and CSS variables.
-**Component Architecture:** Atomic design approach for UI, feature, and page components.
-**Loan Product Catalog (November 2025):** Centralized loan product data in `client/src/lib/loan-catalog.ts` serving as single source of truth:
-  - `getIndividualLoans()`: Returns all individual loan products (Personal Loan, Mortgage Loan, Auto/Motorcycle Loan, Education Loan, Wedding Loan, etc.)
-  - `getBusinessLoans()`: Returns all business loan products (Business Loan, Cash Flow Credit, Equipment Financing, Real Estate Project Financing, Business Startup Loan, etc.)
-  - Each product includes icon, colors, titleKey, descKey, featuresKey for i18n integration
-  - Marketing components: `IndividualLoanShowcase.tsx` and `BusinessLoanShowcase.tsx` consume catalog data
-  - Prevents data duplication across Home page and Products page
-  - Consistent CTA behavior across all loan presentations
-**Partners Section (November 2025):** Real bank partner logos displayed on home page in `PartnersSection.tsx`:
-  - Authentic logos: BNP Paribas, HSBC, Santander (SVG from Wikimedia Commons), Société Générale, Crédit Agricole, ING, Deutsche Bank, Credit Suisse (stock images)
-  - Professional grayscale filter with color reveal on hover for visual engagement
-  - Consistent card layout with object-contain sizing and fixed height (h-12)
-  - Assets imported via @assets alias for proper bundling
-  - Supports light/dark themes with white/card background contrast
+**Design System:** Utilizes Radix UI primitives, custom HSL color system design tokens, Google Fonts, and a responsive mobile-first approach.
+**Internationalization (i18n):** Custom implementation with Zustand, supporting 7 languages (FR, EN, ES, PT, IT, DE, NL). Includes type-safe translation keys, `useTranslations` hook, and IP-based automatic language detection with comprehensive country-to-language mapping.
+**Theming:** Supports light/dark mode via Zustand with localStorage persistence and CSS variables.
+**Component Architecture:** Follows an Atomic design approach.
+**Loan Product Catalog:** Centralized data in `client/src/lib/loan-catalog.ts` for individual and business loan products, ensuring consistent presentation and i18n integration across the platform.
+**Partners Section:** Displays authentic bank partner logos with a professional grayscale filter and color reveal on hover, supporting both light and dark themes.
 
 ### Backend Architecture
 
 **Technology Stack:** Node.js with Express.js, TypeScript, Drizzle ORM, PostgreSQL (via Neon serverless driver), and Connect-pg-simple for session management.
-**API Design:** RESTful API endpoints (`/api`) with response formatting and request logging.
-**Data Layer:** Schema-first design with Drizzle ORM, type-safe operations, Zod schemas, and drizzle-kit for migrations.
-**Storage Strategy:** PostgreSQL database (`DatabaseStorage`) with Neon serverless, using an `IStorage` interface.
+**API Design:** RESTful API endpoints with response formatting and request logging.
+**Data Layer:** Schema-first design using Drizzle ORM, type-safe operations, Zod schemas, and drizzle-kit for migrations.
+**Storage Strategy:** PostgreSQL database (`DatabaseStorage`) with Neon serverless, adhering to an `IStorage` interface.
 **Database Schema:** Key tables include `users`, `loans`, `transfers`, `fees`, `transactions`, `adminSettings`, `auditLogs`, `transferValidationCodes`, `transferEvents`, `adminMessages`, `externalAccounts`, and `userOtps`.
-**Key Architectural Decisions:** Monorepo for client/server, end-to-end type safety, Vite middleware for HMR, and separate client/server builds.
+**Key Architectural Decisions:** Monorepo structure, end-to-end type safety, Vite middleware for HMR, and separate client/server builds.
 
 ### UI/UX Decisions
-- Virtual bank card fixed in bottom-right of dashboard.
-- Welcome modal appears once after first login.
-- Responsive design across all pages.
-- Clear feedback and loading states for actions like file uploads and 2FA setup.
-- Password strength indicators during reset.
-- Profile photo upload with dual cache-busting mechanism (server `updatedAt` + client `photoCacheBuster`) for immediate display after upload.
+
+- Virtual bank card fixed in the bottom-right of the dashboard.
+- Welcome modal displayed once after the first login.
+- Fully responsive design across all pages.
+- Clear feedback and loading states for user actions.
+- Password strength indicators during resets.
+- Profile photo upload with dual cache-busting for immediate display.
 
 ### Technical Implementations
-- **Authentication:**
-    - Complete forgot/reset password functionality with email notifications, rate limiting, and 12-character password validation.
-    - Email verification with automatic login: After clicking verification link, users are automatically logged in and redirected to dashboard (no manual login required).
-    - **Streamlined Login Flow (Updated Nov 2025):**
-        - Users WITHOUT 2FA enabled: Direct login access to dashboard (no OTP required)
-        - Users WITH 2FA enabled: Must enter 6-digit TOTP code from Google Authenticator
-        - OTP email codes removed for standard login (only used for password reset and special cases)
-    - TOTP-based Two-Factor Authentication (2FA) using Google Authenticator, including setup, verification, and disable flows.
-        - Optional feature enabled via user settings (Security section)
-        - Setup flow: Generate QR code → Scan with authenticator app → Verify code → Enable 2FA
-        - Once enabled, 2FA code required at every login
-    - Single session enforcement preventing multiple simultaneous logins per user.
-    - CSRF protection on mutating routes, with preloading tokens for signup.
-    - Cross-domain session cookies with flexible configuration:
-        - COOKIE_DOMAIN environment variable support (defaults to .altusfinancegroup.com in production)
-        - Automatic mode detection via IS_PRODUCTION constant
-        - Production: domain=COOKIE_DOMAIN, sameSite='none', secure=true, httpOnly=true
-        - Development: no domain (localhost), sameSite='lax', secure=false, httpOnly=true
-    - Request debugging middleware with secure logging (session presence flags only, no sensitive data)
-    - Comprehensive startup logging for production troubleshooting (config, CORS, cookies)
-- **Session Management & Error Handling:**
-    - Global 401/403 interceptor in `queryClient.ts` redirecting to login with contextual messages stored in sessionStorage.
-    - `SessionMonitor` component for periodic session validation (60s intervals) and inactivity detection (30min timeout).
-    - Automatic CSRF token cleanup and session clearing on authentication failures.
-    - Intelligent retry logic distinguishing network errors (exponential backoff, max 3 retries) from authentication errors (no retry).
-    - Enhanced 404 page ensuring authentication errors never display as "page not found".
-    - All authentication routes (`/auth`, `/login`, `/signup`) properly configured to prevent routing errors.
-- **Security Features:**
-    - IDOR protection, Zod validation, XSS protection, strong password requirements, UUID usernames, generic error messages.
-    - File upload validation with magic byte verification.
-    - Comprehensive rate limiting on sensitive endpoints.
-    - User status verification in authentication middleware.
-    - Encrypted 2FA secrets.
-- **Loan Disbursement Workflow:** Multi-step approval: Request -> Admin Approval -> Contract Signing -> Manual Admin Fund Disbursement (`active` status). Requires explicit admin action for disbursement, logs all actions, and validates loan status.
-- **KYC Document Upload:** Real file upload via FormData to `/api/kyc/upload` with loading states, error handling, and input clearing.
-- **Profile Photo Upload (Cloudinary Integration - November 2025):**
-    - Cloud-based image storage using Cloudinary for persistent profile photos in production
-    - Memory-based upload (no local disk storage) via multer.memoryStorage()
-    - Automatic image transformations: 500x500 face-centered crop, quality optimization, auto-format
-    - Secure HTTPS URLs stored in PostgreSQL database
-    - Automatic cleanup of old photos from Cloudinary when users update their profile picture
-    - Cross-domain compatible: works with frontend on Vercel and backend on Render
-    - Environment variables: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
-    - Images organized in `user_profiles/` folder with unique public IDs
-- **Notification System (November 2025 - Extended):**
-    - Database-backed persistent notifications replacing temporary toast messages.
-    - PostgreSQL table (`notifications`) with fields: userId, type, title, message, severity, isRead, metadata, createdAt, readAt.
-    - RESTful API endpoints with full CSRF protection and defense-in-depth IDOR protection.
-    - Storage methods enforce user ownership at SQL level: all read/update/delete operations include `WHERE userId = ?` clause.
-    - NotificationBell component with real-time polling (5s intervals for admin loan requests, 30s for user notifications), unread count badge, and dropdown menu.
-    - Sound alerts for new notifications (plays only when unread count increases).
-    - 2FA suggestion notification system:
-        - Appears once in notification bell for users without 2FA enabled.
-        - Uses `hasNotificationByType` to check all notifications (read/unread) preventing duplicates.
-        - Auto-removes via `deleteAllNotificationsByType` when user enables 2FA.
-    - Real-time loan request notifications for admins with 5s polling and audio alerts.
-    - **Multilingual Notification System with Metadata Interpolation (November 2025):**
-        - Complete internationalization support for all notifications across French (default), English, and Spanish.
-        - Backend stores generic English messages + structured metadata (amounts, reasons, loan types, recipients, sequences, etc.).
-        - Frontend `interpolateMessage()` function replaces placeholders ({amount}, {reason}, {loanType}, etc.) with actual metadata values.
-        - Translation keys in `i18n.ts` include placeholders for dynamic content in all 3 languages.
-        - Notifications dynamically adapt to user's selected language with contextual data properly displayed.
-        - Fallback mechanism: Uses backend title/message (generic English) if translation key not found.
-        - Example FR: "Votre demande de prêt {loanType} de {amount} € a été soumise..."
-        - Example EN: "Your {loanType} loan request for £{amount} has been successfully submitted..."
-        - Example ES: "Su solicitud de préstamo {loanType} por {amount} € ha sido enviada..."
-    - **Comprehensive notification coverage (November 2025):**
-        - Notification helper utilities (`notification-helper.ts`) generate notifications for ALL critical events:
-        - **Loan lifecycle**: Request submitted, under review, approved, contract generated, contract signed, rejected, funds disbursed
-        - **Transfer lifecycle**: Transfer initiated, transfer completed, transfer approved, transfer suspended, validation code issued
-        - **KYC events**: KYC approved, KYC rejected
-        - **Admin actions**: Admin messages sent, fees added, account status changes
-        - **18 distinct notification types** covering every important user action
-    - Notifications persist across page refreshes and logout/login cycles.
-    - Notifications remain visible even after being marked as read.
-    - Security: SQL-level user ownership validation prevents cross-user access even if route checks are bypassed.
+
+- **Authentication:** Comprehensive forgot/reset password with email notifications and rate limiting. Email verification includes automatic login post-verification. Streamlined login flow differentiates between users with and without 2FA. TOTP-based Two-Factor Authentication (2FA) using Google Authenticator is optional and user-configurable. Single session enforcement and CSRF protection are implemented. Cross-domain session cookies are configured for production and development environments.
+- **Session Management & Error Handling:** Global 401/403 interceptor redirects to login with contextual messages. `SessionMonitor` component ensures periodic session validation and inactivity detection. Automatic CSRF token cleanup and session clearing occur on authentication failures. Intelligent retry logic distinguishes network errors from authentication errors.
+- **Security Features:** Includes IDOR protection, Zod validation, XSS protection, strong password requirements, UUID usernames, generic error messages, and file upload validation with magic byte verification. Comprehensive rate limiting on sensitive endpoints and encrypted 2FA secrets are also in place.
+- **Loan Disbursement Workflow:** Multi-step approval process (Request -> Admin Approval -> Contract Signing -> Manual Admin Fund Disbursement) ensuring explicit admin action for disbursement and logging all actions.
+- **KYC Document Upload:** Real file upload functionality via FormData with appropriate loading states and error handling.
+- **Profile Photo Upload:** Utilizes Cloudinary for cloud-based image storage, including automatic transformations, secure HTTPS URLs, and cleanup of old photos.
+- **Notification System:** Database-backed persistent notifications replace temporary toast messages. Features include RESTful API endpoints with CSRF and IDOR protection, user ownership enforcement at the SQL level, `NotificationBell` component with polling, unread count badges, sound alerts, and a 2FA suggestion notification system. It supports multilingual notifications with metadata interpolation for dynamic content in French, English, and Spanish. A comprehensive set of 18 distinct notification types covers all critical user events and persists across sessions.
 
 ## External Dependencies
 
@@ -144,7 +54,6 @@ Preferred communication style: Simple, everyday language.
 **UI Component Libraries:** Radix UI, shadcn/ui, Recharts, Lucide React.
 **Styling & Design:** Tailwind CSS, `class-variance-authority`, `tailwind-merge`, `clsx`.
 **Form Management:** React Hook Form, Zod, `@hookform/resolvers`.
-**Development Tools:** Replit Plugins, TypeScript, ESBuild.
 **Authentication:** SendGrid for transactional email verification.
-**Two-Factor Authentication:** Speakeasy and qrcode libraries for TOTP.
+**Two-Factor Authentication:** Speakeasy and qrcode libraries for TOTP generation and verification.
 **Cloud Storage:** Cloudinary for persistent profile photo storage and delivery.
