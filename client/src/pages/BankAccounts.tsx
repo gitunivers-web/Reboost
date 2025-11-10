@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,7 +12,16 @@ import { apiRequest, queryClient } from '@/lib/queryClient';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { ExternalAccount } from '@shared/schema';
 import { useTranslations } from '@/lib/i18n';
-import { UserLayout } from '@/components/UserLayout';
+
+function BankAccountsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {[...Array(4)].map((_, i) => (
+        <Skeleton key={i} className="h-48" />
+      ))}
+    </div>
+  );
+}
 
 export default function BankAccounts() {
   const t = useTranslations();
@@ -120,128 +129,126 @@ export default function BankAccounts() {
 
   if (isLoading) {
     return (
-      <UserLayout
-        title={t.bankAccounts.title}
-        description={t.bankAccounts.description}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-48" />
-          ))}
-        </div>
-      </UserLayout>
+      <div className="p-6 md:p-8 max-w-[1200px] mx-auto space-y-6">
+        <Skeleton className="h-10 w-48" />
+        <BankAccountsSkeleton />
+      </div>
     );
   }
 
   return (
     <>
-      <UserLayout
-        title={t.bankAccounts.title}
-        description={t.bankAccounts.description}
-        actions={
+      <div className="p-6 md:p-8 max-w-[1200px] mx-auto space-y-6">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">{t.bankAccounts.title}</h1>
+            <p className="text-sm text-muted-foreground mt-1">{t.bankAccounts.description}</p>
+          </div>
           <Button
-            size="lg"
             onClick={() => setDialogOpen(true)}
+            className="gap-2"
             data-testid="button-add-account"
           >
-            <Plus className="mr-2 h-5 w-5" />
+            <Plus className="w-4 h-4" />
             {t.bankAccounts.addAccount}
           </Button>
-        }
-      >
+        </div>
 
         {accounts && accounts.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Building2 className="h-16 w-16 text-muted-foreground mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{t.bankAccounts.noAccountsTitle}</h3>
-              <p className="text-muted-foreground text-center mb-6 max-w-md">
+          <Card className="p-12">
+            <div className="flex flex-col items-center justify-center text-center">
+              <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+                <Building2 className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">{t.bankAccounts.noAccountsTitle}</h3>
+              <p className="text-muted-foreground text-sm mb-6 max-w-md">
                 {t.bankAccounts.noAccountsDescription}
               </p>
               <Button onClick={() => setDialogOpen(true)} data-testid="button-add-first-account">
                 <Plus className="mr-2 h-4 w-4" />
                 {t.bankAccounts.addFirstAccount}
               </Button>
-            </CardContent>
+            </div>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {accounts?.map((account) => (
-              <Card key={account.id} className="relative" data-testid={`card-account-${account.id}`}>
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2">
-                      <Building2 className="h-5 w-5 text-primary" />
-                      <CardTitle className="text-lg">{account.bankName}</CardTitle>
+              <Card key={account.id} className="p-6 relative" data-testid={`card-account-${account.id}`}>
+                {account.isDefault && (
+                  <Badge className="absolute top-4 right-4 gap-1" variant="default">
+                    <Star className="w-3 h-3" />
+                    Par défaut
+                  </Badge>
+                )}
+                
+                <div className="space-y-4">
+                  {/* Bank Icon & Name */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Building2 className="h-6 w-6 text-primary" />
                     </div>
-                    {account.isDefault && (
-                      <Badge variant="secondary" className="flex items-center gap-1">
-                        <Star className="h-3 w-3" />
-                        Défaut
-                      </Badge>
-                    )}
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg text-foreground">{account.bankName}</h3>
+                      <p className="text-sm text-muted-foreground">{account.accountLabel}</p>
+                    </div>
                   </div>
-                  <CardDescription className="font-semibold">{account.accountLabel}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
+
+                  {/* IBAN */}
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CreditCard className="h-4 w-4" />
-                      <span>IBAN</span>
-                    </div>
-                    <p className="font-mono text-sm break-all">{formatIBAN(account.iban)}</p>
+                    <p className="text-xs text-muted-foreground">IBAN</p>
+                    <p className="font-mono text-sm text-foreground">
+                      {formatIBAN(account.iban)}
+                    </p>
                   </div>
-                  
+
+                  {/* BIC */}
                   {account.bic && (
                     <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">BIC</p>
-                      <p className="font-mono text-sm">{account.bic}</p>
+                      <p className="text-xs text-muted-foreground">BIC/SWIFT</p>
+                      <p className="font-mono text-sm text-foreground">{account.bic}</p>
                     </div>
                   )}
 
-                  <div className="pt-3 flex gap-2">
+                  {/* Actions */}
+                  <div className="pt-4 border-t flex justify-end">
                     <Button
                       variant="destructive"
                       size="sm"
-                      className="w-full"
-                      onClick={() => {
-                        if (confirm('Êtes-vous sûr de vouloir supprimer ce compte ?')) {
-                          deleteAccountMutation.mutate(account.id);
-                        }
-                      }}
+                      onClick={() => deleteAccountMutation.mutate(account.id)}
+                      disabled={deleteAccountMutation.isPending}
                       data-testid={`button-delete-account-${account.id}`}
+                      className="gap-2"
                     >
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      {t.bankAccounts.delete}
+                      <Trash2 className="w-4 h-4" />
+                      Supprimer
                     </Button>
                   </div>
-                </CardContent>
+                </div>
               </Card>
             ))}
           </div>
         )}
-      </UserLayout>
+      </div>
 
+      {/* Add Account Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[550px]">
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle className="text-2xl">{t.bankAccounts.addAccount} bancaire</DialogTitle>
+            <DialogTitle>{t.bankAccounts.addAccountTitle}</DialogTitle>
             <DialogDescription>
               {t.bankAccounts.addAccountDescription}
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="accountLabel">{t.bankAccounts.accountLabelLabel}</Label>
+              <Label htmlFor="accountLabel">{t.bankAccounts.accountLabel}</Label>
               <Input
                 id="accountLabel"
-                placeholder="{t.bankAccounts.accountLabelPlaceholder}"
                 value={formData.accountLabel}
-                onChange={(e) => {
-                  setFormData({ ...formData, accountLabel: e.target.value });
-                  setErrors({ ...errors, accountLabel: '' });
-                }}
-                className={errors.accountLabel ? 'border-destructive' : ''}
+                onChange={(e) => setFormData({ ...formData, accountLabel: e.target.value })}
+                placeholder={t.bankAccounts.accountLabelPlaceholder}
                 data-testid="input-account-label"
               />
               {errors.accountLabel && (
@@ -250,16 +257,12 @@ export default function BankAccounts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="bankName">{t.bankAccounts.bankNameLabel}</Label>
+              <Label htmlFor="bankName">{t.bankAccounts.bankName}</Label>
               <Input
                 id="bankName"
-                placeholder="{t.bankAccounts.bankNamePlaceholder}"
                 value={formData.bankName}
-                onChange={(e) => {
-                  setFormData({ ...formData, bankName: e.target.value });
-                  setErrors({ ...errors, bankName: '' });
-                }}
-                className={errors.bankName ? 'border-destructive' : ''}
+                onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
+                placeholder={t.bankAccounts.bankNamePlaceholder}
                 data-testid="input-bank-name"
               />
               {errors.bankName && (
@@ -268,16 +271,12 @@ export default function BankAccounts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="iban">IBAN</Label>
+              <Label htmlFor="iban">{t.bankAccounts.iban}</Label>
               <Input
                 id="iban"
-                placeholder="FR76 XXXX XXXX XXXX XXXX XXXX XXX"
                 value={formData.iban}
-                onChange={(e) => {
-                  setFormData({ ...formData, iban: e.target.value });
-                  setErrors({ ...errors, iban: '' });
-                }}
-                className={errors.iban ? 'border-destructive' : ''}
+                onChange={(e) => setFormData({ ...formData, iban: e.target.value.toUpperCase() })}
+                placeholder="FR76 1234 5678 9012 3456 7890 123"
                 data-testid="input-iban"
               />
               {errors.iban && (
@@ -286,16 +285,12 @@ export default function BankAccounts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="bic">{t.bankAccounts.bicLabel}</Label>
+              <Label htmlFor="bic">{t.bankAccounts.bic} (Optionnel)</Label>
               <Input
                 id="bic"
-                placeholder="AGRIFRPP"
                 value={formData.bic}
-                onChange={(e) => {
-                  setFormData({ ...formData, bic: e.target.value });
-                  setErrors({ ...errors, bic: '' });
-                }}
-                className={errors.bic ? 'border-destructive' : ''}
+                onChange={(e) => setFormData({ ...formData, bic: e.target.value.toUpperCase() })}
+                placeholder="BNPAFRPP"
                 data-testid="input-bic"
               />
               {errors.bic && (
@@ -303,7 +298,7 @@ export default function BankAccounts() {
               )}
             </div>
 
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-3 pt-4">
               <Button
                 type="button"
                 variant="outline"
@@ -311,16 +306,16 @@ export default function BankAccounts() {
                   setDialogOpen(false);
                   resetForm();
                 }}
-                data-testid="button-cancel-account"
+                data-testid="button-cancel-add-account"
               >
                 {t.common.cancel}
               </Button>
               <Button
                 type="submit"
                 disabled={createAccountMutation.isPending}
-                data-testid="button-submit-account"
+                data-testid="button-submit-add-account"
               >
-                {createAccountMutation.isPending ? '{t.bankAccounts.submitting}' : '{t.bankAccounts.submitting}le compte'}
+                {createAccountMutation.isPending ? t.common.saving : t.common.save}
               </Button>
             </div>
           </form>

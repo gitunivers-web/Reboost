@@ -20,7 +20,7 @@ export interface DashboardData {
     id: string;
     amount: number;
     recipient: string;
-    status: 'pending' | 'in-progress' | 'approved' | 'rejected';
+    status: 'pending' | 'in-progress' | 'approved' | 'rejected' | 'completed';
     currentStep: number;
     updatedAt: string;
   }>;

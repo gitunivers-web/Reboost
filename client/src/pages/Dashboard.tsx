@@ -115,7 +115,7 @@ export default function Dashboard() {
                 </h2>
               </div>
 
-              <div className="flex flex-wrap gap-6">
+              <div className="flex flex-wrap gap-6" data-testid="section-balance-kpis">
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">Crédit disponible</p>
                   <p className="text-lg font-semibold text-foreground" data-testid="text-available-credit">
@@ -138,7 +138,7 @@ export default function Dashboard() {
             </div>
 
             {/* Sparkline Trend */}
-            <div className="h-24 w-full md:w-80">
+            <div className="h-24 w-full md:w-80" data-testid="chart-balance-trend">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={mockTrendData}>
                   <defs>
@@ -191,7 +191,7 @@ export default function Dashboard() {
               <h3 className="text-lg font-semibold text-foreground mb-1">Flux de trésorerie</h3>
               <p className="text-sm text-muted-foreground">Revenus et dépenses sur 6 mois</p>
             </div>
-            <div className="h-64">
+            <div className="h-64" data-testid="chart-cashflow">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={mockCashflowData}>
                   <defs>
@@ -250,7 +250,7 @@ export default function Dashboard() {
               <h3 className="text-lg font-semibold text-foreground mb-1">Utilisation du crédit</h3>
               <p className="text-sm text-muted-foreground">Capacité d'emprunt</p>
             </div>
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center" data-testid="section-credit-utilization">
               <div className="relative w-48 h-48">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -323,7 +323,7 @@ export default function Dashboard() {
                     <div>
                       <p className="font-medium text-foreground text-sm">{transfer.recipient}</p>
                       <p className="text-xs text-muted-foreground">
-                        {new Date(transfer.createdAt).toLocaleDateString('fr-FR')}
+                        {new Date(transfer.updatedAt).toLocaleDateString('fr-FR')}
                       </p>
                     </div>
                   </div>
@@ -332,13 +332,14 @@ export default function Dashboard() {
                       -{new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(Number(transfer.amount))}
                     </p>
                     <Badge variant={
-                      transfer.status === 'completed' ? 'default' : 
-                      transfer.status === 'pending' ? 'secondary' : 
+                      transfer.status === 'approved' || transfer.status === 'completed' ? 'default' : 
+                      transfer.status === 'pending' || transfer.status === 'in-progress' ? 'secondary' : 
                       'destructive'
                     } className="text-xs">
-                      {transfer.status === 'completed' ? 'Terminé' : 
-                       transfer.status === 'pending' ? 'En cours' : 
-                       'Échoué'}
+                      {transfer.status === 'approved' || transfer.status === 'completed' ? 'Terminé' : 
+                       transfer.status === 'pending' ? 'En attente' : 
+                       transfer.status === 'in-progress' ? 'En cours' :
+                       'Rejeté'}
                     </Badge>
                   </div>
                 </div>
@@ -384,12 +385,10 @@ export default function Dashboard() {
                         </div>
                         <div>
                           <p className="font-medium text-foreground text-sm">
-                            {loan.loanType === 'business' ? 'Prêt professionnel' : 
-                             loan.loanType === 'real_estate' ? 'Prêt immobilier' : 
-                             'Prêt personnel'}
+                            Prêt actif
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            {loan.duration} mois • {loan.interestRate}% APR
+                            {loan.interestRate}% APR
                           </p>
                         </div>
                       </div>
