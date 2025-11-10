@@ -27,7 +27,12 @@ export default function AdminSummaryGrid({ metrics, columns }: AdminSummaryGridP
     xl: columns?.xl || 4,
   };
 
-  const gridClass = `grid gap-4 grid-cols-${gridCols.base} sm:grid-cols-${gridCols.md} xl:grid-cols-${gridCols.xl}`;
+  const gridClass = [
+    'grid gap-4',
+    gridCols.base === 1 ? 'grid-cols-1' : 'grid-cols-2',
+    gridCols.md === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3',
+    gridCols.xl === 3 ? 'xl:grid-cols-3' : 'xl:grid-cols-4',
+  ].join(' ');
 
   return (
     <section className={gridClass} data-testid="grid-admin-summary" role="list">

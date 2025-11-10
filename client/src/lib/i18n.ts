@@ -1613,6 +1613,7 @@ type TranslationKeys = {
       approveReason: string;
       rejectReason: string;
       deleteReason: string;
+      approveDialogTitle: string;
       approveDialogDesc: string;
       rejectDialogTitle: string;
       rejectDialogDesc: string;
@@ -1628,6 +1629,10 @@ type TranslationKeys = {
       allTransfersDescription: string;
       transferUpdated: string;
       transferUpdatedDesc: string;
+      approveDialogTitle: string;
+      approveDialogDesc: string;
+      suspendDialogTitle: string;
+      suspendDialogDesc: string;
     };
   };
 };
@@ -3566,6 +3571,10 @@ export const translations: Record<Language, TranslationKeys> = {
         allTransfersDescription: 'Liste complète des transferts de fonds',
         transferUpdated: 'Transfert mis à jour',
         transferUpdatedDesc: 'Le statut du transfert a été modifié avec succès',
+        approveDialogTitle: 'Approuver le transfert',
+        approveDialogDesc: 'Cette action approuvera le transfert et mettra à jour son statut en "en cours".',
+        suspendDialogTitle: 'Suspendre le transfert',
+        suspendDialogDesc: 'Cette action suspend le transfert. Il pourra être réactivé ultérieurement.',
       },
     },
   },
@@ -5401,6 +5410,10 @@ export const translations: Record<Language, TranslationKeys> = {
         allTransfersDescription: 'Complete list of fund transfers',
         transferUpdated: 'Transfer updated',
         transferUpdatedDesc: 'The transfer status has been successfully updated',
+        approveDialogTitle: 'Approve transfer',
+        approveDialogDesc: 'This action will approve the transfer and update its status to "in progress".',
+        suspendDialogTitle: 'Suspend transfer',
+        suspendDialogDesc: 'This action will suspend the transfer. It can be reactivated later.',
       },
     },
   },
@@ -7248,6 +7261,10 @@ export const translations: Record<Language, TranslationKeys> = {
         allTransfersDescription: 'Lista completa de transferencias de fondos',
         transferUpdated: 'Transferencia actualizada',
         transferUpdatedDesc: 'El estado de la transferencia se ha actualizado exitosamente',
+        approveDialogTitle: 'Aprobar transferencia',
+        approveDialogDesc: 'Esta acción aprobará la transferencia y actualizará su estado a "en curso".',
+        suspendDialogTitle: 'Suspender transferencia',
+        suspendDialogDesc: 'Esta acción suspenderá la transferencia. Podrá reactivarse más tarde.',
       },
     },
   },
@@ -8909,7 +8926,7 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       dashboard: {title: 'Console de Administração', description: 'Visão geral da plataforma e gestão de usuários', totalUsers: 'Total de Usuários', activeUsers: 'ativos', pendingUsers: 'pendentes', transfers: 'Transferências', transfersPending: 'em andamento', loans: 'Empréstimos', loansActive: 'ativos', totalVolume: 'Volume Total', volumeDescription: 'Transferências totais', recentUsers: 'Usuários Recentes', recentUsersDescription: 'Últimas inscrições', recentTransfers: 'Transferências Recentes', recentTransfersDescription: 'Últimas operações'},
       loans: {title: 'Gestão de Empréstimos', description: 'Gerenciar todas as solicitações de empréstimos da plataforma', allLoans: 'Todos os Empréstimos', allLoansDescription: 'Lista completa de solicitações de empréstimos', loanApproved: 'Empréstimo aprovado', loanApprovedDesc: 'O empréstimo foi aprovado com sucesso. O contrato foi gerado.', loanRejected: 'Empréstimo rejeitado', loanRejectedDesc: 'O empréstimo foi rejeitado com sucesso', loanDeleted: 'Empréstimo excluído', loanDeletedDesc: 'O empréstimo foi excluído com sucesso', fundsDisbursed: 'Fundos desembolsados', fundsDisbursedDesc: 'Os fundos foram desembolsados ​​com sucesso. O usuário foi notificado.', contractGenerated: '📄 Gerado', contractSigned: '✅ Assinado', approveReason: 'Motivo da aprovação', rejectReason: 'Motivo da rejeição', deleteReason: 'Motivo da exclusão', approveDialogDesc: 'Esta ação aprovará o empréstimo de {amount} para {userName} e gerará o contrato.', rejectDialogTitle: 'Rejeitar empréstimo', rejectDialogDesc: 'Esta ação rejeitará permanentemente o empréstimo. O usuário será notificado.', disburseDialogTitle: 'Desembolsar fundos', disburseDialogDesc: 'Esta ação desembolsará {amount} para {userName}. O empréstimo passará para o status ativo e o usuário poderá fazer transferências.', deleteDialogTitle: 'Excluir empréstimo', deleteDialogDesc: 'Esta ação excluirá o empréstimo permanentemente.'},
-      transfers: {title: 'Gestão de Transferências', description: 'Aprovar ou suspender solicitações de transferência', allTransfers: 'Todas as Transferências', allTransfersDescription: 'Lista completa de transferências de fundos', transferUpdated: 'Transferência atualizada', transferUpdatedDesc: 'O status da transferência foi atualizado com sucesso'},
+      transfers: {title: 'Gestão de Transferências', description: 'Aprovar ou suspender solicitações de transferência', allTransfers: 'Todas as Transferências', allTransfersDescription: 'Lista completa de transferências de fundos', transferUpdated: 'Transferência atualizada', transferUpdatedDesc: 'O status da transferência foi atualizado com sucesso', approveDialogTitle: 'Aprovar transferência', approveDialogDesc: 'Esta ação aprovará a transferência e atualizará seu status para "em andamento".', suspendDialogTitle: 'Suspender transferência', suspendDialogDesc: 'Esta ação suspenderá a transferência. Ela poderá ser reativada posteriormente.'},
     },
   },
   it: {
@@ -10572,7 +10589,7 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       dashboard: {title: 'Console di Amministrazione', description: 'Panoramica della piattaforma e gestione utenti', totalUsers: 'Totale Utenti', activeUsers: 'attivi', pendingUsers: 'in sospeso', transfers: 'Trasferimenti', transfersPending: 'in corso', loans: 'Prestiti', loansActive: 'attivi', totalVolume: 'Volume Totale', volumeDescription: 'Trasferimenti totali', recentUsers: 'Utenti Recenti', recentUsersDescription: 'Ultime registrazioni', recentTransfers: 'Trasferimenti Recenti', recentTransfersDescription: 'Ultime operazioni'},
       loans: {title: 'Gestione Prestiti', description: 'Gestire tutte le richieste di prestito della piattaforma', allLoans: 'Tutti i Prestiti', allLoansDescription: 'Elenco completo delle richieste di prestito', loanApproved: 'Prestito approvato', loanApprovedDesc: 'Il prestito è stato approvato con successo. Il contratto è stato generato.', loanRejected: 'Prestito rifiutato', loanRejectedDesc: 'Il prestito è stato rifiutato con successo', loanDeleted: 'Prestito eliminato', loanDeletedDesc: 'Il prestito è stato eliminato con successo', fundsDisbursed: 'Fondi erogati', fundsDisbursedDesc: 'I fondi sono stati erogati con successo. L\'utente è stato notificato.', contractGenerated: '📄 Generato', contractSigned: '✅ Firmato', approveReason: 'Motivo dell\'approvazione', rejectReason: 'Motivo del rifiuto', deleteReason: 'Motivo dell\'eliminazione', approveDialogDesc: 'Questa azione approverà il prestito di {amount} per {userName} e genererà il contratto.', rejectDialogTitle: 'Rifiuta prestito', rejectDialogDesc: 'Questa azione rifiuterà permanentemente il prestito. L\'utente sarà notificato.', disburseDialogTitle: 'Eroga fondi', disburseDialogDesc: 'Questa azione erogherà {amount} a {userName}. Il prestito diventerà attivo e l\'utente potrà effettuare trasferimenti.', deleteDialogTitle: 'Elimina prestito', deleteDialogDesc: 'Questa azione eliminerà permanentemente il prestito.'},
-      transfers: {title: 'Gestione Trasferimenti', description: 'Approvare o sospendere richieste di trasferimento', allTransfers: 'Tutti i Trasferimenti', allTransfersDescription: 'Elenco completo dei trasferimenti di fondi', transferUpdated: 'Trasferimento aggiornato', transferUpdatedDesc: 'Lo stato del trasferimento è stato aggiornato con successo'},
+      transfers: {title: 'Gestione Trasferimenti', description: 'Approvare o sospendere richieste di trasferimento', allTransfers: 'Tutti i Trasferimenti', allTransfersDescription: 'Elenco completo dei trasferimenti di fondi', transferUpdated: 'Trasferimento aggiornato', transferUpdatedDesc: 'Lo stato del trasferimento è stato aggiornato con successo', approveDialogTitle: 'Approva trasferimento', approveDialogDesc: 'Questa azione approverà il trasferimento e aggiornerà il suo stato in "in corso".', suspendDialogTitle: 'Sospendi trasferimento', suspendDialogDesc: 'Questa azione sospenderà il trasferimento. Potrà essere riattivato successivamente.'},
     },
   },
   de: {
@@ -12235,7 +12252,7 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       dashboard: {title: 'Admin-Konsole', description: 'Plattformübersicht und Benutzerverwaltung', totalUsers: 'Benutzer gesamt', activeUsers: 'aktiv', pendingUsers: 'ausstehend', transfers: 'Überweisungen', transfersPending: 'in Bearbeitung', loans: 'Kredite', loansActive: 'aktiv', totalVolume: 'Gesamtvolumen', volumeDescription: 'Überweisungen gesamt', recentUsers: 'Neueste Benutzer', recentUsersDescription: 'Neueste Registrierungen', recentTransfers: 'Neueste Überweisungen', recentTransfersDescription: 'Neueste Transaktionen'},
       loans: {title: 'Kreditverwaltung', description: 'Alle Kreditanträge der Plattform verwalten', allLoans: 'Alle Kredite', allLoansDescription: 'Vollständige Liste der Kreditanträge', loanApproved: 'Kredit genehmigt', loanApprovedDesc: 'Der Kredit wurde erfolgreich genehmigt. Der Vertrag wurde erstellt.', loanRejected: 'Kredit abgelehnt', loanRejectedDesc: 'Der Kredit wurde erfolgreich abgelehnt', loanDeleted: 'Kredit gelöscht', loanDeletedDesc: 'Der Kredit wurde erfolgreich gelöscht', fundsDisbursed: 'Mittel ausgezahlt', fundsDisbursedDesc: 'Die Mittel wurden erfolgreich ausgezahlt. Der Benutzer wurde benachrichtigt.', contractGenerated: '📄 Erstellt', contractSigned: '✅ Unterzeichnet', approveReason: 'Grund der Genehmigung', rejectReason: 'Grund der Ablehnung', deleteReason: 'Grund der Löschung', approveDialogDesc: 'Diese Aktion genehmigt den Kredit von {amount} für {userName} und erstellt den Vertrag.', rejectDialogTitle: 'Kredit ablehnen', rejectDialogDesc: 'Diese Aktion lehnt den Kredit dauerhaft ab. Der Benutzer wird benachrichtigt.', disburseDialogTitle: 'Mittel auszahlen', disburseDialogDesc: 'Diese Aktion zahlt {amount} an {userName} aus. Der Kredit wird aktiv und der Benutzer kann Überweisungen vornehmen.', deleteDialogTitle: 'Kredit löschen', deleteDialogDesc: 'Diese Aktion löscht den Kredit dauerhaft.'},
-      transfers: {title: 'Überweisungsverwaltung', description: 'Überweisungsanträge genehmigen oder aussetzen', allTransfers: 'Alle Überweisungen', allTransfersDescription: 'Vollständige Liste der Geldüberweisungen', transferUpdated: 'Überweisung aktualisiert', transferUpdatedDesc: 'Der Überweisungsstatus wurde erfolgreich aktualisiert'},
+      transfers: {title: 'Überweisungsverwaltung', description: 'Überweisungsanträge genehmigen oder aussetzen', allTransfers: 'Alle Überweisungen', allTransfersDescription: 'Vollständige Liste der Geldüberweisungen', transferUpdated: 'Überweisung aktualisiert', transferUpdatedDesc: 'Der Überweisungsstatus wurde erfolgreich aktualisiert', approveDialogTitle: 'Überweisung genehmigen', approveDialogDesc: 'Diese Aktion genehmigt die Überweisung und aktualisiert ihren Status auf "in Bearbeitung".', suspendDialogTitle: 'Überweisung aussetzen', suspendDialogDesc: 'Diese Aktion setzt die Überweisung aus. Sie kann später reaktiviert werden.'},
     },
   },
   nl: {
@@ -13867,7 +13884,7 @@ export const translations: Record<Language, TranslationKeys> = {
       },
       dashboard: {title: 'Beheerdersconscole', description: 'Platformoverzicht en gebruikersbeheer', totalUsers: 'Totaal aantal gebruikers', activeUsers: 'actief', pendingUsers: 'in behandeling', transfers: 'Overboekingen', transfersPending: 'bezig', loans: 'Leningen', loansActive: 'actief', totalVolume: 'Totaal volume', volumeDescription: 'Totale overboekingen', recentUsers: 'Recente gebruikers', recentUsersDescription: 'Laatste registraties', recentTransfers: 'Recente overboekingen', recentTransfersDescription: 'Laatste transacties'},
       loans: {title: 'Leningbeheer', description: 'Alle leningaanvragen van het platform beheren', allLoans: 'Alle leningen', allLoansDescription: 'Volledige lijst van leningaanvragen', loanApproved: 'Lening goedgekeurd', loanApprovedDesc: 'De lening is succesvol goedgekeurd. Het contract is gegenereerd.', loanRejected: 'Lening afgewezen', loanRejectedDesc: 'De lening is succesvol afgewezen', loanDeleted: 'Lening verwijderd', loanDeletedDesc: 'De lening is succesvol verwijderd', fundsDisbursed: 'Fondsen uitbetaald', fundsDisbursedDesc: 'De fondsen zijn succesvol uitbetaald. De gebruiker is op de hoogte gesteld.', contractGenerated: '📄 Gegenereerd', contractSigned: '✅ Ondertekend', approveReason: 'Reden voor goedkeuring', rejectReason: 'Reden voor afwijzing', deleteReason: 'Reden voor verwijdering', approveDialogDesc: 'Deze actie keurt de lening van {amount} voor {userName} goed en genereert het contract.', rejectDialogTitle: 'Lening afwijzen', rejectDialogDesc: 'Deze actie wijst de lening permanent af. De gebruiker wordt op de hoogte gesteld.', disburseDialogTitle: 'Fondsen uitbetalen', disburseDialogDesc: 'Deze actie betaalt {amount} uit aan {userName}. De lening wordt actief en de gebruiker kan overdrachten maken.', deleteDialogTitle: 'Lening verwijderen', deleteDialogDesc: 'Deze actie verwijdert de lening permanent.'},
-      transfers: {title: 'Overboekingenbeheer', description: 'Overboekingsaanvragen goedkeuren of opschorten', allTransfers: 'Alle overboekingen', allTransfersDescription: 'Volledige lijst van geldoverboekingen', transferUpdated: 'Overboeking bijgewerkt', transferUpdatedDesc: 'De status van de overboeking is succesvol bijgewerkt'},
+      transfers: {title: 'Overboekingenbeheer', description: 'Overboekingsaanvragen goedkeuren of opschorten', allTransfers: 'Alle overboekingen', allTransfersDescription: 'Volledige lijst van geldoverboekingen', transferUpdated: 'Overboeking bijgewerkt', transferUpdatedDesc: 'De status van de overboeking is succesvol bijgewerkt', approveDialogTitle: 'Overboeking goedkeuren', approveDialogDesc: 'Deze actie keurt de overboeking goed en werkt de status bij naar "in behandeling".', suspendDialogTitle: 'Overboeking opschorten', suspendDialogDesc: 'Deze actie schort de overboeking op. Deze kan later worden heractiveerd.'},
     },
   } as TranslationKeys,
 };
