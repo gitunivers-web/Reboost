@@ -12,6 +12,7 @@ import { apiRequest, queryClient } from '@/lib/queryClient';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { ExternalAccount } from '@shared/schema';
 import { useTranslations } from '@/lib/i18n';
+import { UserLayout } from '@/components/UserLayout';
 
 export default function BankAccounts() {
   const t = useTranslations();
@@ -119,27 +120,25 @@ export default function BankAccounts() {
 
   if (isLoading) {
     return (
-      <div className="p-6 md:p-8 space-y-6">
-        <Skeleton className="h-10 w-64" />
+      <UserLayout
+        title={t.bankAccounts.title}
+        description={t.bankAccounts.description}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(3)].map((_, i) => (
             <Skeleton key={i} className="h-48" />
           ))}
         </div>
-      </div>
+      </UserLayout>
     );
   }
 
   return (
     <>
-      <div className="p-6 md:p-8 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-semibold mb-2">{t.bankAccounts.title}</h1>
-            <p className="text-muted-foreground">
-              {t.bankAccounts.description}
-            </p>
-          </div>
+      <UserLayout
+        title={t.bankAccounts.title}
+        description={t.bankAccounts.description}
+        actions={
           <Button
             size="lg"
             onClick={() => setDialogOpen(true)}
@@ -148,7 +147,8 @@ export default function BankAccounts() {
             <Plus className="mr-2 h-5 w-5" />
             {t.bankAccounts.addAccount}
           </Button>
-        </div>
+        }
+      >
 
         {accounts && accounts.length === 0 ? (
           <Card>
@@ -220,7 +220,7 @@ export default function BankAccounts() {
             ))}
           </div>
         )}
-      </div>
+      </UserLayout>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-[550px]">

@@ -11,6 +11,7 @@ import { Plus, ArrowRightLeft, Search, Filter } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { useTranslations } from '@/lib/i18n';
+import { UserLayout } from '@/components/UserLayout';
 
 interface Transfer {
   id: string;
@@ -61,26 +62,24 @@ export default function Transfers() {
 
   if (isLoading) {
     return (
-      <div className="p-6 md:p-8 space-y-6">
-        <Skeleton className="h-10 w-64" />
+      <UserLayout
+        title={t.transfer.pageTitle}
+        description={t.transfer.pageDescription}
+      >
         <div className="grid grid-cols-1 gap-4">
           {[...Array(5)].map((_, i) => (
             <Skeleton key={i} className="h-32" />
           ))}
         </div>
-      </div>
+      </UserLayout>
     );
   }
 
   return (
-    <div className="p-6 md:p-8 space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-semibold mb-2">{t.transfer.pageTitle}</h1>
-          <p className="text-muted-foreground">
-            {t.transfer.pageDescription}
-          </p>
-        </div>
+    <UserLayout
+      title={t.transfer.pageTitle}
+      description={t.transfer.pageDescription}
+      actions={
         <Button
           size="lg"
           onClick={() => setLocation('/transfer/new')}
@@ -89,7 +88,8 @@ export default function Transfers() {
           <Plus className="mr-2 h-5 w-5" />
           {t.transfer.newTransfer}
         </Button>
-      </div>
+      }
+    >
 
       <Card>
         <CardHeader>
@@ -190,6 +190,6 @@ export default function Transfers() {
           {transfers && filteredTransfers.length < transfers.length && ` sur ${transfers.length}`}
         </div>
       )}
-    </div>
+    </UserLayout>
   );
 }
