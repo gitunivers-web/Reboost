@@ -53,15 +53,15 @@ export default function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <div className="px-4 py-6 mb-4 flex items-center justify-center gap-3" data-testid="sidebar-logo">
+          <div className="px-4 py-6 mb-4 flex items-center justify-center gap-4" data-testid="sidebar-logo">
             <img 
               src={logoUrl} 
               alt="Altus Finance Group Logo" 
-              className="w-16 h-16 object-contain"
+              className="w-32 h-32 object-contain"
             />
             <div className="flex flex-col">
-              <span className="text-sidebar-foreground text-xl font-bold tracking-tight">ALTUS</span>
-              <span className="text-sidebar-foreground text-sm font-semibold tracking-wide">FINANCE</span>
+              <span className="text-sidebar-foreground text-2xl font-bold tracking-tight">ALTUS</span>
+              <span className="text-sidebar-foreground text-base font-semibold tracking-wide">FINANCE</span>
             </div>
           </div>
           <SidebarGroupLabel className="text-sm font-semibold px-4 py-2">
