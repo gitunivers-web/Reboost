@@ -1,4 +1,54 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { useLanguage } from "./i18n";
+
+function getErrorMessage(status: number): string {
+  const lang = useLanguage.getState?.().language || 'fr';
+  const messages: Record<string, Record<number, string>> = {
+    fr: {
+      401: 'Votre session a expiré. Veuillez vous reconnecter.',
+      403: 'Accès refusé.',
+      404: 'Ressource non trouvée.',
+      500: 'Erreur serveur. Veuillez réessayer.',
+    },
+    en: {
+      401: 'Your session has expired. Please log in again.',
+      403: 'Access denied.',
+      404: 'Resource not found.',
+      500: 'Server error. Please try again.',
+    },
+    es: {
+      401: 'Su sesión ha expirado. Por favor, vuelva a iniciar sesión.',
+      403: 'Acceso denegado.',
+      404: 'Recurso no encontrado.',
+      500: 'Error del servidor. Inténtelo de nuevo.',
+    },
+    pt: {
+      401: 'Sua sessão expirou. Por favor, faça login novamente.',
+      403: 'Acesso negado.',
+      404: 'Recurso não encontrado.',
+      500: 'Erro do servidor. Tente novamente.',
+    },
+    it: {
+      401: 'La tua sessione è scaduta. Per favore, accedi di nuovo.',
+      403: 'Accesso negato.',
+      404: 'Risorsa non trovata.',
+      500: 'Errore del server. Riprova.',
+    },
+    de: {
+      401: 'Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.',
+      403: 'Zugriff verweigert.',
+      404: 'Ressource nicht gefunden.',
+      500: 'Serverfehler. Bitte versuchen Sie es erneut.',
+    },
+    nl: {
+      401: 'Uw sessie is verlopen. Log alstublieft opnieuw in.',
+      403: 'Toegang geweigerd.',
+      404: 'Bron niet gevonden.',
+      500: 'Serverfout. Probeer het opnieuw.',
+    },
+  };
+  return messages[lang]?.[status] || messages['en']?.[status] || 'Une erreur s\'est produite';
+}
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
@@ -52,9 +102,7 @@ function handleAuthError(res: Response, errorMessage?: string) {
   const isAuthPage = currentPath === '/login' || currentPath === '/signup' || currentPath === '/auth';
   
   if (!isAuthPage) {
-    const message = errorMessage || (res.status === 401 
-      ? 'Votre session a expiré. Veuillez vous reconnecter.' 
-      : 'Accès refusé. Veuillez vous reconnecter.');
+    const message = errorMessage || getErrorMessage(res.status);
     
     sessionStorage.setItem('auth_redirect_message', message);
     sessionStorage.setItem('auth_redirect_from', currentPath);
@@ -75,11 +123,22 @@ async function throwIfResNotOk(res: Response) {
       
       const errorMessage = errorData?.error || '';
       handleAuthError(res, errorMessage);
-      throw new Error(errorMessage || `${res.status}: Authentification requise`);
+      throw new Error(errorMessage || getErrorMessage(res.status));
     }
     
-    const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    let errorData;
+    try {
+      errorData = await res.json();
+      if (errorData?.error) {
+        throw new Error(errorData.error);
+      }
+    } catch (e) {
+      if (e instanceof Error && e.message !== '') {
+        throw e;
+      }
+    }
+    
+    throw new Error(getErrorMessage(res.status));
   }
 }
 
@@ -134,7 +193,7 @@ export const getQueryFn: <T>(options: {
       
       const errorMessage = errorData?.error || '';
       handleAuthError(res, errorMessage);
-      throw new Error(errorMessage || `${res.status}: Authentification requise`);
+      throw new Error(errorMessage || getErrorMessage(res.status));
     }
 
     await throwIfResNotOk(res);

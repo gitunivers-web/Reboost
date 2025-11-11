@@ -77,14 +77,14 @@ export default function Auth() {
     
     if (authMessage) {
       toast({
-        title: 'Session expirée',
+        title: t.auth.sessionExpired,
         description: authMessage,
         variant: 'destructive',
       });
       sessionStorage.removeItem('auth_redirect_message');
       sessionStorage.removeItem('auth_redirect_from');
     }
-  }, [toast]);
+  }, [toast, t]);
 
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -117,13 +117,13 @@ export default function Auth() {
       if (data.requires2FA) {
         toast({
           title: t.common.success,
-          description: data.message || 'Veuillez entrer votre code d\'authentification à deux facteurs',
+          description: data.message || t.auth.pleaseTwoFactorCode,
         });
         setLocation(`/verify-2fa?userId=${data.userId}`);
       } else if (data.requiresOtp) {
         toast({
           title: t.common.success,
-          description: data.message || 'Code de vérification envoyé',
+          description: data.message || t.auth.verificationCodeSent,
         });
         setLocation(`/verify-otp/${data.userId}`);
       } else {

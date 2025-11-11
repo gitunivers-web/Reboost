@@ -695,7 +695,31 @@ type TranslationKeys = {
     passwordNumber: string;
     passwordSpecial: string;
     passwordMatch: string;
-    invalidOtp?: string;
+    invalidOtp: string;
+    sessionExpired: string;
+    sessionExpiredMessage: string;
+    accessDenied: string;
+    authenticationRequired: string;
+    verificationError: string;
+    verificationInProgress: string;
+    emailVerified: string;
+    accountActiveAutoLogin: string;
+    linkExpiredInvalid: string;
+    tokenMissing: string;
+    pleaseTwoFactorCode: string;
+    verificationCodeSent: string;
+    twoFactorAuth: string;
+    enterOtpCode: string;
+    otpExpiresIn: string;
+    backToLogin: string;
+  };
+  errors: {
+    sessionExpired: string;
+    accessDenied: string;
+    authRequired: string;
+    networkError: string;
+    unexpectedError: string;
+    verificationFailed: string;
   };
   bankCard: {
     title: string;
@@ -2591,6 +2615,31 @@ export const translations: Record<Language, TranslationKeys> = {
       passwordNumber: 'Le mot de passe doit contenir au moins un chiffre',
       passwordSpecial: 'Le mot de passe doit contenir au moins un caractère spécial',
       passwordMatch: 'Les mots de passe ne correspondent pas',
+      invalidOtp: 'Code invalide ou expiré',
+      sessionExpired: 'Session expirée',
+      sessionExpiredMessage: 'Votre session a expiré. Veuillez vous reconnecter.',
+      accessDenied: 'Accès refusé',
+      authenticationRequired: 'Authentification requise',
+      verificationError: 'Erreur lors de la vérification',
+      verificationInProgress: 'Vérification en cours',
+      emailVerified: 'Email vérifié',
+      accountActiveAutoLogin: 'Votre compte est maintenant actif. Vous êtes automatiquement connecté et serez redirigé vers votre tableau de bord dans quelques secondes...',
+      linkExpiredInvalid: 'Le lien de vérification est peut-être expiré ou invalide.',
+      tokenMissing: 'Token de vérification manquant',
+      pleaseTwoFactorCode: 'Veuillez entrer votre code d\'authentification à deux facteurs',
+      verificationCodeSent: 'Code de vérification envoyé',
+      twoFactorAuth: 'Authentification à deux facteurs',
+      enterOtpCode: 'Entrez le code à 6 chiffres envoyé à votre email',
+      otpExpiresIn: 'Le code expire dans 10 minutes',
+      backToLogin: 'Retour à la connexion',
+    },
+    errors: {
+      sessionExpired: 'Session expirée',
+      accessDenied: 'Accès refusé',
+      authRequired: 'Authentification requise',
+      networkError: 'Erreur réseau. Veuillez réessayer.',
+      unexpectedError: 'Une erreur inattendue s\'est produite',
+      verificationFailed: 'Échec de la vérification',
     },
     bankCard: {
       title: 'Carte Bancaire Professionnelle',
@@ -4471,6 +4520,31 @@ export const translations: Record<Language, TranslationKeys> = {
       passwordNumber: 'Password must contain at least one number',
       passwordSpecial: 'Password must contain at least one special character',
       passwordMatch: 'Passwords do not match',
+      invalidOtp: 'Invalid or expired code',
+      sessionExpired: 'Session expired',
+      sessionExpiredMessage: 'Your session has expired. Please log in again.',
+      accessDenied: 'Access denied',
+      authenticationRequired: 'Authentication required',
+      verificationError: 'Verification error',
+      verificationInProgress: 'Verification in progress',
+      emailVerified: 'Email verified',
+      accountActiveAutoLogin: 'Your account is now active. You are automatically logged in and will be redirected to your dashboard in a few seconds...',
+      linkExpiredInvalid: 'The verification link may be expired or invalid.',
+      tokenMissing: 'Verification token missing',
+      pleaseTwoFactorCode: 'Please enter your two-factor authentication code',
+      verificationCodeSent: 'Verification code sent',
+      twoFactorAuth: 'Two-factor authentication',
+      enterOtpCode: 'Enter the 6-digit code sent to your email',
+      otpExpiresIn: 'The code expires in 10 minutes',
+      backToLogin: 'Back to login',
+    },
+    errors: {
+      sessionExpired: 'Session expired',
+      accessDenied: 'Access denied',
+      authRequired: 'Authentication required',
+      networkError: 'Network error. Please try again.',
+      unexpectedError: 'An unexpected error occurred',
+      verificationFailed: 'Verification failed',
     },
     settings: {
       title: 'Settings',
@@ -6333,6 +6407,31 @@ export const translations: Record<Language, TranslationKeys> = {
       passwordNumber: 'La contraseña debe contener al menos un número',
       passwordSpecial: 'La contraseña debe contener al menos un carácter especial',
       passwordMatch: 'Las contraseñas no coinciden',
+      invalidOtp: 'Código inválido o caducado',
+      sessionExpired: 'Sesión expirada',
+      sessionExpiredMessage: 'Su sesión ha expirado. Por favor, vuelva a iniciar sesión.',
+      accessDenied: 'Acceso denegado',
+      authenticationRequired: 'Autenticación requerida',
+      verificationError: 'Error durante la verificación',
+      verificationInProgress: 'Verificación en curso',
+      emailVerified: 'Email verificado',
+      accountActiveAutoLogin: 'Su cuenta está ahora activa. Está conectado automáticamente y será redirigido a su panel en unos segundos...',
+      linkExpiredInvalid: 'El enlace de verificación puede estar caducado o ser inválido.',
+      tokenMissing: 'Token de verificación faltante',
+      pleaseTwoFactorCode: 'Por favor, ingrese su código de autenticación de dos factores',
+      verificationCodeSent: 'Código de verificación enviado',
+      twoFactorAuth: 'Autenticación de dos factores',
+      enterOtpCode: 'Ingrese el código de 6 dígitos enviado a su correo electrónico',
+      otpExpiresIn: 'El código expira en 10 minutos',
+      backToLogin: 'Volver al inicio de sesión',
+    },
+    errors: {
+      sessionExpired: 'Sesión expirada',
+      accessDenied: 'Acceso denegado',
+      authRequired: 'Autenticación requerida',
+      networkError: 'Error de red. Inténtelo de nuevo.',
+      unexpectedError: 'Se produjo un error inesperado',
+      verificationFailed: 'Falló la verificación',
     },
     settings: {
       title: 'Configuración',
@@ -8232,6 +8331,31 @@ export const translations: Record<Language, TranslationKeys> = {
       passwordNumber: 'A senha deve conter pelo menos um número',
       passwordSpecial: 'A senha deve conter pelo menos um caractere especial',
       passwordMatch: 'As senhas devem coincidir',
+      invalidOtp: 'Código inválido ou expirado',
+      sessionExpired: 'Sessão expirada',
+      sessionExpiredMessage: 'Sua sessão expirou. Por favor, faça login novamente.',
+      accessDenied: 'Acesso negado',
+      authenticationRequired: 'Autenticação necessária',
+      verificationError: 'Erro durante a verificação',
+      verificationInProgress: 'Verificação em andamento',
+      emailVerified: 'Email verificado',
+      accountActiveAutoLogin: 'Sua conta está agora ativa. Você está automaticamente conectado e será redirecionado ao seu painel em alguns segundos...',
+      linkExpiredInvalid: 'O link de verificação pode estar expirado ou inválido.',
+      tokenMissing: 'Token de verificação faltando',
+      pleaseTwoFactorCode: 'Por favor, insira seu código de autenticação de dois fatores',
+      verificationCodeSent: 'Código de verificação enviado',
+      twoFactorAuth: 'Autenticação de dois fatores',
+      enterOtpCode: 'Insira o código de 6 dígitos enviado para seu email',
+      otpExpiresIn: 'O código expira em 10 minutos',
+      backToLogin: 'Voltar ao login',
+    },
+    errors: {
+      sessionExpired: 'Sessão expirada',
+      accessDenied: 'Acesso negado',
+      authRequired: 'Autenticação necessária',
+      networkError: 'Erro de rede. Tente novamente.',
+      unexpectedError: 'Ocorreu um erro inesperado',
+      verificationFailed: 'Falha na verificação',
     },
     settings: {
       title: 'Configurações',
@@ -10093,8 +10217,31 @@ export const translations: Record<Language, TranslationKeys> = {
       passwordNumber: 'La password deve contenere almeno un numero',
       passwordSpecial: 'La password deve contenere almeno un carattere speciale',
       passwordMatch: 'Le password devono corrispondere',
-
       invalidOtp: 'Codice non valido o scaduto',
+      sessionExpired: 'Sessione scaduta',
+      sessionExpiredMessage: 'La tua sessione è scaduta. Per favore, accedi di nuovo.',
+      accessDenied: 'Accesso negato',
+      authenticationRequired: 'Autenticazione richiesta',
+      verificationError: 'Errore durante la verifica',
+      verificationInProgress: 'Verifica in corso',
+      emailVerified: 'Email verificato',
+      accountActiveAutoLogin: 'Il tuo account è ora attivo. Sei automaticamente connesso e sarai reindirizzato alla tua dashboard tra pochi secondi...',
+      linkExpiredInvalid: 'Il link di verifica potrebbe essere scaduto o non valido.',
+      tokenMissing: 'Token di verifica mancante',
+      pleaseTwoFactorCode: 'Inserisci il tuo codice di autenticazione a due fattori',
+      verificationCodeSent: 'Codice di verifica inviato',
+      twoFactorAuth: 'Autenticazione a due fattori',
+      enterOtpCode: 'Inserisci il codice a 6 cifre inviato alla tua email',
+      otpExpiresIn: 'Il codice scade tra 10 minuti',
+      backToLogin: 'Torna al login',
+    },
+    errors: {
+      sessionExpired: 'Sessione scaduta',
+      accessDenied: 'Accesso negato',
+      authRequired: 'Autenticazione richiesta',
+      networkError: 'Errore di rete. Riprova.',
+      unexpectedError: 'Si è verificato un errore imprevisto',
+      verificationFailed: 'Verifica fallita',
     },
     bankCard: {
       title: 'Carta bancaria Premium Altus',
@@ -11874,8 +12021,31 @@ export const translations: Record<Language, TranslationKeys> = {
       passwordNumber: 'Das Passwort muss mindestens eine Zahl enthalten',
       passwordSpecial: 'Das Passwort muss mindestens ein Sonderzeichen enthalten',
       passwordMatch: 'Die Passwörter müssen übereinstimmen',
-
       invalidOtp: 'Ungültiger oder abgelaufener Code',
+      sessionExpired: 'Sitzung abgelaufen',
+      sessionExpiredMessage: 'Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.',
+      accessDenied: 'Zugriff verweigert',
+      authenticationRequired: 'Authentifizierung erforderlich',
+      verificationError: 'Fehler bei der Überprüfung',
+      verificationInProgress: 'Überprüfung läuft',
+      emailVerified: 'E-Mail verifiziert',
+      accountActiveAutoLogin: 'Ihr Konto ist jetzt aktiv. Sie sind automatisch angemeldet und werden in wenigen Sekunden zu Ihrem Dashboard weitergeleitet...',
+      linkExpiredInvalid: 'Der Bestätigungslink ist möglicherweise abgelaufen oder ungültig.',
+      tokenMissing: 'Bestätigungstoken fehlt',
+      pleaseTwoFactorCode: 'Bitte geben Sie Ihren Zwei-Faktor-Authentifizierungscode ein',
+      verificationCodeSent: 'Bestätigungscode gesendet',
+      twoFactorAuth: 'Zwei-Faktor-Authentifizierung',
+      enterOtpCode: 'Geben Sie den 6-stelligen Code ein, der an Ihre E-Mail gesendet wurde',
+      otpExpiresIn: 'Der Code läuft in 10 Minuten ab',
+      backToLogin: 'Zurück zur Anmeldung',
+    },
+    errors: {
+      sessionExpired: 'Sitzung abgelaufen',
+      accessDenied: 'Zugriff verweigert',
+      authRequired: 'Authentifizierung erforderlich',
+      networkError: 'Netzwerkfehler. Bitte versuchen Sie es erneut.',
+      unexpectedError: 'Ein unerwarteter Fehler ist aufgetreten',
+      verificationFailed: 'Überprüfung fehlgeschlagen',
     },
     bankCard: {
       title: 'Altus Premium-Bankkarte',
@@ -13654,8 +13824,31 @@ export const translations: Record<Language, TranslationKeys> = {
       passwordNumber: 'Het wachtwoord moet minimaal één cijfer bevatten',
       passwordSpecial: 'Het wachtwoord moet minimaal één speciaal teken bevatten',
       passwordMatch: 'De wachtwoorden moeten overeenkomen',
-
       invalidOtp: 'Ongeldige of verlopen code',
+      sessionExpired: 'Sessie verlopen',
+      sessionExpiredMessage: 'Uw sessie is verlopen. Log alstublieft opnieuw in.',
+      accessDenied: 'Toegang geweigerd',
+      authenticationRequired: 'Authenticatie vereist',
+      verificationError: 'Fout tijdens verificatie',
+      verificationInProgress: 'Verificatie bezig',
+      emailVerified: 'E-mail geverifieerd',
+      accountActiveAutoLogin: 'Uw account is nu actief. U bent automatisch ingelogd en wordt over enkele seconden doorgestuurd naar uw dashboard...',
+      linkExpiredInvalid: 'De verificatielink is mogelijk verlopen of ongeldig.',
+      tokenMissing: 'Verificatietoken ontbreekt',
+      pleaseTwoFactorCode: 'Voer uw twee-factor authenticatiecode in',
+      verificationCodeSent: 'Verificatiecode verzonden',
+      twoFactorAuth: 'Twee-factor authenticatie',
+      enterOtpCode: 'Voer de 6-cijferige code in die naar uw e-mail is verzonden',
+      otpExpiresIn: 'De code verloopt over 10 minuten',
+      backToLogin: 'Terug naar inloggen',
+    },
+    errors: {
+      sessionExpired: 'Sessie verlopen',
+      accessDenied: 'Toegang geweigerd',
+      authRequired: 'Authenticatie vereist',
+      networkError: 'Netwerkfout. Probeer het opnieuw.',
+      unexpectedError: 'Er is een onverwachte fout opgetreden',
+      verificationFailed: 'Verificatie mislukt',
     },
     bankCard: {
       title: 'Altus Premium bankkaart',
