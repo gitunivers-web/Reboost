@@ -229,3 +229,49 @@ export async function notifyTransferInitiated(userId: string, transferId: string
     metadata: { transferId, amount, recipientName },
   });
 }
+
+export async function notifyAllAdmins(params: Omit<CreateNotificationParams, 'userId'>) {
+  const allUsers = await storage.getAllUsers();
+  const adminUsers = allUsers.filter(user => user.role === 'admin');
+  
+  const notifications = await Promise.all(
+    adminUsers.map(admin =>
+      createUserNotification({
+        ...params,
+        userId: admin.id,
+      })
+    )
+  );
+  
+  return notifications;
+}
+
+export async function notifyAdminsNewKycDocument(userId: string, userName: string, documentType: string, loanType: string) {
+  return await notifyAllAdmins({
+    type: 'general',
+    title: 'Nouveau document KYC',
+    message: `${userName} a uploadé un nouveau document KYC (${documentType} - ${loanType})`,
+    severity: 'info',
+    metadata: { userId, userName, documentType, loanType },
+  });
+}
+
+export async function notifyAdminsNewLoanRequest(userId: string, userName: string, loanId: string, amount: string, loanType: string) {
+  return await notifyAllAdmins({
+    type: 'general',
+    title: 'Nouvelle demande de prêt',
+    message: `${userName} a soumis une demande de prêt de ${amount}€ (${loanType})`,
+    severity: 'info',
+    metadata: { userId, userName, loanId, amount, loanType },
+  });
+}
+
+export async function notifyAdminsNewTransfer(userId: string, userName: string, transferId: string, amount: string, recipient: string) {
+  return await notifyAllAdmins({
+    type: 'general',
+    title: 'Nouveau transfert',
+    message: `${userName} a initié un transfert de ${amount}€ vers ${recipient}`,
+    severity: 'info',
+    metadata: { userId, userName, transferId, amount, recipient },
+  });
+}
