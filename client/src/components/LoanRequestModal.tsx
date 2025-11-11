@@ -61,10 +61,8 @@ export function LoanRequestModal({ open, onOpenChange, user }: LoanRequestModalP
 
   const createLoanMutation = useMutation({
     mutationFn: async (data: LoanRequestForm & { documents: Record<string, string> }) => {
-      return await apiRequest('/api/loans', {
-        method: 'POST',
-        body: data,
-      });
+      const response = await apiRequest('POST', '/api/loans', data);
+      return await response.json();
     },
     onSuccess: () => {
       toast({
