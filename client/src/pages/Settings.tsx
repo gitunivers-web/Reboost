@@ -253,9 +253,10 @@ export default function Settings() {
       description=""
       maxWidth="6xl"
     >
+      <div className="w-full overflow-x-hidden">
       <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <CardContent className="p-4 md:p-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
             <div className="relative">
               <Avatar className="h-24 w-24 border-2 border-border">
                 {profilePhotoUrl ? (
@@ -284,9 +285,9 @@ export default function Settings() {
               </Button>
             </div>
             
-            <div className="flex-1 space-y-2">
-              <div className="flex items-center gap-3 flex-wrap">
-                <h2 className="text-2xl md:text-3xl font-semibold">
+            <div className="flex-1 space-y-2 w-full md:w-auto overflow-hidden">
+              <div className="flex items-center gap-2 md:gap-3 flex-wrap">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold truncate">
                   {user.fullName}
                 </h2>
                 {user.kycStatus === 'approved' && (
@@ -319,41 +320,43 @@ export default function Settings() {
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="profile" className="space-y-6">
-        <TabsList className="inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-md bg-muted p-1 shadow-sm overflow-x-auto">
-          <TabsTrigger 
-            value="profile" 
-            className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0" 
-            data-testid="tab-profile"
-          >
-            <User className="h-4 w-4" />
-            <span className="hidden sm:inline">{t.settings.profile}</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="notifications" 
-            className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0" 
-            data-testid="tab-notifications"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="hidden sm:inline">{t.settings.notifications}</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="security" 
-            className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0" 
-            data-testid="tab-security"
-          >
-            <Shield className="h-4 w-4" />
-            <span className="hidden sm:inline">{t.settings.security}</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="appearance" 
-            className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0" 
-            data-testid="tab-appearance"
-          >
-            <Palette className="h-4 w-4" />
-            <span className="hidden sm:inline">{t.settings.appearance}</span>
-          </TabsTrigger>
-        </TabsList>
+      <Tabs defaultValue="profile" className="space-y-6 w-full">
+        <div className="w-full overflow-x-auto pb-2">
+          <TabsList className="inline-flex h-12 min-w-full sm:min-w-0 sm:w-auto items-center justify-start sm:justify-center rounded-md bg-muted p-1 shadow-sm">
+            <TabsTrigger 
+              value="profile" 
+              className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0 px-3" 
+              data-testid="tab-profile"
+            >
+              <User className="h-4 w-4" />
+              <span className="text-xs sm:text-sm">{t.settings.profile}</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="notifications" 
+              className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0 px-3" 
+              data-testid="tab-notifications"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="text-xs sm:text-sm">{t.settings.notifications}</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="security" 
+              className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0 px-3" 
+              data-testid="tab-security"
+            >
+              <Shield className="h-4 w-4" />
+              <span className="text-xs sm:text-sm">{t.settings.security}</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="appearance" 
+              className="gap-2 rounded-sm data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all flex-shrink-0 px-3" 
+              data-testid="tab-appearance"
+            >
+              <Palette className="h-4 w-4" />
+              <span className="text-xs sm:text-sm">{t.settings.appearance}</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="profile" className="space-y-6">
           <Card>
@@ -749,6 +752,7 @@ export default function Settings() {
           </Card>
         </TabsContent>
       </Tabs>
+      </div>
     </UserLayout>
   );
 }
