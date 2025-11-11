@@ -8,7 +8,9 @@ function escapeHtml(unsafe: string): string {
 }
 
 type Language = 'fr' | 'en' | 'es' | 'pt' | 'it' | 'de' | 'nl';
-type TemplateType = 'verification' | 'welcome' | 'contract' | 'fundingRelease' | 'otp' | 'resetPassword';
+type TemplateType = 'verification' | 'welcome' | 'contract' | 'fundingRelease' | 'otp' | 'resetPassword' | 
+  'loanRequestUser' | 'loanRequestAdmin' | 'kycUploadedAdmin' | 'loanApprovedUser' | 
+  'transferInitiatedAdmin' | 'transferCodeUser';
 
 interface EmailTemplate {
   subject: string;
@@ -52,7 +54,58 @@ interface ResetPasswordVariables {
   resetUrl: string;
 }
 
-type TemplateVariables = VerificationVariables | WelcomeVariables | ContractVariables | FundingReleaseVariables | OtpVariables | ResetPasswordVariables;
+interface LoanRequestUserVariables {
+  fullName: string;
+  amount: string;
+  loanType: string;
+  loanId: string;
+}
+
+interface LoanRequestAdminVariables {
+  userName: string;
+  userEmail: string;
+  amount: string;
+  loanType: string;
+  loanId: string;
+  userId: string;
+}
+
+interface KycUploadedAdminVariables {
+  userName: string;
+  userEmail: string;
+  documentType: string;
+  loanType: string;
+  userId: string;
+}
+
+interface LoanApprovedUserVariables {
+  fullName: string;
+  amount: string;
+  loanId: string;
+  loginUrl: string;
+}
+
+interface TransferInitiatedAdminVariables {
+  userName: string;
+  userEmail: string;
+  amount: string;
+  recipient: string;
+  transferId: string;
+  userId: string;
+}
+
+interface TransferCodeUserVariables {
+  fullName: string;
+  amount: string;
+  recipient: string;
+  code: string;
+  sequence: number;
+  totalCodes: number;
+}
+
+type TemplateVariables = VerificationVariables | WelcomeVariables | ContractVariables | FundingReleaseVariables | OtpVariables | ResetPasswordVariables |
+  LoanRequestUserVariables | LoanRequestAdminVariables | KycUploadedAdminVariables | LoanApprovedUserVariables | 
+  TransferInitiatedAdminVariables | TransferCodeUserVariables;
 
 const translations = {
   fr: {
@@ -147,6 +200,94 @@ const translations = {
       expirationText: "Ce code expirera dans 5 minutes.",
       securityWarning: "⚠️ Pour votre sécurité, ne partagez jamais ce code avec quiconque. Notre équipe ne vous demandera jamais ce code.",
       notYouText: "Si vous n'avez pas demandé ce code, ignorez cet email et votre compte restera sécurisé.",
+      footer: "Tous droits réservés."
+    },
+    loanRequestUser: {
+      subject: "Votre demande de prêt a été reçue - ALTUS FINANCE GROUP",
+      headerTitle: "✅ Demande de prêt reçue",
+      greeting: "Bonjour",
+      confirmationMessage: "Nous avons bien reçu votre demande de prêt",
+      confirmationMessage2: "pour un montant de",
+      referenceLabel: "Référence de la demande:",
+      nextStepsTitle: "Prochaines étapes :",
+      step1: "Notre équipe examine votre dossier",
+      step2: "Vous recevrez une réponse dans les 24-48 heures",
+      step3: "Si des documents supplémentaires sont nécessaires, nous vous contacterons",
+      dashboardText: "Vous pouvez suivre l'état de votre demande depuis votre tableau de bord.",
+      dashboardButton: "Accéder à mon tableau de bord",
+      supportText: "Notre équipe reste à votre disposition pour toute question.",
+      footer: "Tous droits réservés."
+    },
+    loanRequestAdmin: {
+      subject: "Nouvelle demande de prêt - ALTUS FINANCE GROUP",
+      headerTitle: "📋 Nouvelle demande de prêt",
+      message: "Une nouvelle demande de prêt a été soumise et nécessite votre attention.",
+      applicantLabel: "Demandeur:",
+      emailLabel: "Email:",
+      amountLabel: "Montant demandé:",
+      loanTypeLabel: "Type de prêt:",
+      referenceLabel: "Référence:",
+      userIdLabel: "ID utilisateur:",
+      actionButton: "Examiner la demande",
+      footer: "Tous droits réservés."
+    },
+    kycUploadedAdmin: {
+      subject: "Nouveau document KYC uploadé - ALTUS FINANCE GROUP",
+      headerTitle: "📄 Nouveau document KYC",
+      message: "Un nouveau document KYC a été uploadé et nécessite votre vérification.",
+      userLabel: "Utilisateur:",
+      emailLabel: "Email:",
+      documentTypeLabel: "Type de document:",
+      loanTypeLabel: "Type de prêt:",
+      userIdLabel: "ID utilisateur:",
+      actionButton: "Vérifier le document",
+      footer: "Tous droits réservés."
+    },
+    loanApprovedUser: {
+      subject: "Félicitations ! Votre prêt est approuvé - ALTUS FINANCE GROUP",
+      headerTitle: "🎉 Félicitations !",
+      headerSubtitle: "Votre prêt est approuvé",
+      greeting: "Bonjour",
+      approvalMessage: "Excellente nouvelle ! Votre demande de prêt de",
+      approvalMessage2: "a été approuvée.",
+      referenceLabel: "Référence:",
+      nextStepsTitle: "Prochaines étapes :",
+      step1: "Téléchargez votre contrat de prêt depuis votre espace client",
+      step2: "Signez le contrat et retournez-le nous",
+      step3: "Les fonds seront débloqués sous 24 heures après réception du contrat signé",
+      loginButton: "Accéder à mon espace client",
+      importantTitle: "⚠️ Important :",
+      importantMessage: "Vous devez signer et retourner le contrat pour que les fonds soient débloqués.",
+      supportText: "Notre équipe reste à votre disposition pour toute question.",
+      footer: "Tous droits réservés."
+    },
+    transferInitiatedAdmin: {
+      subject: "Nouveau transfert initié - ALTUS FINANCE GROUP",
+      headerTitle: "💸 Nouveau transfert initié",
+      message: "Un nouveau transfert a été initié et nécessite votre attention.",
+      userLabel: "Utilisateur:",
+      emailLabel: "Email:",
+      amountLabel: "Montant:",
+      recipientLabel: "Bénéficiaire:",
+      transferIdLabel: "ID transfert:",
+      userIdLabel: "ID utilisateur:",
+      actionButton: "Voir le transfert",
+      footer: "Tous droits réservés."
+    },
+    transferCodeUser: {
+      subject: "Code de validation pour votre transfert - ALTUS FINANCE GROUP",
+      headerTitle: "🔐 Code de validation",
+      greeting: "Bonjour",
+      transferInfoTitle: "Détails du transfert",
+      amountLabel: "Montant:",
+      recipientLabel: "Bénéficiaire:",
+      codeTitle: "Votre code de validation",
+      codeSequence: "Code",
+      codeOf: "sur",
+      instruction: "Utilisez le code ci-dessous pour valider votre transfert :",
+      expirationText: "Ce code expirera dans 15 minutes.",
+      securityWarning: "⚠️ Pour votre sécurité, ne partagez jamais ce code avec quiconque. Notre équipe ne vous demandera jamais ce code.",
+      notYouText: "Si vous n'avez pas initié ce transfert, contactez-nous immédiatement.",
       footer: "Tous droits réservés."
     }
   },

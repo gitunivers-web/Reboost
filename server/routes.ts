@@ -1206,7 +1206,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
             public_id: `user_${req.session.userId}_${Date.now()}`,
           },
-          (error, result) => {
+          (error: any, result: any) => {
             if (error) reject(error);
             else resolve(result);
           }
@@ -1418,7 +1418,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             use_filename: true,
             unique_filename: true,
           },
-          (error, result) => {
+          (error: any, result: any) => {
             if (error) {
               reject(error);
             } else if (result) {
