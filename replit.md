@@ -26,7 +26,7 @@ Preferred communication style: Simple, everyday language.
 **API Design:** RESTful API endpoints with response formatting and request logging.
 **Data Layer:** Schema-first design using Drizzle ORM, type-safe operations, Zod schemas, and drizzle-kit for migrations.
 **Storage Strategy:** PostgreSQL database (`DatabaseStorage`) with Neon serverless, adhering to an `IStorage` interface.
-**Database Schema:** Key tables include `users`, `loans`, `transfers`, `fees`, `transactions`, `adminSettings`, `auditLogs`, `transferValidationCodes`, `transferEvents`, `adminMessages`, `externalAccounts`, and `userOtps`.
+**Database Schema:** Key tables include `users`, `loans`, `transfers`, `fees`, `transactions`, `adminSettings`, `auditLogs`, `transferValidationCodes`, `transferEvents`, `adminMessages`, `externalAccounts`, `userOtps`, and `kycDocuments`. **Security enhancements (Nov 2025):** Added `cloudinaryPublicId` to `kycDocuments` and `signedContractCloudinaryPublicId` to `loans` for secure Cloudinary authenticated storage tracking.
 **Key Architectural Decisions:** Monorepo structure, end-to-end type safety, Vite middleware for HMR, and separate client/server builds.
 
 ### UI/UX Decisions
@@ -42,10 +42,11 @@ Preferred communication style: Simple, everyday language.
 
 - **Authentication:** Comprehensive forgot/reset password with email notifications and rate limiting. Email verification includes automatic login post-verification. Streamlined login flow differentiates between users with and without 2FA. TOTP-based Two-Factor Authentication (2FA) using Google Authenticator is optional and user-configurable. Single session enforcement and CSRF protection are implemented. Cross-domain session cookies are configured for production and development environments.
 - **Session Management & Error Handling:** Global 401/403 interceptor redirects to login with contextual messages. `SessionMonitor` component ensures periodic session validation and inactivity detection. Automatic CSRF token cleanup and session clearing occur on authentication failures. Intelligent retry logic distinguishes network errors from authentication errors.
-- **Security Features:** Includes IDOR protection, Zod validation, XSS protection, strong password requirements, UUID usernames, generic error messages, and file upload validation with magic byte verification. Comprehensive rate limiting on sensitive endpoints and encrypted 2FA secrets are also in place.
+- **Security Features:** Includes IDOR protection, Zod validation, XSS protection, strong password requirements, UUID usernames, generic error messages, and file upload validation with magic byte verification. Comprehensive rate limiting on sensitive endpoints (100 req/15min general, 10 req/15min auth, 20 req/15min uploads) and encrypted 2FA secrets are also in place. **CRITICAL SECURITY (Nov 2025):** All file uploads (KYC, signed contracts, profile photos) use Cloudinary with `type:'authenticated'` and cryptographic UUIDs. Public file exposure via `express.static` has been eliminated. SSL configuration hardened for production (`ssl: true`, no `rejectUnauthorized: false`). Debug logging disabled in production environments.
 - **Loan Disbursement Workflow:** Multi-step approval process (Request -> Admin Approval -> Contract Signing -> Manual Admin Fund Disbursement) ensuring explicit admin action for disbursement and logging all actions.
-- **KYC Document Upload:** Real file upload functionality via FormData with appropriate loading states and error handling.
-- **Profile Photo Upload:** Utilizes Cloudinary for cloud-based image storage, including automatic transformations, secure HTTPS URLs, and cleanup of old photos.
+- **KYC Document Upload:** Cloudinary-based authenticated file storage with cryptographic UUID identifiers (`cloudinaryPublicId`). Automatic cleanup of local temporary files after successful upload. Real file validation via FormData with magic byte verification and appropriate loading states.
+- **Profile Photo Upload:** Cloudinary cloud-based image storage with `type:'authenticated'`, automatic transformations, secure HTTPS URLs, cleanup of old photos, and cryptographic UUID identifiers.
+- **Signed Contracts:** Fully migrated to Cloudinary authenticated storage (`signedContractCloudinaryPublicId`). No local file storage. PDF validation and automatic cleanup of temporary files.
 - **Notification System:** Database-backed persistent notifications replace temporary toast messages. Features include RESTful API endpoints with CSRF and IDOR protection, user ownership enforcement at the SQL level, `NotificationBell` component with polling, unread count badges, sound alerts, and a 2FA suggestion notification system. It supports multilingual notifications with metadata interpolation for dynamic content in French, English, and Spanish. A comprehensive set of 18 distinct notification types covers all critical user events and persists across sessions.
 
 ## External Dependencies
@@ -56,4 +57,4 @@ Preferred communication style: Simple, everyday language.
 **Form Management:** React Hook Form, Zod, `@hookform/resolvers`.
 **Authentication:** SendGrid for transactional email verification.
 **Two-Factor Authentication:** Speakeasy and qrcode libraries for TOTP generation and verification.
-**Cloud Storage:** Cloudinary for persistent profile photo storage and delivery.
+**Cloud Storage:** Cloudinary for authenticated file storage and delivery. **All** sensitive files (KYC documents, signed contracts, profile photos) use `type:'authenticated'` with cryptographic UUID identifiers. No public file access - requires signed URLs for download (recommended implementation pending).
