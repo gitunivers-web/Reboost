@@ -46,13 +46,13 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
       slug: 'personal-credit',
       hero: {
         title: 'Crédit Personnel',
-        subtitle: 'Financez vos projets personnels avec des taux avantageux et une réponse rapide en 24h',
+        subtitle: 'Financez vos projets personnels avec des taux avantageux et une réponse rapide',
         cta: 'Demander un crédit',
         features: [
           'Taux à partir de 4.9%',
-          'Jusqu\'à 100\'000 CHF',
           'Remboursement flexible',
-          'Réponse en 24h'
+          'Réponse rapide',
+          'Fonds immédiatement disponibles'
         ]
       },
       benefits: {
@@ -65,8 +65,8 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
           },
           {
             icon: 'Clock',
-            title: 'Réponse rapide',
-            description: 'Obtenez une décision de principe en moins de 24 heures'
+            title: 'Réponse ultra-rapide',
+            description: 'Obtenez une réponse en quelques minutes à 24 heures maximum'
           },
           {
             icon: 'Shield',
@@ -81,27 +81,27 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
         ]
       },
       process: {
-        title: 'Comment ça marche ?',
+        title: 'Un processus 100% digital ultra-rapide',
         steps: [
           {
             number: 1,
-            title: 'Faites votre demande',
+            title: 'Demande en ligne',
             description: 'Remplissez notre formulaire en ligne en quelques minutes'
           },
           {
             number: 2,
-            title: 'Recevez une offre',
-            description: 'Nous analysons votre dossier et vous proposons les meilleures conditions'
+            title: 'Réponse rapide',
+            description: 'Nous analysons votre dossier et vous répondons en quelques minutes à 24h'
           },
           {
             number: 3,
-            title: 'Signez votre contrat',
-            description: 'Validez votre offre en ligne de manière sécurisée'
+            title: 'Signature électronique',
+            description: 'Si votre demande est acceptée, signez votre contrat en ligne de manière sécurisée'
           },
           {
             number: 4,
-            title: 'Recevez vos fonds',
-            description: 'L\'argent est versé sur votre compte dans les plus brefs délais'
+            title: 'Fonds immédiatement disponibles',
+            description: 'Dès la signature du contrat, l\'argent est versé immédiatement sur votre compte'
           }
         ]
       },
@@ -114,7 +114,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
           },
           {
             question: 'Combien puis-je emprunter ?',
-            answer: 'Vous pouvez emprunter de 5\'000 à 100\'000 CHF selon votre capacité de remboursement.'
+            answer: 'Le montant que vous pouvez emprunter dépend de votre capacité de remboursement et sera déterminé après analyse de votre dossier.'
           },
           {
             question: 'Quelle est la durée de remboursement ?',
@@ -128,7 +128,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
       },
       cta: {
         title: 'Prêt à concrétiser votre projet ?',
-        description: 'Faites votre demande en ligne et recevez une réponse en 24h',
+        description: 'Faites votre demande en ligne, recevez une réponse rapide, et si acceptée, vos fonds sont immédiatement disponibles après signature',
         button: 'Demander mon crédit'
       }
     },
@@ -408,13 +408,13 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
       slug: 'personal-credit',
       hero: {
         title: 'Personal Credit',
-        subtitle: 'Finance your personal projects with competitive rates and a quick 24h response',
+        subtitle: 'Finance your personal projects with competitive rates and a quick response',
         cta: 'Apply for credit',
         features: [
           'Rates from 4.9%',
-          'Up to CHF 100,000',
           'Flexible repayment',
-          '24h response'
+          'Quick response',
+          'Funds immediately available'
         ]
       },
       benefits: {
@@ -427,8 +427,8 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
           },
           {
             icon: 'Clock',
-            title: 'Quick response',
-            description: 'Get a decision in principle in less than 24 hours'
+            title: 'Ultra-fast response',
+            description: 'Get a response in minutes to 24 hours maximum'
           },
           {
             icon: 'Shield',
@@ -443,27 +443,27 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
         ]
       },
       process: {
-        title: 'How does it work?',
+        title: '100% digital ultra-fast process',
         steps: [
           {
             number: 1,
-            title: 'Submit your application',
+            title: 'Online application',
             description: 'Fill out our online form in just a few minutes'
           },
           {
             number: 2,
-            title: 'Receive an offer',
-            description: 'We analyze your file and offer you the best conditions'
+            title: 'Quick response',
+            description: 'We analyze your file and respond in minutes to 24h'
           },
           {
             number: 3,
-            title: 'Sign your contract',
-            description: 'Validate your offer online securely'
+            title: 'Electronic signature',
+            description: 'If your application is accepted, sign your contract online securely'
           },
           {
             number: 4,
-            title: 'Receive your funds',
-            description: 'The money is transferred to your account as soon as possible'
+            title: 'Funds immediately available',
+            description: 'Once the contract is signed, the money is immediately transferred to your account'
           }
         ]
       },
@@ -476,7 +476,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
           },
           {
             question: 'How much can I borrow?',
-            answer: 'You can borrow from CHF 5,000 to CHF 100,000 depending on your repayment capacity.'
+            answer: 'The amount you can borrow depends on your repayment capacity and will be determined after analyzing your file.'
           },
           {
             question: 'What is the repayment period?',
@@ -490,7 +490,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
       },
       cta: {
         title: 'Ready to realize your project?',
-        description: 'Submit your application online and receive a response within 24 hours',
+        description: 'Submit your application online, receive a quick response, and if accepted, your funds are immediately available after signing',
         button: 'Apply for credit'
       }
     },
@@ -774,7 +774,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
         cta: 'Solicitar crédito',
         features: [
           'Tasas desde 4.9%',
-          'Hasta 100,000 CHF',
+          'Fondos inmediatamente disponibles',
           'Reembolso flexible',
           'Respuesta en 24h'
         ]
@@ -838,7 +838,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
           },
           {
             question: '¿Cuánto puedo pedir prestado?',
-            answer: 'Puede pedir prestado de 5,000 a 100,000 CHF según su capacidad de reembolso.'
+            answer: 'El monto que puede pedir prestado depende de su capacidad de reembolso y se determinará después del análisis de su expediente.'
           },
           {
             question: '¿Cuál es el período de reembolso?',
@@ -1137,7 +1137,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
         cta: 'Solicitar crédito',
         features: [
           'Taxas a partir de 4.9%',
-          'Até CHF 100,000',
+          'Fundos imediatamente disponíveis',
           'Reembolso flexível',
           'Resposta em 24h'
         ]
@@ -1201,7 +1201,7 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
           },
           {
             question: 'Quanto posso pedir emprestado?',
-            answer: 'Você pode pedir emprestado de CHF 5,000 a CHF 100,000 dependendo da sua capacidade de reembolso.'
+            answer: 'O valor que você pode pedir emprestado depende de sua capacidade de reembolso e será determinado após a análise de seu dossiê.'
           },
           {
             question: 'Qual é o período de reembolso?',
@@ -1495,10 +1495,10 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
   it: {
     'personal-credit': {
       slug: 'personal-credit',
-      hero: { title: 'Credito Personale', subtitle: 'Finanzia i tuoi progetti personali con tassi competitivi e risposta rapida in 24h', cta: 'Richiedere credito', features: ['Tassi dal 4.9%', 'Fino a 100,000 CHF', 'Rimborso flessibile', 'Risposta in 24h'] },
+      hero: { title: 'Credito Personale', subtitle: 'Finanzia i tuoi progetti personali con tassi competitivi e risposta rapida in 24h', cta: 'Richiedere credito', features: ['Tassi dal 4.9%', 'Fondi immediatamente disponibili', 'Rimborso flessibile', 'Risposta in 24h'] },
       benefits: { title: 'Perché scegliere il nostro credito personale?', items: [{ icon: 'Percent', title: 'Tassi competitivi', description: 'Beneficia di alcuni dei tassi di interesse più bassi del mercato svizzero' }, { icon: 'Clock', title: 'Risposta rapida', description: 'Ottieni una decisione di principio in meno di 24 ore' }, { icon: 'Shield', title: 'Sicurezza garantita', description: 'I tuoi dati sono protetti secondo gli standard svizzeri più rigorosi' }, { icon: 'Calendar', title: 'Rimborso flessibile', description: 'Scegli la durata che meglio si adatta alla tua situazione' }] },
       process: { title: 'Come funziona?', steps: [{ number: 1, title: 'Fai la tua richiesta', description: 'Compila il nostro modulo online in pochi minuti' }, { number: 2, title: 'Ricevi un\'offerta', description: 'Analizziamo il tuo file e ti proponiamo le migliori condizioni' }, { number: 3, title: 'Firma il tuo contratto', description: 'Convalida la tua offerta online in modo sicuro' }, { number: 4, title: 'Ricevi i tuoi fondi', description: 'Il denaro viene trasferito sul tuo conto il prima possibile' }] },
-      faq: { title: 'Domande frequenti', items: [{ question: 'Quali sono i criteri di eleggibilità?', answer: 'Per essere eleggibile, devi essere maggiorenne, risiedere in Svizzera, avere un reddito regolare e non essere in riscossione crediti.' }, { question: 'Quanto posso prendere in prestito?', answer: 'Puoi prendere in prestito da CHF 5,000 a CHF 100,000 a seconda della tua capacità di rimborso.' }, { question: 'Qual è il periodo di rimborso?', answer: 'Il periodo di rimborso varia da 12 a 120 mesi a seconda dell\'importo preso in prestito.' }, { question: 'Ci sono commissioni di gestione?', answer: 'Le nostre commissioni di gestione sono trasparenti e competitive. Ti saranno comunicate nella tua offerta personalizzata.' }] },
+      faq: { title: 'Domande frequenti', items: [{ question: 'Quali sono i criteri di eleggibilità?', answer: 'Per essere eleggibile, devi essere maggiorenne, risiedere in Svizzera, avere un reddito regolare e non essere in riscossione crediti.' }, { question: 'Quanto posso prendere in prestito?', answer: 'L\'importo che puoi prendere in prestito dipende dalla tua capacità di rimborso e sarà determinato dopo l\'analisi del tuo dossier.' }, { question: 'Qual è il periodo di rimborso?', answer: 'Il periodo di rimborso varia da 12 a 120 mesi a seconda dell\'importo preso in prestito.' }, { question: 'Ci sono commissioni di gestione?', answer: 'Le nostre commissioni di gestione sono trasparenti e competitive. Ti saranno comunicate nella tua offerta personalizzata.' }] },
       cta: { title: 'Pronto a realizzare il tuo progetto?', description: 'Invia la tua richiesta online e ricevi una risposta entro 24 ore', button: 'Richiedere il mio credito' }
     },
     'loan-refinancing': {
@@ -1529,10 +1529,10 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
   de: {
     'personal-credit': {
       slug: 'personal-credit',
-      hero: { title: 'Privatkredit', subtitle: 'Finanzieren Sie Ihre persönlichen Projekte mit günstigen Zinsen und schneller Antwort in 24h', cta: 'Kredit beantragen', features: ['Zinsen ab 4.9%', 'Bis zu CHF 100,000', 'Flexible Rückzahlung', 'Antwort in 24h'] },
+      hero: { title: 'Privatkredit', subtitle: 'Finanzieren Sie Ihre persönlichen Projekte mit günstigen Zinsen und schneller Antwort in 24h', cta: 'Kredit beantragen', features: ['Zinsen ab 4.9%', 'Sofortige Auszahlung', 'Flexible Rückzahlung', 'Antwort in 24h'] },
       benefits: { title: 'Warum unseren Privatkredit wählen?', items: [{ icon: 'Percent', title: 'Wettbewerbsfähige Zinsen', description: 'Profitieren Sie von einigen der niedrigsten Zinssätze auf dem Schweizer Markt' }, { icon: 'Clock', title: 'Schnelle Antwort', description: 'Erhalten Sie eine Entscheidung im Prinzip in weniger als 24 Stunden' }, { icon: 'Shield', title: 'Garantierte Sicherheit', description: 'Ihre Daten sind nach den strengsten Schweizer Standards geschützt' }, { icon: 'Calendar', title: 'Flexible Rückzahlung', description: 'Wählen Sie die Laufzeit, die am besten zu Ihrer Situation passt' }] },
       process: { title: 'Wie funktioniert es?', steps: [{ number: 1, title: 'Stellen Sie Ihren Antrag', description: 'Füllen Sie unser Online-Formular in wenigen Minuten aus' }, { number: 2, title: 'Erhalten Sie ein Angebot', description: 'Wir analysieren Ihr Dossier und bieten Ihnen die besten Konditionen' }, { number: 3, title: 'Unterschreiben Sie Ihren Vertrag', description: 'Bestätigen Sie Ihr Angebot online sicher' }, { number: 4, title: 'Erhalten Sie Ihre Mittel', description: 'Das Geld wird so schnell wie möglich auf Ihr Konto überwiesen' }] },
-      faq: { title: 'Häufig gestellte Fragen', items: [{ question: 'Was sind die Zulassungskriterien?', answer: 'Um berechtigt zu sein, müssen Sie volljährig sein, in der Schweiz wohnen, ein regelmäßiges Einkommen haben und nicht in Schuldeneintreibung sein.' }, { question: 'Wie viel kann ich leihen?', answer: 'Sie können je nach Ihrer Rückzahlungsfähigkeit von CHF 5,000 bis CHF 100,000 leihen.' }, { question: 'Was ist die Rückzahlungsdauer?', answer: 'Die Rückzahlungsdauer variiert von 12 bis 120 Monaten je nach geliehenem Betrag.' }, { question: 'Gibt es Bearbeitungsgebühren?', answer: 'Unsere Bearbeitungsgebühren sind transparent und wettbewerbsfähig. Sie werden Ihnen in Ihrem personalisierten Angebot mitgeteilt.' }] },
+      faq: { title: 'Häufig gestellte Fragen', items: [{ question: 'Was sind die Zulassungskriterien?', answer: 'Um berechtigt zu sein, müssen Sie volljährig sein, in der Schweiz wohnen, ein regelmäßiges Einkommen haben und nicht in Schuldeneintreibung sein.' }, { question: 'Wie viel kann ich leihen?', answer: 'Der Betrag, den Sie leihen können, hängt von Ihrer Rückzahlungsfähigkeit ab und wird nach Analyse Ihres Dossiers festgelegt.' }, { question: 'Was ist die Rückzahlungsdauer?', answer: 'Die Rückzahlungsdauer variiert von 12 bis 120 Monaten je nach geliehenem Betrag.' }, { question: 'Gibt es Bearbeitungsgebühren?', answer: 'Unsere Bearbeitungsgebühren sind transparent und wettbewerbsfähig. Sie werden Ihnen in Ihrem personalisierten Angebot mitgeteilt.' }] },
       cta: { title: 'Bereit, Ihr Projekt zu verwirklichen?', description: 'Senden Sie Ihren Antrag online und erhalten Sie eine Antwort innerhalb von 24 Stunden', button: 'Meinen Kredit beantragen' }
     },
     'loan-refinancing': {
@@ -1563,10 +1563,10 @@ export const loanPages: Record<Language, Record<LoanSlug, LoanContent>> = {
   nl: {
     'personal-credit': {
       slug: 'personal-credit',
-      hero: { title: 'Persoonlijk Krediet', subtitle: 'Financier uw persoonlijke projecten met concurrerende tarieven en snelle reactie binnen 24u', cta: 'Krediet aanvragen', features: ['Tarieven vanaf 4.9%', 'Tot CHF 100,000', 'Flexibele terugbetaling', 'Reactie binnen 24u'] },
+      hero: { title: 'Persoonlijk Krediet', subtitle: 'Financier uw persoonlijke projecten met concurrerende tarieven en snelle reactie binnen 24u', cta: 'Krediet aanvragen', features: ['Tarieven vanaf 4.9%', 'Onmiddellijk beschikbaar', 'Flexibele terugbetaling', 'Reactie binnen 24u'] },
       benefits: { title: 'Waarom ons persoonlijk krediet kiezen?', items: [{ icon: 'Percent', title: 'Concurrerende tarieven', description: 'Profiteer van enkele van de laagste rentetarieven op de Zwitserse markt' }, { icon: 'Clock', title: 'Snelle reactie', description: 'Krijg in principe een beslissing in minder dan 24 uur' }, { icon: 'Shield', title: 'Gegarandeerde veiligheid', description: 'Uw gegevens zijn beschermd volgens de strengste Zwitserse normen' }, { icon: 'Calendar', title: 'Flexibele terugbetaling', description: 'Kies de looptijd die het beste bij uw situatie past' }] },
       process: { title: 'Hoe werkt het?', steps: [{ number: 1, title: 'Doe uw aanvraag', description: 'Vul ons online formulier in een paar minuten in' }, { number: 2, title: 'Ontvang een aanbieding', description: 'We analyseren uw dossier en bieden u de beste voorwaarden' }, { number: 3, title: 'Onderteken uw contract', description: 'Valideer uw aanbieding online veilig' }, { number: 4, title: 'Ontvang uw fondsen', description: 'Het geld wordt zo snel mogelijk naar uw rekening overgemaakt' }] },
-      faq: { title: 'Veelgestelde vragen', items: [{ question: 'Wat zijn de toelatingscriteria?', answer: 'Om in aanmerking te komen, moet u meerderjarig zijn, in Zwitserland wonen, een regelmatig inkomen hebben en niet in schuldinvordering zijn.' }, { question: 'Hoeveel kan ik lenen?', answer: 'U kunt lenen van CHF 5,000 tot CHF 100,000 afhankelijk van uw terugbetalingscapaciteit.' }, { question: 'Wat is de terugbetalingsperiode?', answer: 'De terugbetalingsperiode varieert van 12 tot 120 maanden afhankelijk van het geleende bedrag.' }, { question: 'Zijn er verwerkingskosten?', answer: 'Onze verwerkingskosten zijn transparant en concurrerend. Ze zullen u in uw gepersonaliseerde aanbieding worden meegedeeld.' }] },
+      faq: { title: 'Veelgestelde vragen', items: [{ question: 'Wat zijn de toelatingscriteria?', answer: 'Om in aanmerking te komen, moet u meerderjarig zijn, in Zwitserland wonen, een regelmatig inkomen hebben en niet in schuldinvordering zijn.' }, { question: 'Hoeveel kan ik lenen?', answer: 'Het bedrag dat u kunt lenen hangt af van uw terugbetalingscapaciteit en wordt bepaald na analyse van uw dossier.' }, { question: 'Wat is de terugbetalingsperiode?', answer: 'De terugbetalingsperiode varieert van 12 tot 120 maanden afhankelijk van het geleende bedrag.' }, { question: 'Zijn er verwerkingskosten?', answer: 'Onze verwerkingskosten zijn transparant en concurrerend. Ze zullen u in uw gepersonaliseerde aanbieding worden meegedeeld.' }] },
       cta: { title: 'Klaar om uw project te realiseren?', description: 'Dien uw aanvraag online in en ontvang binnen 24 uur een reactie', button: 'Mijn krediet aanvragen' }
     },
     'loan-refinancing': {

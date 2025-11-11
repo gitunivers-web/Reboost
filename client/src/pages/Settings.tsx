@@ -597,6 +597,81 @@ export default function Settings() {
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-md bg-primary/10 text-primary">
+                  <Shield className="h-5 w-5" />
+                </div>
+                <CardTitle>{t.settings.twoFactorAuth}</CardTitle>
+              </div>
+              <CardDescription>
+                {t.settings.twoFactorAuthDesc}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-4 p-4 bg-muted/50 rounded-md">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2 flex-1">
+                    <p className="font-medium">
+                      {user?.twoFactorEnabled ? t.settings.twoFactorEnabled : t.settings.enable2FA}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {user?.twoFactorEnabled 
+                        ? t.settings.twoFactorEnabledDesc
+                        : t.settings.twoFactorDisabledDesc}
+                    </p>
+                  </div>
+                  {user?.twoFactorEnabled ? (
+                    <Button 
+                      variant="outline" 
+                      data-testid="button-disable-2fa"
+                      onClick={async () => {
+                        try {
+                          await apiRequest('POST', '/api/2fa/disable');
+                          queryClient.invalidateQueries({ queryKey: ['/api/user'] });
+                          toast({
+                            title: t.settings.disable2FASuccess,
+                            description: t.settings.disable2FASuccessDesc,
+                          });
+                        } catch (error: any) {
+                          toast({
+                            title: t.common.error,
+                            description: error.message || t.settings.disable2FAError,
+                            variant: 'destructive',
+                          });
+                        }
+                      }}
+                    >
+                      {t.settings.disable}
+                    </Button>
+                  ) : (
+                    <Button 
+                      variant="outline" 
+                      data-testid="button-enable-2fa"
+                      onClick={() => window.location.href = '/security/2fa'}
+                    >
+                      {t.settings.configure}
+                    </Button>
+                  )}
+                </div>
+                {user?.twoFactorEnabled && (
+                  <div 
+                    className="flex items-start gap-3 p-3 bg-green-500/10 border border-green-500/30 rounded-md"
+                    role="status"
+                  >
+                    <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-500 text-white">
+                      {t.settings.enabled}
+                    </span>
+                    <p className="text-sm text-muted-foreground">
+                      {t.settings.twoFactorActiveMessage}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="appearance" className="space-y-6">
