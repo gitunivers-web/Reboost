@@ -1781,7 +1781,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               status: 'pending',
               fileUrl: uploadResult.url,
               fileName,
-              fileSize: buffer.length.toString(),
+              fileSize: buffer.length,
               cloudinaryPublicId: uploadResult.publicId,
             });
 
@@ -1795,7 +1795,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             await notifyAdminsNewKycDocument(
               req.session.userId!,
               user?.fullName || 'Utilisateur',
-              kycDocument.id,
               documentType,
               loanType
             );
@@ -1816,7 +1815,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
 
-        await storage.deleteLoan(loan.id);
+        await storage.deleteLoan(loan.id, req.session.userId!, 'Document upload failed');
 
         return res.status(500).json({ 
           error: uploadError.message || 'Erreur lors de l\'upload des documents. Veuillez réessayer.' 
