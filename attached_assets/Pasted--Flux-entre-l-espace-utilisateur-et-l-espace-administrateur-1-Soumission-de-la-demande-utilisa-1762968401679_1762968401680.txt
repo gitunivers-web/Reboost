@@ -1,0 +1,50 @@
+🧩 Flux entre l’espace utilisateur et l’espace administrateur
+1️⃣ – Soumission de la demande utilisateur
+
+L’utilisateur fait une demande depuis son espace personnel et téléverse les documents nécessaires selon son profil (particulier ou professionnel).
+
+Tous les documents et informations (nom, email, numéro de téléphone, type de compte, etc.) sont envoyés automatiquement à l’adresse email de l’administrateur pour vérification.
+
+Dans le dashboard utilisateur, la demande apparaît comme “En cours de traitement”.
+
+L’administrateur analyse la demande via les documents reçus par mail. Si tout est conforme, il revient dans son espace administrateur pour valider ou rejeter la demande.
+
+En cas de rejet, l’admin saisit un motif, qui s’affiche automatiquement dans les notifications utilisateur.
+
+En cas de besoin d’informations supplémentaires, l’admin envoie un message depuis son espace ; la notification apparaît alors côté utilisateur.
+
+2️⃣ – Validation, génération du contrat et gestion des transferts
+
+Si la demande est approuvée, le contrat est généré automatiquement dans le dashboard de l’utilisateur, accompagné d’une notification.
+
+L’utilisateur peut télécharger, signer (numériquement ou manuellement) et renvoyer le contrat via son espace personnel.
+
+Une fois le contrat reçu, l’administrateur le vérifie et, s’il est valide, confirme la finalisation.
+
+Ce n’est qu’après validation de l’admin que le système procède automatiquement à la génération des codes de transfert (voir section suivante).
+
+3️⃣ – Automatisation des codes et progression du transfert
+
+Le système génère 5 codes aléatoires, uniques et non réutilisables, chacun associé à un pourcentage d’arrêt du transfert déterminé de manière aléatoire.
+
+Exemple : arrêts à 12 %, 34 %, 55 %, 78 % et 92 %.
+
+Ces pourcentages sont croissants et distribués de façon aléatoire pour simuler une progression naturelle.
+
+Le système envoie une notification interne à l’administrateur avec la liste des 5 codes et les pourcentages correspondants.
+
+Ces codes ne sont jamais communiqués automatiquement à l’utilisateur.
+
+Une fois les fonds disponibles dans le compte utilisateur, les codes deviennent actifs et prêts à l’usage.
+
+Lorsqu’un utilisateur initie un transfert, le système le fait progresser jusqu’au pourcentage défini, puis affiche :
+
+“Transfert en pause. Veuillez entrer le code de vérification correspondant (ex. Code d’autorisation ou Code de conformité).”
+
+L’administrateur transmet alors manuellement le code à l’utilisateur pour débloquer la progression.
+
+Si le code entré est valide → le transfert continue jusqu’au prochain arrêt.
+
+Si le code est invalide → une popup d’erreur apparaît et le transfert reste en pause.
+
+Une fois les 5 codes utilisés et le transfert complété, un récapitulatif final s’affiche avec confirmation et instructions.
