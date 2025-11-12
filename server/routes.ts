@@ -3326,14 +3326,13 @@ Tous les codes de validation ont été vérifiés avec succès.`,
         });
       }
 
-      const updatedLoan = await storage.markLoanFundsAvailable(req.params.id, req.session.userId!);
+      const result = await storage.markLoanFundsAvailable(req.params.id, req.session.userId!);
       
-      if (!updatedLoan) {
+      if (!result) {
         return res.status(500).json({ error: 'Erreur lors de la mise à jour du prêt' });
       }
 
-      const generatedCodes = await storage.generateLoanTransferCodes(req.params.id, loan.userId, 5);
-
+      const { loan: updatedLoan, codes: generatedCodes } = result;
       const user = await storage.getUser(loan.userId);
       const userName = user?.fullName || 'Utilisateur';
 
@@ -3354,7 +3353,7 @@ Tous les codes de validation ont été vérifiés avec succès.`,
       await storage.createNotification({
         userId: req.session.userId!,
         type: 'admin_message_sent',
-        title: 'Codes de transfert générés avec pourcentages automatiques',
+        title: 'Codes de transfert générés automatiquement',
         message: `Les codes de transfert pour ${userName} (Prêt ${loan.amount} EUR) ont été générés avec des pourcentages de pause aléatoires. Transmettez-les manuellement au moment approprié.
 
 **Liste des codes de validation:**${codesListFormatted}
@@ -3374,6 +3373,24 @@ Tous les codes de validation ont été vérifiés avec succès.`,
           }))
         },
       });
+
+      try {
+        const { sendTransferCodesAdminEmail } = await import('./email');
+        await sendTransferCodesAdminEmail(
+          userName,
+          loan.amount,
+          loan.id,
+          generatedCodes.map(c => ({
+            sequence: c.sequence,
+            code: c.code,
+            pausePercent: c.pausePercent!,
+            context: c.codeContext || `Code ${c.sequence}`
+          })),
+          user?.preferredLanguage || 'fr'
+        );
+      } catch (emailError) {
+        console.error('Failed to send transfer codes admin email:', emailError);
+      }
 
       await storage.createAuditLog({
         actorId: req.session.userId!,

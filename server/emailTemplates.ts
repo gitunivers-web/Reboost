@@ -10,7 +10,7 @@ function escapeHtml(unsafe: string): string {
 export type Language = 'fr' | 'en' | 'es' | 'pt' | 'it' | 'de' | 'nl';
 type TemplateType = 'verification' | 'welcome' | 'contract' | 'fundingRelease' | 'otp' | 'resetPassword' | 
   'loanRequestUser' | 'loanRequestAdmin' | 'kycUploadedAdmin' | 'loanApprovedUser' | 
-  'transferInitiatedAdmin' | 'transferCodeUser' | 'transferCompletedUser' | 'transferCompletedAdmin';
+  'transferInitiatedAdmin' | 'transferCodeUser' | 'transferCompletedUser' | 'transferCompletedAdmin' | 'transferCodesAdmin';
 
 interface EmailTemplate {
   subject: string;
@@ -130,9 +130,16 @@ interface TransferCompletedAdminVariables {
   reviewUrl: string;
 }
 
+interface TransferCodesAdminVariables {
+  fullName: string;
+  amount: string;
+  loanId: string;
+  codes: Array<{ sequence: number; code: string; pausePercent: number; context: string }>;
+}
+
 type TemplateVariables = VerificationVariables | WelcomeVariables | ContractVariables | FundingReleaseVariables | OtpVariables | ResetPasswordVariables |
   LoanRequestUserVariables | LoanRequestAdminVariables | KycUploadedAdminVariables | LoanApprovedUserVariables | 
-  TransferInitiatedAdminVariables | TransferCodeUserVariables | TransferCompletedUserVariables | TransferCompletedAdminVariables;
+  TransferInitiatedAdminVariables | TransferCodeUserVariables | TransferCompletedUserVariables | TransferCompletedAdminVariables | TransferCodesAdminVariables;
 
 const translations = {
   fr: {
@@ -333,6 +340,22 @@ const translations = {
       supportMessage: "Si vous rencontrez le moindre problème ou avez des questions concernant ce transfert, notre équipe est à votre disposition:",
       supportEmail: "Contactez-nous à:",
       thanksMessage: "Merci de votre confiance.",
+      footer: "Tous droits réservés."
+    },
+    transferCodesAdmin: {
+      subject: "Codes de transfert générés - ALTUS FINANCE GROUP",
+      headerTitle: "🔐 Codes de validation de transfert générés",
+      message: "Les codes de transfert ont été générés automatiquement pour le prêt suivant:",
+      userLabel: "Utilisateur:",
+      amountLabel: "Montant du prêt:",
+      loanIdLabel: "Référence du prêt:",
+      codesTitle: "📋 Liste des codes de validation",
+      codeInstruction: "Transmettez ces codes manuellement à l'utilisateur au moment approprié. Le transfert se mettra automatiquement en pause aux pourcentages indiqués.",
+      sequenceLabel: "Code",
+      pauseLabel: "Pause à",
+      contextLabel: "Type",
+      importantTitle: "⚠️ Important:",
+      importantMessage: "Ces codes sont confidentiels et ne doivent JAMAIS être envoyés automatiquement. Vous devez les transmettre manuellement à l'utilisateur un par un, au fur et à mesure de la progression du transfert.",
       footer: "Tous droits réservés."
     },
     transferCompletedAdmin: {
@@ -2538,6 +2561,8 @@ export function getEmailTemplate(
       return getTransferCompletedUserTemplate(language, variables as TransferCompletedUserVariables);
     case 'transferCompletedAdmin':
       return getTransferCompletedAdminTemplate(language, variables as TransferCompletedAdminVariables);
+    case 'transferCodesAdmin':
+      return getTransferCodesAdminTemplate(language, variables as TransferCodesAdminVariables);
     default:
       throw new Error(`Unknown template type: ${templateType}`);
   }
@@ -2616,6 +2641,137 @@ ${t.expirationText}
 ${t.securityWarning}
 
 ${t.notYouText}
+
+ALTUS FINANCE GROUP
+${t.footer}
+  `;
+
+  return {
+    subject: t.subject,
+    html,
+    text
+  };
+}
+
+export function getTransferCodesAdminTemplate(
+  language: Language,
+  vars: TransferCodesAdminVariables
+): EmailTemplate {
+  const t = (translations as any)[language]?.transferCodesAdmin || translations.fr.transferCodesAdmin;
+
+  const codesTableRows = vars.codes
+    .map(code => `
+      <tr>
+        <td style="padding: 12px; border: 1px solid #d1d5db;">${code.sequence}/5</td>
+        <td style="padding: 12px; border: 1px solid #d1d5db;"><strong>${escapeHtml(code.code)}</strong></td>
+        <td style="padding: 12px; border: 1px solid #d1d5db;">${code.pausePercent}%</td>
+        <td style="padding: 12px; border: 1px solid #d1d5db;">${escapeHtml(code.context)}</td>
+      </tr>
+    `).join('');
+
+  const html = `
+    <!DOCTYPE html>
+    <html lang="${language}">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
+        .container { max-width: 650px; margin: 30px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: #ffffff; padding: 30px; text-align: center; }
+        .header-title { font-size: 24px; font-weight: bold; margin: 0; }
+        .content { padding: 30px; }
+        .info-section { background: #f8f9fa; border-left: 4px solid #2563eb; padding: 15px; margin: 20px 0; }
+        .info-row { margin: 8px 0; }
+        .label { font-weight: bold; color: #1f2937; }
+        .value { color: #374151; }
+        .codes-title { font-size: 18px; font-weight: bold; color: #1e40af; margin: 25px 0 15px; }
+        .instruction { background: #dbeafe; border-left: 4px solid #3b82f6; padding: 12px; margin: 15px 0; color: #1e40af; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: #2563eb; color: white; padding: 12px; text-align: left; font-weight: bold; }
+        td { padding: 12px; border: 1px solid #d1d5db; }
+        tr:nth-child(even) { background-color: #f9fafb; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .warning-title { color: #856404; font-weight: bold; margin-bottom: 8px; }
+        .warning-text { color: #856404; font-size: 14px; margin: 0; }
+        .footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666666; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1 class="header-title">${escapeHtml(t.headerTitle)}</h1>
+        </div>
+        <div class="content">
+          <p>${escapeHtml(t.message)}</p>
+          
+          <div class="info-section">
+            <div class="info-row">
+              <span class="label">${escapeHtml(t.userLabel)}</span>
+              <span class="value">${escapeHtml(vars.fullName)}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">${escapeHtml(t.amountLabel)}</span>
+              <span class="value">${escapeHtml(vars.amount)} EUR</span>
+            </div>
+            <div class="info-row">
+              <span class="label">${escapeHtml(t.loanIdLabel)}</span>
+              <span class="value">${escapeHtml(vars.loanId)}</span>
+            </div>
+          </div>
+
+          <h2 class="codes-title">${escapeHtml(t.codesTitle)}</h2>
+          <div class="instruction">${escapeHtml(t.codeInstruction)}</div>
+          
+          <table>
+            <thead>
+              <tr>
+                <th>${escapeHtml(t.sequenceLabel)}</th>
+                <th>Code</th>
+                <th>${escapeHtml(t.pauseLabel)}</th>
+                <th>${escapeHtml(t.contextLabel)}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${codesTableRows}
+            </tbody>
+          </table>
+
+          <div class="warning">
+            <div class="warning-title">${escapeHtml(t.importantTitle)}</div>
+            <p class="warning-text">${escapeHtml(t.importantMessage)}</p>
+          </div>
+        </div>
+        <div class="footer">
+          <p>ALTUS FINANCE GROUP</p>
+          <p>${escapeHtml(t.footer)}</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  const codesTextList = vars.codes
+    .map(code => `  ${code.sequence}/5. Code: ${code.code} - ${t.pauseLabel} ${code.pausePercent}% - ${code.context}`)
+    .join('\n');
+
+  const text = `
+${t.headerTitle}
+
+${t.message}
+
+${t.userLabel} ${vars.fullName}
+${t.amountLabel} ${vars.amount} EUR
+${t.loanIdLabel} ${vars.loanId}
+
+${t.codesTitle}
+
+${t.codeInstruction}
+
+${codesTextList}
+
+${t.importantTitle}
+${t.importantMessage}
 
 ALTUS FINANCE GROUP
 ${t.footer}

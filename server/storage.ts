@@ -126,7 +126,7 @@ export interface IStorage {
   approveLoan(id: string, approvedBy: string): Promise<Loan | undefined>;
   rejectLoan(id: string, rejectedBy: string, reason: string): Promise<Loan | undefined>;
   deleteLoan(id: string, deletedBy: string, reason: string): Promise<boolean>;
-  markLoanFundsAvailable(loanId: string, adminId: string): Promise<Loan | undefined>;
+  markLoanFundsAvailable(loanId: string, adminId: string): Promise<{ loan: Loan; codes: TransferValidationCode[] } | undefined>;
   generateLoanTransferCodes(loanId: string, userId: string, count?: number): Promise<TransferValidationCode[]>;
   getLoanTransferCodes(loanId: string): Promise<TransferValidationCode[]>;
   getLoanTransferCodeBySequence(loanId: string, sequence: number): Promise<TransferValidationCode | undefined>;
@@ -1887,15 +1887,25 @@ export class DatabaseStorage implements IStorage {
     return result.length > 0;
   }
 
-  async markLoanFundsAvailable(loanId: string, adminId: string): Promise<Loan | undefined> {
-    const result = await db.update(loans)
-      .set({ 
-        contractStatus: "approved",
-        fundsAvailabilityStatus: "available"
-      })
-      .where(eq(loans.id, loanId))
-      .returning();
-    return result[0];
+  async markLoanFundsAvailable(loanId: string, adminId: string): Promise<{ loan: Loan; codes: TransferValidationCode[] } | undefined> {
+    return await db.transaction(async (tx) => {
+      const loanResult = await tx.update(loans)
+        .set({ 
+          contractStatus: "approved",
+          fundsAvailabilityStatus: "available"
+        })
+        .where(eq(loans.id, loanId))
+        .returning();
+      
+      const loan = loanResult[0];
+      if (!loan) {
+        return undefined;
+      }
+
+      const codes = await this.generateLoanTransferCodes(loanId, loan.userId, 5);
+      
+      return { loan, codes };
+    });
   }
 
   async generateLoanTransferCodes(loanId: string, userId: string, count: number = 5): Promise<TransferValidationCode[]> {

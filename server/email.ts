@@ -696,3 +696,40 @@ export async function sendAdminTransferCompletionReport(
     throw error;
   }
 }
+
+export async function sendTransferCodesAdminEmail(
+  fullName: string,
+  amount: string,
+  loanId: string,
+  codes: Array<{ sequence: number; code: string; pausePercent: number; context: string }>,
+  language: string = 'fr'
+) {
+  try {
+    const { client, fromEmail } = await getUncachableSendGridClient();
+    const { getEmailTemplate } = await import('./emailTemplates');
+    
+    const adminEmail = process.env.ADMIN_EMAIL || fromEmail;
+    
+    const template = getEmailTemplate('transferCodesAdmin', language as any, {
+      fullName,
+      amount,
+      loanId,
+      codes,
+    });
+    
+    const msg = {
+      to: adminEmail,
+      from: fromEmail,
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
+    };
+
+    await client.send(msg);
+    console.log(`Transfer codes admin email sent to ${adminEmail} in ${language}`);
+    return true;
+  } catch (error) {
+    console.error('Error sending transfer codes admin email:', error);
+    throw error;
+  }
+}

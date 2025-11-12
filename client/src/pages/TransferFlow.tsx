@@ -498,13 +498,16 @@ export default function TransferFlow() {
                       Transfert en pause à {Math.round(simulatedProgress)}%
                     </p>
                     <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
-                      Veuillez entrer le code de validation #{validatedCount + 1} pour continuer
+                      Veuillez entrer le code de vérification correspondant pour continuer
                     </p>
                     {nextCode.codeContext && (
                       <p className="text-xs text-orange-600 dark:text-orange-400 mt-1 italic">
-                        {nextCode.codeContext}
+                        {nextCode.codeContext} - Code {validatedCount + 1} sur {totalCodes}
                       </p>
                     )}
+                    <p className="text-xs text-orange-700 dark:text-orange-300 mt-2">
+                      L'administrateur vous transmettra ce code manuellement
+                    </p>
                   </div>
                 </div>
 
