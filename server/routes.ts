@@ -3618,13 +3618,35 @@ Tous les codes de validation ont été vérifiés avec succès.`,
         return res.status(404).json({ error: 'Transfer not found' });
       }
 
-      const code = await storage.issueTransferValidationCode(req.params.id, validatedData.sequence);
+      if (!transfer.loanId) {
+        return res.status(400).json({ 
+          error: 'Ce transfert n\'est pas associé à un prêt. Impossible de transmettre les codes de validation.' 
+        });
+      }
+
+      const loan = await storage.getLoan(transfer.loanId);
+      if (!loan) {
+        return res.status(404).json({ error: 'Prêt associé non trouvé' });
+      }
+
+      const code = await storage.getLoanTransferCodeBySequence(transfer.loanId, validatedData.sequence);
+      if (!code) {
+        return res.status(404).json({ 
+          error: `Code de validation #${validatedData.sequence} non trouvé pour ce prêt. Vérifiez que le contrat a été confirmé et que les codes ont été générés.` 
+        });
+      }
+
+      if (code.consumedAt) {
+        return res.status(400).json({ 
+          error: `Le code de validation #${validatedData.sequence} a déjà été utilisé le ${code.consumedAt.toLocaleString('fr-FR')}.` 
+        });
+      }
 
       await storage.createAdminMessage({
         userId: transfer.userId,
         transferId: req.params.id,
         subject: `Code de validation pour transfert #${validatedData.sequence}`,
-        content: `Votre code de validation pour l'étape ${validatedData.sequence} est: ${code.code}. Ce code expire dans 30 minutes.`,
+        content: `Votre code de validation pour l'étape ${validatedData.sequence} est: ${code.code}. Ce code a été pré-généré lors de la confirmation de votre contrat.`,
         severity: 'info',
       });
 
@@ -3636,7 +3658,7 @@ Tous les codes de validation ont été vérifiés avec succès.`,
         action: 'issue_validation_code',
         entityType: 'transfer',
         entityId: req.params.id,
-        metadata: { sequence: validatedData.sequence },
+        metadata: { sequence: validatedData.sequence, loanId: transfer.loanId, codeId: code.id, reusedExisting: true },
       });
 
       res.json(code);

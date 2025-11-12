@@ -128,6 +128,7 @@ export interface IStorage {
   markLoanFundsAvailable(loanId: string, adminId: string): Promise<Loan | undefined>;
   generateLoanTransferCodes(loanId: string, userId: string, count?: number): Promise<TransferValidationCode[]>;
   getLoanTransferCodes(loanId: string): Promise<TransferValidationCode[]>;
+  getLoanTransferCodeBySequence(loanId: string, sequence: number): Promise<TransferValidationCode | undefined>;
   
   updateUserBorrowingCapacity(userId: string, maxAmount: string): Promise<User | undefined>;
   suspendUser(userId: string, until: Date, reason: string): Promise<User | undefined>;
@@ -1902,6 +1903,19 @@ export class DatabaseStorage implements IStorage {
       .from(transferValidationCodes)
       .where(eq(transferValidationCodes.loanId, loanId))
       .orderBy(transferValidationCodes.sequence);
+  }
+
+  async getLoanTransferCodeBySequence(loanId: string, sequence: number): Promise<TransferValidationCode | undefined> {
+    const result = await db.select()
+      .from(transferValidationCodes)
+      .where(
+        and(
+          eq(transferValidationCodes.loanId, loanId),
+          eq(transferValidationCodes.sequence, sequence)
+        )
+      )
+      .limit(1);
+    return result[0];
   }
 
   async updateUserBorrowingCapacity(userId: string, maxAmount: string): Promise<User | undefined> {
