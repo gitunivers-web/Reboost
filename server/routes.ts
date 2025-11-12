@@ -31,6 +31,7 @@ import {
   notifyAdminsNewTransfer
 } from "./notification-helper";
 import cloudinary from "./config/cloudinary";
+import { PassThrough } from "stream";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // SÉCURITÉ: Accès aux fichiers via endpoints protégés uniquement
@@ -1769,8 +1770,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 }
               );
               
-              const stream = require('stream');
-              const bufferStream = new stream.PassThrough();
+              const bufferStream = new PassThrough();
               bufferStream.end(buffer);
               bufferStream.pipe(uploadStream);
             });
