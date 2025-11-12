@@ -110,7 +110,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   const generalApiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100,
+    max: 50,
     message: { error: 'Trop de requêtes. Veuillez ralentir.' },
     standardHeaders: true,
     legacyHeaders: false,

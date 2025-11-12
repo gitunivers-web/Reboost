@@ -47,15 +47,17 @@ if (!process.env.SESSION_SECRET) {
 const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || (process.env.NODE_ENV === 'production' ? '.altusfinancegroup.com' : undefined);
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-console.log('='.repeat(60));
-console.log(`[CONFIG] Environment: ${process.env.NODE_ENV || 'development'}`);
-console.log(`[CONFIG] Cookie Domain: ${COOKIE_DOMAIN || 'none (localhost)'}`);
-console.log(`[CONFIG] Cookie SameSite: ${IS_PRODUCTION ? 'none' : 'lax'}`);
-console.log(`[CONFIG] Cookie Secure: ${IS_PRODUCTION}`);
-console.log(`[CONFIG] CORS Allowed Origins: ${IS_PRODUCTION ? 'production domains' : 'localhost'}`);
-console.log(`[CONFIG] Frontend URL: ${process.env.FRONTEND_URL || 'NOT SET'}`);
-console.log(`[CONFIG] Trust Proxy: enabled`);
-console.log('='.repeat(60));
+if (!IS_PRODUCTION) {
+  console.log('='.repeat(60));
+  console.log(`[CONFIG] Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`[CONFIG] Cookie Domain: ${COOKIE_DOMAIN || 'none (localhost)'}`);
+  console.log(`[CONFIG] Cookie SameSite: ${IS_PRODUCTION ? 'none' : 'lax'}`);
+  console.log(`[CONFIG] Cookie Secure: ${IS_PRODUCTION}`);
+  console.log(`[CONFIG] CORS Allowed Origins: ${IS_PRODUCTION ? 'production domains' : 'localhost'}`);
+  console.log(`[CONFIG] Frontend URL: ${process.env.FRONTEND_URL || 'NOT SET'}`);
+  console.log(`[CONFIG] Trust Proxy: enabled`);
+  console.log('='.repeat(60));
+}
 
 const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [
@@ -70,13 +72,12 @@ app.use(cors({
     if (process.env.NODE_ENV !== 'production') {
       callback(null, true);
     } else if (!origin || allowedOrigins.includes(origin)) {
-      if (process.env.NODE_ENV === 'production') {
-        console.log(`[CORS DEBUG] ✅ Origin allowed: ${origin || 'no-origin'}`);
-      }
       callback(null, true);
     } else {
-      console.error(`[CORS ERROR] ❌ Origin rejected: ${origin}`);
-      console.error(`[CORS ERROR] Allowed origins: ${JSON.stringify(allowedOrigins)}`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(`[CORS ERROR] ❌ Origin rejected: ${origin}`);
+        console.error(`[CORS ERROR] Allowed origins: ${JSON.stringify(allowedOrigins)}`);
+      }
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -146,6 +147,7 @@ app.use(session({
     maxAge: 7 * 24 * 60 * 60 * 1000,
     sameSite: IS_PRODUCTION ? 'none' : 'lax',
     domain: COOKIE_DOMAIN,
+    signed: true,
   },
   name: 'sessionId',
 }));
@@ -279,5 +281,16 @@ app.use((req, res, next) => {
       console.log(`[CONFIG] Session Cookie Secure: ${IS_PRODUCTION}`);
       console.log(`[CONFIG] Session Cookie SameSite: ${IS_PRODUCTION ? 'none' : 'lax'}`);
     }
+    
+    const { cleanupExpiredOTPs } = require("./services/otp");
+    setInterval(async () => {
+      try {
+        await cleanupExpiredOTPs();
+      } catch (error) {
+        console.error('[OTP CLEANUP] Error:', error);
+      }
+    }, 60 * 60 * 1000);
+    
+    setTimeout(() => cleanupExpiredOTPs().catch(console.error), 5000);
   });
 })();

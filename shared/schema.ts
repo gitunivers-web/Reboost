@@ -219,6 +219,7 @@ export const userOtps = pgTable("user_otps", {
   otpCode: text("otp_code").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
   used: boolean("used").notNull().default(false),
+  attempts: integer("attempts").notNull().default(0),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
 });
 

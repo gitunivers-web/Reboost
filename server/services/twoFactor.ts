@@ -29,6 +29,6 @@ export function verifyTwoFactorToken(secret: string, token: string): boolean {
     secret,
     encoding: 'base32',
     token,
-    window: 2,
+    window: 1,
   });
 }

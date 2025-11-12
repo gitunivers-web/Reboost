@@ -26,7 +26,7 @@ async function getSendGridClient() {
 
 export async function generateAndSendOTP(userId: string, userEmail: string, fullName: string, language: string = 'fr'): Promise<void> {
   try {
-    const code = crypto.randomInt(100000, 999999).toString();
+    const code = crypto.randomInt(10000000, 99999999).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
     await db.insert(userOtps).values({
@@ -86,7 +86,11 @@ export async function verifyOTP(userId: string, code: string): Promise<boolean> 
       return false;
     }
 
-    const isValidCode = record.otpCode === code;
+    const recordCodeBuffer = Buffer.from(record.otpCode, 'utf8');
+    const inputCodeBuffer = Buffer.from(code, 'utf8');
+    
+    const isValidCode = recordCodeBuffer.length === inputCodeBuffer.length && 
+                        crypto.timingSafeEqual(recordCodeBuffer, inputCodeBuffer);
     
     if (isValidCode) {
       await db
