@@ -613,7 +613,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-1">{t.dashboard.yourActiveLoans}</h3>
-                <p className="text-sm text-muted-foreground">Vos emprunts en cours</p>
+                <p className="text-sm text-muted-foreground">{t.dashboard.yourActiveLoansDescription}</p>
               </div>
               <Link href="/loans">
                 <Button variant="ghost" size="sm" className="gap-1" data-testid="link-view-all-loans">

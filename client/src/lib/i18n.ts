@@ -207,6 +207,7 @@ type TranslationKeys = {
     viewAll: string;
     noRecentTransactions: string;
     yourActiveLoans: string;
+    yourActiveLoansDescription: string;
     activeLoan: string;
     pendingRequests: string;
     pendingRequestsDescription: string;
@@ -1971,6 +1972,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noPendingRequests: 'Aucune demande en attente',
       pendingLoan: 'Demande en attente',
       yourActiveLoans: 'Vos emprunts en cours',
+      yourActiveLoansDescription: 'Suivez vos remboursements et échéances',
       activeLoan: 'Prêt actif',
       repaid: 'Remboursé',
       upcomingDueDates: 'Échéances à venir',
@@ -3974,6 +3976,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noPendingRequests: 'No pending requests',
       pendingLoan: 'Pending request',
       yourActiveLoans: 'Your active loans',
+      yourActiveLoansDescription: 'Track your repayments and due dates',
       activeLoan: 'Active loan',
       repaid: 'Repaid',
       upcomingDueDates: 'Upcoming due dates',
@@ -5961,6 +5964,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noPendingRequests: 'No hay solicitudes pendientes',
       pendingLoan: 'Solicitud pendiente',
       yourActiveLoans: 'Sus préstamos activos',
+      yourActiveLoansDescription: 'Realice un seguimiento de sus reembolsos y vencimientos',
       activeLoan: 'Préstamo activo',
       repaid: 'Reembolsado',
       upcomingDueDates: 'Próximos vencimientos',
@@ -7960,6 +7964,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noPendingRequests: 'Nenhuma solicitação pendente',
       pendingLoan: 'Solicitação pendente',
       yourActiveLoans: 'Seus empréstimos ativos',
+      yourActiveLoansDescription: 'Acompanhe seus reembolsos e vencimentos',
       activeLoan: 'Empréstimo ativo',
       repaid: 'Reembolsado',
       upcomingDueDates: 'Próximos vencimentos',
@@ -9768,6 +9773,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noPendingRequests: 'Nessuna richiesta in sospeso',
       pendingLoan: 'Richiesta in sospeso',
       yourActiveLoans: 'I tuoi prestiti attivi',
+      yourActiveLoansDescription: 'Monitora i tuoi rimborsi e le scadenze',
       activeLoan: 'Prestito attivo',
       repaid: 'Rimborsato',
       upcomingDueDates: 'Prossime scadenze',
@@ -11576,6 +11582,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noPendingRequests: 'Keine ausstehenden Anfragen',
       pendingLoan: 'Ausstehende Anfrage',
       yourActiveLoans: 'Ihre aktiven Darlehen',
+      yourActiveLoansDescription: 'Verfolgen Sie Ihre Rückzahlungen und Fälligkeiten',
       activeLoan: 'Aktives Darlehen',
       repaid: 'Zurückgezahlt',
       upcomingDueDates: 'Bevorstehende Fälligkeiten',
@@ -13384,6 +13391,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noPendingRequests: 'Geen aanvragen in behandeling',
       pendingLoan: 'Aanvraag in behandeling',
       yourActiveLoans: 'Uw actieve leningen',
+      yourActiveLoansDescription: 'Volg uw terugbetalingen en vervaldagen',
       activeLoan: 'Actieve lening',
       repaid: 'Terugbetaald',
       upcomingDueDates: 'Aankomende vervaldagen',
