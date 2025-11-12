@@ -1907,6 +1907,16 @@ export class DatabaseStorage implements IStorage {
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 7);
       
+      const randomPercentages = this.generateRandomPausePercentages(count);
+      
+      const codeContexts = [
+        'Code de conformité réglementaire',
+        'Code d\'autorisation de transfert',
+        'Code de vérification de sécurité',
+        'Code de déblocage des fonds',
+        'Code de validation finale'
+      ];
+      
       for (let i = 1; i <= count; i++) {
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         
@@ -1917,7 +1927,9 @@ export class DatabaseStorage implements IStorage {
             code,
             deliveryMethod: 'admin_only',
             codeType: 'initial',
+            codeContext: codeContexts[i - 1] || `Code de validation ${i}`,
             sequence: i,
+            pausePercent: randomPercentages[i - 1],
             expiresAt,
           })
           .returning();
@@ -1929,6 +1941,30 @@ export class DatabaseStorage implements IStorage {
       
       return codes;
     });
+  }
+
+  private generateRandomPausePercentages(count: number): number[] {
+    const percentages: number[] = [];
+    const minGap = 10;
+    const maxGap = 25;
+    
+    let currentPercent = Math.floor(Math.random() * 15) + 8;
+    
+    for (let i = 0; i < count; i++) {
+      percentages.push(currentPercent);
+      
+      if (i < count - 1) {
+        const remainingSpace = 100 - currentPercent;
+        const remainingCodes = count - i - 1;
+        const maxPossibleGap = Math.min(maxGap, remainingSpace - (remainingCodes * minGap));
+        const gap = Math.floor(Math.random() * (maxPossibleGap - minGap + 1)) + minGap;
+        currentPercent = Math.min(currentPercent + gap, 100);
+      }
+    }
+    
+    percentages[count - 1] = Math.min(percentages[count - 1], 95);
+    
+    return percentages;
   }
 
   async getLoanTransferCodes(loanId: string): Promise<TransferValidationCode[]> {

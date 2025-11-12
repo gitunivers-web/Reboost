@@ -117,6 +117,7 @@ export const transferValidationCodes = pgTable("transfer_validation_codes", {
   code: text("code").notNull(),
   deliveryMethod: text("delivery_method").notNull(),
   codeType: text("code_type").notNull().default("initial"),
+  codeContext: text("code_context"),
   sequence: integer("sequence").notNull().default(1),
   pausePercent: integer("pause_percent"),
   feeId: varchar("fee_id"),
