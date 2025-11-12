@@ -232,7 +232,7 @@ export default function Auth() {
                         <FormLabel>{t.auth.email}</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               {...field}
                               type="email"
@@ -255,7 +255,7 @@ export default function Auth() {
                         <FormLabel>{t.auth.password}</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               {...field}
                               type="password"
@@ -382,7 +382,7 @@ export default function Auth() {
                           <FormLabel>{t.auth.fullName} *</FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                              <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                               <Input
                                 {...field}
                                 placeholder={t.auth.fullNamePlaceholder}
@@ -404,7 +404,7 @@ export default function Auth() {
                           <FormLabel>{t.auth.phone}</FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                              <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                               <Input
                                 {...field}
                                 placeholder={t.auth.phonePlaceholder}
@@ -429,7 +429,7 @@ export default function Auth() {
                             <FormLabel>{t.auth.companyName} *</FormLabel>
                             <FormControl>
                               <div className="relative">
-                                <FileText className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                                 <Input
                                   {...field}
                                   placeholder={t.auth.companyNamePlaceholder}
@@ -451,7 +451,7 @@ export default function Auth() {
                             <FormLabel>{t.auth.siret}</FormLabel>
                             <FormControl>
                               <div className="relative">
-                                <Hash className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                <Hash className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                                 <Input
                                   {...field}
                                   placeholder={t.auth.siretPlaceholder}
@@ -475,7 +475,7 @@ export default function Auth() {
                         <FormLabel>{t.auth.email} *</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               {...field}
                               type="email"
@@ -499,7 +499,7 @@ export default function Auth() {
                           <FormLabel>{t.auth.password} *</FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                               <Input
                                 {...field}
                                 type="password"
@@ -522,7 +522,7 @@ export default function Auth() {
                           <FormLabel>{t.auth.confirmPassword} *</FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                               <Input
                                 {...field}
                                 type="password"
