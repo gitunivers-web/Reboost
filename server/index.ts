@@ -151,14 +151,15 @@ app.use(session({
 }));
 
 app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[REQUEST DEBUG] ${req.method} ${req.path}`);
-    console.log(`[REQUEST DEBUG] Origin: ${req.headers.origin || 'NO ORIGIN'}`);
-    console.log(`[REQUEST DEBUG] Cookie Header: ${req.headers.cookie ? 'PRESENT' : 'MISSING'}`);
-    console.log(`[REQUEST DEBUG] Session Exists: ${req.session?.id ? 'YES' : 'NO'}`);
-    console.log(`[REQUEST DEBUG] Authenticated: ${req.session?.userId ? 'YES' : 'NO'}`);
-    console.log(`[REQUEST DEBUG] CSRF Token: ${req.headers['x-csrf-token'] ? 'present' : 'missing'}`);
-  }
+  // Debug logs disabled to reduce console noise
+  // if (process.env.NODE_ENV === 'development') {
+  //   console.log(`[REQUEST DEBUG] ${req.method} ${req.path}`);
+  //   console.log(`[REQUEST DEBUG] Origin: ${req.headers.origin || 'NO ORIGIN'}`);
+  //   console.log(`[REQUEST DEBUG] Cookie Header: ${req.headers.cookie ? 'PRESENT' : 'MISSING'}`);
+  //   console.log(`[REQUEST DEBUG] Session Exists: ${req.session?.id ? 'YES' : 'NO'}`);
+  //   console.log(`[REQUEST DEBUG] Authenticated: ${req.session?.userId ? 'YES' : 'NO'}`);
+  //   console.log(`[REQUEST DEBUG] CSRF Token: ${req.headers['x-csrf-token'] ? 'present' : 'missing'}`);
+  // }
   next();
 });
 
