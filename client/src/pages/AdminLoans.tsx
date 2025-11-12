@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, XCircle, Wallet, Trash2, Trash } from "lucide-react";
+import { CheckCircle, XCircle, Trash2, Trash } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -101,34 +101,14 @@ export default function AdminLoans() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/loans"] });
       toast({
-        title: "Contrat confirmé",
-        description: "Le contrat a été confirmé et les codes de transfert ont été générés.",
+        title: "Contrat confirmé - Fonds disponibles",
+        description: "Le contrat a été confirmé, les codes de transfert ont été générés et les fonds sont désormais disponibles pour l'utilisateur.",
       });
     },
     onError: (error: any) => {
       toast({
         title: t.admin.common.messages.error,
         description: error.message || "Impossible de confirmer le contrat",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const disburseFundsMutation = useMutation({
-    mutationFn: async (id: string) => {
-      return await apiRequest("POST", `/api/admin/loans/${id}/disburse`, {});
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/loans"] });
-      toast({
-        title: t.admin.loans.fundsDisbursed,
-        description: t.admin.loans.fundsDisbursedDesc,
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: t.admin.common.messages.error,
-        description: error.message || t.admin.common.messages.cannotUpdate,
         variant: "destructive",
       });
     },
@@ -459,43 +439,6 @@ export default function AdminLoans() {
                       </AlertDialog>
                     )}
 
-                    {(loan as any).contractStatus === 'approved' && (loan as any).fundsAvailabilityStatus === 'pending_disbursement' && (
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            variant="default"
-                            size="sm"
-                            className="w-full justify-start"
-                            data-testid={`button-disburse-mobile-${loan.id}`}
-                          >
-                            <Wallet className="h-4 w-4 mr-2" />
-                            {t.admin.common.actions.disburse}
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>{t.admin.loans.disburseDialogTitle}</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              {interpolate(t.admin.loans.disburseDialogDesc, {
-                                amount: parseFloat(loan.amount).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }),
-                                userName: loan.userName
-                              })}
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>{t.admin.common.actions.cancel}</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() => disburseFundsMutation.mutate(loan.id)}
-                              disabled={disburseFundsMutation.isPending}
-                              data-testid={`button-confirm-disburse-mobile-${loan.id}`}
-                            >
-                              {t.admin.common.actions.disburse}
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    )}
-
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
@@ -721,42 +664,6 @@ export default function AdminLoans() {
                                 data-testid={`button-confirm-confirm-contract-${loan.id}`}
                               >
                                 Confirmer
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      )}
-
-                      {(loan as any).contractStatus === 'approved' && (loan as any).fundsAvailabilityStatus === 'pending_disbursement' && (
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button
-                              variant="default"
-                              size="sm"
-                              data-testid={`button-disburse-${loan.id}`}
-                            >
-                              <Wallet className="h-4 w-4 mr-1" />
-                              {t.admin.common.actions.disburse}
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>{t.admin.loans.disburseDialogTitle}</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                {interpolate(t.admin.loans.disburseDialogDesc, {
-                                  amount: parseFloat(loan.amount).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }),
-                                  userName: loan.userName
-                                })}
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>{t.admin.common.actions.cancel}</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() => disburseFundsMutation.mutate(loan.id)}
-                                disabled={disburseFundsMutation.isPending}
-                                data-testid={`button-confirm-disburse-${loan.id}`}
-                              >
-                                {t.admin.common.actions.disburse}
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
