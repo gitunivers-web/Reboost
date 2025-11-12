@@ -17,13 +17,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, XCircle, Wallet, Trash2 } from "lucide-react";
+import { CheckCircle, XCircle, Wallet, Trash2, Trash } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { useTranslations } from "@/lib/i18n";
 import { AdminLayout } from "@/components/admin";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function AdminLoans() {
   const t = useTranslations();
@@ -31,6 +32,7 @@ export default function AdminLoans() {
   const [approveReason, setApproveReason] = useState("");
   const [rejectReason, setRejectReason] = useState("");
   const [deleteReason, setDeleteReason] = useState("");
+  const [selectedLoans, setSelectedLoans] = useState<Set<string>>(new Set());
 
   const { data: loans, isLoading } = useQuery({
     queryKey: ["/api/admin/loans"],
@@ -123,6 +125,61 @@ export default function AdminLoans() {
     },
   });
 
+  const bulkDeleteLoanMutation = useMutation({
+    mutationFn: async (loanIds: string[]) => {
+      return await apiRequest("POST", "/api/admin/loans/bulk-delete", { loanIds, reason: "Suppression en masse" });
+    },
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/loans"] });
+      setSelectedLoans(new Set());
+      toast({
+        title: "Suppression réussie",
+        description: data.message || "Les prêts ont été supprimés avec succès",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: t.admin.common.messages.error,
+        description: error?.message || "Impossible de supprimer les prêts",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const toggleLoanSelection = (loanId: string) => {
+    const newSelection = new Set(selectedLoans);
+    if (newSelection.has(loanId)) {
+      newSelection.delete(loanId);
+    } else {
+      newSelection.add(loanId);
+    }
+    setSelectedLoans(newSelection);
+  };
+
+  const toggleSelectAll = () => {
+    const loanList = Array.isArray(loans) ? loans : [];
+    if (selectedLoans.size === loanList.length) {
+      setSelectedLoans(new Set());
+    } else {
+      setSelectedLoans(new Set(loanList.map((loan: any) => loan.id)));
+    }
+  };
+
+  const handleBulkDelete = () => {
+    if (selectedLoans.size === 0) {
+      toast({
+        title: "Aucune sélection",
+        description: "Veuillez sélectionner au moins un prêt à supprimer",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (confirm(`Êtes-vous sûr de vouloir supprimer ${selectedLoans.size} prêt(s) ?`)) {
+      bulkDeleteLoanMutation.mutate(Array.from(selectedLoans));
+    }
+  };
+
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case 'active':
@@ -172,8 +229,24 @@ export default function AdminLoans() {
       <div className="space-y-6" data-testid="page-admin-loans">
         <Card data-testid="card-loans-table">
         <CardHeader>
-          <CardTitle className="text-lg sm:text-xl">{t.admin.loans.allLoans}</CardTitle>
-          <CardDescription className="text-sm">{t.admin.loans.allLoansDescription}</CardDescription>
+          <div className="flex flex-wrap justify-between items-center gap-4">
+            <div>
+              <CardTitle className="text-lg sm:text-xl">{t.admin.loans.allLoans}</CardTitle>
+              <CardDescription className="text-sm">{t.admin.loans.allLoansDescription}</CardDescription>
+            </div>
+            {selectedLoans.size > 0 && (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleBulkDelete}
+                disabled={bulkDeleteLoanMutation.isPending}
+                data-testid="button-bulk-delete-loans"
+              >
+                <Trash className="h-4 w-4 mr-2" />
+                Supprimer ({selectedLoans.size})
+              </Button>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
           {/* Mobile Card View */}
@@ -401,6 +474,13 @@ export default function AdminLoans() {
             <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-12">
+                  <Checkbox
+                    checked={Array.isArray(loans) && selectedLoans.size === loans.length && loans.length > 0}
+                    onCheckedChange={toggleSelectAll}
+                    data-testid="checkbox-select-all-loans"
+                  />
+                </TableHead>
                 <TableHead>{t.admin.common.labels.user}</TableHead>
                 <TableHead>{t.admin.common.labels.type}</TableHead>
                 <TableHead>{t.admin.common.labels.amount}</TableHead>
@@ -414,6 +494,13 @@ export default function AdminLoans() {
             <TableBody>
               {Array.isArray(loans) && loans.map((loan: any) => (
                 <TableRow key={loan.id} data-testid={`row-loan-${loan.id}`}>
+                  <TableCell>
+                    <Checkbox
+                      checked={selectedLoans.has(loan.id)}
+                      onCheckedChange={() => toggleLoanSelection(loan.id)}
+                      data-testid={`checkbox-select-loan-${loan.id}`}
+                    />
+                  </TableCell>
                   <TableCell className="font-medium" data-testid={`text-loan-user-${loan.id}`}>
                     {loan.userName}
                   </TableCell>

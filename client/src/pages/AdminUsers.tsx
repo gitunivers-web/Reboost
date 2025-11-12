@@ -25,12 +25,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Ban, Trash2, CheckCircle } from "lucide-react";
+import { Ban, Trash2, CheckCircle, Trash } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AdminLayout } from "@/components/admin";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function AdminUsers() {
   const { toast } = useToast();
@@ -38,6 +39,7 @@ export default function AdminUsers() {
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [suspendReason, setSuspendReason] = useState("");
   const [suspendUntil, setSuspendUntil] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
 
   const { data: users, isLoading } = useQuery({
     queryKey: ["/api/admin/users"],
@@ -105,6 +107,61 @@ export default function AdminUsers() {
       });
     },
   });
+
+  const bulkDeleteUserMutation = useMutation({
+    mutationFn: async (userIds: string[]) => {
+      return await apiRequest("POST", "/api/admin/users/bulk-delete", { userIds });
+    },
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
+      setSelectedUsers(new Set());
+      toast({
+        title: "Suppression réussie",
+        description: data.message || "Les utilisateurs ont été supprimés avec succès",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Erreur",
+        description: error?.message || "Impossible de supprimer les utilisateurs",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const toggleUserSelection = (userId: string) => {
+    const newSelection = new Set(selectedUsers);
+    if (newSelection.has(userId)) {
+      newSelection.delete(userId);
+    } else {
+      newSelection.add(userId);
+    }
+    setSelectedUsers(newSelection);
+  };
+
+  const toggleSelectAll = () => {
+    const userList = Array.isArray(users) ? users : [];
+    if (selectedUsers.size === userList.length) {
+      setSelectedUsers(new Set());
+    } else {
+      setSelectedUsers(new Set(userList.map((user: any) => user.id)));
+    }
+  };
+
+  const handleBulkDelete = () => {
+    if (selectedUsers.size === 0) {
+      toast({
+        title: "Aucune sélection",
+        description: "Veuillez sélectionner au moins un utilisateur à supprimer",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (confirm(`Êtes-vous sûr de vouloir supprimer ${selectedUsers.size} utilisateur(s) ?`)) {
+      bulkDeleteUserMutation.mutate(Array.from(selectedUsers));
+    }
+  };
 
   const handleSuspend = (userId: string) => {
     setSelectedUserId(userId);
@@ -208,13 +265,36 @@ export default function AdminUsers() {
         <div className="space-y-6" data-testid="page-admin-users">
           <Card data-testid="card-users-table">
           <CardHeader>
-            <CardTitle>Tous les Utilisateurs</CardTitle>
-            <CardDescription>Liste complète des comptes utilisateurs</CardDescription>
+            <div className="flex flex-wrap justify-between items-center gap-4">
+              <div>
+                <CardTitle>Tous les Utilisateurs</CardTitle>
+                <CardDescription>Liste complète des comptes utilisateurs</CardDescription>
+              </div>
+              {selectedUsers.size > 0 && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleBulkDelete}
+                  disabled={bulkDeleteUserMutation.isPending}
+                  data-testid="button-bulk-delete-users"
+                >
+                  <Trash className="h-4 w-4 mr-2" />
+                  Supprimer ({selectedUsers.size})
+                </Button>
+              )}
+            </div>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12">
+                    <Checkbox
+                      checked={Array.isArray(users) && selectedUsers.size === users.length && users.length > 0}
+                      onCheckedChange={toggleSelectAll}
+                      data-testid="checkbox-select-all-users"
+                    />
+                  </TableHead>
                   <TableHead>Nom Complet</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Téléphone</TableHead>
@@ -229,6 +309,13 @@ export default function AdminUsers() {
               <TableBody>
                 {Array.isArray(users) && users.map((user: any) => (
                   <TableRow key={user.id} data-testid={`row-user-${user.id}`}>
+                    <TableCell>
+                      <Checkbox
+                        checked={selectedUsers.has(user.id)}
+                        onCheckedChange={() => toggleUserSelection(user.id)}
+                        data-testid={`checkbox-select-user-${user.id}`}
+                      />
+                    </TableCell>
                     <TableCell className="font-medium" data-testid={`text-user-name-${user.id}`}>
                       {user.fullName}
                     </TableCell>

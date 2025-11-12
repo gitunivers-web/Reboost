@@ -2823,6 +2823,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/admin/users/bulk-delete", requireAuth, requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      const bulkDeleteSchema = z.object({
+        userIds: z.array(z.string()).min(1, 'Au moins un utilisateur doit être sélectionné'),
+      });
+      
+      const { userIds } = bulkDeleteSchema.parse(req.body);
+      
+      const results = {
+        success: [] as string[],
+        failed: [] as string[],
+      };
+
+      for (const id of userIds) {
+        try {
+          const deleted = await storage.deleteUser(id);
+          
+          if (deleted) {
+            results.success.push(id);
+            
+            await storage.createAuditLog({
+              actorId: req.session.userId!,
+              actorRole: 'admin',
+              action: 'user_bulk_deleted',
+              entityType: 'user',
+              entityId: id,
+              metadata: null
+            });
+          } else {
+            results.failed.push(id);
+          }
+        } catch (error) {
+          console.error(`Error deleting user ${id}:`, error);
+          results.failed.push(id);
+        }
+      }
+
+      res.json({ 
+        message: `${results.success.length} utilisateur(s) supprimé(s) avec succès`,
+        results 
+      });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('Bulk delete users error:', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression des utilisateurs' });
+    }
+  });
+
   app.get("/api/admin/transfers", requireAdmin, async (req, res) => {
     try {
       const transfers = await storage.getAllTransfers();
@@ -3197,6 +3248,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: deleted });
     } catch (error) {
       res.status(500).json({ error: 'Failed to delete loan' });
+    }
+  });
+
+  app.post("/api/admin/loans/bulk-delete", requireAuth, requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      const bulkDeleteSchema = z.object({
+        loanIds: z.array(z.string()).min(1, 'Au moins un prêt doit être sélectionné'),
+        reason: z.string().optional(),
+      });
+      
+      const { loanIds, reason } = bulkDeleteSchema.parse(req.body);
+      
+      const results = {
+        success: [] as string[],
+        failed: [] as string[],
+      };
+
+      for (const id of loanIds) {
+        try {
+          const loan = await storage.getLoan(id);
+          if (!loan) {
+            results.failed.push(id);
+            continue;
+          }
+
+          const deleted = await storage.deleteLoan(id, req.session.userId!, reason || 'Suppression en masse par admin');
+          
+          if (deleted) {
+            results.success.push(id);
+            
+            await storage.createAuditLog({
+              actorId: req.session.userId!,
+              actorRole: 'admin',
+              action: 'loan_bulk_deleted',
+              entityType: 'loan',
+              entityId: id,
+              metadata: { amount: loan.amount, loanType: loan.loanType, reason }
+            });
+          } else {
+            results.failed.push(id);
+          }
+        } catch (error) {
+          console.error(`Error deleting loan ${id}:`, error);
+          results.failed.push(id);
+        }
+      }
+
+      res.json({ 
+        message: `${results.success.length} prêt(s) supprimé(s) avec succès`,
+        results 
+      });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('Bulk delete loans error:', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression des prêts' });
     }
   });
 
