@@ -274,7 +274,7 @@ export default function Auth() {
                     <Link href="/forgot-password">
                       <button
                         type="button"
-                        className="text-sm text-accent hover:text-accent/80 hover:underline"
+                        className="text-sm text-primary hover:text-primary/80 hover:underline font-medium"
                         data-testid="link-forgot-password"
                       >
                         Mot de passe oublié ?
