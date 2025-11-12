@@ -24,6 +24,7 @@ export default function TransferFlow() {
   const [amount, setAmount] = useState('');
   const [recipient, setRecipient] = useState('');
   const [externalAccountId, setExternalAccountId] = useState('');
+  const [loanId, setLoanId] = useState('');
   const [validationCode, setValidationCode] = useState('');
   const [transferId, setTransferId] = useState(params?.id || '');
   const [currentSequence, setCurrentSequence] = useState(1);
@@ -35,6 +36,11 @@ export default function TransferFlow() {
 
   const { data: externalAccounts } = useQuery<ExternalAccount[]>({
     queryKey: ['/api/external-accounts'],
+  });
+
+  const { data: activeLoans } = useQuery<any[]>({
+    queryKey: ['/api/loans'],
+    select: (loans) => loans.filter(loan => loan.status === 'active' && loan.contractStatus === 'completed'),
   });
 
   const { data: transferData, refetch: refetchTransfer } = useQuery<TransferDetailsResponse>({
@@ -180,9 +186,19 @@ export default function TransferFlow() {
       return;
     }
 
+    if (!loanId) {
+      toast({
+        variant: 'destructive',
+        title: t.transferFlow.toast.error,
+        description: 'Veuillez sélectionner un prêt actif pour initier le transfert.',
+      });
+      return;
+    }
+
     initiateMutation.mutate({
       amount: parseFloat(amount),
       recipient,
+      loanId,
       externalAccountId: externalAccountId && externalAccountId !== 'none' ? externalAccountId : null,
     });
   };
@@ -234,6 +250,31 @@ export default function TransferFlow() {
                 onChange={(e) => setAmount(e.target.value)}
                 data-testid="input-amount"
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="loan">Prêt actif *</Label>
+              <Select value={loanId} onValueChange={setLoanId}>
+                <SelectTrigger data-testid="select-loan">
+                  <SelectValue placeholder="Sélectionnez le prêt pour ce transfert" />
+                </SelectTrigger>
+                <SelectContent>
+                  {!activeLoans || activeLoans.length === 0 ? (
+                    <SelectItem value="none" disabled>Aucun prêt actif disponible</SelectItem>
+                  ) : (
+                    activeLoans.map((loan) => (
+                      <SelectItem key={loan.id} value={loan.id}>
+                        Prêt #{loan.reference} - {parseFloat(loan.amount).toFixed(2)} EUR ({loan.loanType})
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
+              {activeLoans && activeLoans.length === 0 && (
+                <p className="text-sm text-destructive">
+                  Vous devez avoir un prêt actif avec contrat confirmé pour initier un transfert.
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
