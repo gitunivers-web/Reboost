@@ -90,6 +90,7 @@ export const externalAccounts = pgTable("external_accounts", {
 export const transfers = pgTable("transfers", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").notNull(),
+  loanId: varchar("loan_id"),
   externalAccountId: varchar("external_account_id"),
   amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
   recipient: text("recipient").notNull(),
