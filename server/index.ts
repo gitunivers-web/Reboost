@@ -282,15 +282,19 @@ app.use((req, res, next) => {
       console.log(`[CONFIG] Session Cookie SameSite: ${IS_PRODUCTION ? 'none' : 'lax'}`);
     }
     
-    const { cleanupExpiredOTPs } = require("./services/otp");
-    setInterval(async () => {
-      try {
-        await cleanupExpiredOTPs();
-      } catch (error) {
-        console.error('[OTP CLEANUP] Error:', error);
-      }
-    }, 60 * 60 * 1000);
+    const startOTPCleanup = async () => {
+      const { cleanupExpiredOTPs } = await import("./services/otp");
+      setInterval(async () => {
+        try {
+          await cleanupExpiredOTPs();
+        } catch (error) {
+          console.error('[OTP CLEANUP] Error:', error);
+        }
+      }, 60 * 60 * 1000);
+      
+      setTimeout(() => cleanupExpiredOTPs().catch(console.error), 5000);
+    };
     
-    setTimeout(() => cleanupExpiredOTPs().catch(console.error), 5000);
+    startOTPCleanup();
   });
 })();
