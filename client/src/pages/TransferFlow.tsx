@@ -85,9 +85,12 @@ export default function TransferFlow() {
     },
     onSuccess: (data: any) => {
       setValidationCode('');
+      const contextInfo = data.codeContext ? ` - ${data.codeContext}` : '';
+      const pauseInfo = data.pausePercent && !data.isComplete ? ` Le transfert progressera jusqu'à ${data.pausePercent}%.` : '';
+      
       toast({
         title: t.transferFlow.toast.codeValidated,
-        description: data.message,
+        description: `${data.message}${contextInfo}${pauseInfo}`,
       });
       
       if (data.isComplete) {

@@ -2645,6 +2645,8 @@ Tous les codes de validation ont été vérifiés avec succès.`,
         message: `Code validé (${newCodesValidated}/${transfer.requiredCodes})`,
         isComplete,
         progress: newProgress,
+        codeContext: validatedCode.codeContext || `Code de validation ${newCodesValidated}`,
+        pausePercent: validatedCode.pausePercent,
       });
     } catch (error) {
       console.error('Code validation error:', error);
