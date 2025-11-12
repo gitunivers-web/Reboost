@@ -2,7 +2,7 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertLoanSchema, insertTransferSchema, insertUserSchema, transferValidationCodes } from "@shared/schema";
+import { insertLoanSchema, insertTransferSchema, insertUserSchema, transferValidationCodes, type TransferValidationCode } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { randomUUID, randomBytes } from "crypto";
 import { sendVerificationEmail, sendWelcomeEmail, sendResetPasswordEmail } from "./email";
@@ -2405,7 +2405,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const events = await storage.getTransferEvents(req.params.id);
       
-      let codes = [];
+      let codes: TransferValidationCode[] = [];
       if (transfer.loanId) {
         codes = await storage.getLoanTransferCodes(transfer.loanId);
       }

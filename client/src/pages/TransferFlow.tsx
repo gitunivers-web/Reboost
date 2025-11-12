@@ -9,9 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
-import { ArrowLeft, CheckCircle2, Clock, Send, Shield, AlertCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Clock, Send, Shield, AlertCircle, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import type { TransferDetailsResponse, ExternalAccount } from '@shared/schema';
+import type { TransferDetailsResponse, ExternalAccount, TransferValidationCode } from '@shared/schema';
 import { useTranslations } from '@/lib/i18n';
 
 export default function TransferFlow() {
@@ -20,18 +20,21 @@ export default function TransferFlow() {
   const { toast } = useToast();
   const t = useTranslations();
   
-  const [step, setStep] = useState<'form' | 'verification' | 'validation' | 'progress' | 'complete'>('form');
+  const [step, setStep] = useState<'form' | 'verification' | 'progress' | 'complete'>('form');
   const [amount, setAmount] = useState('');
   const [recipient, setRecipient] = useState('');
   const [externalAccountId, setExternalAccountId] = useState('');
   const [loanId, setLoanId] = useState('');
   const [validationCode, setValidationCode] = useState('');
   const [transferId, setTransferId] = useState(params?.id || '');
-  const [currentSequence, setCurrentSequence] = useState(1);
-  const [demoCode, setDemoCode] = useState('');
   const [verificationProgress, setVerificationProgress] = useState(0);
   
+  const [simulatedProgress, setSimulatedProgress] = useState(10);
+  const [isPausedForCode, setIsPausedForCode] = useState(false);
+  const [currentCodeSequence, setCurrentCodeSequence] = useState(1);
+  
   const verificationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const notificationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { data: externalAccounts } = useQuery<ExternalAccount[]>({
@@ -46,7 +49,7 @@ export default function TransferFlow() {
   const { data: transferData, refetch: refetchTransfer } = useQuery<TransferDetailsResponse>({
     queryKey: [`/api/transfers/${transferId}`],
     enabled: !!transferId,
-    refetchInterval: step === 'progress' ? 2000 : false,
+    refetchInterval: step === 'progress' ? 3000 : false,
   });
 
   const initiateMutation = useMutation({
@@ -59,9 +62,10 @@ export default function TransferFlow() {
       if (notificationTimeoutRef.current) clearTimeout(notificationTimeoutRef.current);
       
       setTransferId(data.transfer.id);
-      setDemoCode(data.codeForDemo);
-      setCurrentSequence(1);
+      setCurrentCodeSequence(1);
       setVerificationProgress(0);
+      setSimulatedProgress(10);
+      setIsPausedForCode(false);
       setLocation(`/transfer/${data.transfer.id}`);
       setStep('verification');
       toast({
@@ -86,19 +90,14 @@ export default function TransferFlow() {
     onSuccess: (data: any) => {
       setValidationCode('');
       const contextInfo = data.codeContext ? ` - ${data.codeContext}` : '';
-      const pauseInfo = data.pausePercent && !data.isComplete ? ` Le transfert progressera jusqu'à ${data.pausePercent}%.` : '';
       
       toast({
         title: t.transferFlow.toast.codeValidated,
-        description: `${data.message}${contextInfo}${pauseInfo}`,
+        description: `${data.message}${contextInfo}`,
       });
       
-      if (data.isComplete) {
-        setStep('progress');
-      } else {
-        setCurrentSequence(prev => prev + 1);
-        sendCodeMutation.mutate({ method: 'email' });
-      }
+      setIsPausedForCode(false);
+      setCurrentCodeSequence(prev => prev + 1);
       
       refetchTransfer();
     },
@@ -107,20 +106,6 @@ export default function TransferFlow() {
         variant: 'destructive',
         title: t.transferFlow.toast.codeInvalid,
         description: t.transferFlow.toast.codeInvalidDesc,
-      });
-    },
-  });
-
-  const sendCodeMutation = useMutation({
-    mutationFn: async (data: { method: string }) => {
-      const response = await apiRequest('POST', `/api/transfers/${transferId}/send-code`, data);
-      return await response.json();
-    },
-    onSuccess: (data: any) => {
-      setDemoCode(data.codeForDemo);
-      toast({
-        title: t.transferFlow.toast.codeSent,
-        description: t.transferFlow.toast.codeSentDesc.replace('{sequence}', data.sequence.toString()),
       });
     },
   });
@@ -138,7 +123,7 @@ export default function TransferFlow() {
             clearInterval(verificationIntervalRef.current);
             verificationIntervalRef.current = null;
           }
-          setStep('validation');
+          setStep('progress');
         }
       }, 1000);
       
@@ -163,17 +148,80 @@ export default function TransferFlow() {
   }, [step, toast]);
 
   useEffect(() => {
+    if (step === 'progress' && transferData?.transfer && transferData?.codes) {
+      const transfer = transferData.transfer;
+      const codes = transferData.codes as TransferValidationCode[];
+      
+      if (transfer.status === 'completed') {
+        if (progressIntervalRef.current) {
+          clearInterval(progressIntervalRef.current);
+          progressIntervalRef.current = null;
+        }
+        setSimulatedProgress(100);
+        setStep('complete');
+        return;
+      }
+      
+      const sortedCodes = [...codes].sort((a, b) => a.sequence - b.sequence);
+      const validatedCount = transfer.codesValidated || 0;
+      const nextCode = sortedCodes[validatedCount];
+      
+      if (!nextCode) {
+        if (progressIntervalRef.current) {
+          clearInterval(progressIntervalRef.current);
+          progressIntervalRef.current = null;
+        }
+        setSimulatedProgress(100);
+        return;
+      }
+      
+      const targetPercent = nextCode.pausePercent || 90;
+      
+      if (simulatedProgress < targetPercent && !isPausedForCode) {
+        if (progressIntervalRef.current) {
+          clearInterval(progressIntervalRef.current);
+        }
+        
+        progressIntervalRef.current = setInterval(() => {
+          setSimulatedProgress(prev => {
+            const increment = 0.5;
+            const next = prev + increment;
+            
+            if (next >= targetPercent) {
+              if (progressIntervalRef.current) {
+                clearInterval(progressIntervalRef.current);
+                progressIntervalRef.current = null;
+              }
+              setIsPausedForCode(true);
+              return targetPercent;
+            }
+            
+            return next;
+          });
+        }, 200);
+      } else if (simulatedProgress >= targetPercent && !isPausedForCode) {
+        setIsPausedForCode(true);
+      }
+      
+      return () => {
+        if (progressIntervalRef.current) {
+          clearInterval(progressIntervalRef.current);
+          progressIntervalRef.current = null;
+        }
+      };
+    }
+  }, [step, transferData, simulatedProgress, isPausedForCode]);
+
+  useEffect(() => {
     if (transferData?.transfer) {
       const transfer = transferData.transfer;
       
       if (transfer.status === 'completed') {
         setStep('complete');
-      } else if (transfer.status === 'in-progress' && transfer.codesValidated === transfer.requiredCodes) {
-        setStep('progress');
-      } else if (transfer.status === 'pending' || transfer.codesValidated < transfer.requiredCodes) {
+      } else if (transfer.status === 'pending' || transfer.status === 'in-progress') {
         if (step === 'form') {
-          setStep('validation');
-          setCurrentSequence(transfer.codesValidated + 1);
+          setStep('progress');
+          setCurrentCodeSequence((transfer.codesValidated || 0) + 1);
         }
       }
     }
@@ -218,7 +266,7 @@ export default function TransferFlow() {
 
     validateMutation.mutate({
       code: validationCode,
-      sequence: currentSequence,
+      sequence: currentCodeSequence,
     });
   };
 
@@ -393,201 +441,111 @@ export default function TransferFlow() {
     );
   }
 
-  if (step === 'validation') {
-    return (
-      <div className="p-6 md:p-8 max-w-2xl mx-auto">
-        <Card data-testid="card-validation">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="w-6 h-6 text-primary" />
-              {t.transferFlow.validation.title}
-            </CardTitle>
-            <CardDescription>
-              {t.transferFlow.validation.subtitle.replace('{sequence}', currentSequence.toString()).replace('{total}', transferData?.transfer?.requiredCodes?.toString() || '1')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <Alert data-testid="alert-demo-code">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                <strong>{t.transferFlow.validation.demoCodeLabel}</strong> {demoCode}
-              </AlertDescription>
-            </Alert>
-
-            <div className="space-y-2">
-              <Label htmlFor="code">{t.transferFlow.validation.codeLabel}</Label>
-              <Input
-                id="code"
-                type="text"
-                maxLength={6}
-                placeholder={t.transferFlow.validation.codePlaceholder}
-                value={validationCode}
-                onChange={(e) => setValidationCode(e.target.value.replace(/\D/g, ''))}
-                data-testid="input-validation-code"
-              />
-              <p className="text-sm text-muted-foreground">
-                {t.transferFlow.validation.codeHelpText}
-              </p>
-            </div>
-
-            <div className="flex gap-3">
-              <Button
-                onClick={handleValidateCode}
-                disabled={validateMutation.isPending}
-                className="flex-1"
-                data-testid="button-validate-code"
-              >
-                {validateMutation.isPending ? t.transferFlow.validation.validating : t.transferFlow.validation.validateButton}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => sendCodeMutation.mutate({ method: 'email' })}
-                disabled={sendCodeMutation.isPending}
-                data-testid="button-resend-code"
-              >
-                <Send className="w-4 h-4 mr-2" />
-                {t.transferFlow.validation.resendButton}
-              </Button>
-            </div>
-
-            {transferData?.events && (
-              <div className="mt-6 space-y-2">
-                <h3 className="font-semibold text-sm">{t.transferFlow.validation.historyLabel}</h3>
-                <div className="space-y-2" data-testid="list-events">
-                  {transferData.events.map((event: any) => (
-                    <div key={event.id} className="text-sm border-l-2 border-primary pl-3 py-1">
-                      <p className="font-medium">{event.message}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(event.createdAt).toLocaleString('fr-FR')}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   if (step === 'progress') {
-    const progress = transferData?.transfer?.progressPercent || 0;
-    const status = transferData?.transfer?.status || 'in-progress';
-    const isPaused = transferData?.transfer?.isPaused || false;
-    const pausePercent = transferData?.transfer?.pausePercent;
+    const transfer = transferData?.transfer;
+    const codes = transferData?.codes as TransferValidationCode[] || [];
+    const sortedCodes = [...codes].sort((a, b) => a.sequence - b.sequence);
+    const validatedCount = transfer?.codesValidated || 0;
+    const totalCodes = transfer?.requiredCodes || codes.length;
+    const nextCode = sortedCodes[validatedCount];
 
     return (
       <div className="p-6 md:p-8 max-w-2xl mx-auto">
         <Card data-testid="card-progress">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              {isPaused ? (
+              {isPausedForCode ? (
                 <>
                   <AlertCircle className="w-6 h-6 text-orange-500" />
-                  {t.transferFlow.progress.titlePaused}
+                  Transfert en pause
                 </>
               ) : (
                 <>
-                  <Clock className="w-6 h-6 text-primary animate-pulse" />
-                  {t.transferFlow.progress.titleInProgress}
+                  <Loader2 className="w-6 h-6 text-primary animate-spin" />
+                  Transfert en cours
                 </>
               )}
             </CardTitle>
             <CardDescription>
-              {t.transferFlow.progress.amountLabel.replace('{amount}', transferData?.transfer?.amount?.toString() || '').replace('{recipient}', transferData?.transfer?.recipient || '')}
+              {transfer?.recipient && `Vers: ${transfer.recipient}`}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span>{t.transferFlow.progress.progressLabel}</span>
-                <span className="font-semibold" data-testid="text-progress">{progress}%</span>
+                <span>Progression du transfert</span>
+                <span className="font-semibold" data-testid="text-progress">
+                  {Math.round(simulatedProgress)}%
+                </span>
               </div>
-              <Progress value={progress} className="h-3" />
+              <Progress value={simulatedProgress} className="h-3" />
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>Codes validés: {validatedCount}/{totalCodes}</span>
+                {nextCode && <span>Prochaine pause: {nextCode.pausePercent}%</span>}
+              </div>
             </div>
 
-            {isPaused ? (
+            {isPausedForCode && nextCode ? (
               <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 p-4 rounded-lg space-y-3">
                 <div className="flex items-start gap-2">
                   <AlertCircle className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
-                      {t.transferFlow.progress.pauseTitle.replace('{percent}', pausePercent?.toString() || '')}
+                      Transfert en pause à {Math.round(simulatedProgress)}%
                     </p>
                     <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
-                      {t.transferFlow.progress.pauseDescription}
+                      Veuillez entrer le code de validation #{validatedCount + 1} pour continuer
                     </p>
+                    {nextCode.codeContext && (
+                      <p className="text-xs text-orange-600 dark:text-orange-400 mt-1 italic">
+                        {nextCode.codeContext}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="pause-code" className="text-sm font-medium">
-                    {t.transferFlow.progress.pauseCodeLabel}
-                  </label>
+                  <Label htmlFor="pause-code" className="text-sm font-medium">
+                    Code de validation (6 chiffres)
+                  </Label>
                   <Input
                     id="pause-code"
                     type="text"
+                    maxLength={6}
                     value={validationCode}
-                    onChange={(e) => setValidationCode(e.target.value.toUpperCase())}
-                    placeholder={t.transferFlow.progress.pauseCodePlaceholder}
+                    onChange={(e) => setValidationCode(e.target.value.replace(/\D/g, ''))}
+                    placeholder="Entrez le code à 6 chiffres"
                     className="font-mono"
                     data-testid="input-pause-code"
                   />
                 </div>
 
                 <Button
-                  onClick={() => {
-                    if (!validationCode) {
-                      toast({
-                        variant: 'destructive',
-                        title: t.transferFlow.toast.codeRequired,
-                        description: t.transferFlow.toast.codeRequiredDesc,
-                      });
-                      return;
-                    }
-                    
-                    apiRequest('POST', `/api/transfers/${transferId}/validate-pause-code`, { code: validationCode })
-                      .then(async (response) => {
-                        const data = await response.json();
-                        setValidationCode('');
-                        toast({
-                          title: t.transferFlow.toast.unblocked,
-                          description: data.message,
-                        });
-                        refetchTransfer();
-                      })
-                      .catch(() => {
-                        toast({
-                          variant: 'destructive',
-                          title: t.transferFlow.toast.codeInvalid,
-                          description: t.transferFlow.toast.codeInvalidDesc,
-                        });
-                      });
-                  }}
-                  disabled={!validationCode}
+                  onClick={handleValidateCode}
+                  disabled={validateMutation.isPending || !validationCode || validationCode.length !== 6}
                   className="w-full"
                   data-testid="button-validate-pause-code"
                 >
-                  {t.transferFlow.progress.validatePauseCode}
+                  {validateMutation.isPending ? 'Validation...' : 'Valider et continuer'}
                 </Button>
               </div>
             ) : (
               <div className="bg-muted p-4 rounded-lg space-y-2">
-                <p className="text-sm font-medium">{t.transferFlow.progress.statusLabel}</p>
-                <p className="text-sm text-muted-foreground" data-testid="text-status">
-                  {status === 'completed' 
-                    ? t.transferFlow.progress.statusCompleted
-                    : t.transferFlow.progress.statusProcessing}
+                <div className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                  <p className="text-sm font-medium">Transfert en cours...</p>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Le transfert progresse automatiquement. Veuillez patienter.
                 </p>
               </div>
             )}
 
-            {transferData?.events && (
-              <div className="space-y-2">
-                <h3 className="font-semibold text-sm">{t.transferFlow.progress.eventsLabel}</h3>
-                <div className="space-y-2" data-testid="list-progress-events">
-                  {transferData.events.map((event: any) => (
+            {transferData?.events && transferData.events.length > 0 && (
+              <div className="mt-6 space-y-2">
+                <h3 className="font-semibold text-sm">Historique</h3>
+                <div className="space-y-2 max-h-48 overflow-y-auto" data-testid="list-events">
+                  {transferData.events.slice(0, 5).map((event: any) => (
                     <div key={event.id} className="text-sm border-l-2 border-primary pl-3 py-1">
                       <p className="font-medium">{event.message}</p>
                       <p className="text-xs text-muted-foreground">
@@ -607,9 +565,9 @@ export default function TransferFlow() {
   if (step === 'complete') {
     return (
       <div className="p-6 md:p-8 max-w-2xl mx-auto">
-        <Card data-testid="card-complete">
+        <Card data-testid="card-complete" className="border-green-200 dark:border-green-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-green-600">
+            <CardTitle className="flex items-center gap-2 text-green-700 dark:text-green-400">
               <CheckCircle2 className="w-6 h-6" />
               {t.transferFlow.complete.title}
             </CardTitle>
@@ -618,36 +576,35 @@ export default function TransferFlow() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg space-y-2">
-              <div className="flex justify-between">
-                <span className="text-sm font-medium">{t.transferFlow.complete.amountLabel}</span>
-                <span className="text-sm font-semibold">{transferData?.transfer?.amount} EUR</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm font-medium">{t.transferFlow.complete.recipientLabel}</span>
-                <span className="text-sm">{transferData?.transfer?.recipient}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm font-medium">{t.transferFlow.complete.feesLabel}</span>
-                <span className="text-sm">{transferData?.transfer?.feeAmount} EUR</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm font-medium">{t.dialogs.transactionHistory.date}</span>
-                <span className="text-sm">
-                  {transferData?.transfer?.completedAt 
-                    ? new Date(transferData.transfer.completedAt).toLocaleString('fr-FR')
-                    : 'N/A'
-                  }
-                </span>
-              </div>
+            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-lg">
+              <p className="text-sm text-green-900 dark:text-green-100">
+                {t.transferFlow.complete.successMessage}
+              </p>
             </div>
 
-            <Button
+            {transferData?.transfer && (
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t.transferFlow.complete.recipient}</span>
+                  <span className="font-medium" data-testid="text-recipient">{transferData.transfer.recipient}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t.transferFlow.complete.amount}</span>
+                  <span className="font-medium" data-testid="text-amount">{transferData.transfer.amount} EUR</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t.transferFlow.complete.reference}</span>
+                  <span className="font-mono text-xs" data-testid="text-reference">{transferData.transfer.id}</span>
+                </div>
+              </div>
+            )}
+
+            <Button 
               onClick={() => setLocation('/dashboard')}
               className="w-full"
-              data-testid="button-back-to-dashboard"
+              data-testid="button-return-dashboard"
             >
-              {t.transferFlow.backToDashboard}
+              {t.transferFlow.complete.returnButton}
             </Button>
           </CardContent>
         </Card>
