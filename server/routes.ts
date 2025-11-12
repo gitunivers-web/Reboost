@@ -2293,16 +2293,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/transfers/initiate", requireAuth, requireCSRF, transferLimiter, async (req, res) => {
     try {
-      const { amount, externalAccountId, recipient } = req.body;
+      const { amount, externalAccountId, recipient, loanId } = req.body;
       
-      const settingCodesCount = await storage.getAdminSetting('validation_codes_count');
+      if (!loanId) {
+        return res.status(400).json({ error: 'Le prêt (loanId) est requis pour initier un transfert' });
+      }
+
+      const loan = await storage.getLoan(loanId);
+      if (!loan) {
+        return res.status(404).json({ error: 'Prêt non trouvé' });
+      }
+
+      if (loan.userId !== req.session.userId) {
+        return res.status(403).json({ error: 'Accès refusé - ce prêt ne vous appartient pas' });
+      }
+
+      if (loan.fundsAvailabilityStatus !== 'available') {
+        return res.status(400).json({ 
+          error: 'Les fonds ne sont pas encore disponibles pour ce prêt. Veuillez attendre la confirmation du contrat par l\'administrateur.' 
+        });
+      }
+
+      const loanCodes = await storage.getLoanTransferCodes(loanId);
+      if (!loanCodes || loanCodes.length === 0) {
+        return res.status(400).json({ 
+          error: 'Aucun code de validation n\'est disponible pour ce prêt. Veuillez contacter l\'administrateur.' 
+        });
+      }
+
+      const unconsumedCodes = loanCodes.filter(code => !code.consumedAt);
+      if (unconsumedCodes.length === 0) {
+        return res.status(400).json({ 
+          error: 'Tous les codes de validation ont déjà été utilisés pour ce prêt.' 
+        });
+      }
+      
       const settingFee = await storage.getAdminSetting('default_transfer_fee');
-      
-      const codesRequired = (settingCodesCount?.settingValue as any)?.default || 1;
       const feeAmount = (settingFee?.settingValue as any)?.amount || 25;
       
       const transfer = await storage.createTransfer({
         userId: req.session.userId!,
+        loanId: loanId,
         externalAccountId: externalAccountId || null,
         amount: amount.toString(),
         recipient,
@@ -2310,7 +2341,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         currentStep: 1,
         progressPercent: 10,
         feeAmount: feeAmount.toString(),
-        requiredCodes: codesRequired,
+        requiredCodes: loanCodes.length,
         codesValidated: 0,
       });
 
@@ -2327,32 +2358,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         );
       }
 
-      const expiresAt = new Date();
-      expiresAt.setMinutes(expiresAt.getMinutes() + 15);
-
-      const { code, notification, fee } = await storage.issueCodeWithNotificationAndFee({
-        transferId: transfer.id,
-        userId: req.session.userId!,
-        sequence: 1,
-        expiresAt,
-        deliveryMethod: 'email',
-        subject: `Code de validation pour votre transfert`,
-        content: `Votre code de validation pour le transfert de ${amount}€ vers ${recipient} est: {CODE}. Ce code expire dans 15 minutes. Un frais de ${feeAmount}€ sera automatiquement validé lors de l'utilisation de ce code.`,
-        feeType: 'Frais de validation',
-        feeAmount: feeAmount.toString(),
-        feeReason: `Frais de validation pour transfert vers ${recipient}`,
-      });
-
       await storage.createTransferEvent({
         transferId: transfer.id,
         eventType: 'initiated',
-        message: 'Transfert initié - Code de validation et frais créés',
-        metadata: { method: 'email', sequence: 1, feeId: fee.id },
+        message: `Transfert initié - ${loanCodes.length} codes de validation disponibles (générés lors de la confirmation du contrat)`,
+        metadata: { loanId, codesCount: loanCodes.length },
       });
 
       res.status(201).json({ 
         transfer,
-        message: 'Code de validation envoyé à votre email',
+        message: `Transfert initié avec succès. L'administrateur vous transmettra les codes de validation un par un.`,
+        codesRequired: loanCodes.length,
       });
     } catch (error) {
       console.error('Transfer initiation error:', error);
