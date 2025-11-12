@@ -1,0 +1,85 @@
+🧩 PARTIE 1 — Demande et validation initiale
+1️⃣ Soumission de la demande
+
+L’utilisateur remplit le formulaire et joint les documents nécessaires (selon qu’il soit particulier ou professionnel).
+
+Les données sont enregistrées (status = "pending_review") et les documents sont envoyés automatiquement à l’adresse e-mail de l’administrateur.
+
+Le dashboard utilisateur affiche :
+
+“Votre demande a été transmise et est en attente de vérification.”
+
+2️⃣ Validation de la demande par l’administrateur
+
+L’administrateur consulte les documents reçus par e-mail, vérifie la conformité, puis valide la demande dans son espace admin.
+
+Le statut passe à approved.
+
+Le système génère automatiquement un contrat personnalisé et notifie l’utilisateur :
+
+“Votre demande a été validée. Le contrat est désormais disponible dans votre espace.”
+
+3️⃣ Signature du contrat
+
+L’utilisateur télécharge le contrat, le signe (numériquement ou manuellement) et le renvoie via son tableau de bord.
+
+Le statut passe à contractStatus = "awaiting_admin_review".
+
+L’admin est notifié :
+
+“Un contrat signé est en attente de vérification.”
+
+🧩 PARTIE 2 — Validation du contrat et génération des codes
+4️⃣ Vérification du contrat par l’administrateur
+
+L’administrateur vérifie le contrat signé, puis clique sur “Confirmer le contrat”.
+
+Le backend met à jour les statuts :
+
+contractStatus = "approved"
+transferStatus = "funds_available"
+
+
+Le système génère automatiquement les 5 codes de transfert côté serveur (non visibles par l’utilisateur).
+
+Une notification interne (admin uniquement) est envoyée :
+
+“Les codes de transfert pour [Nom utilisateur] ont été générés et sont prêts à l’usage.”
+
+5️⃣ Disponibilité des fonds
+
+Une fois le contrat validé, le système notifie l’utilisateur :
+
+“Vos fonds sont désormais disponibles. Vous pouvez initier votre transfert.”
+
+Les codes existent déjà en base, mais ne sont visibles que par l’administrateur.
+
+🧩 PARTIE 3 — Transfert, contrôle manuel des codes et clôture
+6️⃣ Déroulement du transfert
+
+L’utilisateur initie le transfert depuis son espace.
+
+L’administrateur suit la progression et transmet manuellement chaque code à mesure que le transfert avance.
+
+Lorsqu’un code est saisi, le backend vérifie sa validité :
+
+if (codeIsValid && !used) {
+  markCodeAsUsed(code);
+  updateTransferProgress(userId);
+  if (progress === 100) completeTransfer(userId);
+}
+
+
+Si valide → progression du transfert.
+
+Si invalide → message d’erreur immédiat.
+
+7️⃣ Fin du transfert
+
+Après les 5 validations, le transfert est marqué completed.
+
+L’utilisateur reçoit :
+
+“Votre transfert est terminé. Les fonds ont été crédités conformément au contrat.”
+
+L’administrateur reçoit un rapport complet du transfert avec les horodatages et la progression.
