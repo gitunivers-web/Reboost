@@ -3,8 +3,8 @@
 ## 📋 Vue d'ensemble
 
 Ce guide vous explique comment déployer votre application en production avec :
-- **Frontend** : Vercel
-- **Backend** : Render
+- **Frontend** : Vercel → `altusfinancegroup.com`
+- **Backend** : Render → `api.altusfinancegroup.com`
 - **Base de données** : PostgreSQL (Neon, Render PostgreSQL, ou autre)
 - **Emails** : SendGrid
 
@@ -37,14 +37,17 @@ FRONTEND_URL=https://votre-app.vercel.app
 
 ### Frontend (Vercel)
 
-⚠️ **IMPORTANT** : Le frontend n'a PAS besoin de variables d'environnement pour fonctionner avec le backend Render. Les appels API se font directement vers le backend déployé.
-
-Cependant, si vous voulez configurer des analytics ou autres services :
+Créez ces variables d'environnement dans **Vercel → Project Settings → Environment Variables** :
 
 ```bash
-# Optionnel - Analytics, etc.
-VITE_ANALYTICS_ID=votre_id_analytics
+# URL du backend API (OBLIGATOIRE)
+VITE_API_URL=https://api.altusfinancegroup.com
+
+# URL du site pour SEO et Open Graph (RECOMMANDÉ)
+VITE_SITE_URL=https://altusfinancegroup.com
 ```
+
+⚠️ **IMPORTANT** : Ces variables doivent être préfixées par `VITE_` pour être accessibles dans le code frontend.
 
 ---
 
