@@ -309,7 +309,7 @@ export default function AdminLoans() {
                   </div>
 
                   <div className="flex flex-col gap-2 pt-2 border-t">
-                    {loan.status === 'pending' && (
+                    {loan.status === 'pending_review' && (
                       <>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
@@ -546,7 +546,7 @@ export default function AdminLoans() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
-                      {loan.status === 'pending' && (
+                      {loan.status === 'pending_review' && (
                         <>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>

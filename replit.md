@@ -4,6 +4,21 @@
 
 ALTUS is a multi-language professional loan management platform designed for business clients. It provides a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. The platform emphasizes trust, clarity, and data-driven decision-making, offering features such as multi-language support (French, English, Spanish, Portuguese, Italian, German, Dutch), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. Its purpose is to serve business professionals and enterprises with robust loan financing and financial management tools. The platform also includes a "How It Works" section detailing the loan application process from registration to fund disbursement, with a timeline of approximately 2-3 weeks for personal loans up to €75,000.
 
+## Recent Changes
+
+### Loan Workflow Enhancement (November 2025)
+**Implementation of 3-stage contract lifecycle:** The loan application workflow has been refined with a dual-state model separating loan lifecycle (`status`) from contract review steps (`contractStatus`). This provides clearer tracking and proper separation of concerns.
+
+**Key Changes:**
+- **Database Schema:** Added `contractStatus` field to `loans` table with values: `none`, `awaiting_user_signature`, `awaiting_admin_review`, `completed`. Default loan status changed from `'pending'` to `'pending_review'`.
+- **Workflow Stages:**
+  1. **User Submission:** Creates loan with `status='pending_review'` → Admin receives notification
+  2. **Admin Approval:** Sets `status='approved'` and `contractStatus='awaiting_user_signature'` → Generates contract → User receives notification
+  3. **Contract Signature:** Sets `contractStatus='awaiting_admin_review'` → User uploads signed contract → Admin receives notification
+  4. **Fund Disbursement:** Admin manually disburses funds → Sets `status='active'` and `contractStatus='completed'`
+- **Frontend Updates:** Modified AdminLoans, IndividualLoans, and LoanDetailsDialog components to display new contract statuses. Removed deprecated `'signed'` status in favor of `contractStatus` field.
+- **Notifications:** Added admin notification system for signed contract receipt via `notifyAdminsSignedContractReceived`.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
