@@ -62,14 +62,24 @@ interface LoanRequestUserVariables {
   dashboardUrl: string;
 }
 
+interface DocumentInfo {
+  documentType: string;
+  fileUrl: string;
+  fileName: string;
+}
+
 interface LoanRequestAdminVariables {
   fullName: string;
   email: string;
+  phone: string | null;
+  accountType: string;
   amount: string;
+  duration: number;
   loanType: string;
   reference: string;
   userId: string;
   reviewUrl: string;
+  documents: DocumentInfo[];
 }
 
 interface KycUploadedAdminVariables {
@@ -258,10 +268,18 @@ const translations = {
       message: "Une nouvelle demande de prêt a été soumise et nécessite votre attention.",
       applicantLabel: "Demandeur:",
       emailLabel: "Email:",
+      phoneLabel: "Téléphone:",
+      accountTypeLabel: "Type de compte:",
       amountLabel: "Montant demandé:",
+      durationLabel: "Durée:",
       loanTypeLabel: "Type de prêt:",
       referenceLabel: "Référence:",
       userIdLabel: "ID utilisateur:",
+      documentsTitle: "📄 Documents uploadés",
+      documentTypeLabel: "Type de document",
+      downloadLabel: "Télécharger",
+      noDocuments: "Aucun document uploadé",
+      monthsLabel: "mois",
       actionButton: "Examiner la demande",
       footer: "Tous droits réservés."
     },
@@ -494,10 +512,18 @@ const translations = {
       message: "A new loan request has been submitted and requires your attention.",
       applicantLabel: "Applicant:",
       emailLabel: "Email:",
+      phoneLabel: "Phone:",
+      accountTypeLabel: "Account type:",
       amountLabel: "Amount requested:",
+      durationLabel: "Duration:",
       loanTypeLabel: "Loan type:",
       referenceLabel: "Reference:",
       userIdLabel: "User ID:",
+      documentsTitle: "📄 Documents uploaded",
+      documentTypeLabel: "Document type",
+      downloadLabel: "Download",
+      noDocuments: "No documents uploaded",
+      monthsLabel: "months",
       actionButton: "Review request",
       footer: "All rights reserved."
     },
@@ -714,10 +740,18 @@ const translations = {
       message: "Se ha enviado una nueva solicitud de préstamo que requiere tu atención.",
       applicantLabel: "Solicitante:",
       emailLabel: "Email:",
+      phoneLabel: "Teléfono:",
+      accountTypeLabel: "Tipo de cuenta:",
       amountLabel: "Monto solicitado:",
+      durationLabel: "Duración:",
       loanTypeLabel: "Tipo de préstamo:",
       referenceLabel: "Referencia:",
       userIdLabel: "ID de usuario:",
+      documentsTitle: "📄 Documentos subidos",
+      documentTypeLabel: "Tipo de documento",
+      downloadLabel: "Descargar",
+      noDocuments: "Ningún documento subido",
+      monthsLabel: "meses",
       actionButton: "Examinar solicitud",
       footer: "Todos los derechos reservados."
     },
@@ -897,10 +931,18 @@ const translations = {
       message: "Uma nova solicitação de empréstimo foi enviada e requer sua atenção.",
       applicantLabel: "Solicitante:",
       emailLabel: "Email:",
+      phoneLabel: "Telefone:",
+      accountTypeLabel: "Tipo de conta:",
       amountLabel: "Valor solicitado:",
+      durationLabel: "Duração:",
       loanTypeLabel: "Tipo de empréstimo:",
       referenceLabel: "Referência:",
       userIdLabel: "ID do usuário:",
+      documentsTitle: "📄 Documentos enviados",
+      documentTypeLabel: "Tipo de documento",
+      downloadLabel: "Baixar",
+      noDocuments: "Nenhum documento enviado",
+      monthsLabel: "meses",
       actionButton: "Analisar solicitação",
       footer: "Todos os direitos reservados."
     },
@@ -1080,10 +1122,18 @@ const translations = {
       message: "È stata inviata una nuova richiesta di prestito che richiede la tua attenzione.",
       applicantLabel: "Richiedente:",
       emailLabel: "Email:",
+      phoneLabel: "Telefono:",
+      accountTypeLabel: "Tipo di account:",
       amountLabel: "Importo richiesto:",
+      durationLabel: "Durata:",
       loanTypeLabel: "Tipo di prestito:",
       referenceLabel: "Riferimento:",
       userIdLabel: "ID utente:",
+      documentsTitle: "📄 Documenti caricati",
+      documentTypeLabel: "Tipo di documento",
+      downloadLabel: "Scarica",
+      noDocuments: "Nessun documento caricato",
+      monthsLabel: "mesi",
       actionButton: "Esamina richiesta",
       footer: "Tutti i diritti riservati."
     },
@@ -1263,10 +1313,18 @@ const translations = {
       message: "Ein neuer Kreditantrag wurde eingereicht und benötigt Ihre Aufmerksamkeit.",
       applicantLabel: "Antragsteller:",
       emailLabel: "E-Mail:",
+      phoneLabel: "Telefon:",
+      accountTypeLabel: "Kontotyp:",
       amountLabel: "Beantragter Betrag:",
+      durationLabel: "Laufzeit:",
       loanTypeLabel: "Kreditart:",
       referenceLabel: "Referenz:",
       userIdLabel: "Benutzer-ID:",
+      documentsTitle: "📄 Hochgeladene Dokumente",
+      documentTypeLabel: "Dokumenttyp",
+      downloadLabel: "Herunterladen",
+      noDocuments: "Keine Dokumente hochgeladen",
+      monthsLabel: "Monate",
       actionButton: "Antrag prüfen",
       footer: "Alle Rechte vorbehalten."
     },
@@ -1446,10 +1504,18 @@ const translations = {
       message: "Er is een nieuwe leningaanvraag ingediend die uw aandacht vereist.",
       applicantLabel: "Aanvrager:",
       emailLabel: "E-mail:",
+      phoneLabel: "Telefoon:",
+      accountTypeLabel: "Accounttype:",
       amountLabel: "Aangevraagd bedrag:",
+      durationLabel: "Looptijd:",
       loanTypeLabel: "Type lening:",
       referenceLabel: "Referentie:",
       userIdLabel: "Gebruikers-ID:",
+      documentsTitle: "📄 Geüploade documenten",
+      documentTypeLabel: "Documenttype",
+      downloadLabel: "Download",
+      noDocuments: "Geen documenten geüpload",
+      monthsLabel: "maanden",
       actionButton: "Aanvraag beoordelen",
       footer: "Alle rechten voorbehouden."
     },
@@ -1951,7 +2017,22 @@ function getLoanRequestUserTemplate(lang: Language, vars: LoanRequestUserVariabl
 
 function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVariables): EmailTemplate {
   const t = translations[lang].loanRequestAdmin;
+  const accountTypes = translations[lang].accountTypes;
   const currentYear = new Date().getFullYear();
+  
+  const accountTypeText = vars.accountType === 'personal' ? accountTypes.personal : accountTypes.business;
+  const phoneDisplay = vars.phone || 'N/A';
+  
+  const documentsRows = vars.documents.length > 0 
+    ? vars.documents.map(doc => `
+      <tr>
+        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${escapeHtml(doc.documentType)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">
+          <a href="${doc.fileUrl}" style="color: #f59e0b; text-decoration: none; font-weight: 500;">${t.downloadLabel}</a>
+        </td>
+      </tr>
+    `).join('')
+    : `<tr><td colspan="2" style="padding: 12px; text-align: center; color: #6b7280;">${t.noDocuments}</td></tr>`;
   
   const html = `
     <!DOCTYPE html>
@@ -1960,15 +2041,19 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
       <meta charset="utf-8">
       <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; padding: 20px; }
         .header { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
         .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
         .button { display: inline-block; background: #f59e0b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
         .info-table { background: white; border-radius: 8px; padding: 20px; margin: 20px 0; }
         .info-row { display: flex; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
         .info-row:last-child { border-bottom: none; }
-        .info-label { font-weight: bold; width: 150px; color: #6b7280; }
+        .info-label { font-weight: bold; width: 180px; color: #6b7280; }
         .info-value { color: #1f2937; }
+        .documents-section { margin: 25px 0; }
+        .documents-title { font-size: 18px; font-weight: bold; color: #1f2937; margin-bottom: 15px; }
+        .documents-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+        .documents-table th { background: #f59e0b; color: white; padding: 12px; text-align: left; font-weight: bold; }
         .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
       </style>
     </head>
@@ -1990,8 +2075,20 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
               <div class="info-value">${escapeHtml(vars.email)}</div>
             </div>
             <div class="info-row">
+              <div class="info-label">${t.phoneLabel}</div>
+              <div class="info-value">${escapeHtml(phoneDisplay)}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">${t.accountTypeLabel}</div>
+              <div class="info-value">${escapeHtml(accountTypeText)}</div>
+            </div>
+            <div class="info-row">
               <div class="info-label">${t.amountLabel}</div>
               <div class="info-value">${escapeHtml(vars.amount)} €</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">${t.durationLabel}</div>
+              <div class="info-value">${vars.duration} ${t.monthsLabel}</div>
             </div>
             <div class="info-row">
               <div class="info-label">${t.loanTypeLabel}</div>
@@ -2007,6 +2104,21 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
             </div>
           </div>
 
+          <div class="documents-section">
+            <div class="documents-title">${t.documentsTitle}</div>
+            <table class="documents-table">
+              <thead>
+                <tr>
+                  <th>${t.documentTypeLabel}</th>
+                  <th>${t.downloadLabel}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${documentsRows}
+              </tbody>
+            </table>
+          </div>
+
           <div style="text-align: center;">
             <a href="${vars.reviewUrl}" class="button">${t.actionButton}</a>
           </div>
@@ -2019,6 +2131,10 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
     </html>
   `;
 
+  const documentsText = vars.documents.length > 0
+    ? vars.documents.map(doc => `- ${doc.documentType}: ${doc.fileUrl}`).join('\n    ')
+    : t.noDocuments;
+
   const text = `
     ${t.headerTitle}
     
@@ -2026,10 +2142,16 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
     
     ${t.applicantLabel} ${vars.fullName}
     ${t.emailLabel} ${vars.email}
+    ${t.phoneLabel} ${phoneDisplay}
+    ${t.accountTypeLabel} ${accountTypeText}
     ${t.amountLabel} ${vars.amount} €
+    ${t.durationLabel} ${vars.duration} ${t.monthsLabel}
     ${t.loanTypeLabel} ${vars.loanType}
     ${t.referenceLabel} ${vars.reference}
     ${t.userIdLabel} ${vars.userId}
+    
+    ${t.documentsTitle}
+    ${documentsText}
     
     ${t.actionButton}: ${vars.reviewUrl}
     
