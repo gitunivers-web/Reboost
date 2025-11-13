@@ -3231,24 +3231,6 @@ Tous les codes de validation ont été vérifiés avec succès.`,
         return res.status(404).json({ error: 'Prêt non trouvé' });
       }
 
-      if (loan.status !== 'approved' && loan.status !== 'signed') {
-        return res.status(400).json({ 
-          error: 'Impossible de confirmer le contrat: Le prêt doit être en statut approuvé ou signé. Statut actuel: ' + loan.status 
-        });
-      }
-
-      if (loan.contractStatus !== 'awaiting_admin_review') {
-        return res.status(400).json({ 
-          error: 'Impossible de confirmer le contrat: Le contrat doit être en attente de validation. Statut actuel: ' + loan.contractStatus 
-        });
-      }
-
-      if (!loan.signedContractUrl) {
-        return res.status(400).json({ 
-          error: 'Impossible de confirmer le contrat: Aucun contrat signé trouvé' 
-        });
-      }
-
       const result = await storage.markLoanFundsAvailable(req.params.id, req.session.userId!);
       
       if (!result) {
