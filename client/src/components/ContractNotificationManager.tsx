@@ -16,7 +16,7 @@ export default function ContractNotificationManager() {
   const { data: loans } = useQuery<Loan[]>({
     queryKey: ['/api/loans'],
   });
-  const { addNotification, notifications } = useNotifications();
+  const { addNotification, removeNotification, notifications } = useNotifications();
 
   useEffect(() => {
     if (!loans) return;
@@ -27,6 +27,17 @@ export default function ContractNotificationManager() {
         loan.contractUrl &&
         !loan.signedContractUrl
     );
+
+    const loanIdsNeedingSignature = new Set(loansNeedingSignature.map(l => l.id));
+
+    notifications.forEach((notification) => {
+      if (notification.id.startsWith('contract-to-sign-')) {
+        const loanId = notification.id.replace('contract-to-sign-', '');
+        if (!loanIdsNeedingSignature.has(loanId)) {
+          removeNotification(notification.id);
+        }
+      }
+    });
 
     loansNeedingSignature.forEach((loan) => {
       const notificationId = `contract-to-sign-${loan.id}`;
@@ -45,7 +56,7 @@ export default function ContractNotificationManager() {
 
       addNotification({
         id: notificationId,
-        message: `🔔 Action requise : Votre contrat de prêt de ${formattedAmount} est prêt ! Téléchargez-le, signez-le et retournez-le pour débloquer vos fonds.`,
+        message: `ACTION REQUISE : Votre contrat de prêt de ${formattedAmount} est prêt ! Téléchargez-le, signez-le et retournez-le pour débloquer vos fonds.`,
         variant: 'warning',
         dismissible: false,
         link: {
@@ -54,7 +65,7 @@ export default function ContractNotificationManager() {
         },
       });
     });
-  }, [loans, addNotification, notifications]);
+  }, [loans, addNotification, removeNotification, notifications]);
 
   return null;
 }
