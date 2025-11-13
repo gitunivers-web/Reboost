@@ -41,7 +41,7 @@ import {
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from "./db";
-import { eq, desc, and, isNull, sql as sqlDrizzle } from "drizzle-orm";
+import { eq, desc, and, or, isNull, sql as sqlDrizzle } from "drizzle-orm";
 import path from "path";
 import fs from "fs";
 
@@ -1898,10 +1898,26 @@ export class DatabaseStorage implements IStorage {
 
   async markLoanFundsAvailable(loanId: string, adminId: string): Promise<{ loan: Loan; codes: TransferValidationCode[] } | undefined> {
     return await db.transaction(async (tx) => {
+      const existingLoans = await tx
+        .select()
+        .from(loans)
+        .where(eq(loans.id, loanId))
+        .for('update');
+      
+      const existingLoan = existingLoans[0];
+      if (!existingLoan) {
+        throw new Error('Prêt non trouvé');
+      }
+      
+      if (existingLoan.fundsAvailabilityStatus === 'available') {
+        throw new Error('Les fonds sont déjà marqués comme disponibles pour ce prêt');
+      }
+      
       const loanResult = await tx.update(loans)
         .set({ 
           contractStatus: "approved",
-          fundsAvailabilityStatus: "available"
+          fundsAvailabilityStatus: "available",
+          status: "active"
         })
         .where(eq(loans.id, loanId))
         .returning();
@@ -1910,6 +1926,35 @@ export class DatabaseStorage implements IStorage {
       if (!loan) {
         return undefined;
       }
+      
+      await tx.insert(transactions).values({
+        userId: loan.userId,
+        type: 'credit',
+        amount: loan.amount,
+        description: `Décaissement du prêt #${loan.id.slice(0, 8)}`,
+      });
+      
+      await tx.insert(notifications).values({
+        userId: loan.userId,
+        type: 'loan_funds_available',
+        title: 'Fonds disponibles',
+        message: `Vos fonds de ${parseFloat(loan.amount).toFixed(2)} EUR sont désormais disponibles. Vous pouvez initier votre transfert.`,
+        severity: 'success',
+        metadata: { loanId: loan.id, amount: loan.amount },
+      });
+      
+      await tx.insert(auditLogs).values({
+        actorId: adminId,
+        actorRole: 'admin',
+        action: 'mark_loan_funds_available',
+        entityType: 'loan',
+        entityId: loan.id,
+        metadata: { 
+          loanAmount: loan.amount, 
+          userId: loan.userId,
+          loanId: loan.id 
+        },
+      });
       
       return { loan, codes: [] };
     });
