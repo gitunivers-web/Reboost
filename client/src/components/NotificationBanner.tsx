@@ -11,8 +11,9 @@ export interface Notification {
   dismissible: boolean;
   link?: {
     text: string;
-    href: string;
+    href?: string;
     target?: string;
+    onClick?: () => void;
   };
 }
 
@@ -102,14 +103,24 @@ export default function NotificationBanner() {
               <Icon className="h-5 w-5 flex-shrink-0" />
               <p className="text-sm font-medium">{notification.message}</p>
               {notification.link && (
-                <a
-                  href={notification.link.href}
-                  target={notification.link.target || '_self'}
-                  className="text-sm font-semibold underline hover:no-underline whitespace-nowrap"
-                  data-testid={`link-notification-${notification.id}`}
-                >
-                  {notification.link.text} →
-                </a>
+                notification.link.onClick ? (
+                  <button
+                    onClick={notification.link.onClick}
+                    className="text-sm font-semibold underline hover:no-underline whitespace-nowrap bg-transparent border-0 cursor-pointer p-0"
+                    data-testid={`link-notification-${notification.id}`}
+                  >
+                    {notification.link.text} →
+                  </button>
+                ) : (
+                  <a
+                    href={notification.link.href}
+                    target={notification.link.target || '_self'}
+                    className="text-sm font-semibold underline hover:no-underline whitespace-nowrap"
+                    data-testid={`link-notification-${notification.id}`}
+                  >
+                    {notification.link.text} →
+                  </a>
+                )
               )}
             </div>
             {notification.dismissible && (

@@ -62,8 +62,10 @@ export default function ContractNotificationManager() {
         dismissible: false,
         link: {
           text: 'Voir le contrat',
-          href: getApiUrl(`/api/loans/${loan.id}/contract`),
-          target: '_blank',
+          onClick: () => {
+            const contractUrl = getApiUrl(`/api/loans/${loan.id}/contract`);
+            window.open(contractUrl, '_blank');
+          },
         },
       });
     });
