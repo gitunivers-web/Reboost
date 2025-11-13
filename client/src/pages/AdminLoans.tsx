@@ -211,6 +211,7 @@ export default function AdminLoans() {
       case 'approved':
         return 'secondary';
       case 'pending_review':
+      case 'pending':
         return 'outline';
       case 'rejected':
         return 'destructive';
@@ -222,6 +223,7 @@ export default function AdminLoans() {
   const getStatusText = (status: string) => {
     const statusMap: Record<string, string> = {
       'pending_review': t.admin.common.status.pending,
+      'pending': t.admin.common.status.pending,
       'approved': t.admin.common.status.approved,
       'active': t.admin.common.status.active,
       'rejected': t.admin.common.status.rejected,
@@ -309,7 +311,7 @@ export default function AdminLoans() {
                   </div>
 
                   <div className="flex flex-col gap-2 pt-2 border-t">
-                    {loan.status === 'pending_review' && (
+                    {(loan.status === 'pending_review' || loan.status === 'pending') && (
                       <>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
@@ -543,7 +545,7 @@ export default function AdminLoans() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
-                      {loan.status === 'pending_review' && (
+                      {(loan.status === 'pending_review' || loan.status === 'pending') && (
                         <>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>

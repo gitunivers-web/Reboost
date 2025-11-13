@@ -1623,7 +1623,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount: amount.toString(),
         duration,
         interestRate: interestRate.toString(),
-        status: 'pending',
+        status: 'pending_review',
         documents: null,
       });
       
