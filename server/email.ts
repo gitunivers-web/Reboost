@@ -443,7 +443,37 @@ export async function sendLoanRequestAdminEmail(
       documents,
     });
     
-    const msg = {
+    const attachments: Array<{
+      content: string;
+      filename: string;
+      type: string;
+      disposition: string;
+    }> = [];
+
+    for (const doc of documents) {
+      try {
+        const response = await fetch(doc.fileUrl);
+        if (response.ok) {
+          const buffer = await response.arrayBuffer();
+          const base64Content = Buffer.from(buffer).toString('base64');
+          
+          const mimeType = response.headers.get('content-type') || 'application/octet-stream';
+          
+          attachments.push({
+            content: base64Content,
+            filename: doc.fileName,
+            type: mimeType,
+            disposition: 'attachment'
+          });
+        } else {
+          console.error(`Failed to download document ${doc.fileName}: ${response.status}`);
+        }
+      } catch (downloadError) {
+        console.error(`Error downloading document ${doc.fileName}:`, downloadError);
+      }
+    }
+    
+    const msg: any = {
       to: adminEmail,
       from: fromEmail,
       subject: template.subject,
@@ -451,8 +481,12 @@ export async function sendLoanRequestAdminEmail(
       text: template.text,
     };
 
+    if (attachments.length > 0) {
+      msg.attachments = attachments;
+    }
+
     await client.send(msg);
-    console.log(`Loan request admin notification sent to ${adminEmail} in ${language} with ${documents.length} documents`);
+    console.log(`Loan request admin notification sent to ${adminEmail} in ${language} with ${documents.length} documents (${attachments.length} attached)`);
     return true;
   } catch (error) {
     console.error('Error sending loan request admin notification:', error);
