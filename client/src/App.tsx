@@ -111,7 +111,6 @@ function App() {
                         <Route path="/admin/users" component={AdminUsers} />
                         <Route path="/admin/loans" component={AdminLoans} />
                         <Route path="/admin/transfers" component={AdminTransfers} />
-                        <Route path="/admin/documents" component={AdminDocuments} />
                         <Route path="/admin/settings" component={AdminSettings} />
                         <Route path="/admin/reports" component={AdminReports} />
                         <Route component={NotFound} />

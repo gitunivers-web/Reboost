@@ -43,7 +43,6 @@ export default function AppSidebar() {
     { title: t.nav.users, url: '/admin/users', icon: Users },
     { title: t.nav.loans, url: '/admin/loans', icon: CreditCard },
     { title: t.nav.transfers, url: '/admin/transfers', icon: ArrowRightLeft },
-    { title: t.nav.documents, url: '/admin/documents', icon: FileText },
     { title: t.nav.settings, url: '/admin/settings', icon: Settings },
     { title: t.nav.reports, url: '/admin/reports', icon: BarChart },
   ];
