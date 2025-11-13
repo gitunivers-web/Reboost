@@ -12,6 +12,9 @@ interface Loan {
   amount: string | number;
 }
 
+const REMINDER_INTERVAL = 60 * 60 * 1000; // 1 heure
+const REMINDER_DURATION = 2 * 60 * 1000; // 2 minutes
+
 export default function ContractNotificationManager() {
   const t = useTranslations();
   const { data: loans } = useQuery<Loan[]>({
@@ -99,6 +102,68 @@ export default function ContractNotificationManager() {
       });
     });
   }, [loans, addNotification, removeNotification, notifications, downloadedContracts]);
+
+  useEffect(() => {
+    if (!loans) return;
+
+    const loansAwaitingReturn = loans.filter(
+      (loan) =>
+        loan.status === 'approved' &&
+        loan.contractUrl &&
+        !loan.signedContractUrl &&
+        downloadedContracts.has(loan.id)
+    );
+
+    if (loansAwaitingReturn.length === 0) return;
+
+    const timers: NodeJS.Timeout[] = [];
+
+    loansAwaitingReturn.forEach((loan) => {
+      const reminderKey = `reminder-last-shown-${loan.id}`;
+      const lastShown = localStorage.getItem(reminderKey);
+      const now = Date.now();
+
+      const shouldShowReminder = !lastShown || (now - parseInt(lastShown)) >= REMINDER_INTERVAL;
+
+      if (shouldShowReminder) {
+        const notificationId = `contract-reminder-${loan.id}`;
+        
+        const amount = typeof loan.amount === 'string' 
+          ? parseFloat(loan.amount) 
+          : loan.amount;
+        
+        const formattedAmount = new Intl.NumberFormat('fr-FR', {
+          style: 'currency',
+          currency: 'EUR',
+        }).format(amount);
+
+        addNotification({
+          id: notificationId,
+          message: `RAPPEL : N'oubliez pas de retourner votre contrat de prêt signé de ${formattedAmount} pour débloquer vos fonds.`,
+          variant: 'warning',
+          dismissible: true,
+          link: {
+            text: 'Voir mes contrats',
+            onClick: () => {
+              window.location.href = '/contracts';
+            },
+          },
+        });
+
+        localStorage.setItem(reminderKey, now.toString());
+
+        const removeTimer = setTimeout(() => {
+          removeNotification(notificationId);
+        }, REMINDER_DURATION);
+
+        timers.push(removeTimer);
+      }
+    });
+
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  }, [loans, downloadedContracts, addNotification, removeNotification]);
 
   return null;
 }
