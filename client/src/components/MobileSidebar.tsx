@@ -3,7 +3,7 @@ import { useTranslations } from '@/lib/i18n';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, LogOut, User, Settings, Home, ArrowLeftRight, History as HistoryIcon } from 'lucide-react';
+import { Menu, LogOut, User, Settings, Home, ArrowLeftRight, History as HistoryIcon, CreditCard } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import logoUrl from '@assets/generated_images/Altus_Finance_transparent_logo_ba91b44e.png';
 
@@ -17,6 +17,11 @@ export default function MobileSidebar() {
       label: t.nav.home,
       icon: Home,
       href: '/dashboard',
+    },
+    {
+      label: t.nav.loans,
+      icon: CreditCard,
+      href: '/loans',
     },
     {
       label: t.nav.transfers,

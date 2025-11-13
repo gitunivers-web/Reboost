@@ -32,6 +32,7 @@ export default function AppSidebar() {
 
   const menuItems = [
     { title: t.nav.dashboard, url: '/dashboard', icon: Home },
+    { title: t.nav.loans, url: '/loans', icon: CreditCard },
     { title: t.nav.transfers, url: '/transfers', icon: ArrowRightLeft },
     { title: t.bankAccounts.title, url: '/accounts', icon: Building2 },
     { title: t.nav.history, url: '/history', icon: History },
