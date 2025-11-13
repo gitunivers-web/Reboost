@@ -22,6 +22,26 @@ ALTUS is a multi-language professional loan management platform designed for bus
   - Progressive unlocking as codes are validated in sequence
 - **User Experience:** Clear visual feedback showing "Transfert en pause. Veuillez entrer le code..." at each checkpoint with smooth progression animation.
 
+### Contract Notification System (November 2025)
+**Multi-channel notification system for contract signatures:** Implemented a comprehensive notification system to ensure users are immediately aware when their loan contract is ready for signature.
+
+**Key Changes:**
+- **ContractNotificationManager Component:** Created an intelligent banner management system (`client/src/components/ContractNotificationManager.tsx`) that:
+  - Automatically detects loans with `status='approved'`, `contractUrl` present, and no `signedContractUrl`
+  - Creates persistent, non-dismissible warning banners at the top of the dashboard
+  - Automatically removes banners when contracts are signed (cleanup logic prevents stale notifications)
+  - Uses currency formatting for professional display of loan amounts
+- **KYC Restriction Removal:** Removed KYC verification requirement from loan approval process in `server/routes.ts` - KYC documents are now sent to admins via email for manual review
+- **Integration:** Integrated into `App.tsx` for seamless operation across all dashboard pages
+- **No Emoji Policy:** Adheres to project guidelines by using text-only notifications ("ACTION REQUISE:" instead of emoji icons)
+- **Automatic Cleanup:** Prevents notification pollution by tracking loan IDs and removing banners once contracts are signed
+
+**Notification Channels:**
+1. **Persistent Banner:** Top-of-screen warning with direct link to loans page
+2. **Bell Notifications:** Backend creates database notifications via `notifyLoanContractGenerated`
+3. **Email Notifications:** Automated emails sent through SendGrid when contracts are ready
+4. **Badge Indicators:** Visual badges on loan cards (pre-existing feature)
+
 ### Loan Workflow Enhancement (November 2025)
 **Implementation of 3-stage contract lifecycle:** The loan application workflow has been refined with a dual-state model separating loan lifecycle (`status`) from contract review steps (`contractStatus`). This provides clearer tracking and proper separation of concerns.
 
