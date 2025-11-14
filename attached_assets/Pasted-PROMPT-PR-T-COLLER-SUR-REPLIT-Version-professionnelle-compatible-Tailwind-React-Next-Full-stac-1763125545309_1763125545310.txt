@@ -1,0 +1,146 @@
+PROMPT PRÊT À COLLER SUR REPLIT
+
+(Version professionnelle, compatible Tailwind, React/Next/Full stack js)
+
+🟦 Prompt pour Replit — Refonte totale du Header + Menu Hamburger Premium
+
+Je veux que tu remplaces complètement le header actuel par un header 2025 minimaliste + un menu hamburger dépliant premium. Voici les instructions :
+
+🎯 Objectifs
+
+Le header doit être ultra simple, clair, pro, sans aucun chevauchement.
+
+Tous les liens (Accueil, Nos prêts, Comment ça marche, À propos, FAQ, Contact, Langues, Téléphone, Mon espace) doivent être déplacés dans un menu hamburger dépliant.
+
+Le header visible doit afficher uniquement :
+
+logo ALTUS (à gauche)
+
+bouton hamburger 3 traits (à droite)
+
+À l’ouverture du menu :
+
+une animation fluide doit afficher un panneau full-screen
+
+avec un design fintech moderne : fond blanc pur, ombres douces, typographie large, hiérarchie visuelle nette
+
+chaque lien doit être bien espacé et lisible
+
+le bouton "Mon espace" doit être stylé en CTA (bleu Altus)
+
+le sélecteur de langue doit afficher les drapeaux (FR 🇫🇷 / EN 🇬🇧 / NL 🇳🇱)
+
+bouton fermer (X) animé
+
+Le menu doit utiliser une transition slide + fade moderne (type "2025 UI").
+
+🟦 CODE À INTÉGRER : Composant Header complet
+Header.tsx
+import { useState } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
+
+export default function Header() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      {/* HEADER MINIMALISTE */}
+      <header className="
+        fixed top-0 left-0 w-full h-20 z-[9999]
+        bg-white shadow-sm border-b border-gray-200
+        flex items-center justify-between px-6
+      ">
+        {/* LOGO */}
+        <div className="flex items-center space-x-2">
+          <img src="/logo-altus.png" alt="ALTUS" className="h-10" />
+          <span className="font-semibold text-xl text-gray-900">
+            Altus Finance Group
+          </span>
+        </div>
+
+        {/* BOUTON MENU */}
+        <button
+          onClick={() => setOpen(true)}
+          className="text-3xl text-gray-800 hover:text-blue-600 transition"
+        >
+          <FiMenu />
+        </button>
+      </header>
+
+      {/* MENU DÉPLIANT FULL-SCREEN */}
+      <div
+        className={`
+          fixed inset-0 bg-white z-[99999] 
+          transform transition-all duration-300 ease-out
+          ${open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}
+        `}
+      >
+        {/* BOUTON FERMER */}
+        <div className="absolute top-6 right-6">
+          <button
+            onClick={() => setOpen(false)}
+            className="text-3xl text-gray-700 hover:text-blue-600 transition"
+          >
+            <FiX />
+          </button>
+        </div>
+
+        {/* CONTENU DU MENU */}
+        <div className="flex flex-col items-center justify-center h-full space-y-8">
+          <a href="/" className="text-3xl font-semibold hover:text-blue-600 transition">
+            Accueil
+          </a>
+
+          <a href="/loans" className="text-3xl font-semibold hover:text-blue-600 transition">
+            Nos prêts
+          </a>
+
+          <a href="/how-it-works" className="text-3xl font-semibold hover:text-blue-600 transition">
+            Comment ça marche
+          </a>
+
+          <a href="/about" className="text-3xl font-semibold hover:text-blue-600 transition">
+            À propos
+          </a>
+
+          <a href="/faq" className="text-3xl font-semibold hover:text-blue-600 transition">
+            FAQ
+          </a>
+
+          <a href="/contact" className="text-3xl font-semibold hover:text-blue-600 transition">
+            Contact
+          </a>
+
+          {/* LANGUES */}
+          <div className="flex space-x-6 mt-10">
+            <button className="text-xl flex items-center space-x-2">
+              🇫🇷 <span>Français</span>
+            </button>
+            <button className="text-xl flex items-center space-x-2">
+              🇬🇧 <span>English</span>
+            </button>
+            <button className="text-xl flex items-center space-x-2">
+              🇳🇱 <span>Nederlands</span>
+            </button>
+          </div>
+
+          {/* BOUTON ESPACE CLIENT */}
+          <a
+            href="/login"
+            className="mt-10 px-10 py-4 bg-blue-600 text-white rounded-xl text-2xl font-semibold shadow-lg hover:bg-blue-700 transition"
+          >
+            Mon espace
+          </a>
+        </div>
+      </div>
+    </>
+  );
+}
+
+🌐 Effet visuel final :
+✔ Header ultra clean, toujours lisible, jamais chevauché
+✔ Design premium fintech inspiré de N26 / Revolut / Wise
+✔ Menu hamburger moderne en plein écran
+✔ Navigation fluide et élégante
+✔ Drapeaux pour les langues = touche professionnelle
+✔ Compatible desktop/mobile, parfaitement responsive
