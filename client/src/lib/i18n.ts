@@ -1341,6 +1341,8 @@ type TranslationKeys = {
       statusCompleted: string;
       statusProcessing: string;
       eventsLabel: string;
+      circularProgressTitle: string;
+      circularProgressSubtitle: string;
     };
     complete: {
       title: string;
@@ -3310,6 +3312,8 @@ export const translations: Record<Language, TranslationKeys> = {
         statusCompleted: 'Transfert terminé !',
         statusProcessing: 'Traitement en cours par notre système bancaire...',
         eventsLabel: 'Événements',
+        circularProgressTitle: 'Vérification du transfert',
+        circularProgressSubtitle: 'Votre opération est en cours de traitement sécurisé.',
       },
       complete: {
         title: 'Transfert complété',
@@ -5332,6 +5336,8 @@ export const translations: Record<Language, TranslationKeys> = {
         statusCompleted: 'Transfer completed!',
         statusProcessing: 'Processing by our banking system...',
         eventsLabel: 'Events',
+        circularProgressTitle: 'Transfer verification',
+        circularProgressSubtitle: 'Your transaction is being securely processed.',
       },
       complete: {
         title: 'Transfer Completed',
@@ -7254,6 +7260,8 @@ export const translations: Record<Language, TranslationKeys> = {
         statusCompleted: '¡Transferencia completada!',
         statusProcessing: 'Procesamiento en curso por nuestro sistema bancario...',
         eventsLabel: 'Eventos',
+        circularProgressTitle: 'Verificación de la transferencia',
+        circularProgressSubtitle: 'Su operación está siendo procesada de forma segura.',
       },
       complete: {
         title: 'Transferencia Completada',
@@ -9213,6 +9221,8 @@ export const translations: Record<Language, TranslationKeys> = {
         statusCompleted: 'Transferência concluída!',
         statusProcessing: 'Processamento em andamento pelo nosso sistema bancário...',
         eventsLabel: 'Eventos',
+        circularProgressTitle: 'Verificação da transferência',
+        circularProgressSubtitle: 'Sua operação está sendo processada com segurança.',
       },
       complete: {
         title: 'Transferência Concluída',
@@ -11052,6 +11062,8 @@ export const translations: Record<Language, TranslationKeys> = {
         statusCompleted: 'Trasferimento completato!',
         statusProcessing: 'Elaborazione in corso dal nostro sistema bancario...',
         eventsLabel: 'Eventi',
+        circularProgressTitle: 'Verifica del trasferimento',
+        circularProgressSubtitle: 'La sua operazione è in corso di elaborazione sicura.',
       },
       complete: {
         title: 'Trasferimento completato',
@@ -12891,6 +12903,8 @@ export const translations: Record<Language, TranslationKeys> = {
         statusCompleted: 'Überweisung abgeschlossen!',
         statusProcessing: 'Wird von unserem Banksystem bearbeitet...',
         eventsLabel: 'Ereignisse',
+        circularProgressTitle: 'Überprüfung der Überweisung',
+        circularProgressSubtitle: 'Ihre Transaktion wird sicher verarbeitet.',
       },
       complete: {
         title: 'Überweisung abgeschlossen',
@@ -14699,6 +14713,8 @@ export const translations: Record<Language, TranslationKeys> = {
         statusCompleted: 'Overschrijving voltooid!',
         statusProcessing: 'Wordt verwerkt door ons banksysteem...',
         eventsLabel: 'Gebeurtenissen',
+        circularProgressTitle: 'Verificatie van de overboeking',
+        circularProgressSubtitle: 'Uw transactie wordt veilig verwerkt.',
       },
       complete: {
         title: 'Overschrijving voltooid',

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useTranslations } from "@/lib/i18n";
 
 export default function CircularTransferProgress({ percent }: { percent: number }) {
+  const t = useTranslations();
   const r = 52;
   const circumference = 2 * Math.PI * r;
   const progress = (percent / 100) * circumference;
@@ -54,10 +56,10 @@ export default function CircularTransferProgress({ percent }: { percent: number 
       {/* Texte premium */}
       <div className="text-center">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-          Vérification du transfert
+          {t.transferFlow.progress.circularProgressTitle}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Votre opération est en cours de traitement sécurisé.
+          {t.transferFlow.progress.circularProgressSubtitle}
         </p>
       </div>
     </div>
