@@ -1,0 +1,83 @@
+✅ VERSION DYNAMIQUE – compatible avec ton code actuel
+
+👉 Tu peux brancher ta variable actuelle (ex : progress, stepPercent, transfer.progress, etc.)
+
+HTML (inchangé, sauf qu’on enlève la largeur fixe)
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill"></div>
+  <div class="progress-glow"></div>
+</div>
+
+💅 CSS totalement adaptatif (la lumière fonctionne toujours)
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #e4e7ec;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0059ff, #1e7fff);
+  border-radius: 6px;
+  width: 0%; /* dynamique via JS */
+  transition: width 0.6s ease;
+}
+
+.progress-glow {
+  position: absolute;
+  top: 0;
+  left: -40%;
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.8),
+    transparent
+  );
+  animation: glowMove 2.2s infinite linear;
+}
+
+@keyframes glowMove {
+  0% { left: -40%; }
+  100% { left: 110%; }
+}
+
+🔧 JS – mise à jour de la barre selon TA variable actuelle
+
+✔ Tu remplaces progressValue par la variable utilisée dans ton backend ou front (React, Next, Express, API, etc.)
+
+function updateProgressBar(progressValue) {
+  const bar = document.getElementById("progressFill");
+  bar.style.width = progressValue + "%";
+}
+
+🧪 Exemples d’utilisation
+Si ton système met à jour en fonction d’un status (genre 0 → 35 → 58 → 69 → 100%) :
+updateProgressBar(35);
+updateProgressBar(58);
+updateProgressBar(69);
+updateProgressBar(100);
+
+Si ton API renvoie le pourcentage :
+fetch("/api/transfer-status")
+  .then(res => res.json())
+  .then(data => updateProgressBar(data.progress));
+
+Dans un composant React :
+useEffect(() => {
+  updateProgressBar(progress);
+}, [progress]);
+
+🎯 Résultat
+
+La barre de progression ajuste sa largeur automatiquement
+
+L’effet de lumière continue de fonctionner parfaitement
+
+Aucune dépendance à un pourcentage fixe
+
+Compatible avec ton système actuel (multi-étapes, values dynamiques)
