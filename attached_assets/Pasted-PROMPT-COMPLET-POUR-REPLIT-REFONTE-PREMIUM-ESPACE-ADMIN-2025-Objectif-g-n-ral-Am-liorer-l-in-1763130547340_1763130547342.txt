@@ -1,0 +1,201 @@
+PROMPT COMPLET POUR REPLIT – REFONTE PREMIUM ESPACE ADMIN (2025)
+🎯 Objectif général
+
+Améliorer l’interface admin de manière professionnelle, moderne (style 2025) et élégante, sans casser ou modifier la logique fonctionnelle existante.
+
+🔧 1. Ce qu’il faut faire (résumé clair)
+
+Refondre UNIQUEMENT le design de l’espace admin, c’est-à-dire :
+
+AdminDashboard.tsx
+
+AdminUsers.tsx
+
+AdminLoans.tsx
+
+AdminTransfers.tsx
+
+AdminDocuments.tsx
+
+AdminReports.tsx
+
+AdminSettings.tsx
+
+Sans toucher :
+
+API backend
+
+Routes
+
+Stockage fichiers
+
+Logique prêt / transfert
+
+Auth / Sessions
+
+Signature JWT
+
+Uploads
+
+Templates PDF
+
+🎨 2. Style à appliquer (Design System 2025)
+🟣 Couleurs
+--primary: #4F46E5;       (bleu-violet profond)
+--primary-light: #A5B4FC;
+--background: #ffffff;     (blanc pur)
+--sidebar-bg: #F8F9FF;
+--text: #111827;
+--muted: #6B7280;
+--border: #E5E7EB;
+
+🧩 3. Refonte de la structure admin
+✔️ A) Nouvelle TopBar (fixée, minimaliste, premium)
+
+Une topbar en verre dépoli (glassmorphism), avec :
+
+logo Altus discret
+
+bouton profil admin
+
+icône notifications
+
+titre dynamique selon la page
+
+✔️ B) Nouvelle Sidebar Premium (compacte + icons + labels)
+
+Remplacer la sidebar actuelle par une sidebar moderne façon SaaS 2025 :
+
+icons Lucide (Dashboard, Users, Loans, Transfers, Docs, Reports, Settings)
+
+labels clairs
+
+hover lumineux doux
+
+active state premium
+
+version mobile repliable (slide-in)
+
+✔️ C) Mise en page Centrale (cards premium)
+
+Appliquer un layout uniforme :
+
+cards arrondies
+
+ombres légères
+
+headers fixes
+
+sections propres
+
+tableaux modernisés (borders douces + hover row premium)
+
+💻 4. Code complet à appliquer dans le projet
+
+Important : le code ci-dessous remplace uniquement les composants visuels.
+Il n’altère aucune fonctionnalité.
+
+🔧 A) Nouveau layout admin AdminLayout.tsx
+
+👉 À créer dans client/src/components/AdminLayout.tsx
+
+import { Menu, X, Bell, UserCircle } from "lucide-react";
+import { useState } from "react";
+
+export default function AdminLayout({ children, title }: { children: any; title: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="flex h-screen bg-white text-gray-900">
+
+      {/* SIDEBAR */}
+      <aside className={`fixed z-40 top-0 left-0 h-full w-64 bg-[#F8F9FF] shadow-lg border-r transition-transform duration-300 
+        ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
+
+        <div className="p-6 font-bold text-xl tracking-tight text-indigo-600">ALTUS ADMIN</div>
+
+        <nav className="mt-4 space-y-1 px-3">
+          {[
+            ["Dashboard", "/admin", "layout-dashboard"],
+            ["Utilisateurs", "/admin/users", "users"],
+            ["Prêts", "/admin/loans", "badge-euro"],
+            ["Transferts", "/admin/transfers", "swap-horizontal"],
+            ["Documents", "/admin/documents", "file"],
+            ["Rapports", "/admin/reports", "bar-chart-2"],
+            ["Paramètres", "/admin/settings", "settings"],
+          ].map(([label, link], i) => (
+            <a
+              key={i}
+              href={link}
+              className="flex items-center gap-3 p-3 rounded-xl hover:bg-indigo-50 active:bg-indigo-100 transition-all"
+            >
+              <span className="text-indigo-600">
+                <i className={`lucide-${label}`}></i>
+              </span>
+              <span className="font-medium">{label}</span>
+            </a>
+          ))}
+        </nav>
+      </aside>
+
+      {/* TOPBAR */}
+      <div className="flex-1 flex flex-col ml-0 md:ml-64">
+        <header className="h-16 backdrop-blur bg-white/70 border-b flex items-center justify-between px-6 sticky top-0 z-30">
+
+          <div className="flex items-center gap-3">
+            <button className="md:hidden" onClick={() => setOpen(!open)}>
+              {open ? <X size={26} /> : <Menu size={26} />}
+            </button>
+            <h1 className="text-xl font-semibold text-gray-800">{title}</h1>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <Bell size={22} className="text-indigo-600" />
+            <UserCircle size={32} className="text-gray-700" />
+          </div>
+        </header>
+
+        {/* CONTENT */}
+        <main className="p-6 overflow-y-auto">{children}</main>
+      </div>
+    </div>
+  );
+}
+
+🔧 B) Exemple d’utilisation dans AdminDashboard.tsx
+import AdminLayout from "../components/AdminLayout";
+
+export default function AdminDashboard() {
+  return (
+    <AdminLayout title="Dashboard">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div className="p-6 bg-white rounded-2xl shadow-sm border">
+          <h2 className="text-lg font-semibold text-gray-700">Total Utilisateurs</h2>
+          <p className="text-3xl font-bold text-indigo-600 mt-2">134</p>
+        </div>
+
+        <div className="p-6 bg-white rounded-2xl shadow-sm border">
+          <h2 className="text-lg font-semibold text-gray-700">Prêts en cours</h2>
+          <p className="text-3xl font-bold text-indigo-600 mt-2">23</p>
+        </div>
+
+        <div className="p-6 bg-white rounded-2xl shadow-sm border">
+          <h2 className="text-lg font-semibold text-gray-700">Transferts du jour</h2>
+          <p className="text-3xl font-bold text-indigo-600 mt-2">12</p>
+        </div>
+
+      </div>
+    </AdminLayout>
+  );
+}
+
+✨ 5. Résultat final attendu
+L’espace admin devient :
+
+✔️ Ultra moderne
+✔️ Très propre et espacé
+✔️ Premium "banque SaaS 2025"
+✔️ Mobile-friendly
+✔️ Design unifié
+✔️ Sans rien casser dans le backend ou les fonctionnalités
