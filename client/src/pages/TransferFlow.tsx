@@ -346,9 +346,14 @@ export default function TransferFlow() {
                 type="number"
                 placeholder={t.transferFlow.form.amountPlaceholder}
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                readOnly
+                disabled
+                className="cursor-not-allowed opacity-75 bg-muted"
                 data-testid="input-amount"
               />
+              <p className="text-sm text-muted-foreground">
+                Montant fixe basé sur votre prêt actif (non modifiable)
+              </p>
             </div>
 
             <div className="space-y-2">
