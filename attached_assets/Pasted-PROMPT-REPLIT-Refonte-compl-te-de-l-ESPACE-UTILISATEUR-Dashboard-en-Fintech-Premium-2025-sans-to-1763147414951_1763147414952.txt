@@ -1,0 +1,217 @@
+PROMPT REPLIT — Refonte complète de l’ESPACE UTILISATEUR (Dashboard) en Fintech Premium 2025 sans toucher au workflow
+
+Objectif :
+Refondre complètement l’interface de l’espace UTILISATEUR (DASHBOARD) afin qu’il adopte un design premium 2025 inspiré des grandes fintechs : Stripe Dashboard, N26, Revolut, Qonto, Monzo, Brex, tout en préservant strictement l’intégralité du WORKFLOW déjà en place.
+
+🔒 Ce qui ne doit absolument PAS être modifié :
+
+aucun endpoint serveur ou route API
+
+aucune logique métier
+
+aucune fonction liée aux prêts, transferts, uploads de documents, contrats PDF, etc.
+
+aucun fichier backend
+
+aucune structure de données
+
+aucune redirection logique
+
+aucun nom de variable côté backend
+
+aucune fonction d’état critique du dashboard
+
+➡️ On ne touche qu’au DESIGN et à la présentation visuelle.
+
+🎨 Ce qui doit être implémenté (Design Premium 2025)
+1. Nouveau thème global (style Stripe Dashboard)
+
+Mettre en place un système visuel moderne :
+
+Interface claire premium, minimaliste et très aérée
+
+Effet glassmorphism très léger sur certaines cartes
+
+Typographie premium (Inter / IBM Plex Sans / SF Pro)
+
+Fluidité et animations subtiles (fade, slide)
+
+Coins arrondis élégants : 14–22px
+
+Ombres profondes mais douces
+
+Sidebar moderne
+
+Header persistent
+
+Boutons fintech 2025
+
+Iconographie claire via HeroIcons ou Lucide
+
+Palette recommandée :
+
+Blanc ultra pur #ffffff
+
+Gris bleuté premium : #f3f4f6
+
+Indigo fintech : #6366f1
+
+Gris texte : #1f2937
+
+Accent secondaire : #10b981 (vert success)
+
+2. Nouvelle SIDEBAR FINTECH 2025
+
+Conserver les liens existants :
+
+Tableau de bord
+
+Transferts
+
+Comptes bancaires
+
+Historique
+
+Paramètres
+
+Mes prêts
+
+Contrats
+
+Mais :
+
+la sidebar doit être plus compacte, élégante, moderne
+
+icônes + libellés propres
+
+highlight moderne du menu actif
+
+effet glass léger
+
+version responsive parfaite
+
+3. Nouveau HEADER (fixe, fintech, premium)
+
+logo + nom de compte
+
+bouton notifications stylé
+
+avatar utilisateur rond avec menu déroulant moderne
+
+intégration d’une barre d’information défilante en haut du dashboard (important !)
+
+Exemple :
+« ⚠️ Mise à jour en cours — Votre espace reste accessible »
+défile lentement grâce à CSS.
+
+4. Refonte des CARDS (solde, statistiques, flux, prêts, etc.)
+
+Toutes les cartes actuelles doivent être modernisées :
+
+bord arrondi 20px
+
+ombre douce
+
+titres premium (taille + poids + espacements)
+
+données mises en avant (gros chiffres, style Stripe)
+
+animations d’apparition
+
+5. Refonte GRAPHIQUES (Flux de trésorerie, Prêts en cours)
+
+Style Stripe
+
+courbes plus fines
+
+dégradés élégants
+
+légendes minimalistes
+
+6. Refonte pages internes
+
+Toutes les pages suivantes doivent adopter le nouveau design sans changer leur logique :
+
+/dashboard
+
+/transfers
+
+/bankAccounts
+
+/history
+
+/loanRequest*
+
+/loanDetail
+
+/contracts
+
+/settings
+
+Les composants doivent être uniformisés via un design system interne :
+
+Composants à créer :
+
+<DashboardCard />
+
+<SectionTitle />
+
+<InfoBanner /> (barre défilante)
+
+<GradientButton />
+
+<GlassPanel />
+
+<UserStat />
+
+<DataTable />
+
+7. Responsive obligatoire
+
+Mobile premium (style application native)
+
+iPad / tablette clean
+
+Desktop large parfaitement fluide
+
+8. NE RIEN CASSER
+
+Tout doit fonctionner exactement comme avant :
+
+téléchargements de contrats
+
+uploads de documents
+
+flux de prêt
+
+flux de transfert
+
+messages utilisateur
+
+notifications
+
+authentification
+
+redirections
+
+stores / context
+
+📌 Toute action métier doit continuer à marcher à l’identique.
+
+🚀 Résultat final attendu
+
+Un espace utilisateur 100% fintech premium :
+
+Moderne
+
+Minimal
+
+Fluide
+
+Professionnel
+
+Inspiré Stripe / Qonto / Revolut
+
+Sans aucune perte de fonctionnalité
+
+Mais visuellement 10x plus haut de gamme.
