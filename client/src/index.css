@@ -393,6 +393,19 @@
     animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
+  @keyframes progress-glow {
+    0% {
+      left: -40%;
+    }
+    100% {
+      left: 110%;
+    }
+  }
+
+  .animate-progress-glow {
+    animation: progress-glow 2.2s linear infinite;
+  }
+
   /* Dashboard card styling */
   .dashboard-card {
     @apply bg-white dark:bg-slate-900 shadow-sm;
