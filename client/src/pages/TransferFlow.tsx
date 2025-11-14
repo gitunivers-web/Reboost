@@ -70,12 +70,10 @@ export default function TransferFlow() {
       setTransferId(data.transfer.id);
       toast({
         title: t.transferFlow.toast.initiated,
-        description: 'Transfert créé avec succès. Consultation des codes de validation...',
+        description: 'Transfert initié avec succès. Vérification en cours...',
       });
       
-      setTimeout(() => {
-        setLocation(`/transfer/${data.transfer.id}/codes`);
-      }, 1000);
+      setStep('verification');
     },
     onError: () => {
       toast({

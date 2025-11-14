@@ -35,7 +35,6 @@ import IndividualLoans from '@/pages/IndividualLoans';
 import LoanRequest from '@/pages/LoanRequest';
 import LoanRequestDashboard from '@/pages/LoanRequestDashboard';
 import TransferFlow from '@/pages/TransferFlow';
-import TransferCodes from '@/pages/TransferCodes';
 import Transfers from '@/pages/Transfers';
 import BankAccounts from '@/pages/BankAccounts';
 import History from '@/pages/History';
@@ -108,7 +107,6 @@ function App() {
                         <Route path="/loans/new" component={LoanRequestDashboard} />
                         <Route path="/contracts" component={Contracts} />
                         <Route path="/transfer/new" component={TransferFlow} />
-                        <Route path="/transfer/:id/codes" component={TransferCodes} />
                         <Route path="/transfer/:id" component={TransferFlow} />
                         <Route path="/transfers" component={Transfers} />
                         <Route path="/accounts" component={BankAccounts} />
