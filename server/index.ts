@@ -268,7 +268,7 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+  const port = process.env.PORT ? Number(process.env.PORT) : 5000;
   server.listen(port, "0.0.0.0", () => {
     log(`✅ Backend API server listening on port ${port}`);
     log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
