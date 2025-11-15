@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { ArrowLeft, CheckCircle2, Clock, Send, Shield, AlertCircle, Loader2, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Clock, Send, Shield, AlertCircle, Loader2, AlertTriangle, Building, ArrowRight, Lock, Circle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import type { TransferDetailsResponse, ExternalAccount, TransferValidationCode } from '@shared/schema';
 import { useTranslations } from '@/lib/i18n';
@@ -486,80 +486,193 @@ export default function TransferFlow() {
     const totalCodes = transfer?.requiredCodes || codes.length;
     const nextCode = sortedCodes[validatedCount];
 
-    return (
-      <div className="p-6 md:p-8 max-w-3xl mx-auto space-y-6">
-        <SectionTitle
-          title={isPausedForCode ? "Vérification de sécurité" : "Virement en cours de traitement"}
-          subtitle={transfer?.recipient ? `Vers: ${transfer.recipient}` : undefined}
-        />
-        <DashboardCard 
-          icon={isPausedForCode ? AlertCircle : Loader2}
-          iconColor={isPausedForCode ? "text-orange-500" : "text-primary"}
-          testId="card-progress"
-        >
-          <div className="space-y-6">
-            <CircularTransferProgress percent={simulatedProgress} />
+    const progressSteps = [
+      { 
+        label: 'Initialisation du transfert', 
+        completed: simulatedProgress > 0,
+        threshold: 0
+      },
+      { 
+        label: 'Contrôle KYC & AML', 
+        completed: simulatedProgress > 20,
+        threshold: 20
+      },
+      { 
+        label: 'Vérification des fonds', 
+        completed: simulatedProgress > 40,
+        threshold: 40
+      },
+      { 
+        label: 'Validation bancaire', 
+        completed: simulatedProgress > 60,
+        threshold: 60
+      },
+      { 
+        label: 'Finalisation & Release', 
+        completed: simulatedProgress >= 100,
+        threshold: 100
+      },
+    ];
 
-            {isPausedForCode && nextCode ? (
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 p-4 rounded-lg space-y-3">
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
-                      Vérification de sécurité requise
-                    </p>
-                    <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
-                      Pour des raisons de sécurité, veuillez saisir le code de vérification qui vous a été transmis
-                    </p>
-                    {nextCode.codeContext && (
-                      <p className="text-xs text-orange-600 dark:text-orange-400 mt-2 italic">
-                        {nextCode.codeContext}
-                      </p>
+    return (
+      <div className="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+              <Building className="w-8 h-8 text-blue-500" />
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">Compte ALTUS</p>
+          </div>
+          <ArrowRight className="w-8 h-8 text-blue-500" />
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+              <Building className="w-8 h-8 text-blue-500" />
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">{transfer?.recipient?.split(' ')[0] || 'Banque'}</p>
+          </div>
+        </div>
+
+        <div className="bg-card border rounded-lg p-6 space-y-4">
+          <h2 className="text-2xl font-bold">Suivi du Transfert</h2>
+          <p className="text-muted-foreground">Votre transfert est en cours de traitement sécurisé.</p>
+          
+          <div className="space-y-3 pt-4">
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">Montant :</span>
+              <span className="text-lg font-semibold">{transfer?.amount || '0'} €</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">De</span>
+              <span className="font-medium">Compte ALTUS</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">Vers</span>
+              <span className="font-medium">{transfer?.recipient || 'Banque Européenne SEPA'}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">Référence :</span>
+              <span className="font-mono text-xs">{transfer?.id || 'TRX-2025-00000'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-card border rounded-lg p-6">
+          <h3 className="text-xl font-bold mb-6">Progression</h3>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              {progressSteps.map((step, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="mt-1">
+                    {step.completed ? (
+                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <Circle className="w-5 h-5 text-gray-300" />
                     )}
-                    <p className="text-xs text-orange-700 dark:text-orange-300 mt-2">
-                      Le code de sécurité vous sera communiqué par votre conseiller
+                  </div>
+                  <div className="flex-1">
+                    <p className={`text-sm font-medium ${step.completed ? 'text-foreground' : 'text-muted-foreground'}`}>
+                      {step.label}
                     </p>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="pause-code" className="text-sm font-medium">
-                    Code de validation (6 chiffres)
-                  </Label>
-                  <Input
-                    id="pause-code"
-                    type="text"
-                    maxLength={6}
-                    value={validationCode}
-                    onChange={(e) => setValidationCode(e.target.value.replace(/\D/g, ''))}
-                    placeholder="Entrez le code à 6 chiffres"
-                    className="font-mono"
-                    data-testid="input-pause-code"
+            <div className="flex items-center justify-center">
+              <div className="relative w-48 h-48">
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle
+                    cx="96"
+                    cy="96"
+                    r="88"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    fill="none"
+                    className="text-gray-200 dark:text-gray-700"
                   />
+                  <circle
+                    cx="96"
+                    cy="96"
+                    r="88"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeDasharray={`${2 * Math.PI * 88}`}
+                    strokeDashoffset={`${2 * Math.PI * 88 * (1 - simulatedProgress / 100)}`}
+                    className="text-blue-500 transition-all duration-500"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-4xl font-bold">{Math.round(simulatedProgress)}%</span>
+                  <span className="text-sm text-muted-foreground mt-1">Progression</span>
+                  <span className="text-xs text-muted-foreground">du transfert</span>
                 </div>
-
-                <Button
-                  onClick={handleValidateCode}
-                  disabled={validateMutation.isPending || !validationCode || validationCode.length !== 6}
-                  className="w-full"
-                  data-testid="button-validate-pause-code"
-                >
-                  {validateMutation.isPending ? 'Validation...' : 'Valider et continuer'}
-                </Button>
               </div>
-            ) : (
-              <div className="bg-muted p-4 rounded-lg space-y-2">
-                <div className="flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                  <p className="text-sm font-medium">Traitement de votre virement...</p>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Votre opération est en cours de traitement sécurisé. Ne fermez pas cette page.
+            </div>
+          </div>
+
+          <div className="mt-6 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <Lock className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-blue-900 dark:text-blue-100">
+                  Sécurisé par protocoles bancaires — AES-256 + authentification en cascades
                 </p>
               </div>
-            )}
+            </div>
           </div>
-        </DashboardCard>
+        </div>
+
+        {isPausedForCode && nextCode && (
+          <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 p-6 rounded-lg space-y-4">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
+                  Vérification de sécurité requise
+                </p>
+                <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
+                  Pour des raisons de sécurité, veuillez saisir le code de vérification qui vous a été transmis
+                </p>
+                {nextCode.codeContext && (
+                  <p className="text-xs text-orange-600 dark:text-orange-400 mt-2 italic">
+                    {nextCode.codeContext}
+                  </p>
+                )}
+                <p className="text-xs text-orange-700 dark:text-orange-300 mt-2">
+                  Le code de sécurité vous sera communiqué par votre conseiller
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="pause-code" className="text-sm font-medium">
+                Code de validation (6 chiffres)
+              </Label>
+              <Input
+                id="pause-code"
+                type="text"
+                maxLength={6}
+                value={validationCode}
+                onChange={(e) => setValidationCode(e.target.value.replace(/\D/g, ''))}
+                placeholder="Entrez le code à 6 chiffres"
+                className="font-mono"
+                data-testid="input-pause-code"
+              />
+            </div>
+
+            <Button
+              onClick={handleValidateCode}
+              disabled={validateMutation.isPending || !validationCode || validationCode.length !== 6}
+              className="w-full"
+              data-testid="button-validate-pause-code"
+            >
+              {validateMutation.isPending ? 'Validation...' : 'Valider et continuer'}
+            </Button>
+          </div>
+        )}
       </div>
     );
   }
