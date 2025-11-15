@@ -1,0 +1,164 @@
+PROMPT À COLLER DANS REPLIT
+
+🔥 Version premium, complète, prête à l’emploi
+
+🎯 Objectif :
+Refondre entièrement la page de transfert (Transfer Tracking Page) en un design horizontal réaliste, premium, style Fintech 2025, sans toucher au backend, ni au workflow, ni au fonctionnement existant.
+Tu modifies uniquement le front-end.
+
+🔧 Tâche à exécuter :
+
+👉 Remplacer l’actuel design vertical “type feuille A4"
+par un layout horizontal moderne en deux colonnes, avec :
+
+🟦 Colonne gauche : Informations du transfert
+
+— Carte moderne large
+— Montant
+— Expéditeur / Destinataire
+— Banque
+— Référence
+— Texte “Votre transfert est en cours de traitement sécurisé"
+— Icône/badge “Sécurisé AES-256 + Authentification en cascades”
+
+Style exigé :
+
+Fond blanc
+
+Bords arrondis XL
+
+Ombre soft premium
+
+Largeur responsive
+
+Typography semi-bold moderne
+
+Alignement vertical parfait
+
+Pas de look “PDF” ou “carte étroite”
+
+🟦 Colonne droite : Progression circulaire 2025
+
+Créer une carte indépendante contenant :
+
+✔ Une barre de progression circulaire ultra réaliste
+
+Exigences :
+
+Cercle épais
+
+Dégradé bleu → cyan
+
+Animation fluide du pourcentage
+
+Textes centrés : “84%” + “Progression du transfert”
+
+✔ Liste des étapes
+
+Initialisation du transfert (check vert)
+
+Contrôle KYC & AML (check vert)
+
+Vérification des fonds (check vert)
+
+Validation bancaire (en cours → point animé)
+
+Finalisation & Release (gris)
+
+✔ Section "Sécurisé par protocoles bancaires"
+
+Icône cadenas moderne pastel
+
+Fond gris très clair
+
+Bord arrondi
+
+🏛 Bannière d’en-tête horizontale (en haut de la page)
+
+Ajouter tout en haut, au-dessus des deux colonnes :
+
+Deux emojis/icon banks modernisées + un flux animé entre eux
+
+Exemples acceptés :
+🏦 ➜🔵➜ 🏦
+ou
+🏛️ ➜💠➜ 🏛️
+
+Exigences :
+
+Animation fluide (CSS keyframes léger)
+
+Couleurs pastel bleutées
+
+Largeur 100%
+
+Hauteur faible (pas d’immense section Hero)
+
+📌 Points techniques OBLIGATOIRES
+
+Ne pas modifier : les routes, les hooks, les endpoints, la logique de transfert.
+
+Respecter 100 % le workflow existant.
+
+Ne modifier que la structure JSX + Tailwind de la page, pas les fonctions.
+
+Code propre, composants séparés si nécessaire.
+
+Responsivité obligatoire :
+
+Desktop : deux colonnes
+
+Mobile : colonnes empilées
+
+Aucune dépendance externe (pas de librairies tierces).
+
+📁 Page à modifier :
+
+La page actuelle de suivi de transfert (celle avec la barre de progression existante).
+Elle doit être remplacée par le nouveau layout horizontal décrit plus haut.
+
+🎨 Style global exigé :
+
+Fintech 2025 premium
+
+Minimalisme bancaire
+
+Blanc + bleu premium (#2563EB / #0EA5E9)
+
+Ombres douces
+
+Espacements généreux (p-8 / p-10)
+
+Alignement rigoureux
+
+Animations légères, professionnelles
+
+Ultra réaliste
+
+🧱 Structure finale imposée :
+[Bannière banks qui échangent]       ← animation horizontale
+
+-------------------------------------------------------------
+|  [Carte infos transfert]    |   [Carte progression + cercle] |
+-------------------------------------------------------------
+
+
+Tout doit être propre, symétrique, centré, haut de gamme.
+
+📌 Résultat final attendu
+
+Une interface moderne équivalente à :
+
+Stripe Activity Timeline
+
+Revolut Transfer Flow
+
+Wise Money Movement UI
+
+N26 Transfert Status
+
+HSBC Premier Visualization
+
+Avec un niveau de finition impeccable.
+
+🚀 Merci de générer directement le nouveau code complet, propre, responsive, sans casser le workflow.

@@ -1,0 +1,158 @@
+PROMPT À COLLER DANS REPLIT (VERSION PARFAITE)
+
+Objectif :
+Améliorer le système multilingue + améliorer entièrement le menu mobile + ajouter détection automatique de langue via IP.
+Ne rien casser dans le backend, ni les routes, ni les composants existants.
+Tu modifies uniquement le front-end.
+
+1️⃣ Détection automatique de la langue via IP
+
+Merci d’implémenter la logique suivante :
+
+Au premier chargement du site (SSR ou client), détecter la localisation de l’utilisateur via son IP.
+
+Utiliser un service public simple comme :
+https://ipapi.co/json
+
+Récupérer le country_code (FR, PT, ES, IT, DE, NL, EN…).
+
+Mapper automatiquement avec mes langues supportées :
+FR → fr
+PT → pt
+ES → es
+IT → it
+DE → de
+NL → nl
+GB/US/CA/AU → en
+
+S’il n’y a pas de correspondance, utiliser anglais par défaut.
+
+⚠️ IMPORTANT
+
+Ne pas déclencher la détection à chaque navigation.
+
+Utiliser un useEffect uniquement si aucune langue n’a déjà été définie.
+
+Respecter le state de langue déjà choisi par l’utilisateur.
+
+Le choix manuel doit prendre la priorité sur la détection IP.
+
+2️⃣ Améliorer complètement le menu mobile (drawer)
+
+Merci de :
+
+➤ Le transformer en drawer premium fintech 2025 :
+
+Bord arrondis XL
+
+Ombres douces
+
+Background légèrement flouté (backdrop-blur-xl)
+
+Animation slide-in + fade
+
+Icônes modernisées
+
+Organisation plus propre
+
+➤ Faire un header fixe en haut du drawer
+
+Avec :
+
+Le titre “Menu”
+
+Le bouton fermeture
+
+Une ligne discrète
+
+3️⃣ Rendre le sélecteur de langue COULISSABLE horizontalement
+
+Actuellement, il allonge le menu.
+Je veux le remplacer par un carrousel horizontal :
+
+Exigences :
+
+Scroll horizontal → overflow-x-auto
+
+Sans barre visible → scrollbar-hidden
+
+Style pill (boutons arrondis)
+
+Animation smooth
+
+Chaque langue est un bouton indépendant
+
+État actif clair (fond bleu, texte blanc)
+
+Icône globe minimaliste à gauche
+
+Fonctionne parfaitement sur mobile iOS/Android
+
+Exemple visuel attendu :
+
+🌐  [FR]   [EN]   [PT]   [ES]   [DE]   [IT]   [NL]
+
+4️⃣ Rendre l’ensemble du menu plus moderne
+
+Exigences visuelles :
+
+Fond : bg-white/80
+
+Effet verre : backdrop-blur-xl
+
+Ombre : shadow-2xl
+
+Rayon : rounded-3xl
+
+Espacements : p-6
+
+Boutons avec hover doux
+
+Police semi-bold
+
+Style général équivalent à :
+Revolut / Wise / N26 / HSBC Premier
+
+5️⃣ Contraintes techniques
+
+Merci de respecter strictement :
+
+Ne pas casser le routing existant
+
+Ne pas supprimer la logique de changement de langue déjà en place
+
+Ne pas modifier les pages en dehors du menu et du fichier de gestion de langue
+
+Pas de dépendances externes supplémentaires
+
+Code propre, clair, commenté
+
+Composants séparés si nécessaire :
+
+MobileMenu.tsx
+
+LanguageCarousel.tsx
+
+useDetectLanguage.ts (hook)
+
+6️⃣ Résultat final attendu
+
+Après ton intervention :
+
+✔ Le site détecte automatiquement la langue du visiteur via IP
+
+Avec fallback propre et sans override du choix manuel.
+
+✔ Le menu mobile devient premium, élégant, fintech
+
+Un drawer parfait : arrondi, animé, flouté.
+
+✔ Le sélecteur de langue mobile est coulissable horizontalement
+
+Sans rallonger le menu, responsive et moderne.
+
+✔ L’ensemble reste compatible Vercel + Render
+
+Sans scripts bloquants.
+
+🚀 Merci d’implémenter immédiatement tout ce qui est décrit ci-dessus.
