@@ -1295,8 +1295,11 @@ type TranslationKeys = {
       subtitle: string;
       amountLabel: string;
       amountPlaceholder: string;
+      amountHelper: string;
       accountLabel: string;
       accountPlaceholder: string;
+      externalAccountLabel: string;
+      selectAccountPlaceholder: string;
       noAccount: string;
       recipientLabel: string;
       recipientPlaceholder: string;
@@ -1330,6 +1333,18 @@ type TranslationKeys = {
     progress: {
       titlePaused: string;
       titleInProgress: string;
+      securityVerificationTitle: string;
+      transferProcessingTitle: string;
+      toPrefix: string;
+      securityVerificationRequired: string;
+      enterVerificationCode: string;
+      codeFromAdvisor: string;
+      validationCodeLabel: string;
+      enterCodePlaceholder: string;
+      validating: string;
+      validateAndContinue: string;
+      processingTransfer: string;
+      doNotCloseProcessing: string;
       amountLabel: string;
       progressLabel: string;
       pauseTitle: string;
@@ -1347,11 +1362,19 @@ type TranslationKeys = {
     complete: {
       title: string;
       subtitle: string;
+      successMessage: string;
+      referenceLabel: string;
+      returnToDashboard: string;
       amountLabel: string;
       recipientLabel: string;
       feesLabel: string;
     };
     toast: {
+      transferInProgress: string;
+      transferAlreadyInProgress: string;
+      transferInitiated: string;
+      selectExternalAccount: string;
+      noActiveLoan: string;
       initiated: string;
       initiatedDesc: string;
       error: string;
@@ -6159,6 +6182,23 @@ export const translations: Record<Language, TranslationKeys> = {
       monthApr: 'Abr',
       monthMay: 'May',
       monthJun: 'Jun',
+      serverError: 'No se puede conectar al servidor. Por favor, verifique su conexión e inténtelo de nuevo.',
+      diagnosticInfo: 'Información de diagnóstico (desarrollo)',
+      retry: 'Reintentar',
+      financeOverview: 'Aquí tiene una vista general de sus finanzas',
+      yourCreditLimit: 'Su límite de crédito',
+      maximum: 'Máximo',
+      activeLoanSingular: 'préstamo activo',
+      activeLoansPlural: 'préstamos activos',
+      loanNumber: 'Préstamo #',
+      progression: 'Progreso',
+      nextSixMonths: 'Próximos 6 meses',
+      repayment: 'Reembolso',
+      noUpcomingRepayments: 'Sin reembolsos próximos',
+      pendingContracts: 'Contratos pendientes',
+      contractsToSign: 'contrato(s) para firmar',
+      generatedOn: 'Generado el',
+      view: 'Ver',
     },
     loan: {
       pageTitle: 'Mis Préstamos',
@@ -8199,6 +8239,23 @@ export const translations: Record<Language, TranslationKeys> = {
       monthApr: 'Abr',
       monthMay: 'Mai',
       monthJun: 'Jun',
+      serverError: 'Não foi possível conectar ao servidor. Por favor, verifique sua conexão e tente novamente.',
+      diagnosticInfo: 'Informações de diagnóstico (desenvolvimento)',
+      retry: 'Tentar novamente',
+      financeOverview: 'Aqui está uma visão geral de suas finanças',
+      yourCreditLimit: 'Seu limite de crédito',
+      maximum: 'Máximo',
+      activeLoanSingular: 'empréstimo ativo',
+      activeLoansPlural: 'empréstimos ativos',
+      loanNumber: 'Empréstimo #',
+      progression: 'Progresso',
+      nextSixMonths: 'Próximos 6 meses',
+      repayment: 'Reembolso',
+      noUpcomingRepayments: 'Sem reembolsos próximos',
+      pendingContracts: 'Contratos pendentes',
+      contractsToSign: 'contrato(s) para assinar',
+      generatedOn: 'Gerado em',
+      view: 'Ver',
     },
     loan: {
       pageTitle: 'Meus Empréstimos',
@@ -10048,23 +10105,6 @@ export const translations: Record<Language, TranslationKeys> = {
       monthApr: 'Apr',
       monthMay: 'Mag',
       monthJun: 'Giu',
-      serverError: 'Verbindung zum Server nicht möglich. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.',
-      diagnosticInfo: 'Diagnoseinformationen (Entwicklung)',
-      retry: 'Erneut versuchen',
-      financeOverview: 'Hier ist eine Übersicht Ihrer Finanzen',
-      yourCreditLimit: 'Ihr Kreditlimit',
-      maximum: 'Maximum',
-      activeLoanSingular: 'aktives Darlehen',
-      activeLoansPlural: 'aktive Darlehen',
-      loanNumber: 'Darlehen #',
-      progression: 'Fortschritt',
-      nextSixMonths: 'Nächste 6 Monate',
-      repayment: 'Rückzahlung',
-      noUpcomingRepayments: 'Keine bevorstehenden Rückzahlungen',
-      pendingContracts: 'Ausstehende Verträge',
-      contractsToSign: 'Vertrag/Verträge zu unterschreiben',
-      generatedOn: 'Erstellt am',
-      view: 'Ansehen',
       serverError: 'Impossibile connettersi al server. Si prega di verificare la connessione e riprovare.',
       diagnosticInfo: 'Informazioni diagnostiche (sviluppo)',
       retry: 'Riprova',
@@ -10082,40 +10122,6 @@ export const translations: Record<Language, TranslationKeys> = {
       contractsToSign: 'contratto/i da firmare',
       generatedOn: 'Generato il',
       view: 'Vedi',
-      serverError: 'Não foi possível conectar ao servidor. Por favor, verifique sua conexão e tente novamente.',
-      diagnosticInfo: 'Informações de diagnóstico (desenvolvimento)',
-      retry: 'Tentar novamente',
-      financeOverview: 'Aqui está uma visão geral de suas finanças',
-      yourCreditLimit: 'Seu limite de crédito',
-      maximum: 'Máximo',
-      activeLoanSingular: 'empréstimo ativo',
-      activeLoansPlural: 'empréstimos ativos',
-      loanNumber: 'Empréstimo #',
-      progression: 'Progresso',
-      nextSixMonths: 'Próximos 6 meses',
-      repayment: 'Reembolso',
-      noUpcomingRepayments: 'Sem reembolsos próximos',
-      pendingContracts: 'Contratos pendentes',
-      contractsToSign: 'contrato(s) para assinar',
-      generatedOn: 'Gerado em',
-      view: 'Ver',
-      serverError: 'No se puede conectar al servidor. Por favor, verifique su conexión e inténtelo de nuevo.',
-      diagnosticInfo: 'Información de diagnóstico (desarrollo)',
-      retry: 'Reintentar',
-      financeOverview: 'Aquí tiene una vista general de sus finanzas',
-      yourCreditLimit: 'Su límite de crédito',
-      maximum: 'Máximo',
-      activeLoanSingular: 'préstamo activo',
-      activeLoansPlural: 'préstamos activos',
-      loanNumber: 'Préstamo #',
-      progression: 'Progreso',
-      nextSixMonths: 'Próximos 6 meses',
-      repayment: 'Reembolso',
-      noUpcomingRepayments: 'Sin reembolsos próximos',
-      pendingContracts: 'Contratos pendientes',
-      contractsToSign: 'contrato(s) para firmar',
-      generatedOn: 'Generado el',
-      view: 'Ver',
     },
     loan: {
       pageTitle: 'I miei prestiti',
@@ -11965,6 +11971,23 @@ export const translations: Record<Language, TranslationKeys> = {
       monthApr: 'Apr',
       monthMay: 'Mai',
       monthJun: 'Jun',
+      serverError: 'Verbindung zum Server nicht möglich. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.',
+      diagnosticInfo: 'Diagnoseinformationen (Entwicklung)',
+      retry: 'Erneut versuchen',
+      financeOverview: 'Hier ist eine Übersicht Ihrer Finanzen',
+      yourCreditLimit: 'Ihr Kreditlimit',
+      maximum: 'Maximum',
+      activeLoanSingular: 'aktives Darlehen',
+      activeLoansPlural: 'aktive Darlehen',
+      loanNumber: 'Darlehen #',
+      progression: 'Fortschritt',
+      nextSixMonths: 'Nächste 6 Monate',
+      repayment: 'Rückzahlung',
+      noUpcomingRepayments: 'Keine bevorstehenden Rückzahlungen',
+      pendingContracts: 'Ausstehende Verträge',
+      contractsToSign: 'Vertrag/Verträge zu unterschreiben',
+      generatedOn: 'Erstellt am',
+      view: 'Ansehen',
     },
     loan: {
       pageTitle: 'Meine Kredite',
