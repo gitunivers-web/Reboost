@@ -267,26 +267,26 @@ export default function Products() {
                 <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-white opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
               </span>
-              Conseillers disponibles 24/7
+              {t.products.advisors247}
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Prêt à concrétiser vos projets ?
+              {t.products.ctaTitle}
             </h2>
             <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
-              Notre équipe de conseillers dédiés vous accompagne de A à Z. Démarrez votre dossier en quelques clics.
+              {t.products.ctaSubtitle}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/loan-request">
                 <Button size="lg" className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-6 text-lg font-semibold min-w-[200px]">
-                  Demander un financement
+                  {t.products.ctaButton1}
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
               <Link href="/contact">
                 <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold min-w-[200px]">
-                  Parler à un conseiller
+                  {t.products.ctaButton2}
                 </Button>
               </Link>
             </div>
@@ -294,15 +294,15 @@ export default function Products() {
             <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-white/80">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5" />
-                <span>Sans engagement</span>
+                <span>{t.products.ctaBadge1}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5" />
-                <span>Réponse sous 24h</span>
+                <span>{t.products.ctaBadge2}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5" />
-                <span>100% sécurisé</span>
+                <span>{t.products.ctaBadge3}</span>
               </div>
             </div>
           </motion.div>

@@ -525,6 +525,14 @@ type TranslationKeys = {
     rate: string;
     amount: string;
     duration: string;
+    advisors247: string;
+    ctaTitle: string;
+    ctaSubtitle: string;
+    ctaButton1: string;
+    ctaButton2: string;
+    ctaBadge1: string;
+    ctaBadge2: string;
+    ctaBadge3: string;
   };
   contact: {
     title: string;
@@ -2619,6 +2627,14 @@ export const translations: Record<Language, TranslationKeys> = {
       rate: 'Taux',
       amount: 'Montant',
       duration: 'Durée',
+      advisors247: 'Conseillers disponibles 24/7',
+      ctaTitle: 'Prêt à concrétiser vos projets ?',
+      ctaSubtitle: 'Notre équipe de conseillers dédiés vous accompagne de A à Z. Démarrez votre dossier en quelques clics.',
+      ctaButton1: 'Demander un financement',
+      ctaButton2: 'Parler à un conseiller',
+      ctaBadge1: 'Sans engagement',
+      ctaBadge2: 'Réponse sous 24h',
+      ctaBadge3: '100% sécurisé',
     },
     contact: {
       title: 'Contactez-nous',
@@ -4880,6 +4896,14 @@ export const translations: Record<Language, TranslationKeys> = {
       rate: 'Rate',
       amount: 'Amount',
       duration: 'Duration',
+      advisors247: 'Advisors available 24/7',
+      ctaTitle: 'Ready to make your projects happen?',
+      ctaSubtitle: 'Our team of dedicated advisors supports you from A to Z. Start your application in just a few clicks.',
+      ctaButton1: 'Request financing',
+      ctaButton2: 'Talk to an advisor',
+      ctaBadge1: 'No commitment',
+      ctaBadge2: 'Response within 24h',
+      ctaBadge3: '100% secure',
     },
     contact: {
       title: 'Contact Us',
@@ -7228,6 +7252,14 @@ export const translations: Record<Language, TranslationKeys> = {
       rate: 'Tasa',
       amount: 'Monto',
       duration: 'Duración',
+      advisors247: 'Asesores disponibles 24/7',
+      ctaTitle: '¿Listo para concretar sus proyectos?',
+      ctaSubtitle: 'Nuestro equipo de asesores dedicados le acompaña de principio a fin. Inicie su solicitud en pocos clics.',
+      ctaButton1: 'Solicitar financiamiento',
+      ctaButton2: 'Hablar con un asesor',
+      ctaBadge1: 'Sin compromiso',
+      ctaBadge2: 'Respuesta en 24h',
+      ctaBadge3: '100% seguro',
     },
     contact: {
       title: 'Contáctenos',
@@ -9497,6 +9529,14 @@ export const translations: Record<Language, TranslationKeys> = {
       rate: 'Taxa',
       amount: 'Montante',
       duration: 'Duração',
+      advisors247: 'Consultores disponíveis 24/7',
+      ctaTitle: 'Pronto para concretizar seus projetos?',
+      ctaSubtitle: 'Nossa equipe de consultores dedicados o acompanha do início ao fim. Inicie sua solicitação em poucos cliques.',
+      ctaButton1: 'Solicitar financiamento',
+      ctaButton2: 'Falar com um consultor',
+      ctaBadge1: 'Sem compromisso',
+      ctaBadge2: 'Resposta em 24h',
+      ctaBadge3: '100% seguro',
     },
     contact: {
       title: 'Contate-nos',
@@ -11643,6 +11683,14 @@ export const translations: Record<Language, TranslationKeys> = {
       rate: 'Tasso',
       amount: 'Importo',
       duration: 'Durata',
+      advisors247: 'Consulenti disponibili 24/7',
+      ctaTitle: 'Pronto a realizzare i tuoi progetti?',
+      ctaSubtitle: 'Il nostro team di consulenti dedicati ti accompagna dall\'inizio alla fine. Avvia la tua richiesta in pochi clic.',
+      ctaButton1: 'Richiedere finanziamento',
+      ctaButton2: 'Parlare con un consulente',
+      ctaBadge1: 'Senza impegno',
+      ctaBadge2: 'Risposta entro 24h',
+      ctaBadge3: '100% sicuro',
     },
     contact: {
       title: 'Contattaci',
@@ -13638,6 +13686,14 @@ export const translations: Record<Language, TranslationKeys> = {
       rate: 'Zinssatz',
       amount: 'Betrag',
       duration: 'Laufzeit',
+      advisors247: 'Berater 24/7 verfügbar',
+      ctaTitle: 'Bereit, Ihre Projekte zu verwirklichen?',
+      ctaSubtitle: 'Unser Team engagierter Berater begleitet Sie von A bis Z. Starten Sie Ihren Antrag mit wenigen Klicks.',
+      ctaButton1: 'Finanzierung beantragen',
+      ctaButton2: 'Mit einem Berater sprechen',
+      ctaBadge1: 'Unverbindlich',
+      ctaBadge2: 'Antwort innerhalb 24h',
+      ctaBadge3: '100% sicher',
     },
     contact: {
       title: 'Kontaktieren Sie uns',
@@ -15808,6 +15864,14 @@ export const translations: Record<Language, TranslationKeys> = {
       rate: 'Tarief',
       amount: 'Bedrag',
       duration: 'Looptijd',
+      advisors247: 'Adviseurs beschikbaar 24/7',
+      ctaTitle: 'Klaar om uw projecten te realiseren?',
+      ctaSubtitle: 'Ons team van toegewijde adviseurs begeleidt u van A tot Z. Start uw aanvraag met een paar klikken.',
+      ctaButton1: 'Financiering aanvragen',
+      ctaButton2: 'Praten met een adviseur',
+      ctaBadge1: 'Vrijblijvend',
+      ctaBadge2: 'Reactie binnen 24u',
+      ctaBadge3: '100% veilig',
     },
     contact: {
       title: 'Neem contact met ons op',
