@@ -137,6 +137,10 @@ type TranslationKeys = {
   nav: {
     home: string;
     products: string;
+    tagline: string;
+    more: string;
+    moreInfo: string;
+    language: string;
     loansMenu: {
       label: string;
       items: Array<{
@@ -2023,6 +2027,10 @@ export const translations: Record<Language, TranslationKeys> = {
     nav: {
       home: 'Accueil',
       products: 'Nos Prêts',
+      tagline: 'Solutions Financières Premium',
+      more: 'Plus',
+      moreInfo: 'Plus d\'informations',
+      language: 'Langue',
       loansMenu: {
         label: 'Nos Prêts',
         items: [
@@ -4197,6 +4205,10 @@ export const translations: Record<Language, TranslationKeys> = {
     nav: {
       home: 'Home',
       products: 'Our Loans',
+      tagline: 'Premium Financial Solutions',
+      more: 'More',
+      moreInfo: 'More information',
+      language: 'Language',
       loansMenu: {
         label: 'Our Loans',
         items: [
@@ -6355,6 +6367,10 @@ export const translations: Record<Language, TranslationKeys> = {
     nav: {
       home: 'Inicio',
       products: 'Nuestros Préstamos',
+      tagline: 'Soluciones Financieras Premium',
+      more: 'Más',
+      moreInfo: 'Más información',
+      language: 'Idioma',
       loansMenu: {
         label: 'Nuestros Préstamos',
         items: [
@@ -8525,6 +8541,10 @@ export const translations: Record<Language, TranslationKeys> = {
     nav: {
       home: 'Início',
       products: 'Nossos Empréstimos',
+      tagline: 'Soluções Financeiras Premium',
+      more: 'Mais',
+      moreInfo: 'Mais informações',
+      language: 'Idioma',
       loansMenu: {
         label: 'Nossos Empréstimos',
         items: [
@@ -10420,6 +10440,10 @@ export const translations: Record<Language, TranslationKeys> = {
     nav: {
       home: 'Inizio',
       products: 'I nostri prestiti',
+      tagline: 'Soluzioni Finanziarie Premium',
+      more: 'Più',
+      moreInfo: 'Più informazioni',
+      language: 'Lingua',
       loansMenu: {
         label: 'I nostri prestiti',
         items: [
@@ -12314,6 +12338,10 @@ export const translations: Record<Language, TranslationKeys> = {
     nav: {
       home: 'Startseite',
       products: 'Unsere Kredite',
+      tagline: 'Premium-Finanzlösungen',
+      more: 'Mehr',
+      moreInfo: 'Weitere Informationen',
+      language: 'Sprache',
       loansMenu: {
         label: 'Unsere Kredite',
         items: [
@@ -14208,6 +14236,10 @@ export const translations: Record<Language, TranslationKeys> = {
     nav: {
       home: 'Start',
       products: 'Onze leningen',
+      tagline: 'Premium Financiële Oplossingen',
+      more: 'Meer',
+      moreInfo: 'Meer informatie',
+      language: 'Taal',
       loansMenu: {
         label: 'Onze leningen',
         items: [
