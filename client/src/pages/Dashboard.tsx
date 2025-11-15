@@ -139,31 +139,31 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="p-6 md:p-8 space-y-8 max-w-[1600px] mx-auto animate-fade-in">
+      <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 max-w-[1600px] mx-auto animate-fade-in">
         {/* Hero Section - Greeting */}
         <div className="space-y-1">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             {getGreeting()}
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             {t.dashboard.financeOverview}
           </p>
         </div>
 
         {/* Balance Hero Card - Fintech Premium */}
         <DashboardCard className="bg-gradient-to-br from-primary/10 via-background to-background border-primary/20">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
-            <div className="space-y-6 flex-1">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8">
+            <div className="space-y-4 sm:space-y-6 flex-1">
               <div>
-                <p className="text-sm text-muted-foreground mb-2 font-medium uppercase tracking-wider">
+                <p className="text-xs sm:text-sm text-muted-foreground mb-2 font-medium uppercase tracking-wider">
                   {t.dashboard.totalBalance}
                 </p>
-                <h2 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight" data-testid="text-total-balance">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight break-all" data-testid="text-total-balance">
                   {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(dashboardData.balance.currentBalance)}
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6" data-testid="section-balance-kpis">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6" data-testid="section-balance-kpis">
                 <UserStat
                   label={t.dashboard.availableCredit}
                   value={dashboardData.balance.availableCredit}
@@ -186,7 +186,7 @@ export default function Dashboard() {
             </div>
 
             {/* Trend Visualization */}
-            <div className="h-32 w-full lg:w-96 flex items-end" data-testid="chart-balance-trend">
+            <div className="h-24 sm:h-32 w-full lg:w-96 flex items-end" data-testid="chart-balance-trend">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={[
                   { month: 1, value: 45000 },
@@ -217,40 +217,40 @@ export default function Dashboard() {
         </DashboardCard>
 
         {/* Quick Actions - Fintech Style */}
-        <div className="flex flex-wrap gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <Link href="/transfer/new">
-            <Button size="lg" className="gap-2 shadow-md" data-testid="button-new-transfer">
+            <Button size="lg" className="gap-2 shadow-md w-full" data-testid="button-new-transfer">
               <Send className="w-4 h-4" />
-              {t.dashboard.newTransfer}
+              <span className="text-sm sm:text-base">{t.dashboard.newTransfer}</span>
             </Button>
           </Link>
           <Button 
             size="lg"
             variant="outline" 
-            className="gap-2" 
+            className="gap-2 w-full" 
             onClick={() => setLoanModalOpen(true)}
             data-testid="button-request-loan"
           >
             <Plus className="w-4 h-4" />
-            {t.dashboard.requestLoan}
+            <span className="text-sm sm:text-base">{t.dashboard.requestLoan}</span>
           </Button>
           <Link href="/accounts">
-            <Button size="lg" variant="outline" className="gap-2" data-testid="button-manage-accounts">
+            <Button size="lg" variant="outline" className="gap-2 w-full" data-testid="button-manage-accounts">
               <Wallet className="w-4 h-4" />
-              {t.dashboard.manageAccounts}
+              <span className="text-sm sm:text-base">{t.dashboard.manageAccounts}</span>
             </Button>
           </Link>
         </div>
 
         {/* Analytics Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Cashflow Chart - Stripe Style */}
           <DashboardCard 
             title={t.dashboard.cashflow}
             subtitle={t.dashboard.incomeExpensesSixMonths}
             className="lg:col-span-2"
           >
-            <div className="h-80" data-testid="chart-cashflow">
+            <div className="h-64 sm:h-72 md:h-80" data-testid="chart-cashflow">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={mockCashflowData}>
                   <defs>
@@ -348,7 +348,7 @@ export default function Dashboard() {
         </div>
 
         {/* Loans & Repayments Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Active Loans */}
           <DashboardCard
             title={t.dashboard.activeLoans}

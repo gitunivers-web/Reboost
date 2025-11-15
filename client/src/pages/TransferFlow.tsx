@@ -322,7 +322,7 @@ export default function TransferFlow() {
   if (step === 'form') {
     return (
       <div className="min-h-screen bg-background">
-        <div className="p-6 md:p-8 max-w-5xl mx-auto space-y-8 animate-fade-in">
+        <div className="p-4 sm:p-6 md:p-8 max-w-5xl mx-auto space-y-6 sm:space-y-8 animate-fade-in">
           <Button 
             variant="ghost" 
             onClick={() => setLocation('/dashboard')}
@@ -334,15 +334,15 @@ export default function TransferFlow() {
           </Button>
 
           <div className="space-y-1">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
               {t.transferFlow.form.title}
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               {t.transferFlow.form.subtitle}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <DashboardCard 
               title="Détails du transfert"
               icon={Send}
@@ -613,31 +613,31 @@ export default function TransferFlow() {
 
     return (
       <div className="min-h-screen bg-background">
-        <div className="p-6 md:p-8 max-w-5xl mx-auto space-y-8 animate-fade-in">
-          <div className="flex items-center justify-center gap-6 mb-8">
+        <div className="p-4 sm:p-6 md:p-8 max-w-5xl mx-auto space-y-6 sm:space-y-8 animate-fade-in">
+          <div className="flex items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
             <div className="flex flex-col items-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center border border-primary/10">
-                <Building className="w-10 h-10 text-primary" />
+              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl sm:rounded-2xl flex items-center justify-center border border-primary/10">
+                <Building className="w-6 h-6 sm:w-10 sm:h-10 text-primary" />
               </div>
-              <p className="text-sm font-medium text-foreground mt-3">Compte ALTUS</p>
+              <p className="text-xs sm:text-sm font-medium text-foreground mt-2 sm:mt-3">Compte ALTUS</p>
             </div>
             <div className="flex flex-col items-center">
-              <ArrowRight className="w-10 h-10 text-primary animate-pulse" />
-              <p className="text-xs text-muted-foreground mt-2">En transit</p>
+              <ArrowRight className="w-6 h-6 sm:w-10 sm:h-10 text-primary animate-pulse" />
+              <p className="text-xs text-muted-foreground mt-1 sm:mt-2 hidden sm:block">En transit</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-2xl flex items-center justify-center border border-green-500/10">
-                <Building className="w-10 h-10 text-green-600 dark:text-green-400" />
+              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-xl sm:rounded-2xl flex items-center justify-center border border-green-500/10">
+                <Building className="w-6 h-6 sm:w-10 sm:h-10 text-green-600 dark:text-green-400" />
               </div>
-              <p className="text-sm font-medium text-foreground mt-3">{transfer?.recipient?.split(' ')[0] || 'Banque'}</p>
+              <p className="text-xs sm:text-sm font-medium text-foreground mt-2 sm:mt-3">{transfer?.recipient?.split(' ')[0] || 'Banque'}</p>
             </div>
           </div>
 
           <div className="space-y-1">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
               Suivi du Transfert
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               Votre transfert est en cours de traitement sécurisé.
             </p>
           </div>
@@ -648,27 +648,27 @@ export default function TransferFlow() {
             iconColor="text-primary"
             className="bg-gradient-to-br from-primary/5 via-background to-background"
           >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Montant</p>
-                <p className="text-2xl font-bold text-foreground">{transfer?.amount || '0'} €</p>
+                <p className="text-xl sm:text-2xl font-bold text-foreground break-all">{transfer?.amount || '0'} €</p>
               </div>
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">De</p>
-                <p className="text-sm font-semibold">Compte ALTUS</p>
+                <p className="text-xs sm:text-sm font-semibold">Compte ALTUS</p>
               </div>
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Vers</p>
-                <p className="text-sm font-semibold">{transfer?.recipient || 'Banque SEPA'}</p>
+                <p className="text-xs sm:text-sm font-semibold break-words">{transfer?.recipient || 'Banque SEPA'}</p>
               </div>
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Référence</p>
-                <p className="text-xs font-mono font-semibold">{transfer?.id || 'TRX-2025-00000'}</p>
+                <p className="text-xs font-mono font-semibold break-all">{transfer?.id || 'TRX-2025-00000'}</p>
               </div>
             </div>
           </DashboardCard>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <DashboardCard 
               title="Progression"
               icon={TrendingUp}
@@ -700,8 +700,8 @@ export default function TransferFlow() {
             </DashboardCard>
 
             <DashboardCard className="bg-gradient-to-br from-primary/5 via-background to-background">
-              <div className="flex flex-col items-center justify-center py-8">
-                <div className="relative w-56 h-56">
+              <div className="flex flex-col items-center justify-center py-6 sm:py-8">
+                <div className="relative w-48 h-48 sm:w-56 sm:h-56">
                   <svg className="w-full h-full transform -rotate-90">
                     <circle
                       cx="112"
