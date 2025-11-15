@@ -4856,6 +4856,25 @@ export const translations: Record<Language, TranslationKeys> = {
         ]
       },
       securityTitle: 'Security & Guarantees',
+      securitySubtitle: 'Your security is our absolute priority',
+      securityFeatures: [
+        {
+          title: '256-bit SSL Encryption',
+          description: 'All your data is protected by military-grade encryption'
+        },
+        {
+          title: 'ISO 27001 Certification',
+          description: 'Compliance with international security standards'
+        },
+        {
+          title: 'GDPR Data Protection',
+          description: 'Full respect for your privacy and data'
+        },
+        {
+          title: 'Two-Factor Authentication',
+          description: 'Enhanced protection for your account'
+        }
+      ],
       security: {
         dataProtectionTitle: 'Your Protected Data',
         dataProtectionItems: [
