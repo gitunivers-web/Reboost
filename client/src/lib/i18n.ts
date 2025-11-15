@@ -2019,7 +2019,28 @@ const howItWorksEN = {
       { label: 'Personal contribution 10-30%', required: true }
     ]
   },
+  stepsSimpleTitle: '4 simple steps',
+  stepsSimpleSubtitle: 'From application to fund disbursement with complete ease',
   securityTitle: 'Security & Guarantees',
+  securitySubtitle: 'Your security is our absolute priority',
+  securityFeatures: [
+    {
+      title: '256-bit SSL Encryption',
+      description: 'All your data is protected by military-grade encryption'
+    },
+    {
+      title: 'ISO 27001 Certification',
+      description: 'Compliance with international security standards'
+    },
+    {
+      title: 'GDPR Data Protection',
+      description: 'Full respect for your privacy and data'
+    },
+    {
+      title: 'Two-Factor Authentication',
+      description: 'Enhanced protection for your account'
+    }
+  ],
   security: {
     dataProtectionTitle: 'Your Protected Data',
     dataProtectionItems: [
@@ -2530,7 +2551,28 @@ export const translations: Record<Language, TranslationKeys> = {
           { label: 'Apport personnel 10-30%', required: true }
         ]
       },
+      stepsSimpleTitle: '4 étapes simples',
+      stepsSimpleSubtitle: 'De la demande au déblocage des fonds en toute simplicité',
       securityTitle: 'Sécurité et Garanties',
+      securitySubtitle: 'Votre sécurité est notre priorité absolue',
+      securityFeatures: [
+        {
+          title: 'Chiffrement SSL 256-bit',
+          description: 'Toutes vos données sont protégées par un chiffrement militaire'
+        },
+        {
+          title: 'Certification ISO 27001',
+          description: 'Conformité aux normes internationales de sécurité'
+        },
+        {
+          title: 'Données RGPD',
+          description: 'Respect total de votre vie privée et de vos données'
+        },
+        {
+          title: 'Double authentification',
+          description: 'Protection renforcée de votre compte'
+        }
+      ],
       security: {
         dataProtectionTitle: 'Vos Données Protégées',
         dataProtectionItems: [
@@ -7106,7 +7148,28 @@ export const translations: Record<Language, TranslationKeys> = {
           { label: 'Aporte personal 10-30%', required: true }
         ]
       },
+      stepsSimpleTitle: '4 pasos simples',
+      stepsSimpleSubtitle: 'De la solicitud al desembolso de fondos con total facilidad',
       securityTitle: 'Seguridad y Garantías',
+      securitySubtitle: 'Su seguridad es nuestra prioridad absoluta',
+      securityFeatures: [
+        {
+          title: 'Cifrado SSL de 256 bits',
+          description: 'Todos sus datos están protegidos por cifrado de grado militar'
+        },
+        {
+          title: 'Certificación ISO 27001',
+          description: 'Cumplimiento de estándares internacionales de seguridad'
+        },
+        {
+          title: 'Protección de Datos RGPD',
+          description: 'Respeto total de su privacidad y sus datos'
+        },
+        {
+          title: 'Autenticación de Dos Factores',
+          description: 'Protección reforzada de su cuenta'
+        }
+      ],
       security: {
         dataProtectionTitle: 'Sus Datos Protegidos',
         dataProtectionItems: [
@@ -15662,6 +15725,27 @@ export const translations: Record<Language, TranslationKeys> = {
       step4Desc: 'Maak uw middelen over wanneer u wilt naar uw persoonlijke of zakelijke bankrekening rechtstreeks vanuit uw Altus Finance Group-gebied. Directe of geplande overschrijvingen volgens uw behoeften, zonder extra kosten.',
       step4Duration: 'In uw tempo',
       averageTimeValue: 'Maximaal 24 uur van de indiening van de aanvraag tot de vrijgave van middelen',
+      stepsSimpleTitle: '4 eenvoudige stappen',
+      stepsSimpleSubtitle: 'Van aanvraag tot vrijgave van fondsen met volledig gemak',
+      securitySubtitle: 'Uw veiligheid is onze absolute prioriteit',
+      securityFeatures: [
+        {
+          title: '256-bit SSL-versleuteling',
+          description: 'Al uw gegevens zijn beschermd door militaire versleuteling'
+        },
+        {
+          title: 'ISO 27001 Certificering',
+          description: 'Naleving van internationale veiligheidsnormen'
+        },
+        {
+          title: 'AVG-gegevensbescherming',
+          description: 'Volledig respect voor uw privacy en gegevens'
+        },
+        {
+          title: 'Twee-factor authenticatie',
+          description: 'Versterkte bescherming van uw account'
+        }
+      ],
     },
     products: {
       title: 'Onze leningoplossingen',

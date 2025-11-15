@@ -56,28 +56,11 @@ export default function HowItWorks() {
     },
   ];
 
-  const securityFeatures = [
-    {
-      icon: Shield,
-      title: "Chiffrement SSL 256-bit",
-      description: "Toutes vos données sont protégées par un chiffrement militaire"
-    },
-    {
-      icon: CheckCircle2,
-      title: "Certification ISO 27001",
-      description: "Conformité aux normes internationales de sécurité"
-    },
-    {
-      icon: Users,
-      title: "Données RGPD",
-      description: "Respect total de votre vie privée et de vos données"
-    },
-    {
-      icon: Shield,
-      title: "Double authentification",
-      description: "Protection renforcée de votre compte"
-    }
-  ];
+  const securityFeatures = t.howItWorks.securityFeatures.map((feature, index) => ({
+    icon: [Shield, CheckCircle2, Users, Shield][index],
+    title: feature.title,
+    description: feature.description
+  }));
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -151,9 +134,9 @@ export default function HowItWorks() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">4 étapes simples</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.howItWorks.stepsSimpleTitle}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              De la demande au déblocage des fonds en toute simplicité
+              {t.howItWorks.stepsSimpleSubtitle}
             </p>
           </motion.div>
 
@@ -315,7 +298,7 @@ export default function HowItWorks() {
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.howItWorks.securityTitle}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Votre sécurité est notre priorité absolue
+              {t.howItWorks.securitySubtitle}
             </p>
           </motion.div>
 
