@@ -10,6 +10,11 @@ import Footer from '@/components/Footer';
 import GuaranteesSection from '@/components/GuaranteesSection';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import PartnersSection from '@/components/PartnersSection';
+import ExpertiseSection from '@/components/ExpertiseSection';
+import HowItWorksSection from '@/components/HowItWorksSection';
+import PremiumTestimonials from '@/components/PremiumTestimonials';
+import BankingSecuritySection from '@/components/BankingSecuritySection';
+import FinalCTASection from '@/components/FinalCTASection';
 import SEO from '@/components/SEO';
 import { organizationSchema, websiteSchema } from '@/lib/seo-data';
 import { getKeywordsByPage } from '@/lib/seo-keywords';
@@ -33,11 +38,16 @@ export default function Home() {
       <IndividualLoanShowcase />
       <BusinessLoanShowcase />
       <GuaranteesSection />
+      <ExpertiseSection />
+      <HowItWorksSection />
+      <PremiumTestimonials />
+      <BankingSecuritySection />
       <ProcessTimeline />
       <FeaturesSection />
       <PartnersSection />
       <ScrollingTestimonials />
       <FAQ />
+      <FinalCTASection />
       <Footer />
     </div>
   );

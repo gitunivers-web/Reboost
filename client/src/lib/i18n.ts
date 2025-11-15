@@ -1792,6 +1792,92 @@ type TranslationKeys = {
       suspendDialogDesc: string;
     };
   };
+  expertise: {
+    title: string;
+    subtitle: string;
+    realEstate: string;
+    realEstateDesc: string;
+    personal: string;
+    personalDesc: string;
+    professional: string;
+    professionalDesc: string;
+    consolidation: string;
+    consolidationDesc: string;
+    business: string;
+    businessDesc: string;
+    investment: string;
+    investmentDesc: string;
+  };
+  howItWorksSection: {
+    title: string;
+    subtitle: string;
+    step1Title: string;
+    step1Desc: string;
+    step2Title: string;
+    step2Desc: string;
+    step3Title: string;
+    step3Desc: string;
+    step4Title: string;
+    step4Desc: string;
+    ctaText: string;
+    ctaButton: string;
+  };
+  premiumTestimonials: {
+    title: string;
+    subtitle: string;
+    testimonial1Name: string;
+    testimonial1Role: string;
+    testimonial1Content: string;
+    testimonial2Name: string;
+    testimonial2Role: string;
+    testimonial2Content: string;
+    testimonial3Name: string;
+    testimonial3Role: string;
+    testimonial3Content: string;
+    testimonial4Name: string;
+    testimonial4Role: string;
+    testimonial4Content: string;
+  };
+  bankingSecurity: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    aes256Title: string;
+    aes256Desc: string;
+    mfaTitle: string;
+    mfaDesc: string;
+    kycTitle: string;
+    kycDesc: string;
+    euHostingTitle: string;
+    euHostingDesc: string;
+    monitoringTitle: string;
+    monitoringDesc: string;
+    gdprTitle: string;
+    gdprDesc: string;
+    certified: string;
+    compliance: string;
+    audited: string;
+  };
+  finalCTA: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    benefit1: string;
+    benefit2: string;
+    benefit3: string;
+    benefit4: string;
+    primaryButton: string;
+    secondaryButton: string;
+    trustText: string;
+    stat1Value: string;
+    stat1Label: string;
+    stat2Value: string;
+    stat2Label: string;
+    stat3Value: string;
+    stat3Label: string;
+    stat4Value: string;
+    stat4Label: string;
+  };
 };
 
 const howItWorksEN = {
@@ -3967,6 +4053,92 @@ export const translations: Record<Language, TranslationKeys> = {
         suspendDialogDesc: 'Cette action suspend le transfert. Il pourra être réactivé ultérieurement.',
       },
     },
+    expertise: {
+      title: 'Nos Domaines d\'Expertise',
+      subtitle: 'Des solutions financières sur mesure pour tous vos projets',
+      realEstate: 'Crédit Immobilier',
+      realEstateDesc: 'Financement de votre résidence principale ou secondaire avec des taux avantageux et un accompagnement personnalisé.',
+      personal: 'Prêt Personnel',
+      personalDesc: 'Solutions flexibles pour vos projets personnels : voyage, travaux, événements ou consolidation de dettes.',
+      professional: 'Crédit Professionnel',
+      professionalDesc: 'Accompagnement dédié pour le développement de votre activité professionnelle et l\'acquisition d\'équipements.',
+      consolidation: 'Rachat de Crédit',
+      consolidationDesc: 'Regroupez vos crédits en cours pour simplifier votre gestion et réduire vos mensualités.',
+      business: 'Financement Entreprise',
+      businessDesc: 'Solutions de financement adaptées aux besoins de votre entreprise pour soutenir sa croissance.',
+      investment: 'Investissement Locatif',
+      investmentDesc: 'Financez vos projets d\'investissement immobilier locatif avec des conditions optimales.',
+    },
+    howItWorksSection: {
+      title: 'Comment ça marche ?',
+      subtitle: 'Un processus simple et rapide en 4 étapes',
+      step1Title: 'Inscription',
+      step1Desc: 'Créez votre compte en quelques minutes et complétez votre profil en toute sécurité.',
+      step2Title: 'Analyse',
+      step2Desc: 'Notre équipe d\'experts analyse votre dossier et évalue votre capacité d\'emprunt.',
+      step3Title: 'Validation',
+      step3Desc: 'Recevez votre offre personnalisée et signez électroniquement votre contrat.',
+      step4Title: 'Déblocage',
+      step4Desc: 'Les fonds sont transférés sur votre compte sous 7 à 15 jours ouvrés.',
+      ctaText: 'Prêt à commencer votre projet ?',
+      ctaButton: 'Commencer ma demande',
+    },
+    premiumTestimonials: {
+      title: 'Ils nous font confiance',
+      subtitle: 'Découvrez les témoignages de nos clients satisfaits',
+      testimonial1Name: 'Marie Dubois',
+      testimonial1Role: 'Propriétaire',
+      testimonial1Content: 'Un service exceptionnel ! J\'ai obtenu mon prêt immobilier en moins de 3 semaines. L\'équipe est professionnelle et à l\'écoute.',
+      testimonial2Name: 'Sophie Laurent',
+      testimonial2Role: 'Entrepreneuse',
+      testimonial2Content: 'Grâce à Altus Finance Group, j\'ai pu financer le développement de mon entreprise. Un accompagnement personnalisé du début à la fin.',
+      testimonial3Name: 'Pierre Richard',
+      testimonial3Role: 'Investisseur',
+      testimonial3Content: 'Les taux proposés sont très compétitifs et le processus est 100% digital. Je recommande vivement leurs services.',
+      testimonial4Name: 'Anne Martin',
+      testimonial4Role: 'Commerçante',
+      testimonial4Content: 'Une équipe réactive et des solutions adaptées à mes besoins. Le rachat de crédit m\'a permis de mieux gérer mon budget.',
+    },
+    bankingSecurity: {
+      badge: 'Sécurité Bancaire',
+      title: 'Votre sécurité, notre priorité',
+      subtitle: 'Protection maximale de vos données avec les standards bancaires les plus élevés',
+      aes256Title: 'Cryptage AES-256',
+      aes256Desc: 'Toutes vos données sont protégées par un cryptage de niveau militaire, garantissant une confidentialité absolue.',
+      mfaTitle: 'Authentification MFA',
+      mfaDesc: 'Double authentification obligatoire pour sécuriser l\'accès à votre compte et vos transactions.',
+      kycTitle: 'Processus KYC/AML',
+      kycDesc: 'Vérification d\'identité rigoureuse conforme aux normes européennes anti-blanchiment.',
+      euHostingTitle: 'Hébergement UE',
+      euHostingDesc: 'Serveurs sécurisés situés en Union Européenne pour une conformité RGPD totale.',
+      monitoringTitle: 'Surveillance 24/7',
+      monitoringDesc: 'Monitoring continu des activités suspectes par nos systèmes de détection avancés.',
+      gdprTitle: 'Conformité RGPD',
+      gdprDesc: 'Respect strict du règlement européen sur la protection des données personnelles.',
+      certified: 'Certifié ISO 27001',
+      compliance: 'Conformité RGPD',
+      audited: 'Audits réguliers',
+    },
+    finalCTA: {
+      badge: 'Démarrez maintenant',
+      title: 'Prêt à réaliser vos projets ?',
+      subtitle: 'Rejoignez des milliers de clients qui nous font confiance pour financer leurs projets',
+      benefit1: 'Réponse sous 24 à 48 heures',
+      benefit2: 'Processus 100% digital et sécurisé',
+      benefit3: 'Accompagnement personnalisé',
+      benefit4: 'Taux compétitifs garantis',
+      primaryButton: 'Ouvrir mon dossier',
+      secondaryButton: 'Parler à un conseiller',
+      trustText: '✓ Sans engagement • Réponse sous 24h • 100% sécurisé',
+      stat1Value: '15 000+',
+      stat1Label: 'Clients satisfaits',
+      stat2Value: '98%',
+      stat2Label: 'Taux d\'approbation',
+      stat3Value: '24h',
+      stat3Label: 'Délai de réponse',
+      stat4Value: '€500M+',
+      stat4Label: 'Fonds distribués',
+    },
   },
   en: {
     hero: {
@@ -6038,6 +6210,92 @@ export const translations: Record<Language, TranslationKeys> = {
         suspendDialogTitle: 'Suspend transfer',
         suspendDialogDesc: 'This action will suspend the transfer. It can be reactivated later.',
       },
+    },
+    expertise: {
+      title: 'Our Areas of Expertise',
+      subtitle: 'Tailored financial solutions for all your projects',
+      realEstate: 'Real Estate Loan',
+      realEstateDesc: 'Financing for your primary or secondary residence with advantageous rates and personalized support.',
+      personal: 'Personal Loan',
+      personalDesc: 'Flexible solutions for your personal projects: travel, renovations, events, or debt consolidation.',
+      professional: 'Professional Credit',
+      professionalDesc: 'Dedicated support for developing your professional activity and acquiring equipment.',
+      consolidation: 'Debt Consolidation',
+      consolidationDesc: 'Consolidate your current loans to simplify management and reduce monthly payments.',
+      business: 'Business Financing',
+      businessDesc: 'Financing solutions tailored to your company\'s needs to support its growth.',
+      investment: 'Rental Investment',
+      investmentDesc: 'Finance your rental real estate investment projects with optimal conditions.',
+    },
+    howItWorksSection: {
+      title: 'How It Works',
+      subtitle: 'A simple and quick process in 4 steps',
+      step1Title: 'Registration',
+      step1Desc: 'Create your account in just a few minutes and complete your profile securely.',
+      step2Title: 'Analysis',
+      step2Desc: 'Our team of experts analyzes your application and assesses your borrowing capacity.',
+      step3Title: 'Validation',
+      step3Desc: 'Receive your personalized offer and electronically sign your contract.',
+      step4Title: 'Disbursement',
+      step4Desc: 'Funds are transferred to your account within 7 to 15 business days.',
+      ctaText: 'Ready to start your project?',
+      ctaButton: 'Start my application',
+    },
+    premiumTestimonials: {
+      title: 'They Trust Us',
+      subtitle: 'Discover testimonials from our satisfied customers',
+      testimonial1Name: 'Marie Dubois',
+      testimonial1Role: 'Homeowner',
+      testimonial1Content: 'Exceptional service! I obtained my mortgage in less than 3 weeks. The team is professional and attentive.',
+      testimonial2Name: 'Sophie Laurent',
+      testimonial2Role: 'Entrepreneur',
+      testimonial2Content: 'Thanks to Altus Finance Group, I was able to finance my business development. Personalized support from start to finish.',
+      testimonial3Name: 'Pierre Richard',
+      testimonial3Role: 'Investor',
+      testimonial3Content: 'The rates offered are very competitive and the process is 100% digital. I highly recommend their services.',
+      testimonial4Name: 'Anne Martin',
+      testimonial4Role: 'Business Owner',
+      testimonial4Content: 'A responsive team and solutions tailored to my needs. The debt consolidation helped me better manage my budget.',
+    },
+    bankingSecurity: {
+      badge: 'Banking Security',
+      title: 'Your security, our priority',
+      subtitle: 'Maximum protection of your data with the highest banking standards',
+      aes256Title: 'AES-256 Encryption',
+      aes256Desc: 'All your data is protected by military-grade encryption, ensuring absolute confidentiality.',
+      mfaTitle: 'MFA Authentication',
+      mfaDesc: 'Mandatory two-factor authentication to secure access to your account and transactions.',
+      kycTitle: 'KYC/AML Process',
+      kycDesc: 'Rigorous identity verification compliant with European anti-money laundering standards.',
+      euHostingTitle: 'EU Hosting',
+      euHostingDesc: 'Secure servers located in the European Union for full GDPR compliance.',
+      monitoringTitle: '24/7 Monitoring',
+      monitoringDesc: 'Continuous monitoring of suspicious activities by our advanced detection systems.',
+      gdprTitle: 'GDPR Compliance',
+      gdprDesc: 'Strict compliance with European regulations on personal data protection.',
+      certified: 'ISO 27001 Certified',
+      compliance: 'GDPR Compliant',
+      audited: 'Regular Audits',
+    },
+    finalCTA: {
+      badge: 'Start Now',
+      title: 'Ready to realize your projects?',
+      subtitle: 'Join thousands of clients who trust us to finance their projects',
+      benefit1: 'Response within 24 to 48 hours',
+      benefit2: '100% digital and secure process',
+      benefit3: 'Personalized support',
+      benefit4: 'Guaranteed competitive rates',
+      primaryButton: 'Open my file',
+      secondaryButton: 'Talk to an advisor',
+      trustText: '✓ No commitment • 24h response • 100% secure',
+      stat1Value: '15,000+',
+      stat1Label: 'Satisfied Customers',
+      stat2Value: '98%',
+      stat2Label: 'Approval Rate',
+      stat3Value: '24h',
+      stat3Label: 'Response Time',
+      stat4Value: '€500M+',
+      stat4Label: 'Funds Distributed',
     },
   },
   es: {
@@ -8122,6 +8380,92 @@ export const translations: Record<Language, TranslationKeys> = {
         suspendDialogTitle: 'Suspender transferencia',
         suspendDialogDesc: 'Esta acción suspenderá la transferencia. Podrá reactivarse más tarde.',
       },
+    },
+    expertise: {
+      title: 'Nuestras Áreas de Expertise',
+      subtitle: 'Soluciones financieras personalizadas para todos sus proyectos',
+      realEstate: 'Crédito Inmobiliario',
+      realEstateDesc: 'Financiamiento de su residencia principal o secundaria con tasas ventajosas y apoyo personalizado.',
+      personal: 'Préstamo Personal',
+      personalDesc: 'Soluciones flexibles para sus proyectos personales: viaje, reformas, eventos o consolidación de deudas.',
+      professional: 'Crédito Profesional',
+      professionalDesc: 'Apoyo dedicado para el desarrollo de su actividad profesional y la adquisición de equipos.',
+      consolidation: 'Compra de Crédito',
+      consolidationDesc: 'Agrupe sus créditos actuales para simplificar la gestión y reducir sus cuotas mensuales.',
+      business: 'Financiamiento Empresarial',
+      businessDesc: 'Soluciones de financiamiento adaptadas a las necesidades de su empresa para apoyar su crecimiento.',
+      investment: 'Inversión de Alquiler',
+      investmentDesc: 'Financie sus proyectos de inversión inmobiliaria de alquiler con condiciones óptimas.',
+    },
+    howItWorksSection: {
+      title: '¿Cómo funciona?',
+      subtitle: 'Un proceso simple y rápido en 4 pasos',
+      step1Title: 'Registro',
+      step1Desc: 'Cree su cuenta en pocos minutos y complete su perfil de forma segura.',
+      step2Title: 'Análisis',
+      step2Desc: 'Nuestro equipo de expertos analiza su solicitud y evalúa su capacidad de endeudamiento.',
+      step3Title: 'Validación',
+      step3Desc: 'Reciba su oferta personalizada y firme electrónicamente su contrato.',
+      step4Title: 'Desembolso',
+      step4Desc: 'Los fondos se transfieren a su cuenta en 7 a 15 días hábiles.',
+      ctaText: '¿Listo para comenzar su proyecto?',
+      ctaButton: 'Comenzar mi solicitud',
+    },
+    premiumTestimonials: {
+      title: 'Confían en nosotros',
+      subtitle: 'Descubra los testimonios de nuestros clientes satisfechos',
+      testimonial1Name: 'María Dubois',
+      testimonial1Role: 'Propietaria',
+      testimonial1Content: '¡Servicio excepcional! Obtuve mi hipoteca en menos de 3 semanas. El equipo es profesional y atento.',
+      testimonial2Name: 'Sofía Laurent',
+      testimonial2Role: 'Emprendedora',
+      testimonial2Content: 'Gracias a Altus Finance Group, pude financiar el desarrollo de mi empresa. Acompañamiento personalizado de principio a fin.',
+      testimonial3Name: 'Pedro Richard',
+      testimonial3Role: 'Inversor',
+      testimonial3Content: 'Las tasas ofrecidas son muy competitivas y el proceso es 100% digital. Recomiendo ampliamente sus servicios.',
+      testimonial4Name: 'Ana Martín',
+      testimonial4Role: 'Comerciante',
+      testimonial4Content: 'Un equipo receptivo y soluciones adaptadas a mis necesidades. La consolidación de crédito me ayudó a gestionar mejor mi presupuesto.',
+    },
+    bankingSecurity: {
+      badge: 'Seguridad Bancaria',
+      title: 'Su seguridad, nuestra prioridad',
+      subtitle: 'Máxima protección de sus datos con los más altos estándares bancarios',
+      aes256Title: 'Cifrado AES-256',
+      aes256Desc: 'Todos sus datos están protegidos por cifrado de nivel militar, garantizando confidencialidad absoluta.',
+      mfaTitle: 'Autenticación MFA',
+      mfaDesc: 'Autenticación de dos factores obligatoria para asegurar el acceso a su cuenta y transacciones.',
+      kycTitle: 'Proceso KYC/AML',
+      kycDesc: 'Verificación de identidad rigurosa conforme a las normas europeas anti lavado de dinero.',
+      euHostingTitle: 'Alojamiento UE',
+      euHostingDesc: 'Servidores seguros ubicados en la Unión Europea para un cumplimiento total del RGPD.',
+      monitoringTitle: 'Monitoreo 24/7',
+      monitoringDesc: 'Monitoreo continuo de actividades sospechosas por nuestros sistemas de detección avanzados.',
+      gdprTitle: 'Cumplimiento RGPD',
+      gdprDesc: 'Estricto cumplimiento de la normativa europea sobre protección de datos personales.',
+      certified: 'Certificado ISO 27001',
+      compliance: 'Cumplimiento RGPD',
+      audited: 'Auditorías regulares',
+    },
+    finalCTA: {
+      badge: 'Comience ahora',
+      title: '¿Listo para realizar sus proyectos?',
+      subtitle: 'Únase a miles de clientes que confían en nosotros para financiar sus proyectos',
+      benefit1: 'Respuesta en 24 a 48 horas',
+      benefit2: 'Proceso 100% digital y seguro',
+      benefit3: 'Acompañamiento personalizado',
+      benefit4: 'Tasas competitivas garantizadas',
+      primaryButton: 'Abrir mi expediente',
+      secondaryButton: 'Hablar con un asesor',
+      trustText: '✓ Sin compromiso • Respuesta en 24h • 100% seguro',
+      stat1Value: '15.000+',
+      stat1Label: 'Clientes satisfechos',
+      stat2Value: '98%',
+      stat2Label: 'Tasa de aprobación',
+      stat3Value: '24h',
+      stat3Label: 'Tiempo de respuesta',
+      stat4Value: '€500M+',
+      stat4Label: 'Fondos distribuidos',
     },
   },
   pt: {
