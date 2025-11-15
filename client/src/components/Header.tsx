@@ -102,7 +102,7 @@ export default function Header() {
                 </span>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground/70 font-medium">
                   <Sparkles className="w-3 h-3" />
-                  <span>Solutions Financières Premium</span>
+                  <span>{t.nav.tagline}</span>
                 </div>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function Header() {
               className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-primary rounded-lg hover:bg-primary/5 transition-all duration-300 group relative" 
               data-testid="link-loans-desktop"
             >
-              Nos Prêts
+              {t.nav.products}
               <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent group-hover:w-full transition-all duration-300" />
             </a>
 
@@ -155,7 +155,7 @@ export default function Header() {
                 className="flex items-center gap-1 px-4 py-2 text-sm font-semibold text-gray-700 hover:text-primary rounded-lg hover:bg-primary/5 transition-all duration-300 group relative"
                 data-testid="button-more-menu"
               >
-                Plus
+                {t.nav.more}
                 <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${moreMenuOpen ? 'rotate-180' : ''}`} />
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent group-hover:w-full transition-all duration-300" />
               </button>
@@ -172,7 +172,7 @@ export default function Header() {
                   >
                     <span className="flex items-center gap-2">
                       <span className="w-1 h-1 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                      FAQ
+                      {t.nav.faq}
                     </span>
                   </a>
                   <a
@@ -184,7 +184,7 @@ export default function Header() {
                   >
                     <span className="flex items-center gap-2">
                       <span className="w-1 h-1 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                      À propos
+                      {t.nav.about}
                     </span>
                   </a>
                   <a
@@ -196,7 +196,7 @@ export default function Header() {
                   >
                     <span className="flex items-center gap-2">
                       <span className="w-1 h-1 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                      Mentions légales
+                      {t.footer.legalLinks.terms}
                     </span>
                   </a>
                   <a
@@ -208,7 +208,7 @@ export default function Header() {
                   >
                     <span className="flex items-center gap-2">
                       <span className="w-1 h-1 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                      Politique de confidentialité
+                      {t.footer.legalLinks.privacy}
                     </span>
                   </a>
                 </div>
@@ -311,7 +311,7 @@ export default function Header() {
 
                   <Link href="/products" onClick={closeMobileMenu}>
                     <span className="block px-4 py-3 text-base font-semibold text-gray-900 hover:bg-gray-50 hover:text-[#005DFF] rounded-lg transition-colors cursor-pointer" data-testid="link-loans-mobile">
-                      Nos Prêts
+                      {t.nav.products}
                     </span>
                   </Link>
 
@@ -329,37 +329,37 @@ export default function Header() {
 
                   <div className="pt-4 mt-4 border-t border-gray-100">
                     <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Plus d'informations
+                      {t.nav.moreInfo}
                     </div>
                     
                     <Link href="/resources" onClick={closeMobileMenu}>
                       <span className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#005DFF] rounded-lg transition-colors cursor-pointer" data-testid="link-faq-mobile">
-                        FAQ
+                        {t.nav.faq}
                       </span>
                     </Link>
 
                     <Link href="/about" onClick={closeMobileMenu}>
                       <span className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#005DFF] rounded-lg transition-colors cursor-pointer" data-testid="link-about-mobile">
-                        À propos
+                        {t.nav.about}
                       </span>
                     </Link>
 
                     <Link href="/terms" onClick={closeMobileMenu}>
                       <span className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#005DFF] rounded-lg transition-colors cursor-pointer" data-testid="link-terms-mobile">
-                        Mentions légales
+                        {t.footer.legalLinks.terms}
                       </span>
                     </Link>
 
                     <Link href="/privacy" onClick={closeMobileMenu}>
                       <span className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#005DFF] rounded-lg transition-colors cursor-pointer" data-testid="link-privacy-mobile">
-                        Politique de confidentialité
+                        {t.footer.legalLinks.privacy}
                       </span>
                     </Link>
                   </div>
 
                   <div className="pt-4 mt-4 border-t border-gray-100">
                     <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Langue
+                      {t.nav.language}
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {languages.map((lang) => (

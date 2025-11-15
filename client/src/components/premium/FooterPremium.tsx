@@ -1,35 +1,37 @@
 import { useLocation } from "wouter";
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from "lucide-react";
-
-const footerLinks = {
-  solutions: [
-    { label: "Financement professionnel", href: "/products" },
-    { label: "Financement personnel", href: "/products" },
-    { label: "Consolidation de dettes", href: "/products" },
-    { label: "Solutions innovantes", href: "/products" }
-  ],
-  company: [
-    { label: "À propos", href: "/about" },
-    { label: "Comment ça marche", href: "/how-it-works" },
-    { label: "Contactez-nous", href: "/contact" },
-    { label: "Ressources", href: "/resources" }
-  ],
-  resources: [
-    { label: "Centre d'aide", href: "/contact" },
-    { label: "Documentation", href: "/how-it-works" },
-    { label: "Blog", href: "/resources" },
-    { label: "FAQ", href: "/resources" }
-  ],
-  legal: [
-    { label: "Mentions légales", href: "/terms" },
-    { label: "Politique de confidentialité", href: "/privacy" },
-    { label: "CGU", href: "/terms" },
-    { label: "Cookies", href: "/privacy" }
-  ]
-};
+import { useTranslations } from "@/lib/i18n";
 
 export default function FooterPremium() {
   const [, setLocation] = useLocation();
+  const t = useTranslations();
+  
+  const footerLinks = {
+    solutions: [
+      { label: t.footer.products.business, href: "/products" },
+      { label: t.footer.products.personal, href: "/products" },
+      { label: t.footer.products.mortgage, href: "/products" },
+      { label: t.footer.products.auto, href: "/products" }
+    ],
+    company: [
+      { label: t.nav.about, href: "/about" },
+      { label: t.nav.howItWorks, href: "/how-it-works" },
+      { label: t.nav.contact, href: "/contact" },
+      { label: t.nav.resources, href: "/resources" }
+    ],
+    resources: [
+      { label: t.footer.helpLinks.support, href: "/contact" },
+      { label: t.footer.helpLinks.userGuide, href: "/how-it-works" },
+      { label: t.footer.helpLinks.simulator, href: "/resources" },
+      { label: t.nav.faq, href: "/resources" }
+    ],
+    legal: [
+      { label: t.footer.legalLinks.terms, href: "/terms" },
+      { label: t.footer.legalLinks.privacy, href: "/privacy" },
+      { label: t.footer.legalLinks.cgu, href: "/terms" },
+      { label: t.footer.legalLinks.cookies, href: "/privacy" }
+    ]
+  };
   
   return (
     <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
@@ -42,8 +44,7 @@ export default function FooterPremium() {
               ALTUS Finance Group
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Votre partenaire de confiance pour tous vos projets de financement. 
-              Excellence, innovation et accompagnement personnalisé depuis 2010.
+              {t.footer.description}
             </p>
             
             {/* Contact info */}
@@ -69,7 +70,7 @@ export default function FooterPremium() {
 
           {/* Solutions */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Solutions</h3>
+            <h3 className="font-bold text-lg mb-4">{t.footer.productsTitle}</h3>
             <ul className="space-y-3">
               {footerLinks.solutions.map((link, index) => (
                 <li key={index}>
@@ -88,7 +89,7 @@ export default function FooterPremium() {
 
           {/* Company */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Entreprise</h3>
+            <h3 className="font-bold text-lg mb-4">{t.footer.companyTitle}</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link, index) => (
                 <li key={index}>
@@ -107,7 +108,7 @@ export default function FooterPremium() {
 
           {/* Resources */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Ressources</h3>
+            <h3 className="font-bold text-lg mb-4">{t.footer.helpTitle}</h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link, index) => (
                 <li key={index}>
@@ -131,7 +132,7 @@ export default function FooterPremium() {
         {/* Bottom footer */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-sm text-gray-400">
-            © 2025 Altus Finance Group. Tous droits réservés.
+            {t.footer.copyright}
           </div>
 
           {/* Social links */}

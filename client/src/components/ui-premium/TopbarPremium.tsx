@@ -1,5 +1,6 @@
 import React from "react";
 import ButtonPremium from "./ButtonPremium";
+import { useTranslations } from "@/lib/i18n";
 
 type Props = {
   onMenuClick?: () => void;
@@ -7,6 +8,8 @@ type Props = {
 };
 
 export default function TopbarPremium({ onMenuClick, rightNode }: Props) {
+  const t = useTranslations();
+  
   return (
     <header className="w-full bg-white shadow-sm sticky top-0 z-40">
       <div className="max-w-[1300px] mx-auto flex items-center justify-between py-3 px-4 md:px-6">
@@ -32,14 +35,14 @@ export default function TopbarPremium({ onMenuClick, rightNode }: Props) {
         </div>
 
         <nav className="hidden md:flex gap-6 text-sm text-altus-muted">
-          <a href="/" className="hover:text-altus-royal" data-testid="link-home">Accueil</a>
-          <a href="/products" className="hover:text-altus-royal" data-testid="link-products">Nos Prêts</a>
-          <a href="/how" className="hover:text-altus-royal" data-testid="link-how">Fonctionnement</a>
-          <a href="/faq" className="hover:text-altus-royal" data-testid="link-faq">FAQ</a>
+          <a href="/" className="hover:text-altus-royal" data-testid="link-home">{t.nav.home}</a>
+          <a href="/products" className="hover:text-altus-royal" data-testid="link-products">{t.nav.products}</a>
+          <a href="/how" className="hover:text-altus-royal" data-testid="link-how">{t.nav.howItWorks}</a>
+          <a href="/faq" className="hover:text-altus-royal" data-testid="link-faq">{t.nav.faq}</a>
         </nav>
 
         <div>
-          {rightNode ?? <ButtonPremium size="sm" data-testid="button-my-space">Mon espace</ButtonPremium>}
+          {rightNode ?? <ButtonPremium size="sm" data-testid="button-my-space">{t.hero.cta2}</ButtonPremium>}
         </div>
 
       </div>
