@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import VideoTemoignage from "@/components/VideoTemoignage";
 
 export default function StorytellingSection() {
   return (
@@ -48,18 +49,7 @@ export default function StorytellingSection() {
             className="relative"
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <div className="aspect-[4/3] bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900">
-                {/* Placeholder - replace with actual image */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center text-white/90">
-                    <div className="text-6xl font-bold mb-4">ALTUS</div>
-                    <div className="text-xl">Finance Group</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Glass overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              <VideoTemoignage />
             </div>
             
             {/* Floating card */}

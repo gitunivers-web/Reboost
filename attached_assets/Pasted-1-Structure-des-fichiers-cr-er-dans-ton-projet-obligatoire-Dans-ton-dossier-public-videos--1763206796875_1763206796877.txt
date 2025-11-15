@@ -1,0 +1,133 @@
+1. Structure des fichiers à créer dans ton projet (obligatoire)
+
+Dans ton dossier /public/videos/
+
+/public/videos/video-temoignage.mp4
+/public/videos/subtitles/fr.vtt
+/public/videos/subtitles/en.vtt
+/public/videos/subtitles/es.vtt
+/public/videos/subtitles/pt.vtt
+/public/videos/subtitles/it.vtt
+/public/videos/subtitles/de.vtt
+/public/videos/subtitles/nl.vtt
+
+
+🎯 Note : les fichiers .vtt seront fournis via un script ci-dessous.
+
+✅ 2. Script pour générer automatiquement les sous-titres dans 7 langues
+
+Copie ce prompt dans Replit (là où tu génères ton code) :
+
+📌 PROMPT À COLLER DANS REPLIT (SOUS-TITRES MULTILINGUES)
+Tu vas générer automatiquement les sous-titres .vtt de la vidéo du site Altus Finance Group.  
+La vidéo d’origine est en français.  
+Je veux produire des fichiers .vtt propres et professionnels, parfaitement formatés WebVTT,  
+pour les langues suivantes : FR, EN, ES, DE, PT, IT, NL.
+
+🎯 Mission :
+1. Transcrire le texte de la vidéo en français (si je te fournis le script, utilise-le directement).
+2. Traduire en 6 autres langues sans perdre le sens.
+3. Générer 7 fichiers WebVTT nommés :
+   - fr.vtt
+   - en.vtt
+   - es.vtt
+   - de.vtt
+   - pt.vtt
+   - it.vtt
+   - nl.vtt
+
+🧩 Format strict :
+WEBVTT
+
+00:00:00.000 --> 00:00:04.500
+Texte ligne 1
+
+00:00:04.500 --> 00:00:08.900
+Texte ligne 2
+
+📌 Contraintes :
+- Pas de caractères spéciaux invalides.
+- Découpage fluide, cohérent, pas plus de 2 lignes par sous-titre.
+- Traduction naturelle, professionnelle (fintech premium).
+- Timestamps réguliers, lisibles et cohérents.
+
+Quand tu as fini, fournis-moi chaque fichier dans un bloc séparé prêt à copier/coller.
+
+👉 Quand tu m’auras envoyé le texte exact de la vidéo,
+
+je peux même te produire les fichiers .vtt tout de suite ici, si tu préfères.
+
+✅ 3. Code React (ou Next.js) pour intégrer la vidéo + sous-titres auto
+
+Voici le code à coller à l’endroit où tu veux remplacer le bloc bleu Altus Finance Group :
+
+import { useRouter } from "next/router";
+
+export default function VideoTemoignage() {
+  const { locale } = useRouter();
+
+  // Fallback si une langue n'a pas encore de sous-titres
+  const supported = ["fr", "en", "es", "pt", "it", "de", "nl"];
+  const subtitleLang = supported.includes(locale) ? locale : "en";
+
+  return (
+    <div className="w-full max-w-4xl mx-auto rounded-3xl shadow-lg overflow-hidden mt-10">
+      <video
+        controls
+        poster="/videos/poster.jpg" 
+        className="w-full h-auto rounded-3xl"
+      >
+        <source src="/videos/video-temoignage.mp4" type="video/mp4" />
+
+        <track
+          label="Sous-titres"
+          kind="subtitles"
+          srcLang={subtitleLang}
+          src={`/videos/subtitles/${subtitleLang}.vtt`}
+          default
+        />
+
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  );
+}
+
+🎯 Optionnel : ajouter un poster
+
+Ajoute une image fixe dans /public/videos/poster.jpg
+→ C’est ce qui s’affiche avant lecture.
+
+✅ 4. Emplacement exact (selon ta capture d’écran)
+
+Tu vas remplacer le bloc bleu “ALTUS Finance Group” du Hero par ça :
+
+<div className="col-span-12 lg:col-span-6 flex justify-center items-center">
+  <VideoTemoignage />
+</div>
+
+
+Ton Hero doit rester identique, seule la partie droite change.
+
+🎯 Résultat final
+
+Vidéo 2025 premium
+
+Comprimée
+
+Sous-titres automatiques multilingues
+
+Aucun impact sur ton workflow
+
+Deployable sans aucun souci sur Vercel
+
+Backend Render inchangé
+
+Vitesse optimale
+
+🔥 Prochaine étape
+
+🎤 Envoie-moi maintenant :
+→ le texte exact de la vidéo (ou le fichier audio si tu veux une transcription automatique).
+
+Je génère pour toi les 7 fichiers .vtt prêts à coller dans ton projet.
