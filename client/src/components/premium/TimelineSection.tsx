@@ -1,34 +1,12 @@
 import { motion } from "framer-motion";
 import { FileText, Search, PenTool, Rocket } from "lucide-react";
+import { useTranslations } from "@/lib/i18n";
 
-const steps = [
-  {
-    icon: FileText,
-    title: "Soumission",
-    description: "Remplissez votre dossier en ligne en quelques minutes. Interface intuitive et sécurisée.",
-    duration: "5 min"
-  },
-  {
-    icon: Search,
-    title: "Analyse",
-    description: "Notre équipe étudie votre demande. Vérification KYC/AML et évaluation personnalisée.",
-    duration: "24h"
-  },
-  {
-    icon: PenTool,
-    title: "Signature",
-    description: "Signature électronique sécurisée de votre contrat. Conforme et traçable.",
-    duration: "Immédiat"
-  },
-  {
-    icon: Rocket,
-    title: "Déblocage",
-    description: "Fonds disponibles sur votre compte. Accompagnement post-financement inclus.",
-    duration: "24-48h"
-  }
-];
+const stepIcons = [FileText, Search, PenTool, Rocket];
 
 export default function TimelineSection() {
+  const t = useTranslations();
+  
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background */}
@@ -42,9 +20,9 @@ export default function TimelineSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Comment ça marche</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.premium.timeline.title}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Un processus simple, transparent et 100% digital
+            {t.premium.timeline.subtitle}
           </p>
         </motion.div>
 
@@ -54,7 +32,9 @@ export default function TimelineSection() {
           <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 -translate-y-1/2" />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            {steps.map((step, index) => (
+            {t.premium.timeline.steps.map((step, index) => {
+              const StepIcon = stepIcons[index];
+              return (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -73,7 +53,7 @@ export default function TimelineSection() {
 
                   {/* Icon */}
                   <div className="mb-6 inline-flex p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50">
-                    <step.icon className="h-8 w-8 text-indigo-600" />
+                    <StepIcon className="h-8 w-8 text-indigo-600" />
                   </div>
 
                   {/* Content */}
@@ -89,7 +69,8 @@ export default function TimelineSection() {
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

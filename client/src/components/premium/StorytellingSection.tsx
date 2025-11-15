@@ -2,8 +2,11 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import VideoTemoignage from "@/components/VideoTemoignage";
+import { useTranslations } from "@/lib/i18n";
 
 export default function StorytellingSection() {
+  const t = useTranslations();
+  
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background gradient */}
@@ -19,24 +22,24 @@ export default function StorytellingSection() {
             className="lg:col-span-5"
           >
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-indigo-100 mb-6">
-              <span className="text-sm font-semibold text-indigo-600">Notre Mission</span>
+              <span className="text-sm font-semibold text-indigo-600">{t.premium.storytelling.badge}</span>
             </div>
             
             <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              Financer l'excellence, propulser la croissance
+              {t.premium.storytelling.title}
             </h2>
             
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Depuis notre création, nous accompagnons les entreprises et les particuliers dans leurs projets les plus ambitieux. Notre expertise en financement professionnel et notre approche personnalisée font de nous le partenaire de confiance pour vos investissements stratégiques.
+              {t.premium.storytelling.paragraph1}
             </p>
             
             <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              Chaque dossier est unique. C'est pourquoi nous mettons à votre disposition des conseillers dédiés, des processus digitaux sécurisés et des solutions de financement sur mesure qui s'adaptent à vos besoins réels.
+              {t.premium.storytelling.paragraph2}
             </p>
             
             <Link href="/about">
               <button className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5" data-testid="button-discover-more">
-                Découvrir notre histoire
+                {t.premium.storytelling.ctaButton}
                 <ArrowRight className="h-5 w-5" />
               </button>
             </Link>

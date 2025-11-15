@@ -11049,6 +11049,161 @@ export const translations: Record<Language, TranslationKeys> = {
         },
       },
     },
+    premium: {
+      stats: {
+        title: 'La fiducia di migliaia di aziende',
+        subtitle: 'Numeri che testimoniano la nostra esperienza e il nostro impegno',
+      },
+      storytelling: {
+        badge: 'La Nostra Missione',
+        title: 'Finanziare l\'eccellenza, propulsare la crescita',
+        paragraph1: 'Dalla nostra creazione, accompagniamo aziende e privati nei loro progetti più ambiziosi. La nostra esperienza in finanziamento professionale e il nostro approccio personalizzato ci rendono il partner di fiducia per i vostri investimenti strategici.',
+        paragraph2: 'Ogni dossier è unico. Per questo mettiamo a vostra disposizione consulenti dedicati, processi digitali sicuri e soluzioni di finanziamento su misura che si adattano alle vostre reali esigenze.',
+        ctaButton: 'Scopri la nostra storia',
+      },
+      expertises: {
+        title: 'Le nostre aree di competenza',
+        subtitle: 'Soluzioni finanziarie complete per ogni esigenza, ogni progetto, ogni ambizione',
+        items: [
+          {
+            title: 'Finanziamento professionale',
+            description: 'Soluzioni su misura per PMI, imprese e grandi aziende. Sviluppo, espansione, acquisizione.',
+            features: ['Prestiti attrezzature', 'Leasing', 'Factoring'],
+            learnMore: 'Scopri di più',
+          },
+          {
+            title: 'Finanziamento personale',
+            description: 'Progetti privati accompagnati con esperienza. Immobiliare, veicolo, lavori, studi.',
+            features: ['Mutui immobiliari', 'Prestiti auto', 'Prestiti lavori'],
+            learnMore: 'Scopri di più',
+          },
+          {
+            title: 'Consolidamento debiti',
+            description: 'Riequilibrio finanziario e ottimizzazione della tesoreria per privati e aziende.',
+            features: ['Riscatto crediti', 'Ristrutturazione', 'Ottimizzazione'],
+            learnMore: 'Scopri di più',
+          },
+          {
+            title: 'Soluzioni innovative',
+            description: 'Finanziamenti alternativi e prodotti esclusivi adattati alle nuove sfide economiche.',
+            features: ['Fintech', 'Green finance', 'Su misura'],
+            learnMore: 'Scopri di più',
+          },
+        ],
+      },
+      timeline: {
+        title: 'Come funziona',
+        subtitle: 'Un processo semplice, trasparente e 100% digitale',
+        steps: [
+          {
+            title: 'Invio',
+            description: 'Compilate il vostro dossier online in pochi minuti. Interfaccia intuitiva e sicura.',
+            duration: '5 min',
+          },
+          {
+            title: 'Analisi',
+            description: 'Il nostro team studia la vostra richiesta. Verifica KYC/AML e valutazione personalizzata.',
+            duration: '24h',
+          },
+          {
+            title: 'Firma',
+            description: 'Firma elettronica sicura del vostro contratto. Conforme e tracciabile.',
+            duration: 'Immediato',
+          },
+          {
+            title: 'Sblocco',
+            description: 'Fondi disponibili sul vostro conto. Accompagnamento post-finanziamento incluso.',
+            duration: '24-48h',
+          },
+        ],
+      },
+      testimonials: {
+        title: 'Si fidano di noi',
+        subtitle: 'Scoprite le testimonianze dei nostri clienti soddisfatti',
+        items: [
+          {
+            name: 'Sofia Martini',
+            role: 'CEO, TechStart',
+            text: 'Altus Finance Group è stato un vero partner nel nostro sviluppo. Processo rapido, consulenti in ascolto e soluzioni davvero adatte.',
+          },
+          {
+            name: 'Marco Rossi',
+            role: 'Imprenditore Immobiliare',
+            text: 'Ho potuto concretizzare il mio progetto immobiliare grazie al loro accompagnamento personalizzato. Interfaccia digitale moderna e seguito impeccabile.',
+          },
+          {
+            name: 'Isabella Renaud',
+            role: 'Direttrice Finanziaria, PMI',
+            text: 'Consolidamento debiti realizzato con professionalità. Team trasparente e condizioni ottimali per la nostra azienda.',
+          },
+          {
+            name: 'Tommaso Lefèvre',
+            role: 'Fondatore, GreenTech',
+            text: 'Servizio eccellente! Hanno capito le nostre sfide e ci hanno accompagnato dalla A alla Z. Raccomando vivamente.',
+          },
+          {
+            name: 'Carolina Mercier',
+            role: 'Consulente Indipendente',
+            text: 'Finanziamento ottenuto in 48h per sviluppare la mia attività. Piattaforma intuitiva e team molto reattivo. Perfetto per gli indipendenti.',
+          },
+          {
+            name: 'Lorenzo Bertrand',
+            role: 'Dirigente, RestauGourmet',
+            text: 'Grazie ad Altus, ho potuto aprire il mio secondo ristorante. Soluzioni flessibili adatte alle esigenze dei commercianti.',
+          },
+          {
+            name: 'Emilia Rousseau',
+            role: 'Privato',
+            text: 'Prestito personale per i miei lavori ottenuto rapidamente. Consigli chiari, tasso competitivo e accompagnamento umano. Molto soddisfatta.',
+          },
+          {
+            name: 'Filippo Morel',
+            role: 'CEO, InnovateTech',
+            text: 'Partner finanziario di fiducia per la nostra scale-up. Reattività eccezionale e comprensione fine delle nostre sfide tech.',
+          },
+        ],
+      },
+      security: {
+        badge: 'Sicurezza Bancaria',
+        title: 'La vostra sicurezza, la nostra priorità assoluta',
+        subtitle: 'Applichiamo gli standard di sicurezza più rigorosi dell\'industria finanziaria per proteggere i vostri dati e le vostre transazioni.',
+        features: [
+          {
+            title: 'Crittografia AES-256',
+            description: 'Tutti i vostri dati sono cifrati end-to-end con gli standard bancari più esigenti.',
+          },
+          {
+            title: 'Hosting sicuro UE',
+            description: 'Infrastruttura certificata ISO 27001, ospitata nell\'Unione Europea con ridondanza totale.',
+          },
+          {
+            title: 'Conformità KYC/AML',
+            description: 'Processo di verifica rigoroso conforme alle regolamentazioni europee e internazionali.',
+          },
+          {
+            title: 'Audit regolari',
+            description: 'Audit di sicurezza trimestrali da parte di organismi indipendenti per garantire la vostra protezione.',
+          },
+        ],
+        certifications: {
+          iso27001: 'ISO 27001 Certificato',
+          gdpr: 'GDPR Conforme',
+          pciDss: 'PCI DSS Level 1',
+        },
+      },
+      finalCTA: {
+        badge: 'Consulenti disponibili 24/7',
+        title: 'Pronti a concretizzare i vostri progetti?',
+        subtitle: 'Il nostro team di consulenti dedicati vi accompagna dalla A alla Z. Avviate il vostro dossier in pochi clic o scambiate con un esperto.',
+        primaryButton: 'Apri il mio dossier',
+        secondaryButton: 'Parlare con un consulente',
+        trustBadges: {
+          noCommitment: 'Senza impegno',
+          response24h: 'Risposta in 24h',
+          secure100: '100% sicuro',
+        },
+      },
+    },
     admin: {
       common: {
         status: {pending: 'Pendente', active: 'Ativo', approved: 'Aprovado', rejected: 'Rejeitado', suspended: 'Suspenso', completed: 'Concluído', signed: 'Assinado', inProgress: 'Em andamento'},

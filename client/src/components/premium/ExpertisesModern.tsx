@@ -1,43 +1,20 @@
 import { motion } from "framer-motion";
 import { Building2, User, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { useTranslations } from "@/lib/i18n";
 
-const expertises = [
-  {
-    icon: Building2,
-    title: "Financement professionnel",
-    description: "Solutions sur mesure pour TPE, PME et grands comptes. Développement, expansion, acquisition.",
-    features: ["Prêts équipement", "Crédit-bail", "Affacturage"],
-    color: "from-blue-500 to-indigo-600",
-    link: "/products#business"
-  },
-  {
-    icon: User,
-    title: "Financement personnel",
-    description: "Projets privés accompagnés avec expertise. Immobilier, véhicule, travaux, études.",
-    features: ["Prêts immobiliers", "Crédits auto", "Prêts travaux"],
-    color: "from-indigo-500 to-purple-600",
-    link: "/products#individual"
-  },
-  {
-    icon: RefreshCw,
-    title: "Consolidation de dettes",
-    description: "Rééquilibrage financier et optimisation de trésorerie pour particuliers et entreprises.",
-    features: ["Rachat de crédit", "Restructuration", "Optimisation"],
-    color: "from-purple-500 to-pink-600",
-    link: "/products"
-  },
-  {
-    icon: Sparkles,
-    title: "Solutions innovantes",
-    description: "Financements alternatifs et produits exclusifs adaptés aux nouveaux enjeux économiques.",
-    features: ["Fintech", "Green finance", "Sur mesure"],
-    color: "from-pink-500 to-rose-600",
-    link: "/products"
-  }
+const expertiseIcons = [Building2, User, RefreshCw, Sparkles];
+const expertiseColors = [
+  "from-blue-500 to-indigo-600",
+  "from-indigo-500 to-purple-600",
+  "from-purple-500 to-pink-600",
+  "from-pink-500 to-rose-600"
 ];
+const expertiseLinks = ["/products#business", "/products#individual", "/products", "/products"];
 
 export default function ExpertisesModern() {
+  const t = useTranslations();
+  
   return (
     <section className="relative py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,15 +25,16 @@ export default function ExpertisesModern() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Nos domaines d'expertise</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.premium.expertises.title}</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Des solutions financières complètes pour chaque besoin, chaque projet, chaque ambition
+            {t.premium.expertises.subtitle}
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {expertises.map((expertise, index) => (
-            <motion.div
+          {t.premium.expertises.items.map((expertise, index) => {
+            const Icon = expertiseIcons[index];
+            return (<motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -67,8 +45,8 @@ export default function ExpertisesModern() {
             >
               <div className="relative h-full p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                 {/* Icon */}
-                <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${expertise.color} mb-6`}>
-                  <expertise.icon className="h-8 w-8 text-white" />
+                <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${expertiseColors[index]} mb-6`}>
+                  <Icon className="h-8 w-8 text-white" />
                 </div>
 
                 {/* Content */}
@@ -89,19 +67,19 @@ export default function ExpertisesModern() {
 
                 {/* CTA */}
                 <Link 
-                  href={expertise.link}
+                  href={expertiseLinks[index]}
                   className="inline-flex items-center gap-2 text-indigo-600 font-semibold group-hover:gap-3 transition-all duration-300 cursor-pointer"
                   data-testid={`button-expertise-learn-more-${index}`}
                 >
-                  En savoir plus
+                  {expertise.learnMore}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
                 {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${expertise.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${expertiseColors[index]} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
               </div>
-            </motion.div>
-          ))}
+            </motion.div>);
+          })}
         </div>
       </div>
     </section>

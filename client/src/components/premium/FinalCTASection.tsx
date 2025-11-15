@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
+import { useTranslations } from "@/lib/i18n";
 
 export default function FinalCTASection() {
+  const t = useTranslations();
+  
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background gradient */}
@@ -39,22 +42,21 @@ export default function FinalCTASection() {
                   <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-white opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
                 </span>
-                Conseillers disponibles 24/7
+                {t.premium.finalCTA.badge}
               </motion.div>
 
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Prêt à concrétiser vos projets ?
+                {t.premium.finalCTA.title}
               </h2>
 
               <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Notre équipe de conseillers dédiés vous accompagne de A à Z. 
-                Démarrez votre dossier en quelques clics ou échangez avec un expert.
+                {t.premium.finalCTA.subtitle}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
                 <Link href="/loan-request">
                   <button className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1" data-testid="button-start-dossier">
-                    Ouvrir mon dossier
+                    {t.premium.finalCTA.primaryButton}
                     <ArrowRight className="h-5 w-5" />
                   </button>
                 </Link>
@@ -62,7 +64,7 @@ export default function FinalCTASection() {
                 <Link href="/contact">
                   <button className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white border-2 border-gray-200 text-gray-900 font-bold text-lg shadow-lg hover:shadow-xl hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1" data-testid="button-talk-adviser">
                     <MessageCircle className="h-5 w-5" />
-                    Parler à un conseiller
+                    {t.premium.finalCTA.secondaryButton}
                   </button>
                 </Link>
               </div>
@@ -73,19 +75,19 @@ export default function FinalCTASection() {
                   <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Sans engagement</span>
+                  <span>{t.premium.finalCTA.trustBadges.noCommitment}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Réponse sous 24h</span>
+                  <span>{t.premium.finalCTA.trustBadges.response24h}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>100% sécurisé</span>
+                  <span>{t.premium.finalCTA.trustBadges.secure100}</span>
                 </div>
               </div>
             </div>

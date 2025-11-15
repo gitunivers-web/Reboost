@@ -4,67 +4,22 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Quote, Star } from "lucide-react";
+import { useTranslations } from "@/lib/i18n";
 
-const testimonials = [
-  {
-    name: "Sophie Martin",
-    role: "CEO, TechStart",
-    image: "https://i.pravatar.cc/150?img=1",
-    rating: 5,
-    text: "Altus Finance Group a été un véritable partenaire dans notre développement. Processus rapide, conseillers à l'écoute, et des solutions vraiment adaptées."
-  },
-  {
-    name: "Marc Dubois",
-    role: "Entrepreneur Immobilier",
-    image: "https://i.pravatar.cc/150?img=12",
-    rating: 5,
-    text: "J'ai pu concrétiser mon projet immobilier grâce à leur accompagnement personnalisé. Interface digitale moderne et suivi impeccable."
-  },
-  {
-    name: "Isabelle Renaud",
-    role: "Directrice Financière, PME",
-    image: "https://i.pravatar.cc/150?img=5",
-    rating: 5,
-    text: "Consolidation de dettes réalisée avec professionnalisme. Équipe transparente et conditions optimales pour notre entreprise."
-  },
-  {
-    name: "Thomas Lefèvre",
-    role: "Fondateur, GreenTech",
-    image: "https://i.pravatar.cc/150?img=13",
-    rating: 5,
-    text: "Excellent service ! Ils ont compris nos enjeux et nous ont accompagnés de A à Z. Je recommande vivement."
-  },
-  {
-    name: "Caroline Mercier",
-    role: "Consultante Indépendante",
-    image: "https://i.pravatar.cc/150?img=20",
-    rating: 5,
-    text: "Financement obtenu en 48h pour développer mon activité. Plateforme intuitive et équipe très réactive. Parfait pour les indépendants."
-  },
-  {
-    name: "Laurent Bertrand",
-    role: "Dirigeant, RestauGourmet",
-    image: "https://i.pravatar.cc/150?img=33",
-    rating: 5,
-    text: "Grâce à Altus, j'ai pu ouvrir mon second restaurant. Des solutions flexibles adaptées aux besoins des commerçants."
-  },
-  {
-    name: "Émilie Rousseau",
-    role: "Particulier",
-    image: "https://i.pravatar.cc/150?img=9",
-    rating: 5,
-    text: "Prêt personnel pour mes travaux obtenu rapidement. Conseils clairs, taux compétitif et accompagnement humain. Très satisfaite."
-  },
-  {
-    name: "Philippe Morel",
-    role: "PDG, InnovateTech",
-    image: "https://i.pravatar.cc/150?img=51",
-    rating: 5,
-    text: "Partenaire financier de confiance pour notre scale-up. Réactivité exceptionnelle et compréhension fine de nos enjeux tech."
-  }
+const avatarImages = [
+  "https://i.pravatar.cc/150?img=1",
+  "https://i.pravatar.cc/150?img=12",
+  "https://i.pravatar.cc/150?img=5",
+  "https://i.pravatar.cc/150?img=13",
+  "https://i.pravatar.cc/150?img=20",
+  "https://i.pravatar.cc/150?img=33",
+  "https://i.pravatar.cc/150?img=9",
+  "https://i.pravatar.cc/150?img=51"
 ];
 
 export default function TestimonialsSlider() {
+  const t = useTranslations();
+  
   return (
     <section className="relative py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,9 +30,9 @@ export default function TestimonialsSlider() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Ils nous font confiance</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.premium.testimonials.title}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Découvrez les témoignages de nos clients satisfaits
+            {t.premium.testimonials.subtitle}
           </p>
         </motion.div>
 
@@ -100,7 +55,7 @@ export default function TestimonialsSlider() {
             }}
             className="pb-16"
           >
-            {testimonials.map((testimonial, index) => (
+            {t.premium.testimonials.items.map((testimonial, index) => (
               <SwiperSlide key={index}>
                 <div className="relative h-full p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300" data-testid={`testimonial-${index}`}>
                   {/* Quote icon */}
@@ -110,7 +65,7 @@ export default function TestimonialsSlider() {
 
                   {/* Rating */}
                   <div className="flex gap-1 mb-6">
-                    {[...Array(testimonial.rating)].map((_, i) => (
+                    {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
@@ -124,7 +79,7 @@ export default function TestimonialsSlider() {
                   <div className="flex items-center gap-4">
                     <div className="relative">
                       <img
-                        src={testimonial.image}
+                        src={avatarImages[index]}
                         alt={testimonial.name}
                         className="h-14 w-14 rounded-full object-cover ring-2 ring-indigo-100"
                       />
