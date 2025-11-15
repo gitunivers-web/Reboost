@@ -1977,9 +1977,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Ce prêt n\'est pas en statut approuvé' });
       }
 
+      // Vérification du type de fichier
       const fileType = await fileTypeFromFile(req.file.path);
-      if (!fileType || fileType.ext !== 'pdf') {
+      console.log('File type detection:', fileType);
+      
+      // Vérifier l'extension du fichier uploadé
+      const fileExtension = path.extname(req.file.originalname).toLowerCase();
+      console.log('File extension:', fileExtension);
+      
+      // Accepter si file-type détecte un PDF OU si l'extension est .pdf
+      // (car file-type peut échouer sur certains PDFs valides)
+      const isPdf = (fileType && fileType.ext === 'pdf') || fileExtension === '.pdf';
+      
+      if (!isPdf) {
+        console.error('File rejected - not a PDF:', { fileType, fileExtension });
         return res.status(400).json({ error: 'Type de fichier invalide. Seuls les PDF sont acceptés.' });
+      }
+
+      // Vérification supplémentaire : essayer de lire le fichier comme un PDF
+      try {
+        const fileBuffer = await fs.promises.readFile(req.file.path);
+        const pdfContent = fileBuffer.toString('latin1');
+        if (!pdfContent.startsWith('%PDF')) {
+          console.error('File rejected - not a valid PDF (missing PDF header)');
+          return res.status(400).json({ error: 'Le fichier ne semble pas être un PDF valide.' });
+        }
+      } catch (error) {
+        console.error('Error validating PDF content:', error);
+        return res.status(400).json({ error: 'Erreur lors de la validation du fichier PDF.' });
       }
 
       const user = await storage.getUser(loan.userId);
