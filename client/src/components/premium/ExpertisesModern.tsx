@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Building2, User, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useTranslations } from "@/lib/i18n";
 
 const expertiseIcons = [Building2, User, RefreshCw, Sparkles];
@@ -14,6 +14,27 @@ const expertiseLinks = ["/products#business", "/products#individual", "/products
 
 export default function ExpertisesModern() {
   const t = useTranslations();
+  const [, setLocation] = useLocation();
+
+  const handleLinkClick = (href: string) => {
+    const [path, hash] = href.split('#');
+    setLocation(path);
+    
+    // Scroll to anchor after navigation
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          const offset = 100; // Offset for fixed header
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition - offset,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
+  };
   
   return (
     <section className="relative py-24 bg-white">
@@ -66,14 +87,14 @@ export default function ExpertisesModern() {
                 </div>
 
                 {/* CTA */}
-                <Link 
-                  href={expertiseLinks[index]}
+                <button 
+                  onClick={() => handleLinkClick(expertiseLinks[index])}
                   className="inline-flex items-center gap-2 text-indigo-600 font-semibold group-hover:gap-3 transition-all duration-300 cursor-pointer"
                   data-testid={`button-expertise-learn-more-${index}`}
                 >
                   {expertise.learnMore}
                   <ArrowRight className="h-4 w-4" />
-                </Link>
+                </button>
 
                 {/* Gradient overlay on hover */}
                 <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${expertiseColors[index]} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
