@@ -92,8 +92,8 @@ export default function TransferFlow() {
       
       if (data.redirect && data.existingTransferId) {
         toast({
-          title: 'Transfert en cours',
-          description: 'Un transfert est déjà en cours pour ce prêt. Redirection...',
+          title: t.transferFlow.toast.transferInProgressTitle,
+          description: t.transferFlow.toast.alreadyInProgressDesc,
         });
         setTimeout(() => {
           setLocation(`/transfer/${data.existingTransferId}`);
@@ -104,7 +104,7 @@ export default function TransferFlow() {
       setTransferId(data.transfer.id);
       toast({
         title: t.transferFlow.toast.initiated,
-        description: 'Transfert initié avec succès. Vérification en cours...',
+        description: t.transferFlow.toast.initiatedSuccessDesc,
       });
       
       setStep('verification');
@@ -280,7 +280,7 @@ export default function TransferFlow() {
       toast({
         variant: 'destructive',
         title: t.transferFlow.toast.error,
-        description: 'Veuillez sélectionner un compte externe.',
+        description: t.transferFlow.toast.selectExternalAccountDesc,
       });
       return;
     }
@@ -290,7 +290,7 @@ export default function TransferFlow() {
       toast({
         variant: 'destructive',
         title: t.transferFlow.toast.error,
-        description: 'Aucun prêt actif disponible.',
+        description: t.transferFlow.toast.noActiveLoanDesc,
       });
       return;
     }
@@ -344,7 +344,7 @@ export default function TransferFlow() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <DashboardCard 
-              title="Détails du transfert"
+              title={t.transferFlow.form.cardTitle}
               icon={Send}
               iconColor="text-primary"
               testId="card-transfer-form"
@@ -373,18 +373,18 @@ export default function TransferFlow() {
                   <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
                     <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     <p className="text-xs text-blue-900 dark:text-blue-100">
-                      Montant fixe basé sur votre prêt actif (non modifiable)
+                      {t.transferFlow.form.amountFixedHelper}
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="account" className="text-sm font-medium">
-                    Compte bénéficiaire *
+                    {t.transferFlow.form.beneficiaryAccountLabel}
                   </Label>
                   <Select value={externalAccountId} onValueChange={setExternalAccountId}>
                     <SelectTrigger data-testid="select-account" className="h-12">
-                      <SelectValue placeholder="Sélectionner un compte externe" />
+                      <SelectValue placeholder={t.transferFlow.form.selectExternalAccount} />
                     </SelectTrigger>
                     <SelectContent>
                       {externalAccounts?.map((account) => (
@@ -436,7 +436,7 @@ export default function TransferFlow() {
             </DashboardCard>
 
             <DashboardCard 
-              title="Sécurité & Conformité"
+              title={t.transferFlow.security.title}
               icon={Shield}
               iconColor="text-green-600 dark:text-green-400"
               className="bg-gradient-to-br from-green-500/5 via-background to-background"
@@ -446,9 +446,9 @@ export default function TransferFlow() {
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-xl">
                     <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm mb-1">Transfert SEPA sécurisé</h4>
+                      <h4 className="font-semibold text-sm mb-1">{t.transferFlow.security.sepaSecureTitle}</h4>
                       <p className="text-xs text-muted-foreground">
-                        Vos fonds sont protégés par le protocole bancaire européen SEPA avec chiffrement AES-256
+                        {t.transferFlow.security.sepaSecureDesc}
                       </p>
                     </div>
                   </div>
@@ -456,9 +456,9 @@ export default function TransferFlow() {
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-xl">
                     <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm mb-1">Vérification KYC/AML</h4>
+                      <h4 className="font-semibold text-sm mb-1">{t.transferFlow.security.kycAmlTitle}</h4>
                       <p className="text-xs text-muted-foreground">
-                        Contrôles anti-blanchiment et connaissance client conformes aux normes européennes
+                        {t.transferFlow.security.kycAmlDesc}
                       </p>
                     </div>
                   </div>
@@ -466,9 +466,9 @@ export default function TransferFlow() {
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-xl">
                     <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm mb-1">Délai de traitement</h4>
+                      <h4 className="font-semibold text-sm mb-1">{t.transferFlow.security.processingTimeTitle}</h4>
                       <p className="text-xs text-muted-foreground">
-                        Les fonds seront disponibles sous 24 à 72 heures ouvrées selon votre banque
+                        {t.transferFlow.security.processingTimeDesc}
                       </p>
                     </div>
                   </div>
@@ -476,9 +476,9 @@ export default function TransferFlow() {
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-xl">
                     <Lock className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm mb-1">Authentification renforcée</h4>
+                      <h4 className="font-semibold text-sm mb-1">{t.transferFlow.security.strongAuthTitle}</h4>
                       <p className="text-xs text-muted-foreground">
-                        Validation en plusieurs étapes pour garantir la sécurité de votre transaction
+                        {t.transferFlow.security.strongAuthDesc}
                       </p>
                     </div>
                   </div>
@@ -489,10 +489,10 @@ export default function TransferFlow() {
                     <AlertCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-xs text-blue-900 dark:text-blue-100 font-medium mb-1">
-                        Codes de sécurité requis
+                        {t.transferFlow.security.securityCodesTitle}
                       </p>
                       <p className="text-xs text-blue-800 dark:text-blue-200">
-                        Des codes de validation vous seront demandés pendant le processus. Gardez votre téléphone à portée de main.
+                        {t.transferFlow.security.securityCodesDesc}
                       </p>
                     </div>
                   </div>
@@ -585,27 +585,27 @@ export default function TransferFlow() {
 
     const progressSteps = [
       { 
-        label: 'Initialisation du transfert', 
+        label: t.transferFlow.progress.steps.step1, 
         completed: simulatedProgress > 0,
         inProgress: simulatedProgress > 0 && simulatedProgress <= 20
       },
       { 
-        label: 'Contrôle KYC & AML', 
+        label: t.transferFlow.progress.steps.step2, 
         completed: simulatedProgress > 20,
         inProgress: simulatedProgress > 20 && simulatedProgress <= 40
       },
       { 
-        label: 'Vérification des fonds', 
+        label: t.transferFlow.progress.steps.step3, 
         completed: simulatedProgress > 40,
         inProgress: simulatedProgress > 40 && simulatedProgress <= 60
       },
       { 
-        label: 'Validation bancaire', 
+        label: t.transferFlow.progress.steps.step4, 
         completed: simulatedProgress > 60,
         inProgress: simulatedProgress > 60 && simulatedProgress < 100
       },
       { 
-        label: 'Finalisation & Release', 
+        label: t.transferFlow.progress.steps.step5, 
         completed: simulatedProgress >= 100,
         inProgress: false
       },
@@ -661,7 +661,7 @@ export default function TransferFlow() {
               <div className="space-y-6">
                 {/* Montant du transfert */}
                 <div className="text-center pb-6 border-b border-gray-200 dark:border-gray-700">
-                  <p className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Montant du transfert</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">{t.transferFlow.progress.transferAmountLabel}</p>
                   <p className="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-gray-100">
                     {transfer?.amount || '0'}<span className="text-3xl sm:text-4xl ml-2">€</span>
                   </p>
@@ -673,8 +673,8 @@ export default function TransferFlow() {
                     <Send className="w-5 h-5 text-[#2563EB]" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Expéditeur</p>
-                    <p className="text-base font-semibold text-gray-900 dark:text-gray-100">Compte ALTUS Finance</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">{t.transferFlow.progress.senderLabel}</p>
+                    <p className="text-base font-semibold text-gray-900 dark:text-gray-100">{t.transferFlow.progress.senderValue}</p>
                   </div>
                 </div>
 
@@ -684,9 +684,9 @@ export default function TransferFlow() {
                     <Building className="w-5 h-5 text-[#0EA5E9]" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Destinataire</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">{t.transferFlow.progress.recipientLabel}</p>
                     <p className="text-base font-semibold text-gray-900 dark:text-gray-100 break-words">
-                      {transfer?.recipient || 'Banque SEPA'}
+                      {transfer?.recipient || t.transferFlow.progress.recipientDefault}
                     </p>
                   </div>
                 </div>
@@ -697,7 +697,7 @@ export default function TransferFlow() {
                     <Shield className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Référence</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">{t.transferFlow.progress.referenceLabel}</p>
                     <p className="text-sm font-mono font-semibold text-gray-900 dark:text-gray-100 break-all">
                       {transfer?.id || 'TRX-2025-00000'}
                     </p>
@@ -708,14 +708,14 @@ export default function TransferFlow() {
               {/* Message de sécurité */}
               <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
                 <p className="text-center text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  Votre transfert est en cours de traitement sécurisé
+                  {t.transferFlow.progress.secureProcessingMessage}
                 </p>
                 <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 rounded-xl p-4 border border-blue-100 dark:border-blue-900/50">
                   <div className="flex items-center gap-3">
                     <Lock className="w-5 h-5 text-[#2563EB] flex-shrink-0" />
                     <div>
                       <p className="text-xs font-semibold text-gray-900 dark:text-gray-100">
-                        Sécurisé AES-256 + Authentification en cascades
+                        {t.transferFlow.progress.aesSecurityBadge}
                       </p>
                     </div>
                   </div>
@@ -764,8 +764,8 @@ export default function TransferFlow() {
                       <span className="text-5xl font-bold bg-gradient-to-r from-[#2563EB] to-[#0EA5E9] bg-clip-text text-transparent">
                         {Math.round(simulatedProgress)}%
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400 mt-2">Progression</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-500">du transfert</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400 mt-2">{t.transferFlow.progress.progressLabelShort}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500">{t.transferFlow.progress.transferProgressLabel}</span>
                     </div>
                   </div>
                 </div>
@@ -816,10 +816,10 @@ export default function TransferFlow() {
                   <Lock className="w-5 h-5 text-[#2563EB] mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                      Sécurisé par protocoles bancaires
+                      {t.transferFlow.progress.secureBankingProtocols}
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400">
-                      Chiffrement AES-256 et authentification multi-niveaux conformes aux standards européens
+                      {t.transferFlow.progress.aesMultiLevelAuth}
                     </p>
                   </div>
                 </div>
@@ -837,10 +837,10 @@ export default function TransferFlow() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
-                      Vérification de sécurité requise
+                      {t.transferFlow.progress.securityCheckRequired}
                     </h3>
                     <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                      Pour des raisons de sécurité, veuillez saisir le code de vérification qui vous a été transmis
+                      {t.transferFlow.progress.enterCodeSecurityMessage}
                     </p>
                     {nextCode.codeContext && (
                       <p className="text-xs text-orange-700 dark:text-orange-300 italic">
@@ -848,14 +848,14 @@ export default function TransferFlow() {
                       </p>
                     )}
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-                      Le code de sécurité vous sera communiqué par votre conseiller
+                      {t.transferFlow.progress.codeProvidedByAdvisor}
                     </p>
                   </div>
                 </div>
 
                 <div className="max-w-md mx-auto space-y-4">
                   <Label htmlFor="pause-code" className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Code de validation (6 chiffres)
+                    {t.transferFlow.progress.validationCodeSixDigits}
                   </Label>
                   <Input
                     id="pause-code"
@@ -877,12 +877,12 @@ export default function TransferFlow() {
                   {validateMutation.isPending ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Validation...
+                      {t.transferFlow.progress.validatingAction}
                     </>
                   ) : (
                     <>
                       <CheckCircle2 className="w-4 h-4 mr-2" />
-                      Valider et continuer
+                      {t.transferFlow.progress.validateContinueButton}
                     </>
                   )}
                 </Button>
@@ -910,7 +910,7 @@ export default function TransferFlow() {
           <div className="space-y-6">
             <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-lg">
               <p className="text-sm text-green-900 dark:text-green-100">
-                Votre transfert a été effectué avec succès. Les fonds seront disponibles sous 24 à 72 heures.
+                {t.transferFlow.complete.successMessageLong}
               </p>
             </div>
 
@@ -925,7 +925,7 @@ export default function TransferFlow() {
                   <span className="font-medium" data-testid="text-amount">{transferData.transfer.amount} EUR</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Référence</span>
+                  <span className="text-muted-foreground">{t.transferFlow.complete.reference}</span>
                   <span className="font-mono text-xs" data-testid="text-reference">{transferData.transfer.id}</span>
                 </div>
               </div>
@@ -937,7 +937,7 @@ export default function TransferFlow() {
               size="lg"
               data-testid="button-return-dashboard"
             >
-              Retour au tableau de bord
+              {t.transferFlow.complete.returnButton}
             </Button>
           </div>
         </DashboardCard>
