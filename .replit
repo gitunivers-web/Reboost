@@ -16,12 +16,12 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 34347
-externalPort = 5000
-
-[[ports]]
 localPort = 40983
 externalPort = 3002
+
+[[ports]]
+localPort = 41115
+externalPort = 5000
 
 [[ports]]
 localPort = 42749
