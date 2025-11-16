@@ -219,6 +219,8 @@ Assurez-vous que votre code est sur GitHub, GitLab ou Bitbucket.
    
    ⚠️ **Note sur le plan gratuit** : Les services gratuits Render s'endorment après 15 minutes d'inactivité et prennent ~30 secondes à redémarrer. Pour une application de production, le plan Starter est recommandé.
 
+   ⚠️ **IMPORTANT - Build Command** : Utilisez **uniquement** `npm install`. N'utilisez PAS `npm run build` car votre application utilise maintenant `tsx` directement en production (pas de compilation nécessaire).
+
 ### 3. Variables d'environnement
 
 Ajoutez toutes les variables listées dans la section "Backend" ci-dessus.
