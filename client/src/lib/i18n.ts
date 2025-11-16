@@ -1411,6 +1411,14 @@ type TranslationKeys = {
     uploadedAt: string;
     noDocuments: string;
   };
+  infoBanner: {
+    messages: {
+      message1: string;
+      message2: string;
+      message3: string;
+      message4: string;
+    };
+  };
   transferFlow: {
     backToDashboard: string;
     form: {
@@ -1568,6 +1576,10 @@ type TranslationKeys = {
       codeRequiredDesc: string;
       unblocked: string;
       unblockedDesc: string;
+    };
+    alerts: {
+      noLoansTitle: string;
+      noLoansDescription: string;
     };
   };
   loanOffers: {
@@ -3793,6 +3805,14 @@ export const translations: Record<Language, TranslationKeys> = {
       uploadedAt: 'Téléchargé le',
       noDocuments: 'Aucun document téléchargé',
     },
+    infoBanner: {
+      messages: {
+        message1: 'Votre espace reste accessible pendant les mises à jour système',
+        message2: 'Les virements sont traités sous 24h ouvrées',
+        message3: 'Sécurité renforcée - Activez l\'authentification à deux facteurs',
+        message4: 'Nouveau - Consultez vos contrats signés dans la section Contrats',
+      },
+    },
     transferFlow: {
       backToDashboard: 'Retour au tableau de bord',
       form: {
@@ -3950,6 +3970,10 @@ export const translations: Record<Language, TranslationKeys> = {
         codeRequiredDesc: 'Veuillez entrer le code de déblocage',
         unblocked: 'Transfert débloqué',
         unblockedDesc: 'Le transfert a été débloqué avec succès',
+      },
+      alerts: {
+        noLoansTitle: 'Aucun prêt disponible pour transfert',
+        noLoansDescription: 'Vous n\'avez actuellement aucun prêt approuvé avec des fonds disponibles pour effectuer un transfert. Veuillez vous assurer que votre prêt est approuvé par l\'administrateur et que les fonds ont été débloqués.',
       },
     },
     loanOffers: {
@@ -6293,6 +6317,14 @@ export const translations: Record<Language, TranslationKeys> = {
       uploadedAt: 'Uploaded on',
       noDocuments: 'No documents uploaded',
     },
+    infoBanner: {
+      messages: {
+        message1: 'Your workspace remains accessible during system updates',
+        message2: 'Transfers are processed within 24 business hours',
+        message3: 'Enhanced security - Enable two-factor authentication',
+        message4: 'New - View your signed contracts in the Contracts section',
+      },
+    },
     transferFlow: {
       backToDashboard: 'Back to Dashboard',
       form: {
@@ -6450,6 +6482,10 @@ export const translations: Record<Language, TranslationKeys> = {
         codeRequiredDesc: 'Please enter the unlock code',
         unblocked: 'Transfer Unblocked',
         unblockedDesc: 'Transfer has been successfully unblocked',
+      },
+      alerts: {
+        noLoansTitle: 'No loans available for transfer',
+        noLoansDescription: 'You currently have no approved loans with available funds to make a transfer. Please ensure your loan is approved by the administrator and funds have been released.',
       },
     },
     loanOffers: {
@@ -8695,6 +8731,14 @@ export const translations: Record<Language, TranslationKeys> = {
       uploadedAt: 'Subido el',
       noDocuments: 'No se subieron documentos',
     },
+    infoBanner: {
+      messages: {
+        message1: 'Su espacio permanece accesible durante las actualizaciones del sistema',
+        message2: 'Las transferencias se procesan en 24 horas hábiles',
+        message3: 'Seguridad reforzada - Active la autenticación de dos factores',
+        message4: 'Nuevo - Consulte sus contratos firmados en la sección Contratos',
+      },
+    },
     transferFlow: {
       backToDashboard: 'Volver al Panel',
       form: {
@@ -8852,6 +8896,10 @@ export const translations: Record<Language, TranslationKeys> = {
         codeRequiredDesc: 'Por favor ingrese el código de desbloqueo',
         unblocked: 'Transferencia Desbloqueada',
         unblockedDesc: 'La transferencia ha sido desbloqueada exitosamente',
+      },
+      alerts: {
+        noLoansTitle: 'No hay préstamos disponibles para transferencia',
+        noLoansDescription: 'Actualmente no tiene préstamos aprobados con fondos disponibles para realizar una transferencia. Asegúrese de que su préstamo esté aprobado por el administrador y que los fondos hayan sido liberados.',
       },
     },
     loanOffers: {
@@ -11205,6 +11253,14 @@ export const translations: Record<Language, TranslationKeys> = {
       uploadedAt: 'Enviado em',
       noDocuments: 'Nenhum documento enviado',
     },
+    infoBanner: {
+      messages: {
+        message1: 'Seu espaço permanece acessível durante atualizações do sistema',
+        message2: 'As transferências são processadas em 24 horas úteis',
+        message3: 'Segurança reforçada - Ative a autenticação de dois fatores',
+        message4: 'Novo - Consulte seus contratos assinados na seção Contratos',
+      },
+    },
     transferFlow: {
       backToDashboard: 'Voltar ao Painel',
       form: {
@@ -11362,6 +11418,10 @@ export const translations: Record<Language, TranslationKeys> = {
         codeRequiredDesc: 'Por favor digite o código de desbloqueio',
         unblocked: 'Transferência Desbloqueada',
         unblockedDesc: 'A transferência foi desbloqueada com sucesso',
+      },
+      alerts: {
+        noLoansTitle: 'Nenhum empréstimo disponível para transferência',
+        noLoansDescription: 'Você não possui atualmente nenhum empréstimo aprovado com fundos disponíveis para realizar uma transferência. Certifique-se de que seu empréstimo está aprovado pelo administrador e que os fundos foram liberados.',
       },
     },
     loanOffers: {
@@ -13510,6 +13570,14 @@ export const translations: Record<Language, TranslationKeys> = {
       uploadedAt: 'Caricato il',
       noDocuments: 'Nessun documento caricato',
     },
+    infoBanner: {
+      messages: {
+        message1: 'Il tuo spazio rimane accessibile durante gli aggiornamenti del sistema',
+        message2: 'I trasferimenti vengono elaborati entro 24 ore lavorative',
+        message3: 'Sicurezza rafforzata - Attiva l\'autenticazione a due fattori',
+        message4: 'Nuovo - Consulta i tuoi contratti firmati nella sezione Contratti',
+      },
+    },
     transferFlow: {
       backToDashboard: 'Torna alla dashboard',
       form: {
@@ -13667,6 +13735,10 @@ export const translations: Record<Language, TranslationKeys> = {
         codeRequiredDesc: 'Si prega di inserire il codice di sblocco',
         unblocked: 'Trasferimento sbloccato',
         unblockedDesc: 'Il trasferimento è stato sbloccato con successo',
+      },
+      alerts: {
+        noLoansTitle: 'Nessun prestito disponibile per il trasferimento',
+        noLoansDescription: 'Attualmente non hai prestiti approvati con fondi disponibili per effettuare un trasferimento. Assicurati che il tuo prestito sia approvato dall\'amministratore e che i fondi siano stati rilasciati.',
       },
     },
     loanOffers: {
@@ -15901,6 +15973,14 @@ export const translations: Record<Language, TranslationKeys> = {
       uploadedAt: 'Hochgeladen am',
       noDocuments: 'Keine Dokumente hochgeladen',
     },
+    infoBanner: {
+      messages: {
+        message1: 'Ihr Bereich bleibt während System-Updates zugänglich',
+        message2: 'Überweisungen werden innerhalb von 24 Werktagen bearbeitet',
+        message3: 'Erhöhte Sicherheit - Aktivieren Sie die Zwei-Faktor-Authentifizierung',
+        message4: 'Neu - Sehen Sie Ihre unterschriebenen Verträge im Bereich Verträge ein',
+      },
+    },
     transferFlow: {
       backToDashboard: 'Zurück zum Dashboard',
       form: {
@@ -16058,6 +16138,10 @@ export const translations: Record<Language, TranslationKeys> = {
         codeRequiredDesc: 'Bitte geben Sie den Entsperrcode ein',
         unblocked: 'Überweisung entsperrt',
         unblockedDesc: 'Die Überweisung wurde erfolgreich entsperrt',
+      },
+      alerts: {
+        noLoansTitle: 'Keine Kredite für Überweisung verfügbar',
+        noLoansDescription: 'Sie haben derzeit keine genehmigten Kredite mit verfügbaren Mitteln, um eine Überweisung durchzuführen. Stellen Sie sicher, dass Ihr Kredit vom Administrator genehmigt wurde und die Mittel freigegeben wurden.',
       },
     },
     loanOffers: {
@@ -18262,6 +18346,14 @@ export const translations: Record<Language, TranslationKeys> = {
       uploadedAt: 'Geüpload op',
       noDocuments: 'Geen documenten geüpload',
     },
+    infoBanner: {
+      messages: {
+        message1: 'Uw ruimte blijft toegankelijk tijdens systeemwerkzaamheden',
+        message2: 'Overschrijvingen worden binnen 24 werkuren verwerkt',
+        message3: 'Verhoogde beveiliging - Activeer twee-factor-authenticatie',
+        message4: 'Nieuw - Bekijk uw ondertekende contracten in het sectie Contracten',
+      },
+    },
     transferFlow: {
       backToDashboard: 'Terug naar dashboard',
       form: {
@@ -18419,6 +18511,10 @@ export const translations: Record<Language, TranslationKeys> = {
         codeRequiredDesc: 'Voer de deblokkeringscode in',
         unblocked: 'Overschrijving gedeblokkeerd',
         unblockedDesc: 'De overschrijving is succesvol gedeblokkeerd',
+      },
+      alerts: {
+        noLoansTitle: 'Geen leningen beschikbaar voor overschrijving',
+        noLoansDescription: 'U heeft momenteel geen goedgekeurde leningen met beschikbare fondsen om een overschrijving te maken. Zorg ervoor dat uw lening is goedgekeurd door de beheerder en dat de fondsen zijn vrijgegeven.',
       },
     },
     loanOffers: {
