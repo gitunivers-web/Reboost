@@ -60,6 +60,7 @@ export interface IStorage {
   resetPassword(userId: string, newPassword: string): Promise<User | undefined>;
   
   getUserLoans(userId: string): Promise<Loan[]>;
+  getLoansAvailableForTransfer(userId: string): Promise<Loan[]>;
   getLoan(id: string): Promise<Loan | undefined>;
   createLoan(loan: InsertLoan): Promise<Loan>;
   updateLoan(id: string, loan: Partial<Loan>): Promise<Loan | undefined>;
@@ -1576,6 +1577,28 @@ export class DatabaseStorage implements IStorage {
 
   async getUserLoans(userId: string): Promise<Loan[]> {
     return await db.select().from(loans).where(eq(loans.userId, userId));
+  }
+
+  async getLoansAvailableForTransfer(userId: string): Promise<Loan[]> {
+    const result = await db
+      .select()
+      .from(loans)
+      .where(
+        and(
+          eq(loans.userId, userId),
+          eq(loans.status, 'approved'),
+          eq(loans.fundsAvailabilityStatus, 'available'),
+          isNull(loans.deletedAt),
+          notExists(
+            db
+              .select()
+              .from(transfers)
+              .where(eq(transfers.loanId, loans.id))
+          )
+        )
+      );
+    
+    return result;
   }
 
   async getLoan(id: string): Promise<Loan | undefined> {

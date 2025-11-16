@@ -1594,6 +1594,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/loans/available-for-transfer", requireAuth, async (req, res) => {
+    try {
+      const loansAvailable = await storage.getLoansAvailableForTransfer(req.session.userId!);
+      res.json(loansAvailable);
+    } catch (error) {
+      console.error('Error fetching loans available for transfer:', error);
+      res.status(500).json({ error: 'Erreur lors de la récupération des prêts disponibles' });
+    }
+  });
+
   app.post("/api/loans", requireAuth, requireCSRF, loanLimiter, async (req, res) => {
     try {
       const loanRequestSchema = z.object({
@@ -1604,6 +1614,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       const { loanType, amount, duration, documents } = loanRequestSchema.parse(req.body);
+      
+      const userLoans = await storage.getUserLoans(req.session.userId!);
+      const userTransfers = await storage.getUserTransfers(req.session.userId!);
+      
+      const hasActiveLoan = userLoans.some(loan => {
+        if (loan.deletedAt !== null) return false;
+        if (loan.status === 'rejected') return false;
+        
+        const loanTransfers = userTransfers.filter(t => t.loanId === loan.id);
+        
+        if (loanTransfers.length === 0) {
+          return true;
+        }
+        
+        const hasCompletedTransfer = loanTransfers.some(t => t.status === 'completed');
+        return !hasCompletedTransfer;
+      });
+      
+      if (hasActiveLoan) {
+        return res.status(400).json({ 
+          error: 'Vous avez déjà une demande de prêt active. Vous ne pouvez soumettre une nouvelle demande qu\'une fois votre prêt actuel entièrement finalisé (transfert effectué et terminé).',
+          code: 'ACTIVE_LOAN_EXISTS'
+        });
+      }
       
       const interestRate = await calculateInterestRate(loanType, amount);
       

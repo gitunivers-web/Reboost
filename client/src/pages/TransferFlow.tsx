@@ -22,7 +22,7 @@ export default function TransferFlow() {
   const t = useTranslations();
   
   const [step, setStep] = useState<'form' | 'verification' | 'progress' | 'complete'>('form');
-  const [amount, setAmount] = useState('');
+  const [selectedLoanId, setSelectedLoanId] = useState('');
   const [recipient, setRecipient] = useState('');
   const [externalAccountId, setExternalAccountId] = useState('');
   const [validationCode, setValidationCode] = useState('');
@@ -42,9 +42,8 @@ export default function TransferFlow() {
     queryKey: ['/api/external-accounts'],
   });
 
-  const { data: activeLoans } = useQuery<any[]>({
-    queryKey: ['/api/loans'],
-    select: (loans) => loans.filter(loan => loan.status === 'active'),
+  const { data: availableLoans, isLoading: isLoadingLoans } = useQuery<any[]>({
+    queryKey: ['/api/loans/available-for-transfer'],
   });
 
   const { data: transferData, refetch: refetchTransfer } = useQuery<TransferDetailsResponse>({
@@ -54,10 +53,13 @@ export default function TransferFlow() {
   });
 
   useEffect(() => {
-    if (activeLoans && activeLoans.length > 0 && !amount) {
-      setAmount(parseFloat(activeLoans[0].amount).toString());
+    if (availableLoans && availableLoans.length > 0 && !selectedLoanId) {
+      setSelectedLoanId(availableLoans[0].id);
     }
-  }, [activeLoans]);
+  }, [availableLoans]);
+
+  const selectedLoan = availableLoans?.find(loan => loan.id === selectedLoanId);
+  const amount = selectedLoan ? parseFloat(selectedLoan.amount).toString() : '';
 
   const initiateMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -285,12 +287,11 @@ export default function TransferFlow() {
       return;
     }
 
-    const activeLoan = activeLoans?.[0];
-    if (!activeLoan) {
+    if (!selectedLoan) {
       toast({
         variant: 'destructive',
         title: t.transferFlow.toast.error,
-        description: t.transferFlow.toast.noActiveLoanDesc,
+        description: 'Aucun prêt disponible pour transfert. Veuillez vous assurer que votre prêt est approuvé et que les fonds sont disponibles.',
       });
       return;
     }
@@ -298,7 +299,7 @@ export default function TransferFlow() {
     initiateMutation.mutate({
       amount: parseFloat(amount),
       recipient,
-      loanId: activeLoan.id,
+      loanId: selectedLoan.id,
       externalAccountId,
     });
   };
@@ -342,6 +343,23 @@ export default function TransferFlow() {
             </p>
           </div>
 
+          {!isLoadingLoans && (!availableLoans || availableLoans.length === 0) && (
+            <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-6">
+              <div className="flex gap-4">
+                <AlertCircle className="w-6 h-6 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                    Aucun prêt disponible pour transfert
+                  </h3>
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                    Vous n'avez actuellement aucun prêt approuvé avec des fonds disponibles pour effectuer un transfert. 
+                    Veuillez vous assurer que votre prêt est approuvé par l'administrateur et que les fonds ont été débloqués.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <DashboardCard 
               title={t.transferFlow.form.cardTitle}
@@ -351,27 +369,51 @@ export default function TransferFlow() {
               className="bg-gradient-to-br from-primary/5 via-background to-background"
             >
               <div className="space-y-6">
+                {availableLoans && availableLoans.length > 1 && (
+                  <div className="space-y-2">
+                    <Label htmlFor="loan" className="text-sm font-medium">
+                      Sélectionner le prêt
+                    </Label>
+                    <Select value={selectedLoanId} onValueChange={setSelectedLoanId}>
+                      <SelectTrigger data-testid="select-loan" className="h-12">
+                        <SelectValue placeholder="Choisir un prêt" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableLoans.map((loan) => (
+                          <SelectItem key={loan.id} value={loan.id}>
+                            <div className="flex flex-col items-start">
+                              <span className="font-medium">
+                                {parseFloat(loan.amount).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+                              </span>
+                              <span className="text-xs text-muted-foreground">
+                                {loan.loanType} - Approuvé le {new Date(loan.approvedAt).toLocaleDateString('fr-FR')}
+                              </span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
                 <div className="space-y-2">
                   <Label htmlFor="amount" className="text-sm font-medium">
                     {t.transferFlow.form.amountLabel}
                   </Label>
                   <div className="relative">
-                    <Input
+                    <div
                       id="amount"
-                      type="number"
-                      placeholder={t.transferFlow.form.amountPlaceholder}
-                      value={amount}
-                      readOnly
-                      disabled
-                      className="cursor-not-allowed opacity-75 bg-muted text-2xl font-bold h-14 pr-12"
+                      className="flex h-14 w-full rounded-md border border-input bg-muted px-3 py-2 text-2xl font-bold ring-offset-background cursor-not-allowed opacity-75 pr-12"
                       data-testid="input-amount"
-                    />
+                    >
+                      {amount || t.transferFlow.form.amountPlaceholder}
+                    </div>
                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xl font-semibold text-muted-foreground">
                       €
                     </span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
-                    <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <Lock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     <p className="text-xs text-blue-900 dark:text-blue-100">
                       {t.transferFlow.form.amountFixedHelper}
                     </p>

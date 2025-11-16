@@ -127,10 +127,12 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
       onOpenChange(false);
       resetForm();
     },
-    onError: () => {
+    onError: (error: any) => {
+      const errorMessage = error?.message || t.dialogs.newLoan.error.loanErrorDesc;
+      
       toast({
         title: t.dialogs.newLoan.error.loanError,
-        description: t.dialogs.newLoan.error.loanErrorDesc,
+        description: errorMessage,
         variant: 'destructive',
       });
     },

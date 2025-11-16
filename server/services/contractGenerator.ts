@@ -32,49 +32,65 @@ const getContractTemplate = (data: ContractData): string => {
     .header {
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
       color: white;
-      padding: 30px 40px;
+      padding: 35px 45px;
       margin: -2cm -2cm 30px -2cm;
-      text-align: center;
       position: relative;
     }
     .header-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       text-align: left;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
     .logo-section {
       flex: 1;
+      max-width: 50%;
     }
     .logo {
-      font-size: 28pt;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
+      font-size: 32pt;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
       text-transform: uppercase;
+      line-height: 1;
     }
     .logo-subtitle {
-      font-size: 11pt;
-      opacity: 0.95;
+      font-size: 12pt;
+      opacity: 0.92;
       font-weight: 300;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
     .header-info {
       text-align: right;
       font-size: 9pt;
-      opacity: 0.9;
-      line-height: 1.8;
+      line-height: 2;
+      max-width: 45%;
+    }
+    .header-info strong {
+      display: block;
+      font-size: 10pt;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .header-info .contact-line {
+      display: block;
+      opacity: 0.92;
     }
     .contract-ref {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 12px 20px;
-      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 14px 24px;
+      border-radius: 8px;
       display: inline-block;
-      font-size: 10pt;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: 1.2px;
       backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
     }
     h1 {
       color: #1e3a8a;
@@ -247,17 +263,20 @@ const getContractTemplate = (data: ContractData): string => {
     <div class="header-top">
       <div class="logo-section">
         <div class="logo">ALTUS</div>
-        <div class="logo-subtitle">FINANCE GROUP</div>
+        <div class="logo-subtitle">Finance Group</div>
       </div>
       <div class="header-info">
-        <strong>ALTUS FINANCE GROUP S.à r.l.</strong><br>
-        19 Rue Sigismond, L-2537<br>
-        Luxembourg<br>
-        Tél: +352 40 63 48<br>
-        RCS Luxembourg B123456
+        <strong>ALTUS FINANCE GROUP S.à r.l.</strong>
+        <span class="contact-line">19 Rue Sigismond, L-2537 Luxembourg</span>
+        <span class="contact-line">RCS Luxembourg B123456</span>
+        <span class="contact-line">Tél: +352 40 63 48</span>
+        <span class="contact-line">Email: contact@altusfinance.lu</span>
+        <span class="contact-line">www.altusfinance.lu</span>
       </div>
     </div>
-    <div class="contract-ref">CONTRAT DE PRÊT N° ${loan.id}</div>
+    <div style="text-align: center;">
+      <div class="contract-ref">CONTRAT DE PRÊT N° ${loan.id.toUpperCase()}</div>
+    </div>
   </div>
 
   <h1>Contrat de Prêt Professionnel</h1>
