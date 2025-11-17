@@ -1,0 +1,167 @@
+2025-11-17T00:34:36.973432919Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:34:36.973438619Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:34:36.973700985Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:34:36.973709006Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:36.973717496Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:36.974407423Z Error: Not allowed by CORS
+2025-11-17T00:34:36.974418663Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:36.974424164Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:36.974429054Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:34:36.974433164Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:34:36.974437814Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:34:36.974441794Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:34:36.974445734Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:34:36.974463144Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:34:36.974467735Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:34:36.974475095Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:34:37.203826226Z [ERROR] OPTIONS /api/auth/signup - Status: 500
+2025-11-17T00:34:37.203846747Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:34:37.203852157Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:34:37.204026071Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:34:37.204034882Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:37.204039562Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:37.204683768Z Error: Not allowed by CORS
+2025-11-17T00:34:37.204692648Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:37.204696548Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:37.204700228Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:34:37.204703078Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:34:37.204706438Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:34:37.204709238Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:34:37.204712169Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:34:37.204714999Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:34:37.204720769Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:34:37.204723719Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:34:39.454672657Z [ERROR] GET /api/csrf-token - Status: 500
+2025-11-17T00:34:39.454691188Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:34:39.454696228Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:34:39.454708848Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:34:39.454716978Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:39.454721488Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:39.455607011Z Error: Not allowed by CORS
+2025-11-17T00:34:39.455618881Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:39.455623621Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:39.455627811Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:34:39.455632241Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:34:39.455636561Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:34:39.455682892Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:34:39.455688833Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:34:39.455692893Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:34:39.455696543Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:34:39.455700093Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:34:39.687962098Z [ERROR] OPTIONS /api/auth/signup - Status: 500
+2025-11-17T00:34:39.687981408Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:34:39.687985268Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:34:39.688160723Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:34:39.688167633Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:39.688173603Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:39.688821189Z Error: Not allowed by CORS
+2025-11-17T00:34:39.688832749Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:39.688839009Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:39.68884455Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:34:39.68884966Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:34:39.68885583Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:34:39.6888612Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:34:39.688897651Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:34:39.688907581Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:34:39.688913451Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:34:39.688919262Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:34:43.958347618Z [ERROR] GET /api/csrf-token - Status: 500
+2025-11-17T00:34:43.958376699Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:34:43.958382219Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:34:43.958556163Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:34:43.958579664Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:43.958583504Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:43.959159079Z Error: Not allowed by CORS
+2025-11-17T00:34:43.959166159Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:43.959168519Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:43.959170969Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:34:43.959172619Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:34:43.959174959Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:34:43.959176619Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:34:43.959178319Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:34:43.959180029Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:34:43.959181719Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:34:43.959183409Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:34:44.201822185Z [ERROR] OPTIONS /api/auth/signup - Status: 500
+2025-11-17T00:34:44.201843535Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:34:44.201848286Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:34:44.20204614Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:34:44.202055741Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:44.202059441Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:44.202696957Z Error: Not allowed by CORS
+2025-11-17T00:34:44.202707027Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:44.202710667Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:44.202713917Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:34:44.202716397Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:34:44.202719177Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:34:44.202722068Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:34:44.202724968Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:34:44.202727868Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:34:44.202730638Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:34:44.202733398Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:34:49.866880051Z [ERROR] GET /api/csrf-token - Status: 500
+2025-11-17T00:34:49.866898792Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:34:49.866902612Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:34:49.866906352Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:34:49.866908912Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:49.866911862Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:49.868087972Z Error: Not allowed by CORS
+2025-11-17T00:34:49.868101142Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:34:49.868117093Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:34:49.868120883Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:34:49.868124113Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:34:49.868127263Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:34:49.868129973Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:34:49.868132943Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:34:49.868135703Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:34:49.868138313Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:34:49.868140973Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:37:33.988082799Z [ERROR] GET /api/loans - Status: 500
+2025-11-17T00:37:33.988112379Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:37:33.988119789Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:37:33.988275404Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:37:33.988307564Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:37:33.988316605Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:37:33.988898799Z Error: Not allowed by CORS
+2025-11-17T00:37:33.98891002Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:37:33.98891364Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:37:33.98891925Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:37:33.98892431Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:37:33.98893063Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:37:33.98893527Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:37:33.98894013Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:37:33.98894387Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:37:33.988948681Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:37:33.988953261Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-17T00:47:14.328037973Z ==> Running 'npm start'
+2025-11-17T00:47:15.334742255Z 
+2025-11-17T00:47:15.334775286Z > rest-express@1.0.0 start
+2025-11-17T00:47:15.334780966Z > NODE_ENV=production tsx server/index.ts
+2025-11-17T00:47:15.334783546Z 
+2025-11-17T00:47:35.438496581Z ✅ Cloudinary configured successfully
+2025-11-17T00:47:36.326622132Z 12:47:36 AM [express] ✅ Backend API server listening on port 10000
+2025-11-17T00:47:36.326867107Z 12:47:36 AM [express] 🌍 Environment: production
+2025-11-17T00:47:36.32699566Z 12:47:36 AM [express] 🗄️ Database: Connected
+2025-11-17T00:47:36.327004241Z [CONFIG] FRONTEND_URL: https://altusfinancesgroup.com
+2025-11-17T00:47:36.327013351Z [CONFIG] Allowed Origins: ["https://altusfinancegroup.com","https://www.altusfinancegroup.com","https://altusfinancesgroup.com"]
+2025-11-17T00:47:36.327058292Z [CONFIG] Session Cookie Domain: .altusfinancesgroup.com
+2025-11-17T00:47:36.327067442Z [CONFIG] Session Cookie Secure: true
+2025-11-17T00:47:36.327214055Z [CONFIG] Session Cookie SameSite: none
+2025-11-17T00:47:41.334904348Z Expired OTPs cleaned up
+2025-11-17T00:54:34.021406467Z [ERROR] GET /api/csrf-token - Status: 500
+2025-11-17T00:54:34.021437497Z [ERROR] Message: Not allowed by CORS
+2025-11-17T00:54:34.021443048Z [ERROR] Origin: https://www.altusfinancesgroup.com
+2025-11-17T00:54:34.021447468Z [ERROR] Stack: Error: Not allowed by CORS
+2025-11-17T00:54:34.021456238Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:54:34.021461688Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:54:34.025453029Z Error: Not allowed by CORS
+2025-11-17T00:54:34.025471149Z     at origin (/opt/render/project/src/server/index.ts:81:16)
+2025-11-17T00:54:34.025476209Z     at /opt/render/project/src/node_modules/cors/lib/index.js:219:13
+2025-11-17T00:54:34.02548105Z     at optionsCallback (/opt/render/project/src/node_modules/cors/lib/index.js:199:9)
+2025-11-17T00:54:34.02548505Z     at corsMiddleware (/opt/render/project/src/node_modules/cors/lib/index.js:204:7)
+2025-11-17T00:54:34.02549005Z     at Layer.handle [as handle_request] (/opt/render/project/src/node_modules/express/lib/router/layer.js:95:5)
+2025-11-17T00:54:34.02549761Z     at trim_prefix (/opt/render/project/src/node_modules/express/lib/router/index.js:328:13)
+2025-11-17T00:54:34.02550168Z     at /opt/render/project/src/node_modules/express/lib/router/index.js:286:9
+2025-11-17T00:54:34.02550581Z     at Function.process_params (/opt/render/project/src/node_modules/express/lib/router/index.js:346:12)
+2025-11-17T00:54:34.0255108Z     at next (/opt/render/project/src/node_modules/express/lib/router/index.js:280:10)
+2025-11-17T00:54:34.025514861Z     at expressInit (/opt/render/project/src/node_modules/express/lib/middleware/init.js:40:5)
