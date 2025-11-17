@@ -1,0 +1,65 @@
+2025-11-17T22:08:59.324608849Z ==> Cloning from https://github.com/gitunivers-web/Lepari1
+2025-11-17T22:09:01.714521467Z ==> Checking out commit 9b826228dc409ea86d7f103793ce0e7f015c85db in branch main
+2025-11-17T22:09:03.399518742Z ==> Using Node.js version 22.16.0 (default)
+2025-11-17T22:09:03.425654561Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2025-11-17T22:09:06.238732987Z ==> Running build command 'npm run build:backend'...
+2025-11-17T22:09:06.744771529Z 
+2025-11-17T22:09:06.744792079Z > rest-express@1.0.0 build:backend
+2025-11-17T22:09:06.744797139Z > npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-11-17T22:09:06.744804699Z 
+2025-11-17T22:09:10.108935261Z 
+2025-11-17T22:09:10.108973982Z   dist/index.js  410.3kb
+2025-11-17T22:09:10.108980202Z 
+2025-11-17T22:09:10.108984742Z ⚡ Done in 19ms
+2025-11-17T22:09:15.81615725Z ==> Uploading build...
+2025-11-17T22:09:23.846909037Z ==> Uploaded in 6.5s. Compression took 1.6s
+2025-11-17T22:09:23.893015154Z ==> Build successful 🎉
+2025-11-17T22:09:28.595863635Z ==> Deploying...
+2025-11-17T22:10:00.901482589Z ==> Running 'npm run start:compiled'
+2025-11-17T22:10:02.004435588Z 
+2025-11-17T22:10:02.004456499Z > rest-express@1.0.0 start:compiled
+2025-11-17T22:10:02.004460419Z > NODE_ENV=production node dist/index.js
+2025-11-17T22:10:02.004462119Z 
+2025-11-17T22:10:02.504526119Z node:internal/modules/package_json_reader:256
+2025-11-17T22:10:02.5045557Z   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+2025-11-17T22:10:02.50456044Z         ^
+2025-11-17T22:10:02.50456346Z 
+2025-11-17T22:10:02.50456753Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'drizzle-orm' imported from /opt/render/project/src/dist/index.js
+2025-11-17T22:10:02.504573601Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+2025-11-17T22:10:02.504577571Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-11-17T22:10:02.504581261Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-11-17T22:10:02.504584781Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-11-17T22:10:02.504587991Z     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-11-17T22:10:02.504591171Z     at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-11-17T22:10:02.504594231Z     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-11-17T22:10:02.504598211Z     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-11-17T22:10:02.504601831Z     at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-11-17T22:10:02.504605171Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-11-17T22:10:02.504607382Z }
+2025-11-17T22:10:02.504609332Z 
+2025-11-17T22:10:02.504611552Z Node.js v22.16.0
+2025-11-17T22:10:04.487526757Z ==> Exited with status 1
+2025-11-17T22:10:04.631352919Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2025-11-17T22:10:08.297032688Z ==> Running 'npm run start:compiled'
+2025-11-17T22:10:09.194725892Z 
+2025-11-17T22:10:09.194753233Z > rest-express@1.0.0 start:compiled
+2025-11-17T22:10:09.194758083Z > NODE_ENV=production node dist/index.js
+2025-11-17T22:10:09.194760753Z 
+2025-11-17T22:10:09.790541314Z node:internal/modules/package_json_reader:256
+2025-11-17T22:10:09.790557445Z   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+2025-11-17T22:10:09.790560185Z         ^
+2025-11-17T22:10:09.790562345Z 
+2025-11-17T22:10:09.790565155Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'drizzle-orm' imported from /opt/render/project/src/dist/index.js
+2025-11-17T22:10:09.790570205Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+2025-11-17T22:10:09.790572725Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-11-17T22:10:09.790574835Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-11-17T22:10:09.790577015Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-11-17T22:10:09.790579305Z     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-11-17T22:10:09.790581665Z     at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-11-17T22:10:09.790585876Z     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-11-17T22:10:09.790588206Z     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-11-17T22:10:09.790590286Z     at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-11-17T22:10:09.790592806Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-11-17T22:10:09.790594946Z }
+2025-11-17T22:10:09.790596876Z 
+2025-11-17T22:10:09.790598956Z Node.js v22.16.0
