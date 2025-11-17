@@ -40,8 +40,8 @@ Le fichier `package.json` contient tous les scripts nécessaires :
 Dans les paramètres de votre Web Service Render :
 
 **Build & Deploy :**
-- **Build Command** : `npm install && npm run build`
-- **Start Command** : `npm start`
+- **Build Command** : `bash render-build.sh && npm run build`
+- **Start Command** : `npm run start:compiled`
 - **Branch** : `main` (ou votre branche principale)
 
 **Environment :**
@@ -57,7 +57,15 @@ NODE_ENV=production
 DATABASE_URL=<votre-url-postgresql>
 SESSION_SECRET=<générer-une-clé-secrète-forte>
 PORT=5000
+PUPPETEER_CACHE_DIR=/opt/render/project/.cache/puppeteer
+NPM_CONFIG_PRODUCTION=false
 ```
+
+**⚠️ IMPORTANT - Variables critiques (à configurer dans Render Dashboard → Environment)** :
+- `PUPPETEER_CACHE_DIR=/opt/render/project/.cache/puppeteer` : **OBLIGATOIRE** pour la génération de contrats PDF et la persistance du cache Chrome
+- `NPM_CONFIG_PRODUCTION=false` : **OBLIGATOIRE** pour installer les devDependencies (vite, esbuild, tsx) nécessaires au build
+
+**Note** : Ces variables DOIVENT être configurées dans le dashboard Render AVANT le premier déploiement, sinon le build échouera.
 
 **Variables Optionnelles (si utilisées) :**
 ```
@@ -95,7 +103,64 @@ GET /health
 
 Configurez Render pour utiliser ce endpoint dans les "Health Checks".
 
+## 🎯 Configuration Puppeteer/Chromium (Génération de contrats PDF)
+
+### Changement Important (Nov 2024)
+Le projet a été migré de `puppeteer-core` vers `puppeteer` complet pour résoudre les problèmes de génération de PDF en production.
+
+### Pourquoi ce changement ?
+- **Avant** : `puppeteer-core` nécessitait un Chrome/Chromium installé manuellement sur le serveur
+- **Après** : `puppeteer` inclut automatiquement Chromium, aucune installation système requise
+- **Résultat** : Les contrats PDF sont maintenant générés correctement sur Render
+
+### Configuration requise
+
+**⚠️ Important** : Les trois étapes suivantes sont toutes nécessaires pour que la génération de PDF fonctionne :
+
+1. **Build Command sur Render** : `bash render-build.sh && npm run build`
+   - Render installe automatiquement les dépendances npm en premier
+   - Le script `render-build.sh` installe ensuite Chrome/Chromium
+   - Enfin `npm run build` compile le projet
+
+2. **Variable d'environnement OBLIGATOIRE** : 
+   ```
+   PUPPETEER_CACHE_DIR=/opt/render/project/.cache/puppeteer
+   ```
+   Cette variable indique à Puppeteer où stocker le binaire Chrome téléchargé, permettant sa réutilisation entre les déploiements.
+
+3. **Flux de build complet** :
+   ```
+   1. Render exécute: npm install (avec NPM_CONFIG_PRODUCTION=false pour inclure devDeps)
+   2. Render exécute: bash render-build.sh (installe Chrome dans le cache Puppeteer)
+   3. Render exécute: npm run build (compile frontend + backend vers dist/)
+   4. Runtime: npm run start:compiled (démarre avec node dist/index.js)
+   ```
+
+**Pourquoi NPM_CONFIG_PRODUCTION=false ?**
+- Render doit installer les devDependencies (vite, esbuild) pour compiler le projet
+- Ces outils ne sont nécessaires que pendant le build, pas au runtime
+- Sans cette variable, le build échouera car vite et esbuild seront absents
+
+**Pourquoi start:compiled ?**
+- En production, on utilise le code compilé (`node dist/index.js`)
+- Plus rapide que `tsx` et ne nécessite pas de devDependencies au runtime
+- Le bundle est déjà optimisé et prêt à l'emploi
+
+### Vérification
+Après déploiement, les logs devraient montrer :
+```
+✓ Chromium embarqué Puppeteer trouvé: /opt/render/project/.cache/puppeteer/chrome/...
+✓ Browser Puppeteer lancé avec succès
+✓ PDF généré avec succès: contrat_xxx_xxx.pdf
+```
+
 ## 🔧 Dépannage
+
+### Problème : "An executablePath must be specified for puppeteer-core"
+**Solution** : 
+1. Vérifiez que `PUPPETEER_CACHE_DIR` est définie dans les variables d'environnement
+2. Vérifiez que le build command est : `bash render-build.sh && npm run build`
+3. Consultez les logs de build pour confirmer que Chrome a été installé
 
 ### Problème : "Cannot find module"
 **Solution** : Assurez-vous que la commande `npm install` s'exécute avant le build
@@ -108,6 +173,12 @@ Configurez Render pour utiliser ce endpoint dans les "Health Checks".
 
 ### Problème : "Session store error"
 **Solution** : Assurez-vous que `SESSION_SECRET` est défini dans les variables d'environnement
+
+### Problème : "Contract generation fails" (Statut: none)
+**Solution** : 
+1. Vérifiez les logs pour l'erreur exacte
+2. Assurez-vous que `PUPPETEER_CACHE_DIR` est configurée
+3. Vérifiez que le build a bien exécuté `npx puppeteer browsers install chrome`
 
 ## 📦 Structure des Fichiers de Build
 

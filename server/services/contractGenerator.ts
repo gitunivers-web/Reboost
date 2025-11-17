@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
@@ -554,43 +554,33 @@ export async function generateContractPDF(user: User, loan: Loan): Promise<strin
   const filepath = path.join(uploadsDir, filename);
   console.log(`Chemin du fichier PDF: ${filepath}`);
 
-  let chromiumPath: string | undefined = undefined;
-  let useDefaultChromium = false;
-  
-  console.log('Recherche de Chromium sur le système...');
-  
-  // Essayer de trouver Chromium sur le système
-  try {
-    const whichResult = execSync('which chromium || which chromium-browser || which google-chrome', { encoding: 'utf-8' }).trim();
-    if (whichResult && fs.existsSync(whichResult)) {
-      chromiumPath = whichResult;
-      console.log(`✓ Chromium trouvé sur le système: ${chromiumPath}`);
-    }
-  } catch (e) {
-    console.log('⚠ Aucun Chromium trouvé par "which"');
-  }
-  
-  // Si non trouvé, essayer le chemin Nix (pour Replit)
-  if (!chromiumPath) {
-    const nixChromiumPath = '/nix/store/qa9cnw4v5xkxyip6mb9kxqfq1z4x2dx1-chromium-138.0.7204.100/bin/chromium';
-    console.log(`Vérification du chemin Nix: ${nixChromiumPath}`);
-    if (fs.existsSync(nixChromiumPath)) {
-      chromiumPath = nixChromiumPath;
-      console.log(`✓ Chromium Nix trouvé: ${chromiumPath}`);
-    } else {
-      console.log('⚠ Chromium Nix non trouvé');
-    }
-  }
-  
-  // Si toujours pas trouvé, utiliser le Chromium embarqué de Puppeteer
-  if (!chromiumPath) {
-    console.log('ℹ Aucun Chromium système trouvé, utilisation du Chromium embarqué de Puppeteer');
-    useDefaultChromium = true;
-  }
-
   console.log('Lancement de Puppeteer...');
   let browser;
   try {
+    let executablePath: string | undefined = undefined;
+    
+    // Sur Replit (environnement Nix), utiliser le Chromium système
+    // Sur Render/autre, utiliser le Chromium embarqué de Puppeteer
+    const isReplit = process.env.REPL_ID !== undefined;
+    
+    if (isReplit) {
+      const nixChromiumPath = '/nix/store/qa9cnw4v5xkxyip6mb9kxqfq1z4x2dx1-chromium-138.0.7204.100/bin/chromium';
+      if (fs.existsSync(nixChromiumPath)) {
+        executablePath = nixChromiumPath;
+        console.log(`✓ [Replit] Chromium Nix: ${executablePath}`);
+      }
+    }
+    
+    // Fallback: utiliser le Chromium embarqué de Puppeteer
+    if (!executablePath) {
+      try {
+        executablePath = puppeteer.executablePath();
+        console.log(`✓ [Production] Chromium Puppeteer: ${executablePath}`);
+      } catch (e) {
+        console.log('⚠ Impossible de trouver Chromium');
+      }
+    }
+    
     const launchOptions: any = {
       headless: true,
       args: [
@@ -603,12 +593,8 @@ export async function generateContractPDF(user: User, loan: Loan): Promise<strin
       ]
     };
     
-    // Si on a trouvé un chemin custom, l'utiliser
-    if (chromiumPath && !useDefaultChromium) {
-      launchOptions.executablePath = chromiumPath;
-      console.log(`Utilisation de Chromium custom: ${chromiumPath}`);
-    } else {
-      console.log('Utilisation du Chromium embarqué de Puppeteer (défaut)');
+    if (executablePath) {
+      launchOptions.executablePath = executablePath;
     }
     
     browser = await puppeteer.launch(launchOptions);
