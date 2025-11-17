@@ -1,0 +1,50 @@
+2025-11-17T22:10:02.504584781Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-11-17T22:10:02.504587991Z     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-11-17T22:10:02.504591171Z     at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-11-17T22:10:02.504594231Z     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-11-17T22:10:02.504598211Z     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-11-17T22:10:02.504601831Z     at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-11-17T22:10:02.504605171Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-11-17T22:10:02.504607382Z }
+2025-11-17T22:10:02.504609332Z 
+2025-11-17T22:10:02.504611552Z Node.js v22.16.0
+2025-11-17T22:10:04.487526757Z ==> Exited with status 1
+2025-11-17T22:10:04.631352919Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2025-11-17T22:10:08.297032688Z ==> Running 'npm run start:compiled'
+2025-11-17T22:10:09.194725892Z 
+2025-11-17T22:10:09.194753233Z > rest-express@1.0.0 start:compiled
+2025-11-17T22:10:09.194758083Z > NODE_ENV=production node dist/index.js
+2025-11-17T22:10:09.194760753Z 
+2025-11-17T22:10:09.790541314Z node:internal/modules/package_json_reader:256
+2025-11-17T22:10:09.790557445Z   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+2025-11-17T22:10:09.790560185Z         ^
+2025-11-17T22:10:09.790562345Z 
+2025-11-17T22:10:09.790565155Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'drizzle-orm' imported from /opt/render/project/src/dist/index.js
+2025-11-17T22:10:09.790570205Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+2025-11-17T22:10:09.790572725Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-11-17T22:10:09.790574835Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-11-17T22:10:09.790577015Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-11-17T22:10:09.790579305Z     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-11-17T22:10:09.790581665Z     at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-11-17T22:10:09.790585876Z     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-11-17T22:10:09.790588206Z     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-11-17T22:10:09.790590286Z     at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-11-17T22:10:09.790592806Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-11-17T22:10:09.790594946Z }
+2025-11-17T22:10:09.790596876Z 
+2025-11-17T22:10:09.790598956Z Node.js v22.16.0
+2025-11-17T22:14:18.920779057Z ==> Deploying...
+2025-11-17T22:14:36.018458778Z ==> Running 'npm run start'
+2025-11-17T22:14:37.112638209Z 
+2025-11-17T22:14:37.112667439Z > rest-express@1.0.0 start
+2025-11-17T22:14:37.112672779Z > NODE_ENV=production tsx server/index.ts
+2025-11-17T22:14:37.112675559Z 
+2025-11-17T22:14:37.118791343Z sh: 1: tsx: not found
+2025-11-17T22:14:39.525972543Z ==> Exited with status 127
+2025-11-17T22:14:39.669685175Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2025-11-17T22:14:42.335933353Z ==> Running 'npm run start'
+2025-11-17T22:14:43.32678516Z 
+2025-11-17T22:14:43.326820851Z > rest-express@1.0.0 start
+2025-11-17T22:14:43.326827911Z > NODE_ENV=production tsx server/index.ts
+2025-11-17T22:14:43.326832321Z 
+2025-11-17T22:14:43.331321877Z sh: 1: tsx: not found
