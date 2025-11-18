@@ -41,7 +41,7 @@ import {
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from "./db";
-import { eq, desc, and, or, isNull, notExists, sql as sqlDrizzle } from "drizzle-orm";
+import { eq, desc, and, or, isNull, notExists, inArray, sql as sqlDrizzle } from "drizzle-orm";
 import path from "path";
 import fs from "fs";
 
@@ -1593,7 +1593,12 @@ export class DatabaseStorage implements IStorage {
             db
               .select()
               .from(transfers)
-              .where(eq(transfers.loanId, loans.id))
+              .where(
+                and(
+                  eq(transfers.loanId, loans.id),
+                  inArray(transfers.status, ['pending', 'in-progress'])
+                )
+              )
           )
         )
       );
