@@ -216,6 +216,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Health check endpoint for Render (placed BEFORE all routes)
+app.get('/healthz', (req, res) => {
+  res.status(200).send("OK");
+});
+
 (async () => {
   const server = await registerRoutes(app);
 
