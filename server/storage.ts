@@ -1519,7 +1519,12 @@ export class DatabaseStorage implements IStorage {
   async verifyUserEmail(userId: string): Promise<User | undefined> {
     const result = await db
       .update(users)
-      .set({ emailVerified: true, verificationToken: null, verificationTokenExpiry: null })
+      .set({ 
+        emailVerified: true, 
+        verificationToken: null, 
+        verificationTokenExpiry: null,
+        status: 'active'
+      })
       .where(eq(users.id, userId))
       .returning();
     return result[0];
