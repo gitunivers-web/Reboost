@@ -2515,7 +2515,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      res.status(400).json({ error: 'Failed to initiate transfer' });
+      const errorMessage = error?.message || 'Échec de l\'initiation du transfert. Veuillez réessayer ou contacter le support.';
+      res.status(400).json({ error: errorMessage });
     }
   });
 
