@@ -1,0 +1,403 @@
+Parfait — tu as demandé un patch complet, prêt à coller. Je fournis :
+
+deux fonctions remplacées (dans server/storage.ts) : createTransferWithCodes et validateTransferCode ;
+
+une explication concise des changements ;
+
+instructions de test et commandes git prêtes à exécuter ;
+
+des recommandations complémentaires (logs / sécurité) pour éviter régressions.
+
+Je reste sec et factuel : ce patch verrouille la transaction, empêche la validation automatique abusive, assure que les codes réutilisés ne sont jamais pré-marqué consumedAt, et gère atomiquement l’avancement du transfert (progress / isPaused / status). Copie-colle les fonctions dans server/storage.ts en remplaçant les anciennes définitions.
+
+1) Remplacer validateTransferCode (nouvelle version)
+
+Colle ceci à la place de l’ancienne validateTransferCode :
+
+// validateTransferCode - remplace l'ancienne implémentation
+// Retourne { validatedCode, updatedTransfer } ou undefined si invalide
+async validateTransferCode(
+  transferId: string,
+  code: string,
+  sequence: number,
+  validatedBy?: string | null
+): Promise<
+  { validatedCode: TransferValidationCode; updatedTransfer: Transfer } | undefined
+> {
+  return await db.transaction(async (tx) => {
+    // 1) Lock transfer row to avoid races (SELECT ... FOR UPDATE)
+    const transfersForUpdate = await tx
+      .select()
+      .from(transfers)
+      .where(eq(transfers.id, transferId))
+      .for('update');
+
+    const transfer = transfersForUpdate[0];
+    if (!transfer) return undefined;
+
+    // 2) Determine expected sequence (atomic and authoritative)
+    const expectedSequence = (transfer.codesValidated ?? 0) + 1;
+    if (sequence !== expectedSequence) {
+      // Sequence mismatch -> reject
+      return undefined;
+    }
+
+    // 3) Ensure transfer is in a state allowing validation
+    if (transfer.status === 'completed' || transfer.status === 'cancelled') {
+      return undefined;
+    }
+
+    // 4) Fetch the specific code row and ensure it's not consumed
+    const codeRows = await tx
+      .select()
+      .from(transferValidationCodes)
+      .where(
+        and(
+          eq(transferValidationCodes.transferId, transferId),
+          eq(transferValidationCodes.sequence, sequence)
+        )
+      );
+
+    const codeRow = codeRows[0];
+    if (!codeRow) return undefined;
+    if (codeRow.consumedAt) return undefined; // already consumed
+
+    if (codeRow.code !== code) {
+      // wrong code
+      return undefined;
+    }
+
+    // 5) Mark code consumed (safe conditional update)
+    const now = new Date();
+    const updatedCodes = await tx
+      .update(transferValidationCodes)
+      .set({ consumedAt: now, consumedBy: validatedBy ?? null })
+      .where(
+        and(
+          eq(transferValidationCodes.id, codeRow.id),
+          isNull(transferValidationCodes.consumedAt)
+        )
+      )
+      .returning();
+
+    if (!updatedCodes || updatedCodes.length === 0) {
+      // someone else consumed it concurrently
+      return undefined;
+    }
+
+    const validatedCode = updatedCodes[0];
+
+    // 6) Recompute transfer progress and update transfer atomically
+    const totalCodes = await tx
+      .select()
+      .from(transferValidationCodes)
+      .where(eq(transferValidationCodes.transferId, transferId))
+      .then((rows) => rows.length);
+
+    const newCodesValidated = (transfer.codesValidated ?? 0) + 1;
+    const progressPercent = Math.min(100, Math.round((newCodesValidated / totalCodes) * 100));
+
+    const updates: Partial<Transfer> = {
+      codesValidated: newCodesValidated,
+      progressPercent,
+      status: newCodesValidated >= totalCodes ? 'completed' : 'in_progress',
+    };
+
+    // 7) Determine pause behaviour for NEXT code (if exists)
+    if (newCodesValidated < totalCodes) {
+      const nextRows = await tx
+        .select()
+        .from(transferValidationCodes)
+        .where(
+          and(
+            eq(transferValidationCodes.transferId, transferId),
+            eq(transferValidationCodes.sequence, newCodesValidated + 1)
+          )
+        );
+
+      const nextCode = nextRows[0];
+      if (nextCode && nextCode.pausePercent && Number(nextCode.pausePercent) > 0) {
+        updates.isPaused = true;
+      } else {
+        updates.isPaused = false;
+      }
+    } else {
+      updates.isPaused = false;
+    }
+
+    // If completed, ensure status is completed and isPaused false
+    if (updates.status === 'completed') {
+      updates.isPaused = false;
+    }
+
+    const updatedTransferRows = await tx
+      .update(transfers)
+      .set(updates)
+      .where(eq(transfers.id, transferId))
+      .returning();
+
+    const updatedTransfer = updatedTransferRows[0];
+
+    // 8) Create an event for tracing (code_validated)
+    await tx
+      .insert(transferEvents)
+      .values({
+        id: cryptoRandomId(), // adapt to your id generator
+        transferId,
+        type: 'code_validated',
+        metadata: JSON.stringify({ sequence, validatedBy: validatedBy ?? null }),
+        createdAt: now,
+      });
+
+    return { validatedCode, updatedTransfer };
+  });
+}
+
+Remarques rapides sur la fonction above
+
+Transaction + FOR UPDATE : empêche les validations concurrentes et leap-frogging.
+
+Vérifie explicitement la sequence : si on attend 2, on refuse 3.
+
+Marquage consommé conditionnel (WHERE consumedAt IS NULL) : évite double-consommation.
+
+Mise à jour atomique du transfert : codesValidated, progressPercent, status, isPaused.
+
+Création d’un event : utile pour audit/log.
+
+2) Remplacer createTransferWithCodes (nouvelle version)
+
+Remplace la fonction actuelle par ceci (garantit consumedAt = null, rejette réutilisation de codes consommés, nettoie batch invalide, et associe correctement) :
+
+// createTransferWithCodes - remplace l'ancienne implémentation
+async createTransferWithCodes(
+  insertTransfer: InsertTransfer,
+  codesCount: number = 6
+): Promise<{ transfer: Transfer; codes: TransferValidationCode[] }> {
+  return await db.transaction(async (tx) => {
+    if (!insertTransfer.loanId) {
+      throw new Error('loanId is required for transfer creation');
+    }
+
+    // Lock potential existing transfers for this loan to avoid races
+    const existingActiveTransfers = await tx
+      .select()
+      .from(transfers)
+      .where(
+        and(
+          eq(transfers.loanId, insertTransfer.loanId),
+          or(eq(transfers.status, 'pending'), eq(transfers.status, 'in_progress'))
+        )
+      )
+      .for('update');
+
+    if (existingActiveTransfers.length > 0) {
+      const existingTransfer = existingActiveTransfers[0];
+      const error = new Error('Un transfert est déjà en cours pour ce prêt') as any;
+      error.existingTransferId = existingTransfer.id;
+      throw error;
+    }
+
+    // Insert transfer
+    const transferResult = await tx.insert(transfers).values(insertTransfer).returning();
+    const transfer = transferResult[0];
+
+    // Look for pre-generated codes that are NOT yet linked to a transfer AND not consumed
+    const preGeneratedCodes = await tx
+      .select()
+      .from(transferValidationCodes)
+      .where(
+        and(
+          eq(transferValidationCodes.loanId, insertTransfer.loanId),
+          isNull(transferValidationCodes.transferId),
+          isNull(transferValidationCodes.consumedAt) // ensure not consumed
+        )
+      )
+      .orderBy(transferValidationCodes.sequence);
+
+    const requiredCodesCount = codesCount;
+    const now = new Date();
+    let codes: TransferValidationCode[] = [];
+
+    const isValidBatch =
+      preGeneratedCodes.length === requiredCodesCount &&
+      preGeneratedCodes.every((c) => new Date(c.expiresAt) > now);
+
+    if (preGeneratedCodes.length > 0 && isValidBatch) {
+      // Reuse valid pre-generated codes
+      for (const preCode of preGeneratedCodes) {
+        const updated = await tx
+          .update(transferValidationCodes)
+          .set({ transferId: transfer.id })
+          .where(eq(transferValidationCodes.id, preCode.id))
+          .returning();
+
+        if (updated[0]) {
+          // Ensure consumedAt remains null
+          updated[0].consumedAt = null;
+          codes.push(updated[0]);
+        }
+      }
+    } else {
+      // Clean up invalid batch if present
+      if (preGeneratedCodes.length > 0 && !isValidBatch) {
+        await tx
+          .delete(transferValidationCodes)
+          .where(
+            and(
+              eq(transferValidationCodes.loanId, insertTransfer.loanId),
+              isNull(transferValidationCodes.transferId)
+            )
+          );
+      }
+
+      // Generate a brand new batch ensuring consumedAt is not set
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 30);
+
+      const randomPercentages = this.generateRandomPausePercentages(codesCount);
+
+      const codeContexts = [
+        'Code de conformité réglementaire',
+        "Code d'autorisation de transfert",
+        'Code de vérification de sécurité',
+        'Code de déblocage des fonds',
+        'Code de validation finale',
+        "Frais d'assurance",
+      ];
+
+      for (let i = 1; i <= codesCount; i++) {
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+        const result = await tx
+          .insert(transferValidationCodes)
+          .values({
+            transferId: transfer.id,
+            loanId: insertTransfer.loanId,
+            code,
+            deliveryMethod: 'admin_only',
+            codeType: 'initial',
+            codeContext: codeContexts[i - 1] || `Code de validation ${i}`,
+            sequence: i,
+            pausePercent: randomPercentages[i - 1],
+            expiresAt,
+            consumedAt: null,
+            consumedBy: null,
+            createdAt: now,
+          })
+          .returning();
+
+        if (result[0]) {
+          codes.push(result[0]);
+        }
+      }
+    }
+
+    return { transfer, codes };
+  });
+}
+
+Remarques sur la création
+
+Ajout de isNull(transferValidationCodes.consumedAt) lors de recherche des pre-generated codes — on n’utilise pas des codes déjà consommés.
+
+Lors de génération, on force consumedAt: null explicitement.
+
+Utilisation de transaction et verrouillage évite races.
+
+3) Patch côté route POST /api/transfers/:id/validate-code
+
+Ton route actuelle appelle validateTransferCode() et ensuite fait des mises à jour manuelles. Avec la nouvelle validateTransferCode elle retourne l’updatedTransfer, donc adapte la route pour utiliser la nouvelle signature.
+
+Exemple de modification (remplace le handler existant) :
+
+// Exemple d'adaptation de la route
+router.post('/api/transfers/:id/validate-code', requireAuth, requireCSRF, validationLimiter, async (req, res) => {
+  const transferId = req.params.id;
+  const { code, sequence } = req.body;
+  const userId = req.user?.id || null;
+
+  // Basic ownership check
+  const transfer = await storage.getTransfer(transferId);
+  if (!transfer || transfer.userId !== req.user.id) return res.status(404).json({ error: 'Not found' });
+
+  // If transfer is paused and we require manual admin confirmation to resume, reject automatic attempts.
+  if (transfer.isPaused) {
+    // Enforce manual resume token / header to avoid auto-submissions
+    const manualHeader = req.headers['x-manual-confirm'];
+    if (!manualHeader) {
+      return res.status(403).json({ error: 'Transfer is paused — manual confirmation required' });
+    }
+    // Optionally verify manualHeader token (implement server-side check)
+  }
+
+  const result = await storage.validateTransferCode(transferId, code, Number(sequence), userId);
+
+  if (!result) {
+    return res.status(400).json({ ok: false, error: 'Invalid code or sequence' });
+  }
+
+  // result.validatedCode + result.updatedTransfer available
+  const { validatedCode, updatedTransfer } = result;
+
+  // If we just paused, inform client
+  if (updatedTransfer.isPaused) {
+    // create paused event and inform user
+    return res.json({ ok: true, paused: true, transfer: sanitizeTransfer(updatedTransfer) });
+  }
+
+  const completed = updatedTransfer.status === 'completed';
+  return res.json({ ok: true, completed, transfer: sanitizeTransfer(updatedTransfer) });
+});
+
+
+Important : j’introduis ici une en-tête x-manual-confirm pour empêcher les validations automatiques quand isPaused === true. Tu peux remplacer par un one-time token émis par l’admin ou un flag dans le corps. C’est une protection efficace contre un script qui enverrait les codes automatiquement.
+
+4) Tests recommandés (ordre précis)
+
+Unit / Integration : créer un transfert (POST /initiate). Vérifier via SQL que tous les 6 codes ont consumedAt = NULL et sequence correct.
+
+Tester validation 1 : appeler POST /:id/validate-code avec code 1. Expect: OK, codesValidated = 1. If next code has pausePercent > 0 => isPaused = true.
+
+Tester blocage auto : appeler POST /:id/validate-code (code 2) without x-manual-confirm. Expect: 403 if isPaused = true.
+
+Admin resume : admin triggers sending code 2 and issues a manual token. Call POST /:id/validate-code with header x-manual-confirm: <token> and code 2. Expect: OK and proceed.
+
+Race test : send multiple simultaneous requests for same sequence -> only one should succeed (others get 400/undefined). Validate DB consumedAt set once.
+
+5) Commandes git / patch prêt
+
+Après avoir collé les fonctions dans server/storage.ts (ou appliqué via editor), fais :
+
+git add server/storage.ts server/routes.ts
+git commit -m "Fix transfer flow: transactional validateTransferCode + safe createTransferWithCodes; prevent auto-validation and enforce pause semantics"
+git push
+
+
+Ensuite, trigger a redeploy (Render).
+
+6) Logging & monitoring recommandés (obligatoire pour débug)
+
+Ajoute logs détaillés dans validateTransferCode (before/after) showing:
+
+transfer id, expectedSequence, incoming sequence
+
+who validated (user id / IP)
+
+result (consumed / rejected / concurrent)
+
+Cela te permettra d’identifier s’il s’agit d’un client automatique qui poste les codes ou d’un bug serveur.
+
+7) Pourquoi ce patch corrige ton problème (résumé technique)
+
+Empêche réutilisation de codes déjà consommés (checks & conditional update).
+
+Empêche leap-frogging sur les séquences (sequence must equal expectedSequence).
+
+Verrou transactionnel (SELECT FOR UPDATE) : évite double-validations en cas de requêtes concurrentes.
+
+Assure que les pré-générés ne sont pas marqués consommés à la création (filter isNull(consumedAt)).
+
+Gère atomiquement la mise à jour du transfer (codesValidated / isPaused / status) : plus de logique éparpillée ultérieurement qui provoquerait des incohérences.
+
+Bloque validations automatiques si isPaused=true (via route check + header token).
