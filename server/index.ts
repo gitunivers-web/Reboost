@@ -72,7 +72,7 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
       'https://www.altusfinancesgroup.com',
       process.env.FRONTEND_URL
     ].filter(Boolean)
-  : ['http://localhost:5000', 'http://localhost:5173', 'http://127.0.0.1:5000'];
+  : ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -281,7 +281,7 @@ app.get('/healthz', (req, res) => {
     await setupVite(app, server);
   }
 
-  const port = process.env.PORT ? Number(process.env.PORT) : 5000;
+  const port = process.env.PORT ? Number(process.env.PORT) : 3000;
   server.listen(port, "0.0.0.0", () => {
     log(`✅ Backend API server listening on port ${port}`);
     log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
