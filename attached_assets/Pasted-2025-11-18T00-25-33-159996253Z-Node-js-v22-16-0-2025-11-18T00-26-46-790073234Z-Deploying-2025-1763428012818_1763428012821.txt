@@ -1,0 +1,200 @@
+2025-11-18T00:25:33.159996253Z Node.js v22.16.0
+2025-11-18T00:26:46.790073234Z ==> Deploying...
+2025-11-18T00:27:18.865973598Z ==> Running 'npm start'
+2025-11-18T00:27:19.864818006Z 
+2025-11-18T00:27:19.864847528Z > rest-express@1.0.0 start
+2025-11-18T00:27:19.864853208Z > NODE_ENV=production node dist/index.js
+2025-11-18T00:27:19.864855759Z 
+2025-11-18T00:27:20.470167135Z node:internal/modules/package_json_reader:256
+2025-11-18T00:27:20.470198988Z   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+2025-11-18T00:27:20.470203408Z         ^
+2025-11-18T00:27:20.470206158Z 
+2025-11-18T00:27:20.470209808Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/dist/index.js
+2025-11-18T00:27:20.470215939Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+2025-11-18T00:27:20.470219869Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-11-18T00:27:20.47022322Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-11-18T00:27:20.47022675Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-11-18T00:27:20.47022964Z     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-11-18T00:27:20.47023259Z     at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-11-18T00:27:20.47023547Z     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-11-18T00:27:20.470238341Z     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-11-18T00:27:20.470241351Z     at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-11-18T00:27:20.470245641Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-11-18T00:27:20.470248322Z }
+2025-11-18T00:27:20.470251222Z 
+2025-11-18T00:27:20.470254612Z Node.js v22.16.0
+2025-11-18T00:27:27.207781841Z ==> Exited with status 1
+2025-11-18T00:27:27.364889668Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2025-11-18T00:27:32.112802219Z ==> Running 'npm start'
+2025-11-18T00:27:33.022056412Z 
+2025-11-18T00:27:33.022091775Z > rest-express@1.0.0 start
+2025-11-18T00:27:33.022099236Z > NODE_ENV=production node dist/index.js
+2025-11-18T00:27:33.022101376Z 
+2025-11-18T00:27:33.716110118Z node:internal/modules/package_json_reader:256
+2025-11-18T00:27:33.71613412Z   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+2025-11-18T00:27:33.71613776Z         ^
+2025-11-18T00:27:33.71614046Z 
+2025-11-18T00:27:33.71614466Z Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /opt/render/project/src/dist/index.js
+2025-11-18T00:27:33.716152481Z     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+2025-11-18T00:27:33.716155871Z     at packageResolve (node:internal/modules/esm/resolve:768:81)
+2025-11-18T00:27:33.716158492Z     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+2025-11-18T00:27:33.716161052Z     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+2025-11-18T00:27:33.716164132Z     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+2025-11-18T00:27:33.716166832Z     at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+2025-11-18T00:27:33.716169742Z     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+2025-11-18T00:27:33.716172202Z     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+2025-11-18T00:27:33.716174713Z     at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+2025-11-18T00:27:33.716179123Z   code: 'ERR_MODULE_NOT_FOUND'
+2025-11-18T00:27:33.716181713Z }
+2025-11-18T00:27:33.716183963Z 
+2025-11-18T00:27:33.716186594Z Node.js v22.16.0
+2025-11-18T00:56:31.633397836Z ==> Deploying...
+2025-11-18T00:57:12.462974051Z ==> Your service is live 🎉
+2025-11-18T00:57:12.702570389Z ==> 
+2025-11-18T00:57:12.864666094Z ==> ///////////////////////////////////////////////////////////
+2025-11-18T00:57:13.033731549Z ==> 
+2025-11-18T00:57:13.206532913Z ==> Available at your primary URL https://api.altusfinancesgroup.com + 1 more domain
+2025-11-18T00:57:13.374519317Z ==> 
+2025-11-18T00:57:13.541211372Z ==> ///////////////////////////////////////////////////////////
+2025-11-18T01:00:02.56470284Z 1:00:02 AM [express] GET /api/notifications/unread-count 304 in 12ms
+2025-11-18T01:00:03.052077348Z 1:00:03 AM [express] GET /api/notifications 304 in 18ms
+2025-11-18T01:00:07.916254547Z 1:00:07 AM [express] GET /api/notifications/unread-count 304 in 14ms
+2025-11-18T01:00:08.341571043Z 1:00:08 AM [express] GET /api/notifications 304 in 15ms
+2025-11-18T01:00:13.226058611Z 1:00:13 AM [express] GET /api/notifications/unread-count 304 in 11ms
+2025-11-18T01:00:13.640084173Z 1:00:13 AM [express] GET /api/notifications 304 in 20ms
+2025-11-18T01:00:18.550747233Z 1:00:18 AM [express] GET /api/notifications/unread-count 304 in 9ms
+2025-11-18T01:00:18.915194725Z 1:00:18 AM [express] GET /api/notifications 304 in 14ms
+2025-11-18T01:00:20.819211742Z 1:00:20 AM [express] GET /api/csrf-token 200 in 7ms
+2025-11-18T01:00:21.692653471Z ✓ Document cleaned and validated: id_card.jpg
+2025-11-18T01:00:21.791160936Z ✓ Document cleaned and validated: proof_of_address.jpg
+2025-11-18T01:00:21.886538741Z ✓ Document cleaned and validated: pay_slips.jpg
+2025-11-18T01:00:21.990581741Z ✓ Document cleaned and validated: tax_assessment.jpg
+2025-11-18T01:00:22.087611333Z ✓ Document cleaned and validated: bank_statements.jpg
+2025-11-18T01:00:22.111280657Z ✓ Document attached: bank_statements.jpg
+2025-11-18T01:00:22.184536312Z ✓ Document attached: tax_assessment.jpg
+2025-11-18T01:00:22.185148196Z ✓ Document attached: pay_slips.jpg
+2025-11-18T01:00:22.185856532Z ✓ Document attached: proof_of_address.jpg
+2025-11-18T01:00:22.186732611Z ✓ Document attached: id_card.jpg
+2025-11-18T01:00:22.311354777Z ✅ Loan request admin notification sent to info@altusfinancesgroup.com in fr with 5 documents (5 cleaned & attached)
+2025-11-18T01:00:22.328935544Z 1:00:22 AM [express] POST /api/loans 201 in 741ms
+2025-11-18T01:00:22.633145925Z 1:00:22 AM [express] GET /api/dashboard 200 in 26ms
+2025-11-18T01:00:23.888998282Z 1:00:23 AM [express] GET /api/notifications/unread-count 200 in 15ms
+2025-11-18T01:00:24.267538512Z 1:00:24 AM [express] GET /api/notifications 200 in 17ms
+2025-11-18T01:00:29.201178943Z 1:00:29 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:00:29.600736229Z 1:00:29 AM [express] GET /api/notifications 304 in 16ms
+2025-11-18T01:00:34.495534783Z 1:00:34 AM [express] GET /api/notifications/unread-count 304 in 14ms
+2025-11-18T01:00:34.888847607Z 1:00:34 AM [express] GET /api/notifications 304 in 15ms
+2025-11-18T01:00:55.60741172Z 1:00:55 AM [express] GET /api/csrf-token 200 in 319ms
+2025-11-18T01:01:07.123133981Z 1:01:07 AM [express] GET /api/notifications 304 in 1126ms
+2025-11-18T01:01:28.717612524Z [AUTH SUCCESS] User authenticated successfully
+2025-11-18T01:01:28.717639805Z [AUTH SUCCESS] Session created and will be sent as cookie
+2025-11-18T01:01:28.717645385Z [AUTH SUCCESS] Cookie domain: .altusfinancesgroup.com
+2025-11-18T01:01:28.725279827Z 1:01:28 AM [express] POST /api/auth/login 200 in 765ms
+2025-11-18T01:01:30.203422399Z 1:01:30 AM [express] GET /api/loans 200 in 975ms
+2025-11-18T01:01:30.290478496Z 1:01:30 AM [express] GET /api/user 200 in 204ms
+2025-11-18T01:01:30.439501082Z 1:01:30 AM [express] GET /api/notifications 200 in 1204ms
+2025-11-18T01:01:30.57885569Z 1:01:30 AM [express] GET /api/admin/stats 200 in 1331ms
+2025-11-18T01:01:30.66387556Z 1:01:30 AM [express] GET /api/notifications/unread-count 200 in 1376ms
+2025-11-18T01:01:30.794541263Z 1:01:30 AM [express] GET /api/admin/loans 200 in 579ms
+2025-11-18T01:01:31.169147675Z 1:01:31 AM [express] GET /api/admin/users 200 in 902ms
+2025-11-18T01:01:35.914168676Z 1:01:35 AM [express] GET /api/notifications 304 in 14ms
+2025-11-18T01:01:36.102652574Z 1:01:36 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:01:41.291639496Z 1:01:41 AM [express] GET /api/notifications 304 in 13ms
+2025-11-18T01:01:41.450272149Z 1:01:41 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:01:46.543147401Z 1:01:46 AM [express] GET /api/notifications 304 in 11ms
+2025-11-18T01:01:46.718744668Z 1:01:46 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:01:51.881369556Z 1:01:51 AM [express] GET /api/notifications 304 in 13ms
+2025-11-18T01:01:52.037897572Z 1:01:52 AM [express] GET /api/notifications/unread-count 304 in 9ms
+2025-11-18T01:01:56.840836175Z 1:01:56 AM [express] GET /api/csrf-token 200 in 4ms
+2025-11-18T01:01:57.199759034Z 1:01:57 AM [express] GET /api/notifications 304 in 11ms
+2025-11-18T01:01:57.288884157Z 1:01:57 AM [express] GET /api/notifications/unread-count 304 in 11ms
+2025-11-18T01:01:57.547848857Z 1:01:57 AM [express] DELETE /api/admin/users/cd3ca55f-7a19-4731-b1ca-35d3c0d928b8 200 in 22ms
+2025-11-18T01:01:58.894382547Z 1:01:58 AM [express] GET /api/admin/stats 200 in 1094ms
+2025-11-18T01:01:58.917326305Z 1:01:58 AM [express] GET /api/admin/users 200 in 1121ms
+2025-11-18T01:02:02.457926692Z 1:02:02 AM [express] GET /api/notifications 304 in 11ms
+2025-11-18T01:02:02.547472195Z 1:02:02 AM [express] GET /api/notifications/unread-count 304 in 9ms
+2025-11-18T01:02:07.73682474Z 1:02:07 AM [express] GET /api/notifications 304 in 13ms
+2025-11-18T01:02:07.796284283Z 1:02:07 AM [express] GET /api/notifications/unread-count 304 in 9ms
+2025-11-18T01:02:12.472424094Z 1:02:12 AM [express] DELETE /api/admin/users/a48ae19f-23f4-4827-adc0-a3b69c343f2f 200 in 14ms
+2025-11-18T01:02:13.434790754Z ==> Detected service running on port 10000
+2025-11-18T01:02:13.495543248Z 1:02:13 AM [express] GET /api/notifications 304 in 106ms
+2025-11-18T01:02:13.805990202Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+2025-11-18T01:02:13.887281648Z 1:02:13 AM [express] GET /api/admin/stats 200 in 1152ms
+2025-11-18T01:02:14.062245561Z 1:02:14 AM [express] GET /api/notifications/unread-count 304 in 181ms
+2025-11-18T01:02:14.075835798Z 1:02:14 AM [express] GET /api/admin/users 200 in 1353ms
+2025-11-18T01:02:18.761809162Z 1:02:18 AM [express] GET /api/notifications 304 in 14ms
+2025-11-18T01:02:19.371081877Z 1:02:19 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:02:24.020095517Z 1:02:24 AM [express] GET /api/notifications 304 in 10ms
+2025-11-18T01:02:24.63723648Z 1:02:24 AM [express] GET /api/notifications/unread-count 304 in 8ms
+2025-11-18T01:02:29.309462315Z 1:02:29 AM [express] GET /api/notifications 304 in 16ms
+2025-11-18T01:02:29.965002734Z 1:02:29 AM [express] GET /api/notifications/unread-count 304 in 40ms
+2025-11-18T01:02:30.593111215Z 1:02:30 AM [express] GET /api/user 304 in 9ms
+2025-11-18T01:02:34.579920535Z 1:02:34 AM [express] GET /api/notifications 304 in 11ms
+2025-11-18T01:02:35.278479084Z 1:02:35 AM [express] GET /api/notifications/unread-count 304 in 12ms
+2025-11-18T01:02:39.867174604Z 1:02:39 AM [express] GET /api/notifications 304 in 37ms
+2025-11-18T01:02:40.531127579Z 1:02:40 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:02:44.01143815Z 
+2025-11-18T01:02:44.011464921Z ========================================
+2025-11-18T01:02:44.011469991Z APPROBATION DE PRÊT - ID: c1f86105-ccb1-4d4b-9ab1-2ff020d29d09
+2025-11-18T01:02:44.011473761Z ========================================
+2025-11-18T01:02:44.013676581Z ✓ Prêt trouvé: c1f86105-ccb1-4d4b-9ab1-2ff020d29d09, Montant: 35000.00
+2025-11-18T01:02:44.015973263Z ✓ Utilisateur trouvé: JESUS CHRIST (f65abfse8qp6do2@no.vsmailpro.com)
+2025-11-18T01:02:44.015984133Z 
+2025-11-18T01:02:44.015992383Z --- Début génération de contrat PDF ---
+2025-11-18T01:02:44.016527456Z === DÉBUT GÉNÉRATION CONTRAT PDF ===
+2025-11-18T01:02:44.016539636Z Loan ID: c1f86105-ccb1-4d4b-9ab1-2ff020d29d09, User: JESUS CHRIST, Amount: 35000.00
+2025-11-18T01:02:44.018372207Z ✓ Template HTML généré
+2025-11-18T01:02:44.022325047Z Vérification répertoire: /opt/render/project/src/uploads/contracts
+2025-11-18T01:02:44.022374528Z Création du répertoire uploads/contracts...
+2025-11-18T01:02:44.022515251Z ✓ Répertoire créé
+2025-11-18T01:02:44.022519641Z Chemin du fichier PDF: /opt/render/project/src/uploads/contracts/contrat_c1f86105-ccb1-4d4b-9ab1-2ff020d29d09_1763427764022.pdf
+2025-11-18T01:02:44.022558762Z Lancement de Puppeteer...
+2025-11-18T01:02:44.023116135Z ✓ [Production] Chromium Puppeteer: /opt/render/project/.cache/puppeteer/chrome/linux-142.0.7444.162/chrome-linux64/chrome
+2025-11-18T01:02:44.024112398Z ✗ ERREUR lors du lancement de Puppeteer:
+2025-11-18T01:02:44.02512999Z Error: Browser was not found at the configured executablePath (/opt/render/project/.cache/puppeteer/chrome/linux-142.0.7444.162/chrome-linux64/chrome)
+2025-11-18T01:02:44.025143941Z     at ChromeLauncher.launch (file:///opt/render/project/src/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:54:19)
+2025-11-18T01:02:44.025148591Z     at async generateContractPDF (file:///opt/render/project/src/dist/index.js:5270:15)
+2025-11-18T01:02:44.025152161Z     at async file:///opt/render/project/src/dist/index.js:8791:23
+2025-11-18T01:02:44.025155261Z 
+2025-11-18T01:02:44.025158841Z ✗✗✗ ERREUR LORS DE LA GÉNÉRATION DU CONTRAT PDF ✗✗✗
+2025-11-18T01:02:44.025264913Z Type d'erreur: Error
+2025-11-18T01:02:44.025281254Z Message d'erreur: Browser was not found at the configured executablePath (/opt/render/project/.cache/puppeteer/chrome/linux-142.0.7444.162/chrome-linux64/chrome)
+2025-11-18T01:02:44.025283904Z Stack trace: Error: Browser was not found at the configured executablePath (/opt/render/project/.cache/puppeteer/chrome/linux-142.0.7444.162/chrome-linux64/chrome)
+2025-11-18T01:02:44.025286234Z     at ChromeLauncher.launch (file:///opt/render/project/src/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:54:19)
+2025-11-18T01:02:44.025288604Z     at async generateContractPDF (file:///opt/render/project/src/dist/index.js:5270:15)
+2025-11-18T01:02:44.025290864Z     at async file:///opt/render/project/src/dist/index.js:8791:23
+2025-11-18T01:02:44.025296334Z Erreur complète: {
+2025-11-18T01:02:44.025300354Z   "stack": "Error: Browser was not found at the configured executablePath (/opt/render/project/.cache/puppeteer/chrome/linux-142.0.7444.162/chrome-linux64/chrome)\n    at ChromeLauncher.launch (file:///opt/render/project/src/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:54:19)\n    at async generateContractPDF (file:///opt/render/project/src/dist/index.js:5270:15)\n    at async file:///opt/render/project/src/dist/index.js:8791:23",
+2025-11-18T01:02:44.025304274Z   "message": "Browser was not found at the configured executablePath (/opt/render/project/.cache/puppeteer/chrome/linux-142.0.7444.162/chrome-linux64/chrome)"
+2025-11-18T01:02:44.025306514Z }
+2025-11-18T01:02:44.025309325Z ✗✗✗ FIN DE L'ERREUR ✗✗✗
+2025-11-18T01:02:44.025311374Z 
+2025-11-18T01:02:44.096576338Z 1:02:44 AM [express] POST /api/admin/loans/c1f86105-ccb1-4d4b-9ab1-2ff020d29d09/approve 200 in 88ms
+2025-11-18T01:02:44.790168485Z 1:02:44 AM [express] GET /api/admin/stats 304 in 448ms
+2025-11-18T01:02:44.88842172Z 1:02:44 AM [express] GET /api/admin/loans 200 in 543ms
+2025-11-18T01:02:45.129662653Z 1:02:45 AM [express] GET /api/notifications 304 in 13ms
+2025-11-18T01:02:45.929436213Z 1:02:45 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:02:50.425272882Z 1:02:50 AM [express] GET /api/notifications 304 in 15ms
+2025-11-18T01:02:51.31856039Z 1:02:51 AM [express] GET /api/notifications/unread-count 304 in 11ms
+2025-11-18T01:02:55.687178478Z 1:02:55 AM [express] GET /api/notifications 304 in 11ms
+2025-11-18T01:03:05.236911695Z 1:03:05 AM [express] GET /api/notifications/unread-count 200 in 18ms
+2025-11-18T01:03:07.568388022Z 1:03:07 AM [express] GET /api/notifications 200 in 11ms
+2025-11-18T01:03:10.17896691Z 1:03:10 AM [express] POST /api/notifications/8132176e-7e9e-4021-8932-a3dc7281821f/read 200 in 409ms
+2025-11-18T01:03:10.491369724Z 1:03:10 AM [express] GET /api/notifications 200 in 9ms
+2025-11-18T01:03:10.888366804Z 1:03:10 AM [express] GET /api/notifications/unread-count 200 in 9ms
+2025-11-18T01:03:15.80790316Z 1:03:15 AM [express] GET /api/notifications 304 in 14ms
+2025-11-18T01:03:16.267058558Z 1:03:16 AM [express] GET /api/notifications/unread-count 304 in 8ms
+2025-11-18T01:03:21.155255864Z 1:03:21 AM [express] GET /api/notifications 304 in 10ms
+2025-11-18T01:03:21.608857356Z 1:03:21 AM [express] GET /api/notifications/unread-count 304 in 15ms
+2025-11-18T01:03:26.543535256Z 1:03:26 AM [express] GET /api/notifications 304 in 9ms
+2025-11-18T01:03:27.013423437Z 1:03:27 AM [express] GET /api/notifications/unread-count 304 in 11ms
+2025-11-18T01:03:30.704150316Z 1:03:30 AM [express] GET /api/external-accounts 200 in 9ms
+2025-11-18T01:03:30.731067396Z 1:03:30 AM [express] GET /api/user 304 in 10ms
+2025-11-18T01:03:31.902441993Z 1:03:31 AM [express] GET /api/notifications 304 in 11ms
+2025-11-18T01:03:32.326744172Z 1:03:32 AM [express] GET /api/notifications/unread-count 304 in 10ms
+2025-11-18T01:03:37.229031469Z 1:03:37 AM [express] GET /api/notifications 304 in 18ms
+2025-11-18T01:03:37.610859896Z 1:03:37 AM [express] GET /api/notifications/unread-count 304 in 13ms
+2025-11-18T01:04:44.066385877Z 1:04:44 AM [express] GET /api/notifications 304 in 598ms
+2025-11-18T01:04:44.182270911Z 1:04:44 AM [express] GET /api/notifications/unread-count 304 in 9ms
+2025-11-18T01:04:49.492264689Z 1:04:49 AM [express] GET /api/notifications 304 in 14ms
+2025-11-18T01:04:49.545696379Z 1:04:49 AM [express] GET /api/notifications/unread-count 304 in 8ms

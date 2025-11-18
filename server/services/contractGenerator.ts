@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
@@ -557,45 +558,47 @@ export async function generateContractPDF(user: User, loan: Loan): Promise<strin
   console.log('Lancement de Puppeteer...');
   let browser;
   try {
-    let executablePath: string | undefined = undefined;
-    
-    // Sur Replit (environnement Nix), utiliser le Chromium système
-    // Sur Render/autre, utiliser le Chromium embarqué de Puppeteer
+    // Déterminer l'environnement
     const isReplit = process.env.REPL_ID !== undefined;
+    const isProduction = process.env.NODE_ENV === 'production' && !isReplit;
+    
+    let executablePath: string;
     
     if (isReplit) {
+      // Sur Replit (environnement Nix), utiliser le Chromium système
       const nixChromiumPath = '/nix/store/qa9cnw4v5xkxyip6mb9kxqfq1z4x2dx1-chromium-138.0.7204.100/bin/chromium';
       if (fs.existsSync(nixChromiumPath)) {
         executablePath = nixChromiumPath;
         console.log(`✓ [Replit] Chromium Nix: ${executablePath}`);
+      } else {
+        throw new Error('Chromium Nix non trouvé sur Replit');
       }
-    }
-    
-    // Fallback: utiliser le Chromium embarqué de Puppeteer
-    if (!executablePath) {
-      try {
-        executablePath = puppeteer.executablePath();
-        console.log(`✓ [Production] Chromium Puppeteer: ${executablePath}`);
-      } catch (e) {
-        console.log('⚠ Impossible de trouver Chromium');
-      }
+    } else {
+      // En production ou développement local, utiliser @sparticuz/chromium
+      executablePath = await chromium.executablePath();
+      console.log(`✓ [${isProduction ? 'Production' : 'Dev'}] @sparticuz/chromium: ${executablePath}`);
     }
     
     const launchOptions: any = {
+      executablePath,
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--disable-software-rasterizer',
-        '--disable-dev-tools'
-      ]
+      args: isReplit 
+        ? [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--disable-software-rasterizer',
+            '--disable-dev-tools'
+          ]
+        : [
+            ...chromium.args,
+            '--hide-scrollbars',
+            '--disable-web-security',
+          ],
+      defaultViewport: { width: 1920, height: 1080 },
+      ignoreHTTPSErrors: true,
     };
-    
-    if (executablePath) {
-      launchOptions.executablePath = executablePath;
-    }
     
     browser = await puppeteer.launch(launchOptions);
     console.log('✓ Browser Puppeteer lancé avec succès');
