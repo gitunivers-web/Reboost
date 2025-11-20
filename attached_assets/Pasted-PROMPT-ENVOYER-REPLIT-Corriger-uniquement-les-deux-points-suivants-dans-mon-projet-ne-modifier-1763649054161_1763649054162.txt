@@ -1,0 +1,50 @@
+PROMPT À ENVOYER À REPLIT
+
+Corriger uniquement les deux points suivants dans mon projet (ne modifier aucune autre partie du workflow, tout fonctionne déjà correctement sauf ces deux éléments) :
+
+1️⃣ Correction du pourcentage du premier code dans l’espace utilisateur
+
+Contexte :
+– Lorsque le contrat est confirmé dans l’espace admin, le backend génère 6 codes.
+– Chaque code contient un pourcentage, par ex. : 20%, 40%, 60%, 80%, 90%, 100%.
+– L’email envoyé à l’admin affiche ces valeurs correctement.
+– Problème : dans l’espace utilisateur, le premier code est affiché comme étant requis à 0%, alors qu’il devrait être requis à 20% (la valeur réellement générée).
+– Les codes 2 à 6 ont les bons pourcentages. Ne rien toucher pour eux.
+
+🎯 Correction demandée :
+
+Mettre à jour l’affichage et/ou la logique de vérification du premier code dans l’espace utilisateur pour qu’il reflète correctement le pourcentage réel du premier code envoyé dans l’email admin (20%, pas 0%).
+
+2️⃣ Ajout d’une animation progressive de montée du pourcentage (progress bar)
+
+Contexte :
+– Actuellement, lorsque l'utilisateur initie le transfert, l’affichage du pourcentage saute immédiatement au pourcentage requis.
+– Exemple :
+
+Code 1 → l’UI saute directement à 20%
+
+Code 2 → saute directement au prochain seuil, etc.
+– Je veux un effet visuel fluide.
+
+🎯 Amélioration demandée :
+
+Ajouter une animation de progression graduelle (1%, 2%, 3%, …) jusqu’au pourcentage requis.
+– Durée de l’animation : 8 à 10 secondes par transition.
+– Animation uniquement visuelle : ne pas modifier le backend, ni la logique des codes, ni la sécurité.
+
+⚠️ IMPORTANT : NE PAS MODIFIER
+
+– le workflow complet (il est déjà stable)
+– la génération des codes
+– les pourcentages des codes 2 à 6
+– l’envoi d’email
+– la logique backend déjà fonctionnelle
+– aucune autre partie du système
+
+✅ Résumé rapide pour le dev :
+
+Ajuster le premier pourcentage affiché côté utilisateur pour qu’il soit égal à la valeur réellement générée (20%).
+
+Ajouter une animation progressive de la progression (de 0 → valeur cible) sur 8–10 secondes pour chaque étape.
+
+Ne rien changer ailleurs dans le code.
