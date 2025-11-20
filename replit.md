@@ -8,6 +8,22 @@ ALTUS is a multi-language professional loan management platform designed for bus
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (November 20, 2025)
+
+### CRITICAL SECURITY FIX - Transfer Validation Bypass Removed
+- 🔴 **CRITICAL:** Identified and removed a major security vulnerability in the transfer workflow
+- ❌ Removed fake "verification" step that auto-completed transfers after 45 seconds WITHOUT validating security codes
+- ✅ Transfers now start in paused state (0% progress) immediately after initiation
+- ✅ Progress is strictly blocked until each security code is validated by admin
+- ✅ Removed automatic progression logic - transfers ONLY advance after code validation
+- ✅ Verified with architect: no bypass path remains, security codes are now mandatory
+- 📝 Modified file: `client/src/pages/TransferFlow.tsx`
+  - Removed 'verification' step from state machine
+  - Changed initial progress from 10% to 0%
+  - Set isPausedForCode to true by default
+  - Added critical security check: progression only if `justValidated === true`
+  - Deleted 74 lines of fake verification UI and logic
+
 ## Recent Changes (November 16, 2025)
 
 ### Footer Reorganization & Cleanup
