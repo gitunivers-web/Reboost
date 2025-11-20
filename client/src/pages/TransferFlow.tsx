@@ -273,7 +273,7 @@ export default function TransferFlow() {
       // CORRECTION PROBLÈME 1: Permettre la progression automatique au démarrage (séquence 1)
       // CORRECTION PROBLÈME 2: Utiliser animateProgress pour une animation fluide de 8 secondes
       const isFirstCode = nextSequence === 1 && lastValidatedSequence === 0;
-      const shouldProgress = (justValidated || isFirstCode) && simulatedProgress < targetPercent && !isPausedForCode;
+      const shouldProgress = (justValidated || isFirstCode) && simulatedProgress < targetPercent;
       
       if (shouldProgress) {
         // Lancer l'animation progressive sur 8 secondes
@@ -303,7 +303,7 @@ export default function TransferFlow() {
         animationFrameRef.current = null;
       }
     };
-  }, [step, transferData, simulatedProgress, isPausedForCode, lastValidatedSequence]);
+  }, [step, transferData, lastValidatedSequence]);
 
   useEffect(() => {
     if (transferData?.transfer) {
