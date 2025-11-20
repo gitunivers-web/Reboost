@@ -190,6 +190,19 @@ export function LoanRequestModal({ open, onOpenChange, user }: LoanRequestModalP
   const duration = form.watch('duration');
 
   const limits = loanType ? getLoanOfferLimits(loanType, accountType) : null;
+  
+  // Déterminer si on doit utiliser des années (pour les prêts immobiliers et long terme)
+  const useYears = loanType && (
+    loanType.includes('mortgage') || 
+    loanType.includes('commercial-property') ||
+    (limits && limits.maxDuration >= 180) // 15 ans ou plus
+  );
+  
+  // Convertir la durée en unité appropriée pour l'affichage
+  const displayDuration = useYears ? Math.round(duration / 12) : duration;
+  const displayMinDuration = useYears && limits ? Math.round(limits.minDuration / 12) : limits?.minDuration || 1;
+  const displayMaxDuration = useYears && limits ? Math.round(limits.maxDuration / 12) : limits?.maxDuration || 360;
+  
   const interestRate = loanType ? calculateInterestRate(loanType, amount, duration, accountType) : 0;
 
   const monthlyPayment = loanType && amount && duration ? 
@@ -368,31 +381,40 @@ export function LoanRequestModal({ open, onOpenChange, user }: LoanRequestModalP
                   name="duration"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t.durationMonths}</FormLabel>
+                      <FormLabel>{useYears ? t.durationYears || 'Durée (années)' : t.durationMonths}</FormLabel>
                       <FormControl>
                         <div className="space-y-4">
                           <div className="flex items-center gap-4">
                             <Input
                               type="number"
-                              {...field}
-                              onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                              min={limits.minDuration}
-                              max={limits.maxDuration}
+                              value={displayDuration}
+                              onChange={(e) => {
+                                const value = parseInt(e.target.value) || 0;
+                                // Convertir en mois pour le stockage
+                                field.onChange(useYears ? value * 12 : value);
+                              }}
+                              min={displayMinDuration}
+                              max={displayMaxDuration}
                               data-testid="input-loan-duration"
                             />
-                            <span className="text-sm text-muted-foreground whitespace-nowrap">{t.months}</span>
+                            <span className="text-sm text-muted-foreground whitespace-nowrap">
+                              {useYears ? (t.years || 'ans') : t.months}
+                            </span>
                           </div>
                           <Slider
-                            value={[field.value]}
-                            onValueChange={(values: number[]) => field.onChange(values[0])}
-                            min={limits.minDuration}
-                            max={limits.maxDuration}
+                            value={[displayDuration]}
+                            onValueChange={(values: number[]) => {
+                              // Convertir en mois pour le stockage
+                              field.onChange(useYears ? values[0] * 12 : values[0]);
+                            }}
+                            min={displayMinDuration}
+                            max={displayMaxDuration}
                             step={1}
                             className="w-full"
                           />
                           <div className="flex justify-between text-xs text-muted-foreground">
-                            <span>{limits.minDuration} {t.months}</span>
-                            <span>{limits.maxDuration} {t.months}</span>
+                            <span>{displayMinDuration} {useYears ? (t.years || 'ans') : t.months}</span>
+                            <span>{displayMaxDuration} {useYears ? (t.years || 'ans') : t.months}</span>
                           </div>
                         </div>
                       </FormControl>
