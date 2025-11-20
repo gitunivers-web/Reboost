@@ -1218,7 +1218,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           currentBalance: data.balance,
           activeLoansCount: data.loans.filter(l => l.status === 'active').length,
           totalBorrowed: data.loans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0),
-          availableCredit: 500000 - data.balance,
+          availableCredit: parseFloat(data.user.maxLoanAmount || "500000") - data.balance,
           lastUpdated: 'Il y a 5 minutes',
         },
         loans: data.loans.map(loan => ({
