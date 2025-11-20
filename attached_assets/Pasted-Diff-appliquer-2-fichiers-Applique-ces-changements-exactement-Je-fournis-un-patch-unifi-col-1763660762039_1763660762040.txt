@@ -1,0 +1,315 @@
+Diff à appliquer (2 fichiers)
+
+Applique ces changements exactement. Je fournis un patch unifié ; colle-le dans Replit ou dans ton éditeur, commit & push, puis déploy.
+
+1) client/src/pages/TransferFlow.tsx — patch (principales modifications : ajout refs, protection contre relance, vérif nextSequence avant pause)
+*** Begin Patch
+*** Update File: client/src/pages/TransferFlow.tsx
+@@
+-// LIGNE 57-93 - FONCTION D'ANIMATION AJOUTÉE (mon code)
+-const animateProgress = (from: number, to: number, durationMs: number) => {
+-  if (animationFrameRef.current) {
+-    cancelAnimationFrame(animationFrameRef.current);
+-    animationFrameRef.current = null;
+-  }
+-  if (progressIntervalRef.current) {
+-    clearInterval(progressIntervalRef.current);
+-    progressIntervalRef.current = null;
+-  }
+-  const startTime = performance.now();
+-  const delta = to - from;
+-  const animate = (currentTime: number) => {
+-    const elapsed = currentTime - startTime;
+-    const progress = Math.min(elapsed / durationMs, 1);
+-    
+-    // Ease-out pour une progression naturelle
+-    const easeProgress = 1 - Math.pow(1 - progress, 3);
+-    const currentValue = from + (delta * easeProgress);
+-    setSimulatedProgress(currentValue);
+-    if (progress < 1) {
+-      animationFrameRef.current = requestAnimationFrame(animate);
+-    } else {
+-      setSimulatedProgress(to);
+-      setIsPausedForCode(true);
+-      animationFrameRef.current = null;
+-    }
+-  };
+-  animationFrameRef.current = requestAnimationFrame(animate);
+-};
++// LIGNE 57-93 - FONCTION D'ANIMATION AJOUTÉE (modifiée)
++// Ajout : animationRunningRef pour éviter réentrance; on vérifie nextSequence à la fin.
++const animationRunningRef = useRef(false);
++const animateProgress = (from: number, to: number, durationMs: number, expectedNextSequence?: number) => {
++  // si animation déjà en cours, ne rien faire
++  if (animationRunningRef.current) return;
++  animationRunningRef.current = true;
++
++  // Cancel previous
++  if (animationFrameRef.current) {
++    cancelAnimationFrame(animationFrameRef.current);
++    animationFrameRef.current = null;
++  }
++  if (progressIntervalRef.current) {
++    clearInterval(progressIntervalRef.current);
++    progressIntervalRef.current = null;
++  }
++
++  const startTime = performance.now();
++  const delta = to - from;
++
++  const animate = (currentTime: number) => {
++    const elapsed = currentTime - startTime;
++    const progress = Math.min(elapsed / durationMs, 1);
++
++    // Ease-out pour une progression naturelle
++    const easeProgress = 1 - Math.pow(1 - progress, 3);
++    const currentValue = from + (delta * easeProgress);
++    setSimulatedProgress(currentValue);
++
++    if (progress < 1) {
++      animationFrameRef.current = requestAnimationFrame(animate);
++    } else {
++      // verrouiller la valeur finale proprement
++      setSimulatedProgress(to);
++      animationFrameRef.current = null;
++      // vérifie que nextSequence attendu n'a pas changé entre-temps
++      try {
++        const currentNext = transferData?.nextSequence;
++        if (expectedNextSequence == null || currentNext === expectedNextSequence) {
++          setIsPausedForCode(true);
++        } else {
++          // si le nextSequence a changé, ne pas forcer la pause
++        }
++      } finally {
++        animationRunningRef.current = false;
++      }
++    }
++  };
++
++  animationFrameRef.current = requestAnimationFrame(animate);
++};
+*** End Patch
+
+
+Commentaires importants :
+
+animateProgress prend maintenant un 4ᵉ argument optionnel expectedNextSequence (passe nextSequence quand tu appelles) — ainsi on s’assure qu’on met la pause uniquement si la séquence attendue n’a pas changé pendant l’animation.
+
+animationRunningRef empêche toute relance d’animation tant que la précédente n’a pas fini.
+
+2) client/src/components/CircularTransferProgress.tsx — patch (faire suivre le displayedPercent / simulatedProgress pour éviter conflit Framer Motion)
+*** Begin Patch
+*** Update File: client/src/components/CircularTransferProgress.tsx
+@@
+-import { motion } from "framer-motion";
+-import { useEffect, useState } from "react";
+-export default function CircularTransferProgress({ percent }: { percent: number }) {
+-  const r = 52;
+-  const circumference = 2 * Math.PI * r;
+-  const progress = (percent / 100) * circumference;
+-  
+-  // Animation progressive du nombre affiché
+-  const [displayedPercent, setDisplayedPercent] = useState(0);
+-  
+-  useEffect(() => {
+-    // CORRECTION PROBLÈME 2: Animation progressive du compteur de pourcentage (8-10 secondes TOTAL)
+-    let startPercent = displayedPercent;
+-    const targetPercent = percent;
+-    const percentDelta = Math.abs(targetPercent - startPercent);
+-    
+-    // Durée totale limitée entre 8-10 secondes, quelle que soit la progression
+-    // Pour petites progressions (<5%), utiliser une durée proportionnelle plus courte
+-    let duration: number;
+-    if (percentDelta < 5) {
+-      duration = Math.max(1000, percentDelta * 400); // Min 1s, max 2s pour petites progressions
+-    } else {
+-      duration = 9000; // 9 secondes pour toutes les progressions significatives
+-    }
+-    
+-    const startTime = Date.now();
+-    
+-    const animationInterval = setInterval(() => {
+-      const elapsed = Date.now() - startTime;
+-      const progress = Math.min(elapsed / duration, 1);
+-      
+-      // Fonction d'easing pour une animation plus fluide
+-      const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+-      const easedProgress = easeOutCubic(progress);
+-      
+-      const currentValue = startPercent + (targetPercent - startPercent) * easedProgress;
+-      setDisplayedPercent(currentValue);
+-      
+-      if (progress >= 1) {
+-        clearInterval(animationInterval);
+-        setDisplayedPercent(targetPercent);
+-      }
+-    }, 16); // ~60fps
+-    
+-    return () => clearInterval(animationInterval);
+-  }, [percent]);
+-  return (
+-    <div className="flex flex-col items-center gap-4">
+-      <div className="relative">
+-        <svg width="160" height="160" className="transform -rotate-90">
+-          <circle cx="80" cy="80" r={r} stroke="#E5E7EB" strokeWidth="10" fill="none" />
+-          
+-          <motion.circle
+-            cx="80" cy="80" r={r}
+-            stroke="url(#gradient)"
+-            strokeWidth="10"
+-            strokeLinecap="round"
+-            fill="none"
+-            strokeDasharray={circumference}
+-            initial={{ strokeDashoffset: circumference }}
+-            animate={{ strokeDashoffset: circumference - progress }}
+-            transition={{ duration: 0.7, ease: "easeInOut" }}
+-          />
+-          
+-          <defs>
+-            <linearGradient id="gradient" x1="0" y1="1" x2="1" y2="0">
+-              <stop offset="0%" stopColor="#2563eb" />
+-              <stop offset="100%" stopColor="#7c3aed" />
+-            </linearGradient>
+-          </defs>
+-        </svg>
+-        <div className="absolute inset-0 flex items-center justify-center">
+-          <span className="text-3xl font-bold">
+-            {Math.round(displayedPercent)}%
+-          </span>
+-        </div>
+-      </div>
+-    </div>
+-  );
+-}
++import { useEffect, useState } from "react";
++export default function CircularTransferProgress({ percent }: { percent: number }) {
++  const r = 52;
++  const circumference = 2 * Math.PI * r;
++
++  // On utilise displayedPercent pour piloter **TOUT** : texte + cercle SVG
++  const [displayedPercent, setDisplayedPercent] = useState(0);
++
++  useEffect(() => {
++    // Animation progressive : target = percent
++    let start = displayedPercent;
++    const target = percent;
++    const delta = Math.abs(target - start);
++
++    let duration = delta < 5 ? Math.max(800, delta * 300) : 9000;
++    const startTime = performance.now();
++
++    let rafId: number;
++    const frame = (now: number) => {
++      const elapsed = now - startTime;
++      const t = Math.min(elapsed / duration, 1);
++      const easeOutCubic = (x: number) => 1 - Math.pow(1 - x, 3);
++      const eased = easeOutCubic(t);
++      const current = start + (target - start) * eased;
++      setDisplayedPercent(current);
++      if (t < 1) {
++        rafId = requestAnimationFrame(frame);
++      } else {
++        setDisplayedPercent(target);
++      }
++    };
++    rafId = requestAnimationFrame(frame);
++    return () => cancelAnimationFrame(rafId);
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [percent]);
++
++  // Calculer le strokeDashoffset à partir du displayedPercent (pas du prop percent)
++  const progress = (displayedPercent / 100) * circumference;
++
++  return (
++    <div className="flex flex-col items-center gap-4">
++      <div className="relative">
++        <svg width="160" height="160" className="transform -rotate-90">
++          <circle cx="80" cy="80" r={r} stroke="#E5E7EB" strokeWidth="10" fill="none" />
++          <circle
++            cx="80"
++            cy="80"
++            r={r}
++            stroke="url(#gradient)"
++            strokeWidth="10"
++            strokeLinecap="round"
++            fill="none"
++            strokeDasharray={circumference}
++            strokeDashoffset={circumference - progress}
++            style={{ transition: "stroke-dashoffset 120ms linear" }}
++          />
++          <defs>
++            <linearGradient id="gradient" x1="0" y1="1" x2="1" y2="0">
++              <stop offset="0%" stopColor="#2563eb" />
++              <stop offset="100%" stopColor="#7c3aed" />
++            </linearGradient>
++          </defs>
++        </svg>
++        <div className="absolute inset-0 flex items-center justify-center">
++          <span className="text-3xl font-bold">
++            {Math.round(displayedPercent)}%
++          </span>
++        </div>
++      </div>
++    </div>
++  );
++}
+*** End Patch
+
+
+Commentaires importants :
+
+Le cercle est maintenant piloté par la même valeur que le texte (displayedPercent) — suppression du motion.circle animé indépendamment.
+
+strokeDashoffset est mis directement, avec une courte transition CSS pour éviter micro-sauts — l’animation réelle est conduite par requestAnimationFrame dans useEffect.
+
+Cette approche supprime les conflits Framer Motion <-> rAF.
+
+Appels à modifier dans TransferFlow.tsx
+
+Quand tu appelles animateProgress(simulatedProgress, targetPercent, 8000) passe maintenant le nextSequence attendu pour verrouiller la pause à la fin, par exemple :
+
+animateProgress(simulatedProgress, targetPercent, 8000, computedNextCode?.sequence);
+
+
+(si computedNextCode vaut null, passe undefined).
+
+Tests à exécuter après patch
+
+Commit & push les fichiers modifiés. Déploy sur Vercel (frontend).
+
+Ouvrir workflow → initier un transfert sur l’espace utilisateur (avec l’admin ayant déjà confirmé le contrat).
+
+Observer le cercle : il doit animer de 0 → pausePercent(1) sur ~8s, puis afficher la zone de saisie du code.
+
+Saisir le code (admin a le bon code) → la page doit lancer la prochaine animation 8s → pausePercent(2).
+
+Vérifier qu’il n’y a pas de boucle 1→5%.
+
+Vérifier logs client (console) pour tout message d’erreur.
+
+Si tout OK, tester quelques cas limites : petit incrément (p.ex. 2%), grand incrément (p.ex. 40%).
+
+Pourquoi cela résoudra exactement ton symptôme
+
+L’animation loop 1–5% venait du fait que le useEffect se relançait à chaque changement de simulatedProgress et Framer Motion animait indépendamment : maintenant animationRunningRef empêche relances et le cercle suit la même valeur animée.
+
+Le premier code à 0% : la condition isFirstCode + suppression de !isPausedForCode était correcte — mais il fallait ajouter animationRunningRef et la vérification expectedNextSequence pour éviter pauses prématurées.
+
+Le saut instantané est remplacé par une animation rAF contrôlée, durée 8s (ou adaptative) — l’effet visuel demandé.
+
+Ce que je te demande (pour finaliser rapidement)
+
+Applique les deux patches fournis (TransferFlow + CircularTransferProgress).
+
+Remplace tous les appels à animateProgress(...) par la forme avec expectedNextSequence (expliqué ci-dessus).
+
+Commit / push / redeploy front.
+
+Me donner les résultats des tests 1–4 ci-dessus (capture console + capture réseau XHR si échec).
+
+Si tu veux, je peux générer un patch complet (git diff format) incluant l’appel modifié dans TransferFlow.tsx (là où tu déclenchais animateProgress) — dis-le et je te fournis le diff exact prêt à coller.
+
+Si tu veux que je prépare le patch complet (avec la ligne d’appel animateProgress(..., computedNextCode?.sequence) injectée automatiquement), dis « Fais le patch complet ».
+Sinon applique ce que je t’ai donné et dis-moi les résultats — on boucle jusqu’à 100% de fiabilité.
+
+Je reste strict : suis ces patches — ne touche pas autre part pour éviter régressions.

@@ -1,71 +1,49 @@
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useTranslations } from "@/lib/i18n";
 import { useEffect, useState } from "react";
 
 export default function CircularTransferProgress({ percent }: { percent: number }) {
-  const t = useTranslations();
   const r = 52;
   const circumference = 2 * Math.PI * r;
-  const progress = (percent / 100) * circumference;
-  
-  // Animation progressive du nombre affiché
+
+  // On utilise displayedPercent pour piloter **TOUT** : texte + cercle SVG
   const [displayedPercent, setDisplayedPercent] = useState(0);
-  
+
   useEffect(() => {
-    // CORRECTION PROBLÈME 2: Animation progressive du compteur de pourcentage (8-10 secondes TOTAL)
-    let startPercent = displayedPercent;
-    const targetPercent = percent;
-    const percentDelta = Math.abs(targetPercent - startPercent);
-    
-    // Durée totale limitée entre 8-10 secondes, quelle que soit la progression
-    // Pour petites progressions (<5%), utiliser une durée proportionnelle plus courte
-    let duration: number;
-    if (percentDelta < 5) {
-      duration = Math.max(1000, percentDelta * 400); // Min 1s, max 2s pour petites progressions
-    } else {
-      duration = 9000; // 9 secondes pour toutes les progressions significatives
-    }
-    
-    const startTime = Date.now();
-    
-    const animationInterval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Fonction d'easing pour une animation plus fluide
-      const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-      const easedProgress = easeOutCubic(progress);
-      
-      const currentValue = startPercent + (targetPercent - startPercent) * easedProgress;
-      setDisplayedPercent(currentValue);
-      
-      if (progress >= 1) {
-        clearInterval(animationInterval);
-        setDisplayedPercent(targetPercent);
+    // Animation progressive : target = percent
+    let start = displayedPercent;
+    const target = percent;
+    const delta = Math.abs(target - start);
+
+    let duration = delta < 5 ? Math.max(800, delta * 300) : 9000;
+    const startTime = performance.now();
+
+    let rafId: number;
+    const frame = (now: number) => {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const easeOutCubic = (x: number) => 1 - Math.pow(1 - x, 3);
+      const eased = easeOutCubic(t);
+      const current = start + (target - start) * eased;
+      setDisplayedPercent(current);
+      if (t < 1) {
+        rafId = requestAnimationFrame(frame);
+      } else {
+        setDisplayedPercent(target);
       }
-    }, 16); // ~60fps
-    
-    return () => clearInterval(animationInterval);
+    };
+    rafId = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(rafId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [percent]);
 
+  // Calculer le strokeDashoffset à partir du displayedPercent (pas du prop percent)
+  const progress = (displayedPercent / 100) * circumference;
+
   return (
-    <div className="flex flex-col items-center gap-4 p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 w-full max-w-md mx-auto">
-      
-      {/* Cercle */}
+    <div className="flex flex-col items-center gap-4">
       <div className="relative">
         <svg width="160" height="160" className="transform -rotate-90">
-          {/* Cercle gris */}
+          <circle cx="80" cy="80" r={r} stroke="#E5E7EB" strokeWidth="10" fill="none" />
           <circle
-            cx="80"
-            cy="80"
-            r={r}
-            stroke="#E5E7EB"
-            strokeWidth="10"
-            fill="none"
-          />
-
-          {/* Cercle animé */}
-          <motion.circle
             cx="80"
             cy="80"
             r={r}
@@ -74,12 +52,9 @@ export default function CircularTransferProgress({ percent }: { percent: number 
             strokeLinecap="round"
             fill="none"
             strokeDasharray={circumference}
-            initial={{ strokeDashoffset: circumference }}
-            animate={{ strokeDashoffset: circumference - progress }}
-            transition={{ duration: 0.7, ease: "easeInOut" }}
+            strokeDashoffset={circumference - progress}
+            style={{ transition: "stroke-dashoffset 120ms linear" }}
           />
-
-          {/* Dégradé premium */}
           <defs>
             <linearGradient id="gradient" x1="0" y1="1" x2="1" y2="0">
               <stop offset="0%" stopColor="#2563eb" />
@@ -87,23 +62,11 @@ export default function CircularTransferProgress({ percent }: { percent: number 
             </linearGradient>
           </defs>
         </svg>
-
-        {/* Pourcentage centré avec animation */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          <span className="text-3xl font-bold">
             {Math.round(displayedPercent)}%
           </span>
         </div>
-      </div>
-
-      {/* Texte premium */}
-      <div className="text-center">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-          {t.transferFlow.progress.circularProgressTitle}
-        </h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          {t.transferFlow.progress.circularProgressSubtitle}
-        </p>
       </div>
     </div>
   );

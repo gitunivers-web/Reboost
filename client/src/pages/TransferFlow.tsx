@@ -54,9 +54,15 @@ export default function TransferFlow() {
     refetchInterval: step === 'progress' ? 3000 : false,
   });
 
-  // CORRECTION PROBLÈME 2: Animation lente et fluide (5-8 secondes)
-  const animateProgress = (from: number, to: number, durationMs: number) => {
-    // Annuler toute animation en cours
+  // LIGNE 57-93 - FONCTION D'ANIMATION AJOUTÉE (modifiée)
+  // Ajout : animationRunningRef pour éviter réentrance; on vérifie nextSequence à la fin.
+  const animationRunningRef = useRef(false);
+  const animateProgress = (from: number, to: number, durationMs: number, expectedNextSequence?: number) => {
+    // si animation déjà en cours, ne rien faire
+    if (animationRunningRef.current) return;
+    animationRunningRef.current = true;
+
+    // Cancel previous
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
@@ -72,20 +78,29 @@ export default function TransferFlow() {
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / durationMs, 1);
-      
+
       // Ease-out pour une progression naturelle
       const easeProgress = 1 - Math.pow(1 - progress, 3);
       const currentValue = from + (delta * easeProgress);
-
       setSimulatedProgress(currentValue);
 
       if (progress < 1) {
         animationFrameRef.current = requestAnimationFrame(animate);
       } else {
-        // Animation terminée - atteint la cible exacte
+        // verrouiller la valeur finale proprement
         setSimulatedProgress(to);
-        setIsPausedForCode(true);
         animationFrameRef.current = null;
+        // vérifie que nextSequence attendu n'a pas changé entre-temps
+        try {
+          const currentNext = transferData?.nextSequence;
+          if (expectedNextSequence == null || currentNext === expectedNextSequence) {
+            setIsPausedForCode(true);
+          } else {
+            // si le nextSequence a changé, ne pas forcer la pause
+          }
+        } finally {
+          animationRunningRef.current = false;
+        }
       }
     };
 
@@ -276,8 +291,8 @@ export default function TransferFlow() {
       const shouldProgress = (justValidated || isFirstCode) && simulatedProgress < targetPercent;
       
       if (shouldProgress) {
-        // Lancer l'animation progressive sur 8 secondes
-        animateProgress(simulatedProgress, targetPercent, 8000);
+        // Lancer l'animation progressive sur 8 secondes avec vérification de séquence
+        animateProgress(simulatedProgress, targetPercent, 8000, computedNextCode?.sequence);
       } else if (!justValidated && !isFirstCode) {
         // FORCER la pause tant qu'aucun code n'a été validé (sauf pour le premier)
         setIsPausedForCode(true);
