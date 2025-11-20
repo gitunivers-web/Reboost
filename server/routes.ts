@@ -3145,7 +3145,7 @@ Tous les codes de validation ont été vérifiés avec succès.`,
       const totalBorrowed = dashboardData.loans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0);
       const totalRepaid = dashboardData.loans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0);
       const currentBalance = totalBorrowed - totalRepaid;
-      const maxCapacity = 500000;
+      const maxCapacity = parseFloat(dashboardData.user.maxLoanAmount || "500000");
       const availableCredit = maxCapacity - currentBalance;
       
       const data = months.map((month, index) => {
