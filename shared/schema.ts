@@ -93,6 +93,7 @@ export const transfers = pgTable("transfers", {
   userId: varchar("user_id").notNull(),
   loanId: varchar("loan_id"),
   externalAccountId: varchar("external_account_id"),
+  transferReference: text("transfer_reference"),
   amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
   recipient: text("recipient").notNull(),
   status: text("status").notNull().default("pending"),
