@@ -10,6 +10,30 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 20, 2025)
 
+### Transfer Code System - Critical Fixes
+- ✅ **FIXED:** Code numbering in admin emails corrected from "1/5...6/5" to dynamic "1/6...6/6" format
+  - Email template now derives denominator from `vars.codes.length` for any code count
+  - File modified: `server/emailTemplates.ts`
+- ✅ **FIXED:** Eliminated duplicate email sending during transfer initiation
+  - Codes now sent ONLY once when admin confirms contract (at fund availability)
+  - Removed duplicate `sendTransferCodesAdminEmail` call from transfer initiation route
+  - File modified: `server/routes.ts`
+- ✅ **FIXED:** Transfer initialization state corrected
+  - Transfers now start at 0% progress WITHOUT being paused
+  - `isPaused=false` and `pausePercent=null` explicitly set at transfer creation
+  - Pause occurs ONLY when validation code with pausePercent is encountered
+  - File modified: `server/routes.ts`
+- ✅ **FIXED:** Code retrieval logic improved
+  - `getLoanTransferCodes` now correctly filters codes for active transfer
+  - Falls back to pre-generated codes if no active transfer exists
+  - Prevents mixing codes from different transfers
+  - File modified: `server/storage.ts`
+- 🎯 **VERIFIED:** Single source of truth for pause percentages
+  - Percentages generated randomly once at contract confirmation
+  - Stored in database with validation codes
+  - Reused across all surfaces (admin email, transfer progress, user validation)
+  - No regeneration or inconsistency possible
+
 ### CRITICAL SECURITY FIX - Transfer Validation Bypass Removed
 - 🔴 **CRITICAL:** Identified and removed a major security vulnerability in the transfer workflow
 - ❌ Removed fake "verification" step that auto-completed transfers after 45 seconds WITHOUT validating security codes
