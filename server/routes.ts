@@ -2577,18 +2577,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const events = await storage.getTransferEvents(req.params.id);
       const allCodes = await storage.getTransferCodes(transfer.id);
       
-      // SÉCURITÉ CRITIQUE: Ne JAMAIS exposer les codes admin aux utilisateurs
-      // Filtrer pour ne garder que les codes déjà consommés (historique)
-      // Les codes admin (deliveryMethod='admin') ne doivent JAMAIS être visibles
-      const userVisibleCodes = allCodes.filter(code => 
-        code.consumedAt !== null // Seulement les codes déjà utilisés (historique)
-      ).map(code => ({
-        ...code,
-        // Ne jamais exposer le code lui-même, même s'il est consommé
-        code: '***' 
+      // SÉCURITÉ CRITIQUE: Renvoyer les métadonnées des codes SANS exposer les valeurs
+      // Les utilisateurs ont besoin de savoir quels codes existent pour afficher la progression
+      // mais ne doivent JAMAIS voir les valeurs des codes non-consommés
+      const codesMetadata = allCodes.map(code => ({
+        id: code.id,
+        sequence: code.sequence,
+        pausePercent: code.pausePercent,
+        codeContext: code.codeContext,
+        expiresAt: code.expiresAt,
+        consumedAt: code.consumedAt,
+        deliveryMethod: code.deliveryMethod,
+        isConsumed: code.consumedAt !== null,
+        isPending: code.consumedAt === null,
       }));
 
-      res.json({ transfer, events, codes: userVisibleCodes });
+      // Calculer le prochain code attendu
+      const nextSequence = transfer.codesValidated < transfer.requiredCodes 
+        ? transfer.codesValidated + 1 
+        : null;
+
+      res.json({ 
+        transfer, 
+        events, 
+        codes: codesMetadata,
+        nextSequence,
+      });
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch transfer' });
     }

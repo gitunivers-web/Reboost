@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { apiRequest, getApiUrl } from '@/lib/queryClient';
 import { ArrowLeft, CheckCircle2, Clock, Send, Shield, AlertCircle, Loader2, AlertTriangle, Building, ArrowRight, Lock, Circle, TrendingUp } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import type { TransferDetailsResponse, ExternalAccount, TransferValidationCode } from '@shared/schema';
+import type { TransferDetailsResponse, ExternalAccount, TransferCodeMetadata } from '@shared/schema';
 import { useTranslations } from '@/lib/i18n';
 import { DashboardCard, SectionTitle } from '@/components/fintech';
 import CircularTransferProgress from '@/components/CircularTransferProgress';
@@ -33,7 +33,7 @@ export default function TransferFlow() {
   const [isPausedForCode, setIsPausedForCode] = useState(true);
   const [currentCodeSequence, setCurrentCodeSequence] = useState(1);
   const [lastValidatedSequence, setLastValidatedSequence] = useState(0);
-  const [nextCode, setNextCode] = useState<TransferValidationCode | null>(null);
+  const [nextCode, setNextCode] = useState<TransferCodeMetadata | null>(null);
   
   const verificationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -119,7 +119,8 @@ export default function TransferFlow() {
       
       setTransferId(data.transfer.id);
       setIsPausedForCode(true);
-      setSimulatedProgress(0);
+      // CORRECTION: Utiliser la progression du backend au lieu de hardcoder 0
+      setSimulatedProgress(data.transfer.progressPercent || 0);
       toast({
         title: t.transferFlow.toast.initiated,
         description: t.transferFlow.toast.initiatedSuccessDesc,
@@ -179,9 +180,13 @@ export default function TransferFlow() {
   });
 
   useEffect(() => {
-    if (step === 'progress' && transferData?.transfer && transferData?.codes) {
+    if (step === 'progress' && transferData?.transfer) {
       const transfer = transferData.transfer;
-      const codes = transferData.codes as TransferValidationCode[];
+      const codes = transferData.codes || [];
+      const nextSequence = transferData.nextSequence;
+      
+      // CORRECTION PROBLÈME 1: Utiliser transfer.progressPercent du backend comme source de vérité
+      const backendProgress = transfer.progressPercent || 0;
       
       if (transfer.status === 'completed') {
         if (progressIntervalRef.current) {
@@ -193,23 +198,31 @@ export default function TransferFlow() {
         return;
       }
       
-      const sortedCodes = [...codes].sort((a, b) => a.sequence - b.sequence);
-      const validatedCount = transfer.codesValidated || 0;
+      // Utiliser nextSequence du backend pour trouver le prochain code
+      const computedNextCode = nextSequence 
+        ? codes.find(c => c.sequence === nextSequence) || null
+        : null;
       
-      const computedNextCode = sortedCodes[validatedCount] || null;
       setNextCode(computedNextCode);
       
-      if (!computedNextCode) {
+      // Si la progression simulée est très différente du backend, synchroniser
+      if (Math.abs(simulatedProgress - backendProgress) > 5) {
+        setSimulatedProgress(backendProgress);
+      }
+      
+      // Si pas de code suivant (transfert terminé ou en attente), utiliser la progression du backend
+      if (!computedNextCode || !nextSequence) {
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
           progressIntervalRef.current = null;
         }
-        setSimulatedProgress(100);
+        setSimulatedProgress(backendProgress);
+        setIsPausedForCode(true);
         return;
       }
       
       const targetPercent = computedNextCode.pausePercent || 90;
-      const justValidated = lastValidatedSequence === computedNextCode.sequence;
+      const justValidated = lastValidatedSequence === nextSequence - 1;
       
       // SÉCURITÉ CRITIQUE: Ne progresser QUE si un code vient d'être validé
       // Sinon, le transfert DOIT rester en pause

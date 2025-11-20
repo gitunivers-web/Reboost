@@ -290,8 +290,22 @@ export type InsertUserOtp = z.infer<typeof insertUserOtpSchema>;
 export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 
+// Type sécurisé pour les métadonnées de code sans exposer les valeurs sensibles
+export type TransferCodeMetadata = {
+  id: string;
+  sequence: number;
+  pausePercent: number | null;
+  codeContext: string | null;
+  expiresAt: Date;
+  consumedAt: Date | null;
+  deliveryMethod: string;
+  isConsumed: boolean;
+  isPending: boolean;
+};
+
 export type TransferDetailsResponse = {
   transfer: Transfer;
   events: TransferEvent[];
-  codes?: TransferValidationCode[];
+  codes: TransferCodeMetadata[];
+  nextSequence: number | null;
 };
