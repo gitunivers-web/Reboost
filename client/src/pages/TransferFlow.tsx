@@ -118,9 +118,12 @@ export default function TransferFlow() {
       }
       
       setTransferId(data.transfer.id);
-      setIsPausedForCode(true);
-      // CORRECTION: Utiliser la progression du backend au lieu de hardcoder 0
+      // CORRECTION CRITIQUE: Ne PAS mettre en pause au démarrage
+      // Le transfert doit progresser automatiquement jusqu'au pausePercent du premier code
+      setIsPausedForCode(false);
       setSimulatedProgress(data.transfer.progressPercent || 0);
+      setLastValidatedSequence(0);
+      setCurrentCodeSequence(1);
       toast({
         title: t.transferFlow.toast.initiated,
         description: t.transferFlow.toast.initiatedSuccessDesc,
