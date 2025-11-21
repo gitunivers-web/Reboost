@@ -2014,6 +2014,17 @@ type TranslationKeys = {
       suspendDialogTitle: string;
       suspendDialogDesc: string;
     };
+    chat: {
+      title: string;
+      description: string;
+      users: string;
+      searchPlaceholder: string;
+      activeConversations: string;
+      allUsers: string;
+      noUsersFound: string;
+      selectUser: string;
+      selectUserDesc: string;
+    };
   };
   expertise: {
     title: string;
@@ -4599,6 +4610,17 @@ export const translations: Record<Language, TranslationKeys> = {
         suspendDialogTitle: 'Suspendre le transfert',
         suspendDialogDesc: 'Cette action suspend le transfert. Il pourra être réactivé ultérieurement.',
       },
+      chat: {
+        title: 'Chat Support',
+        description: 'Communiquez en temps réel avec les utilisateurs',
+        users: 'Utilisateurs',
+        searchPlaceholder: 'Rechercher...',
+        activeConversations: 'CONVERSATIONS ACTIVES',
+        allUsers: 'TOUS LES UTILISATEURS',
+        noUsersFound: 'Aucun utilisateur trouvé',
+        selectUser: 'Sélectionnez un utilisateur',
+        selectUserDesc: 'Choisissez un utilisateur pour commencer à discuter',
+      },
     },
     expertise: {
       title: 'Nos Domaines d\'Expertise',
@@ -7145,6 +7167,17 @@ export const translations: Record<Language, TranslationKeys> = {
         approveDialogDesc: 'This action will approve the transfer and update its status to "in progress".',
         suspendDialogTitle: 'Suspend transfer',
         suspendDialogDesc: 'This action will suspend the transfer. It can be reactivated later.',
+      },
+      chat: {
+        title: 'Chat Support',
+        description: 'Communicate in real-time with users',
+        users: 'Users',
+        searchPlaceholder: 'Search...',
+        activeConversations: 'ACTIVE CONVERSATIONS',
+        allUsers: 'ALL USERS',
+        noUsersFound: 'No users found',
+        selectUser: 'Select a user',
+        selectUserDesc: 'Choose a user to start chatting',
       },
     },
     expertise: {

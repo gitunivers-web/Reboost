@@ -6,6 +6,7 @@ import { ChatBox } from '@/components/ChatBox';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 import { MessageSquare, Users } from 'lucide-react';
 import { useTranslations } from '@/lib/i18n';
 
@@ -66,17 +67,18 @@ export default function ChatPage() {
               </>
             ) : conversations && conversations.length > 0 ? (
               conversations.map((conv) => (
-                <button
+                <Button
                   key={conv.userId}
+                  variant="ghost"
                   onClick={() => setSelectedPartnerId(conv.userId)}
-                  className={`w-full p-4 text-left transition-colors hover-elevate ${
+                  className={`w-full p-4 h-auto justify-start ${
                     selectedPartnerId === conv.userId
                       ? 'bg-primary/10'
                       : ''
                   }`}
-                  data-testid={`conversation-${conv.userId}`}
+                  data-testid={`button-conversation-${conv.userId}`}
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 w-full">
                     <Avatar>
                       <AvatarFallback className="bg-primary/20 text-primary">
                         {conv.fullName?.charAt(0).toUpperCase() || 'U'}
@@ -84,7 +86,7 @@ export default function ChatPage() {
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
-                        <p className="font-semibold text-sm truncate" data-testid={`conversation-name-${conv.userId}`}>
+                        <p className="font-semibold text-sm truncate" data-testid={`text-conversation-name-${conv.userId}`}>
                           {conv.fullName}
                         </p>
                         {conv.unreadCount > 0 && (
@@ -100,7 +102,7 @@ export default function ChatPage() {
                       )}
                     </div>
                   </div>
-                </button>
+                </Button>
               ))
             ) : (
               <div className="p-8 text-center">
