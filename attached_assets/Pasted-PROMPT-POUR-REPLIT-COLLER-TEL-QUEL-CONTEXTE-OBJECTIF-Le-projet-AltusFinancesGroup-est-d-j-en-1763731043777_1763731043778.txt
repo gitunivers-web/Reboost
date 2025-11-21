@@ -1,0 +1,264 @@
+PROMPT POUR REPLIT (À COLLER TEL QUEL)
+CONTEXTE & OBJECTIF
+
+Le projet AltusFinancesGroup est déjà en production :
+
+Front-end : https://altusfinancesgroup.com
+ (Next.js sur Vercel)
+
+Back-end : https://api.altusfinancesgroup.com
+ (Node + Express sur Render)
+
+Database : PostgreSQL (Render)
+
+Les clés sont déjà dans les Secrets.
+
+🎯 Objectif de cette tâche : intégrer un système de chat instantané complet, gratuit, temps réel, propre et parfaitement intégré au dashboard.
+
+Le chat doit permettre :
+
+Admin ↔ Utilisateur (particulier + entreprise)
+
+Notifications en temps réel
+
+Historique des messages
+
+Indicateur de nouveaux messages
+
+Pas de services payants (pas de Firebase, pas de Pusher, pas de Stream.io)
+
+✔️ Technologie imposée : Socket.IO (gratuit, stable, parfait)
+🔥 ÉTAPE 1 — BACKEND : Ajout du chat instantané (Node + Express + Socket.IO)
+1. Installer Socket.IO
+npm install socket.io
+
+2. Modifier le server.js (ou index.js) pour activer WebSocket
+import http from "http";
+import { Server } from "socket.io";
+import app from "./app.js";
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: ["https://altusfinancesgroup.com"],
+    methods: ["GET", "POST"]
+  }
+});
+
+io.on("connection", (socket) => {
+  console.log("Client connecté:", socket.id);
+
+  socket.on("join_room", (roomId) => {
+    socket.join(roomId);
+  });
+
+  socket.on("send_message", (data) => {
+    io.to(data.room).emit("receive_message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client déconnecté");
+  });
+});
+
+export default server;
+
+3. Ajouter le modèle PostgreSQL pour les messages
+
+Créer un fichier : models/Message.js
+
+import db from "../config/db.js";
+
+export const createMessage = async (senderId, receiverId, content) => {
+  const result = await db.query(
+    `INSERT INTO messages (sender_id, receiver_id, content)
+     VALUES ($1, $2, $3) RETURNING *;`,
+    [senderId, receiverId, content]
+  );
+  return result.rows[0];
+};
+
+export const getConversation = async (userA, userB) => {
+  const result = await db.query(
+    `SELECT * FROM messages 
+     WHERE (sender_id = $1 AND receiver_id = $2)
+     OR (sender_id = $2 AND receiver_id = $1)
+     ORDER BY created_at ASC;`,
+    [userA, userB]
+  );
+  return result.rows;
+};
+
+4. Ajouter les routes API
+
+Créer routes/chatRoutes.js :
+
+import express from "express";
+import { createMessage, getConversation } from "../models/Message.js";
+
+const router = express.Router();
+
+router.post("/send", async (req, res) => {
+  const { senderId, receiverId, content } = req.body;
+  const msg = await createMessage(senderId, receiverId, content);
+  res.json(msg);
+});
+
+router.get("/history/:userA/:userB", async (req, res) => {
+  const { userA, userB } = req.params;
+  const history = await getConversation(userA, userB);
+  res.json(history);
+});
+
+export default router;
+
+
+Puis l’importer dans app.js :
+
+import chatRoutes from "./routes/chatRoutes.js";
+app.use("/chat", chatRoutes);
+
+🔥 ÉTAPE 2 — FRONTEND (Next.js / React) : Interface chat complète
+1. Installer Socket.IO côté front
+
+Dans Vercel / Next.js :
+
+npm install socket.io-client
+
+2. Créer un hook Socket.IO
+
+hooks/useChat.js
+
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+
+const socket = io("https://api.altusfinancesgroup.com");
+
+export default function useChat(room) {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    socket.emit("join_room", room);
+
+    socket.on("receive_message", (data) => {
+      setMessages((prev) => [...prev, data]);
+    });
+
+    return () => socket.off("receive_message");
+  }, [room]);
+
+  const sendMessage = (msg) => {
+    socket.emit("send_message", msg);
+  };
+
+  return { messages, sendMessage };
+}
+
+3. Interface du chat
+
+Créer /components/ChatBox.jsx
+
+"use client";
+
+import { useState, useEffect } from "react";
+import useChat from "../hooks/useChat";
+
+export default function ChatBox({ userId, targetId }) {
+  const room = [userId, targetId].sort().join("_");
+
+  const { messages, sendMessage } = useChat(room);
+  const [input, setInput] = useState("");
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    sendMessage({
+      room,
+      senderId: userId,
+      receiverId: targetId,
+      content: input,
+      timestamp: new Date()
+    });
+    setInput("");
+  };
+
+  return (
+    <div className="chat-container">
+      <div className="messages">
+        {messages.map((m, i) => (
+          <div
+            key={i}
+            className={m.senderId === userId ? "msg me" : "msg them"}
+          >
+            {m.content}
+          </div>
+        ))}
+      </div>
+
+      <div className="input-bar">
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="Écrire un message…"
+        />
+        <button onClick={handleSend}>Envoyer</button>
+      </div>
+    </div>
+  );
+}
+
+🔥 ÉTAPE 3 — INTEGRATION DANS LE DASHBOARD
+Utilisateur particulier & pro
+
+Ajouter une page : /dashboard/messages
+
+Y mettre le composant <ChatBox userId={} targetId="ADMIN_ID" />
+
+Admin
+
+Page : /admin/messages
+
+Liste des utilisateurs
+
+En cliquant sur un utilisateur → ouvrir le chat
+
+🔥 ÉTAPE 4 — NOTIFICATIONS EN TEMPS RÉEL
+Réception d’un message
+
+Badges type (1), (2), (3)
+
+Mise à jour automatique lors d’un receive_message
+
+Icône cloche : notifications légères
+
+Redirection vers /messages
+
+🔧 ÉTAPE 5 — STYLE (Fintech 2025)
+
+Couleurs conformes tendances Revolut, N26, Qonto :
+
+#FFFFFF (fond pur)
+
+#F8FAFC (gris-fintech)
+
+#0F172A (texte premium)
+
+#3B82F6 (accent moderne)
+
+#64748B (texte secondaire)
+
+#10B981 (validation)
+
+#EF4444 (erreurs)
+
+🔥 ÉTAPE 6 — TESTS
+
+Vérifier flux RealTime
+
+Vérifier envoi/lecture
+
+Vérifier persistance DB
+
+Vérifier admin ↔ user
+
+Vérifier langues (i18n)
