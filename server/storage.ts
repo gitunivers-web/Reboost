@@ -199,9 +199,9 @@ export interface IStorage {
   getUpcomingPayments(loanId: string, limit?: number): Promise<AmortizationSchedule[]>;
   markPaymentAsPaid(paymentId: string): Promise<AmortizationSchedule | undefined>;
   
-  getConversation(userA: string, userB: string): Promise<Message[]>;
-  createChatMessage(message: InsertMessage): Promise<Message>;
-  markChatMessageAsRead(messageId: string): Promise<Message | undefined>;
+  getConversation(userA: string, userB: string, requestingUserId: string): Promise<Message[]>;
+  createChatMessage(message: InsertMessage, requestingUserId: string): Promise<Message>;
+  markChatMessageAsRead(messageId: string, requestingUserId: string): Promise<Message | undefined>;
   getUnreadMessageCount(userId: string): Promise<number>;
   getUserConversations(userId: string): Promise<Array<{userId: string; fullName: string; unreadCount: number; lastMessage: Message | null}>>;
 }
@@ -2873,7 +2873,12 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  async getConversation(userA: string, userB: string): Promise<Message[]> {
+  async getConversation(userA: string, userB: string, requestingUserId: string): Promise<Message[]> {
+    // Authorization: User must be part of the conversation
+    if (requestingUserId !== userA && requestingUserId !== userB) {
+      throw new Error('Unauthorized: You can only view conversations you are part of');
+    }
+
     const result = await db.select()
       .from(messages)
       .where(
@@ -2886,14 +2891,33 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
-  async createChatMessage(message: InsertMessage): Promise<Message> {
+  async createChatMessage(message: InsertMessage, requestingUserId: string): Promise<Message> {
+    // Authorization: User can only send messages as themselves
+    if (message.senderId !== requestingUserId) {
+      throw new Error('Unauthorized: You can only send messages as yourself');
+    }
+
     const result = await db.insert(messages)
       .values(message)
       .returning();
     return result[0];
   }
 
-  async markChatMessageAsRead(messageId: string): Promise<Message | undefined> {
+  async markChatMessageAsRead(messageId: string, requestingUserId: string): Promise<Message | undefined> {
+    // Authorization: User can only mark messages as read if they are the receiver
+    const message = await db.select()
+      .from(messages)
+      .where(eq(messages.id, messageId))
+      .limit(1);
+
+    if (!message[0]) {
+      return undefined;
+    }
+
+    if (message[0].receiverId !== requestingUserId) {
+      throw new Error('Unauthorized: You can only mark messages sent to you as read');
+    }
+
     const result = await db.update(messages)
       .set({
         isRead: true,
@@ -2917,26 +2941,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserConversations(userId: string): Promise<Array<{userId: string; fullName: string; unreadCount: number; lastMessage: Message | null}>> {
-    // Sous-requête pour obtenir le dernier message par conversation
-    const lastMessages = db
-      .select({
-        partnerId: sqlDrizzle<string>`
-          CASE 
-            WHEN ${messages.senderId} = ${userId} THEN ${messages.receiverId}
-            ELSE ${messages.senderId}
-          END
-        `,
-        lastMessageId: sqlDrizzle<string>`
-          (SELECT id FROM ${messages} AS m 
-           WHERE (m.sender_id = ${userId} AND m.receiver_id = CASE WHEN ${messages.senderId} = ${userId} THEN ${messages.receiverId} ELSE ${messages.senderId} END)
-              OR (m.receiver_id = ${userId} AND m.sender_id = CASE WHEN ${messages.senderId} = ${userId} THEN ${messages.receiverId} ELSE ${messages.senderId} END)
-           ORDER BY m.created_at DESC 
-           LIMIT 1)
-        `,
-        unreadCount: sqlDrizzle<number>`
-          COUNT(*) FILTER (WHERE ${messages.receiverId} = ${userId} AND ${messages.isRead} = false)::int
-        `
-      })
+    // Get all messages involving the user
+    const userMessages = await db.select()
       .from(messages)
       .where(
         or(
@@ -2944,20 +2950,67 @@ export class DatabaseStorage implements IStorage {
           eq(messages.receiverId, userId)
         )
       )
-      .groupBy(sqlDrizzle`CASE WHEN ${messages.senderId} = ${userId} THEN ${messages.receiverId} ELSE ${messages.senderId} END`)
-      .as('lastMessages');
-
-    const conversations = await db
-      .select({
-        userId: users.id,
-        fullName: users.fullName,
-        unreadCount: lastMessages.unreadCount,
-        lastMessage: messages
-      })
-      .from(lastMessages)
-      .innerJoin(users, eq(users.id, lastMessages.partnerId))
-      .leftJoin(messages, eq(messages.id, lastMessages.lastMessageId))
       .orderBy(desc(messages.createdAt));
+
+    // Group by conversation partner and find last message + unread count
+    const conversationMap = new Map<string, {
+      partnerId: string;
+      lastMessage: Message;
+      unreadCount: number;
+    }>();
+
+    for (const msg of userMessages) {
+      const partnerId = msg.senderId === userId ? msg.receiverId : msg.senderId;
+      
+      const existing = conversationMap.get(partnerId);
+      
+      if (!existing) {
+        // First message for this conversation (most recent due to ordering)
+        conversationMap.set(partnerId, {
+          partnerId,
+          lastMessage: msg,
+          unreadCount: msg.receiverId === userId && !msg.isRead ? 1 : 0
+        });
+      } else {
+        // Update unread count
+        if (msg.receiverId === userId && !msg.isRead) {
+          existing.unreadCount++;
+        }
+      }
+    }
+
+    // Get user details for all conversation partners
+    const partnerIds = Array.from(conversationMap.keys());
+    if (partnerIds.length === 0) {
+      return [];
+    }
+
+    const partners = await db.select({
+      id: users.id,
+      fullName: users.fullName
+    })
+      .from(users)
+      .where(
+        or(...partnerIds.map(id => eq(users.id, id)))
+      );
+
+    // Combine results
+    const conversations = partners.map(partner => {
+      const conv = conversationMap.get(partner.id)!;
+      return {
+        userId: partner.id,
+        fullName: partner.fullName,
+        unreadCount: conv.unreadCount,
+        lastMessage: conv.lastMessage
+      };
+    });
+
+    // Sort by last message timestamp
+    conversations.sort((a, b) => {
+      const timeA = new Date(a.lastMessage.createdAt).getTime();
+      const timeB = new Date(b.lastMessage.createdAt).getTime();
+      return timeB - timeA;
+    });
 
     return conversations;
   }

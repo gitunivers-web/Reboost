@@ -149,7 +149,7 @@ if (!sessionStore && process.env.NODE_ENV === 'production') {
   process.exit(1);
 }
 
-app.use(session({
+const sessionMiddleware = session({
   store: sessionStore,
   secret: process.env.SESSION_SECRET || 'altus-group-secret-key-dev-only',
   resave: false,
@@ -166,7 +166,9 @@ app.use(session({
     signed: true,
   },
   name: 'sessionId',
-}));
+});
+
+app.use(sessionMiddleware);
 
 app.use((req, res, next) => {
   // Enhanced debug logs for cross-domain session issues
@@ -242,7 +244,7 @@ app.get('/healthz', (req, res) => {
 });
 
 (async () => {
-  const server = await registerRoutes(app);
+  const server = await registerRoutes(app, sessionMiddleware);
 
   app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

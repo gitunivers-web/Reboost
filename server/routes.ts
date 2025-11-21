@@ -47,7 +47,7 @@ import cloudinary from "./config/cloudinary";
 import { PassThrough } from "stream";
 import { setupSocketIO } from "./socket";
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export async function registerRoutes(app: Express, sessionMiddleware: any): Promise<Server> {
   // SÉCURITÉ: Accès aux fichiers via endpoints protégés uniquement
   // app.use('/uploads', express.static(...)); // ❌ SUPPRIMÉ - Exposition publique dangereuse
 
@@ -3134,9 +3134,24 @@ Tous les codes de validation ont été vérifiés avec succès.`,
 
   app.get("/api/chat/conversation/:partnerId", requireAuth, async (req, res) => {
     try {
-      const messages = await storage.getConversation(req.session.userId!, req.params.partnerId);
+      // Validate partnerId is a valid UUID
+      const partnerIdSchema = z.string().uuid();
+      const partnerId = partnerIdSchema.parse(req.params.partnerId);
+
+      const messages = await storage.getConversation(
+        req.session.userId!, 
+        partnerId,
+        req.session.userId! // Pass requesting user for authorization
+      );
       res.json(messages);
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid partner ID format' });
+      }
+      if (error instanceof Error && error.message.includes('Unauthorized')) {
+        console.warn('[CHAT] Unauthorized access attempt:', error.message);
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
       console.error('[CHAT] Error fetching conversation:', error);
       res.status(500).json({ error: 'Failed to fetch conversation' });
     }
@@ -3144,22 +3159,42 @@ Tous les codes de validation ont été vérifiés avec succès.`,
 
   app.post("/api/chat/send", requireAuth, requireCSRF, async (req, res) => {
     try {
-      const { receiverId, content } = req.body;
-      
-      if (!receiverId || !content) {
-        return res.status(400).json({ error: 'receiverId and content are required' });
+      // Zod validation schema
+      const sendMessageSchema = z.object({
+        receiverId: z.string().uuid(),
+        content: z.string().min(1).max(5000)
+      });
+
+      const { receiverId, content } = sendMessageSchema.parse(req.body);
+
+      // Sanitize content on server-side as well
+      const DOMPurify = (await import('isomorphic-dompurify')).default;
+      const sanitizedContent = DOMPurify.sanitize(content, {
+        ALLOWED_TAGS: [],
+        ALLOWED_ATTR: []
+      });
+
+      if (!sanitizedContent.trim()) {
+        return res.status(400).json({ error: 'Message content cannot be empty' });
       }
 
       const message = await storage.createChatMessage({
         senderId: req.session.userId!,
         receiverId,
-        content,
+        content: sanitizedContent,
         isRead: false,
         readAt: null
-      });
+      }, req.session.userId!); // Pass requesting user for authorization
 
       res.json(message);
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid message data', details: error.errors });
+      }
+      if (error instanceof Error && error.message.includes('Unauthorized')) {
+        console.warn('[CHAT] Unauthorized send attempt:', error.message);
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
       console.error('[CHAT] Error sending message:', error);
       res.status(500).json({ error: 'Failed to send message' });
     }
@@ -3177,12 +3212,27 @@ Tous les codes de validation ont été vérifiés avec succès.`,
 
   app.post("/api/chat/mark-read/:messageId", requireAuth, requireCSRF, async (req, res) => {
     try {
-      const message = await storage.markChatMessageAsRead(req.params.messageId);
+      // Validate messageId is a valid UUID
+      const messageIdSchema = z.string().uuid();
+      const messageId = messageIdSchema.parse(req.params.messageId);
+
+      const message = await storage.markChatMessageAsRead(
+        messageId,
+        req.session.userId! // Pass requesting user for authorization
+      );
+      
       if (!message) {
         return res.status(404).json({ error: 'Message not found' });
       }
       res.json(message);
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid message ID format' });
+      }
+      if (error instanceof Error && error.message.includes('Unauthorized')) {
+        console.warn('[CHAT] Unauthorized mark-read attempt:', error.message);
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
       console.error('[CHAT] Error marking message as read:', error);
       res.status(500).json({ error: 'Failed to mark message as read' });
     }
@@ -4440,7 +4490,7 @@ ${urls.map(url => `  <url>
 
   const httpServer = createServer(app);
 
-  setupSocketIO(httpServer);
+  setupSocketIO(httpServer, sessionMiddleware);
 
   return httpServer;
 }
