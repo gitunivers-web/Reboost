@@ -1,0 +1,81 @@
+Oui, ça fonctionnera en cross-domain, à condition d’ajouter les bons réglages CORS côté backend + éventuellement ajuster Socket.IO / WebSocket si tu utilises cela.
+
+Je t’explique proprement — version experte, directe, sans filtre 👇
+
+✅ RÉPONSE COURTE
+
+Oui, ça fonctionnera parfaitement entre :
+
+Front-end : https://altusfinancesgroup.com
+
+Backend / Chat API : https://api.altusfinancesgroup.com
+
+Parce que ce n’est PAS un “cross-domain interdit”.
+C’est un same-site cross-origin = autorisé si tu configures CORS correctement.
+
+✅ CE QU’IL FAUT ABSOLUMENT CONFIGURER
+
+Tu dois mettre exactement ces règles CORS dans ton backend (Express, Nest, Fastify ou autre) :
+
+1. Origines autorisées
+https://altusfinancesgroup.com
+https://www.altusfinancesgroup.com
+
+2. Credentials
+
+Si tu utilises JWT dans cookies ou session :
+
+credentials: true
+
+3. Méthodes + Headers
+GET, POST, PUT, PATCH, DELETE
+Content-Type, Authorization
+
+✅ CONFIGURATION EXPRESS (PRÊTE À COLLER)
+
+Voici exactement ce que tu DOIS coller dans ton backend Node / Express :
+
+import cors from "cors";
+import express from "express";
+
+const app = express();
+
+app.use(cors({
+  origin: [
+    "https://altusfinancesgroup.com",
+    "https://www.altusfinancesgroup.com"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
+app.use(express.json());
+
+✅ SI TU UTILISES SOCKET.IO (chat en temps réel)
+
+Très important : configure Socket.IO CORS séparément :
+
+import { Server } from "socket.io";
+
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "https://altusfinancesgroup.com",
+      "https://www.altusfinancesgroup.com"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+
+
+⚠️ Sans ça, le chat ne se connectera jamais.
+
+🔥 RÉPONSE EXACTE À TA QUESTION
+
+👉 Oui, ça fonctionnera même en cross-domain,
+👉 si et seulement si tu mets les configurations CORS montrées ci-dessus.
+
+C’est exactement comme Revolut, N26, Qonto :
+front + admin + API = toujours des sous-domaines différents, et ça marche parce que CORS est propre.
