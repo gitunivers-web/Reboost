@@ -23,7 +23,7 @@ export function ChatBox({ userId, partnerId, partnerName }: ChatBoxProps) {
   const typingTimeoutRef = useRef<NodeJS.Timeout>();
 
   const room = [userId, partnerId].sort().join("_");
-  const { messages: realtimeMessages, isConnected, isTyping, sendMessage, sendTypingStatus } = useChat({ room, userId });
+  const { messages: realtimeMessages, isSelfConnected, isPartnerOnline, isTyping, sendMessage, sendTypingStatus } = useChat({ room, userId, partnerId });
 
   const { data: historyMessages = [] } = useQuery<Message[]>({
     queryKey: ["/api/chat/conversation", partnerId],
@@ -86,11 +86,11 @@ export function ChatBox({ userId, partnerId, partnerName }: ChatBoxProps) {
           <div className="flex items-center gap-1.5 text-xs">
             <Circle
               className={`w-2 h-2 ${
-                isConnected ? "fill-green-500 text-green-500" : "fill-muted text-muted"
+                isPartnerOnline ? "fill-green-500 text-green-500" : "fill-muted text-muted"
               }`}
             />
             <span className="text-muted-foreground">
-              {isConnected ? "En ligne" : "Hors ligne"}
+              {isPartnerOnline ? "En ligne" : "Hors ligne"}
             </span>
           </div>
         </div>
@@ -159,12 +159,12 @@ export function ChatBox({ userId, partnerId, partnerName }: ChatBoxProps) {
             placeholder="Écrire un message..."
             className="flex-1"
             data-testid="input-chat-message"
-            disabled={!isConnected}
+            disabled={!isSelfConnected}
           />
           <Button
             type="submit"
             size="icon"
-            disabled={!input.trim() || !isConnected}
+            disabled={!input.trim() || !isSelfConnected}
             data-testid="button-send-message"
           >
             <Send className="w-4 h-4" />

@@ -9,11 +9,13 @@ interface ChatMessage extends Omit<Message, 'createdAt'> {
 interface UseChatOptions {
   room: string;
   userId: string;
+  partnerId?: string;
 }
 
-export function useChat({ room, userId }: UseChatOptions) {
+export function useChat({ room, userId, partnerId }: UseChatOptions) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isSelfConnected, setIsSelfConnected] = useState(false);
+  const [isPartnerOnline, setIsPartnerOnline] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const socketRef = useRef<Socket | null>(null);
   // Track message IDs to prevent duplicates
@@ -35,14 +37,35 @@ export function useChat({ room, userId }: UseChatOptions) {
 
     socket.on("connect", () => {
       console.log("[CHAT] Connected to Socket.IO");
-      setIsConnected(true);
+      setIsSelfConnected(true);
       socket.emit("join_room", room);
       socket.emit("join_room", `user_${userId}`);
+      
+      // Request presence state for partner
+      if (partnerId) {
+        socket.emit("get_presence_state", [partnerId]);
+      }
     });
 
     socket.on("disconnect", () => {
       console.log("[CHAT] Disconnected from Socket.IO");
-      setIsConnected(false);
+      setIsSelfConnected(false);
+    });
+
+    // Listen for partner's presence updates
+    socket.on("user_presence", ({ userId: presenceUserId, isOnline }: { userId: string; isOnline: boolean }) => {
+      if (partnerId && presenceUserId === partnerId) {
+        setIsPartnerOnline(isOnline);
+        console.log(`[PRESENCE] Partner ${partnerId} is now ${isOnline ? 'online' : 'offline'}`);
+      }
+    });
+
+    // Listen for initial presence state
+    socket.on("presence_state", (presenceState: Record<string, boolean>) => {
+      if (partnerId && partnerId in presenceState) {
+        setIsPartnerOnline(presenceState[partnerId]);
+        console.log(`[PRESENCE] Partner ${partnerId} initial state: ${presenceState[partnerId] ? 'online' : 'offline'}`);
+      }
     });
 
     socket.on("receive_message", (data: ChatMessage) => {
@@ -101,6 +124,8 @@ export function useChat({ room, userId }: UseChatOptions) {
       socket.off("disconnect");
       socket.off("receive_message");
       socket.off("user_typing");
+      socket.off("user_presence");
+      socket.off("presence_state");
       socket.off("error");
       
       // Disconnect socket
@@ -110,7 +135,7 @@ export function useChat({ room, userId }: UseChatOptions) {
       // Clear seen messages for this room
       seenMessageIds.current.clear();
     };
-  }, [room, userId]);
+  }, [room, userId, partnerId]);
 
   const sendMessage = useCallback((content: string, receiverId: string) => {
     if (!socketRef.current || !content.trim()) return;
@@ -154,7 +179,8 @@ export function useChat({ room, userId }: UseChatOptions) {
 
   return {
     messages,
-    isConnected,
+    isSelfConnected,
+    isPartnerOnline,
     isTyping,
     sendMessage,
     sendTypingStatus,
