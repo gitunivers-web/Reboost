@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Bell, Shield, Palette, Camera, Mail, Phone, Building2, CheckCircle2, Loader2 } from 'lucide-react';
+import { User, Bell, Shield, Palette, Camera, Mail, Phone, Building2, CheckCircle2, Loader2, KeyRound, QrCode, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage, useTranslations } from '@/lib/i18n';
 import { useTheme } from '@/hooks/use-theme';
@@ -46,6 +46,13 @@ export default function Settings() {
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
+  });
+
+  const [twoFactorData, setTwoFactorData] = useState({
+    qrCode: '',
+    secret: '',
+    verificationCode: '',
+    showSetup: false,
   });
 
   useEffect(() => {
@@ -137,6 +144,77 @@ export default function Settings() {
     },
   });
 
+  const setup2FAMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest('POST', '/api/2fa/setup', {});
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setTwoFactorData({
+        ...twoFactorData,
+        qrCode: data.qrCode,
+        secret: data.secret,
+        showSetup: true,
+        verificationCode: '',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        variant: 'destructive',
+        title: t.common.error,
+        description: error.message || 'Erreur lors de la configuration 2FA',
+      });
+    },
+  });
+
+  const verify2FAMutation = useMutation({
+    mutationFn: async (code: string) => {
+      const response = await apiRequest('POST', '/api/2fa/verify', { token: code });
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/user'] });
+      setTwoFactorData({
+        qrCode: '',
+        secret: '',
+        verificationCode: '',
+        showSetup: false,
+      });
+      toast({
+        title: 'Authentification à deux facteurs activée',
+        description: 'Votre compte est maintenant protégé par l\'authentification à deux facteurs',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        variant: 'destructive',
+        title: t.common.error,
+        description: error.message || 'Code de vérification invalide',
+      });
+    },
+  });
+
+  const disable2FAMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest('POST', '/api/2fa/disable', {});
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/user'] });
+      toast({
+        title: 'Authentification à deux facteurs désactivée',
+        description: 'L\'authentification à deux facteurs a été désactivée pour votre compte',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        variant: 'destructive',
+        title: t.common.error,
+        description: error.message || 'Erreur lors de la désactivation 2FA',
+      });
+    },
+  });
+
   const handleSaveProfile = () => {
     updateProfileMutation.mutate(profileData);
   };
@@ -160,6 +238,35 @@ export default function Settings() {
       return;
     }
     changePasswordMutation.mutate(passwordData);
+  };
+
+  const handleSetup2FA = () => {
+    setup2FAMutation.mutate();
+  };
+
+  const handleVerify2FA = () => {
+    if (!twoFactorData.verificationCode || twoFactorData.verificationCode.length !== 6) {
+      toast({
+        variant: 'destructive',
+        title: t.common.error,
+        description: 'Veuillez entrer un code à 6 chiffres',
+      });
+      return;
+    }
+    verify2FAMutation.mutate(twoFactorData.verificationCode);
+  };
+
+  const handleDisable2FA = () => {
+    disable2FAMutation.mutate();
+  };
+
+  const handleCancel2FASetup = () => {
+    setTwoFactorData({
+      qrCode: '',
+      secret: '',
+      verificationCode: '',
+      showSetup: false,
+    });
   };
 
   const handleAvatarClick = () => {
@@ -614,6 +721,178 @@ export default function Settings() {
                   )}
                 </GradientButton>
               </div>
+            </div>
+          </DashboardCard>
+
+          <DashboardCard
+            title="Authentification à deux facteurs (2FA)"
+            subtitle="Ajoutez une couche de sécurité supplémentaire à votre compte"
+            icon={ShieldCheck}
+          >
+            <div className="space-y-6">
+              {!user?.twoFactorEnabled && !twoFactorData.showSetup && (
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-muted/30 border border-border">
+                    <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg">
+                      <ShieldCheck className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <p className="text-sm font-medium">Sécurité renforcée</p>
+                      <p className="text-sm text-muted-foreground">
+                        L'authentification à deux facteurs protège votre compte en ajoutant une étape supplémentaire 
+                        lors de la connexion. Vous devrez entrer un code temporaire généré par une application 
+                        d'authentification en plus de votre mot de passe.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-end pt-4 border-t">
+                    <GradientButton
+                      onClick={handleSetup2FA}
+                      disabled={setup2FAMutation.isPending}
+                      data-testid="button-enable-2fa"
+                    >
+                      {setup2FAMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Génération...
+                        </>
+                      ) : (
+                        <>
+                          <KeyRound className="h-4 w-4 mr-2" />
+                          Activer 2FA
+                        </>
+                      )}
+                    </GradientButton>
+                  </div>
+                </div>
+              )}
+
+              {twoFactorData.showSetup && (
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-primary/5 border border-primary/30">
+                    <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div className="text-sm">
+                      <p className="font-medium text-primary mb-1">Instructions importantes</p>
+                      <p className="text-muted-foreground">
+                        Installez une application d'authentification comme Google Authenticator ou Authy, 
+                        puis scannez le QR code ci-dessous pour lier votre compte.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-6 p-8 bg-muted/30 rounded-xl border border-border">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <QrCode className="h-4 w-4" />
+                      <span>Scannez ce code avec votre application</span>
+                    </div>
+                    {twoFactorData.qrCode && (
+                      <div className="p-4 bg-white rounded-lg shadow-lg">
+                        <img
+                          src={twoFactorData.qrCode}
+                          alt="QR Code 2FA"
+                          className="w-48 h-48"
+                          data-testid="img-2fa-qr-code"
+                        />
+                      </div>
+                    )}
+                    <div className="w-full max-w-md space-y-2">
+                      <p className="text-xs text-center text-muted-foreground">
+                        Ou entrez manuellement ce code secret :
+                      </p>
+                      <div className="flex items-center justify-center gap-2 p-3 bg-background rounded-lg border border-border font-mono text-sm">
+                        <code className="text-primary">{twoFactorData.secret}</code>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <Separator />
+                    <div className="space-y-2">
+                      <Label htmlFor="verificationCode" className="text-sm font-medium">
+                        Code de vérification
+                      </Label>
+                      <p className="text-xs text-muted-foreground">
+                        Entrez le code à 6 chiffres affiché dans votre application
+                      </p>
+                      <Input
+                        id="verificationCode"
+                        type="text"
+                        placeholder="000000"
+                        maxLength={6}
+                        value={twoFactorData.verificationCode}
+                        onChange={(e) => setTwoFactorData({ ...twoFactorData, verificationCode: e.target.value.replace(/\D/g, '') })}
+                        className="text-center text-2xl tracking-widest font-mono"
+                        data-testid="input-2fa-code"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-3 pt-4 border-t">
+                    <Button
+                      variant="outline"
+                      onClick={handleCancel2FASetup}
+                      disabled={verify2FAMutation.isPending}
+                      data-testid="button-cancel-2fa-setup"
+                    >
+                      Annuler
+                    </Button>
+                    <GradientButton
+                      onClick={handleVerify2FA}
+                      disabled={verify2FAMutation.isPending || twoFactorData.verificationCode.length !== 6}
+                      data-testid="button-verify-2fa"
+                    >
+                      {verify2FAMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Vérification...
+                        </>
+                      ) : (
+                        <>
+                          <CheckCircle2 className="h-4 w-4 mr-2" />
+                          Vérifier et activer
+                        </>
+                      )}
+                    </GradientButton>
+                  </div>
+                </div>
+              )}
+
+              {user?.twoFactorEnabled && !twoFactorData.showSetup && (
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-accent/10 border border-accent/30">
+                    <div className="flex-shrink-0 p-2 bg-accent/10 rounded-lg">
+                      <ShieldCheck className="h-6 w-6 text-accent" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium text-accent">2FA activé</p>
+                        <CheckCircle2 className="h-4 w-4 text-accent" />
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Votre compte est protégé par l'authentification à deux facteurs. 
+                        Un code de vérification sera demandé à chaque connexion.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-end pt-4 border-t">
+                    <Button
+                      variant="destructive"
+                      onClick={handleDisable2FA}
+                      disabled={disable2FAMutation.isPending}
+                      data-testid="button-disable-2fa"
+                    >
+                      {disable2FAMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Désactivation...
+                        </>
+                      ) : (
+                        'Désactiver 2FA'
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </DashboardCard>
         </TabsContent>
