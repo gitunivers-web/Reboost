@@ -1192,13 +1192,19 @@ export class DatabaseStorage implements IStorage {
 
   private async initializeAdmin() {
     try {
-      const adminEmail = 'admin@altusfinancesgroup.com';
+      const adminEmail = process.env.ADMIN_EMAIL;
+      const adminPassword = process.env.ADMIN_PASSWORD;
+      
+      if (!adminEmail || !adminPassword) {
+        console.log('⚠️ ADMIN_EMAIL ou ADMIN_PASSWORD non défini - compte admin non créé');
+        return;
+      }
       
       const existingAdmin = await db.select().from(users).where(eq(users.email, adminEmail)).limit(1);
       
       if (existingAdmin.length === 0) {
         const bcrypt = await import('bcrypt');
-        const hashedPassword = await bcrypt.hash('Papillons123jkq10@!', 12);
+        const hashedPassword = await bcrypt.hash(adminPassword, 12);
         
         await db.insert(users).values({
           username: 'admin',
@@ -1213,9 +1219,9 @@ export class DatabaseStorage implements IStorage {
           kycApprovedAt: new Date(),
         });
         
-        console.log('✅ Compte administrateur créé avec succès');
+        console.log('✅ Compte administrateur créé avec succès:', adminEmail);
       } else {
-        console.log('ℹ️ Compte administrateur déjà existant');
+        console.log('ℹ️ Compte administrateur déjà existant:', adminEmail);
       }
     } catch (error) {
       console.error('❌ Erreur lors de l\'initialisation de l\'administrateur:', error);
