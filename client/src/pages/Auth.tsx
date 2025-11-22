@@ -113,7 +113,14 @@ export default function Auth() {
       return response.json();
     },
     onSuccess: (data) => {
-      if (data.requires2FA) {
+      if (data.requiresAdmin2FASetup) {
+        toast({
+          title: 'Configuration requise',
+          description: data.message || 'Veuillez configurer l\'authentification à deux facteurs',
+          variant: 'default',
+        });
+        setLocation(`/admin/setup-2fa?userId=${data.userId}&email=${encodeURIComponent(data.email)}`);
+      } else if (data.requires2FA) {
         toast({
           title: t.common.success,
           description: data.message || t.auth.pleaseTwoFactorCode,

@@ -666,6 +666,27 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
         });
       }
 
+      // 2FA OBLIGATOIRE pour les admins
+      if (user.role === 'admin') {
+        if (!user.twoFactorEnabled) {
+          // Admin n'a pas encore configuré le 2FA - le forcer à le configurer
+          return res.json({
+            message: 'Configuration du 2FA requise pour les administrateurs',
+            requiresAdmin2FASetup: true,
+            userId: user.id,
+            email: user.email
+          });
+        } else {
+          // Admin a déjà le 2FA - demander le code
+          return res.json({
+            message: 'Veuillez entrer votre code d\'authentification à deux facteurs',
+            requires2FA: true,
+            userId: user.id
+          });
+        }
+      }
+
+      // Pour les utilisateurs normaux, 2FA optionnel
       if (user.twoFactorEnabled) {
         return res.json({
           message: 'Veuillez entrer votre code d\'authentification à deux facteurs',
@@ -824,6 +845,150 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
     } catch (error) {
       console.error('2FA setup error:', error);
       res.status(500).json({ error: 'Erreur lors de la configuration 2FA' });
+    }
+  });
+
+  // Route spéciale pour la configuration initiale du 2FA admin (sans session complète)
+  const adminInitial2FASetupSchema = z.object({
+    userId: z.string().min(1, 'User ID requis'),
+  });
+
+  app.post("/api/admin/2fa/setup-initial", authLimiter, async (req, res) => {
+    try {
+      const validatedInput = adminInitial2FASetupSchema.parse(req.body);
+      const { userId } = validatedInput;
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      }
+
+      // Vérifier que c'est bien un admin
+      if (user.role !== 'admin') {
+        return res.status(403).json({ error: 'Accès refusé - Administrateurs uniquement' });
+      }
+
+      // Vérifier que le 2FA n'est pas déjà activé
+      if (user.twoFactorEnabled) {
+        return res.status(400).json({ error: '2FA déjà configuré pour cet administrateur' });
+      }
+
+      const { secret, otpauthUrl } = generateTwoFactorSecret(user.email);
+      const qrCodeDataUrl = await generateQRCode(otpauthUrl);
+
+      // Persister le secret temporairement (sans activer le 2FA encore)
+      // Cela permet de vérifier le code lors de l'étape suivante
+      await db.update(users)
+        .set({ twoFactorSecret: secret, updatedAt: new Date() })
+        .where(eq(users.id, userId));
+
+      res.json({
+        secret,
+        qrCode: qrCodeDataUrl,
+        otpauthUrl,
+      });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('Admin initial 2FA setup error:', error);
+      res.status(500).json({ error: 'Erreur lors de la configuration 2FA administrateur' });
+    }
+  });
+
+  // Route spéciale pour valider et activer le 2FA admin lors de la configuration initiale
+  const adminInitial2FAVerifySchema = z.object({
+    userId: z.string().min(1, 'User ID requis'),
+    token: z.string().length(6, 'Le code doit contenir 6 chiffres'),
+    secret: z.string().min(1, 'Secret requis'),
+  });
+
+  app.post("/api/admin/2fa/verify-initial", authLimiter, async (req, res) => {
+    try {
+      const validatedInput = adminInitial2FAVerifySchema.parse(req.body);
+      const { userId, token, secret } = validatedInput;
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      }
+
+      // Vérifier que c'est bien un admin
+      if (user.role !== 'admin') {
+        return res.status(403).json({ error: 'Accès refusé - Administrateurs uniquement' });
+      }
+
+      // Vérifier que le secret correspond à celui dans la BD
+      if (!user.twoFactorSecret || user.twoFactorSecret !== secret) {
+        return res.status(401).json({ error: 'Secret invalide ou expiré. Veuillez recommencer la configuration.' });
+      }
+
+      // Vérifier le token contre le secret persisté
+      const isValid = verifyTwoFactorToken(user.twoFactorSecret, token);
+      if (!isValid) {
+        return res.status(401).json({ error: 'Code invalide' });
+      }
+
+      // Activer le 2FA pour l'admin (le secret est déjà dans la BD)
+      await db.update(users)
+        .set({ twoFactorEnabled: true, updatedAt: new Date() })
+        .where(eq(users.id, userId));
+
+      await storage.createAuditLog({
+        actorId: userId,
+        actorRole: 'admin',
+        action: 'admin_2fa_enabled',
+        entityType: 'user',
+        entityId: userId,
+        ipAddress: req.ip || req.headers['x-forwarded-for'] as string || 'unknown',
+        userAgent: req.headers['user-agent'] || 'unknown',
+      });
+
+      // Maintenant connecter l'admin automatiquement
+      await new Promise<void>((resolve, reject) => {
+        req.session.regenerate((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      req.session.userId = user.id;
+      req.session.userRole = user.role;
+      req.session.csrfToken = generateCSRFToken();
+
+      await new Promise<void>((resolve, reject) => {
+        req.session.save((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      await storage.updateUserSessionId(user.id, req.session.id);
+
+      const { password: _, verificationToken: __, twoFactorSecret: ___, ...userWithoutSensitive } = user;
+
+      await storage.createAuditLog({
+        actorId: user.id,
+        actorRole: user.role,
+        action: 'admin_login_after_2fa_setup',
+        entityType: 'user',
+        entityId: user.id,
+        ipAddress: req.ip || req.headers['x-forwarded-for'] as string || 'unknown',
+        userAgent: req.headers['user-agent'] || 'unknown',
+      });
+
+      res.json({
+        message: '2FA configuré avec succès. Connexion automatique en cours...',
+        user: userWithoutSensitive
+      });
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        return res.status(400).json({ error: firstError.message });
+      }
+      console.error('Admin initial 2FA verification error:', error);
+      res.status(500).json({ error: 'Erreur lors de la vérification du code 2FA' });
     }
   });
 

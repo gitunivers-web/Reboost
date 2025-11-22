@@ -22,6 +22,7 @@ import Verify from '@/pages/Verify';
 import VerifyOtp from '@/pages/VerifyOtp';
 import TwoFactorSetup from '@/pages/TwoFactorSetup';
 import VerifyTwoFactor from '@/pages/VerifyTwoFactor';
+import AdminSetup2FA from '@/pages/AdminSetup2FA';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import AdminSimple from '@/pages/AdminSimple';
@@ -78,6 +79,7 @@ function App() {
             <Route path="/verify/:token" component={Verify} />
             <Route path="/verify-otp/:userId" component={VerifyOtp} />
             <Route path="/verify-2fa" component={VerifyTwoFactor} />
+            <Route path="/admin/setup-2fa" component={AdminSetup2FA} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password/:token" component={ResetPassword} />
             <Route path="/loans/:slug" component={LoanDetail} />
