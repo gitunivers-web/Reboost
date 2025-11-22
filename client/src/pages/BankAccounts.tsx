@@ -166,7 +166,7 @@ export default function BankAccounts() {
       
       if (bankSelection && bankSelection.ibanLength > 0) {
         if (!validateIban(cleanIban, bankSelection)) {
-          newErrors.iban = `Format IBAN invalide pour ${bankSelection.countryName}. Attendu : ${bankSelection.ibanLength} caractères (actuellement ${cleanIban.length}).`;
+          newErrors.iban = t.bankAccounts.invalidIbanLength(bankSelection.countryName, bankSelection.ibanLength, cleanIban.length);
         }
       } else {
         if (!/^[A-Z]{2}[0-9]{2}[A-Z0-9]+$/.test(cleanIban)) {
@@ -174,7 +174,7 @@ export default function BankAccounts() {
         }
         
         if (dataToValidate.bankCountry && countryCode !== dataToValidate.bankCountry) {
-          newErrors.iban = `Le code pays de l'IBAN (${countryCode}) ne correspond pas au pays de la banque (${dataToValidate.bankCountry}).`;
+          newErrors.iban = t.bankAccounts.invalidIbanCountryCode(countryCode, dataToValidate.bankCountry);
         }
       }
     }
@@ -302,7 +302,7 @@ export default function BankAccounts() {
                     <div className="absolute top-0 right-0">
                       <Badge className="rounded-tl-none rounded-br-none rounded-tr-2xl gap-1.5 px-3 py-1.5 bg-gradient-to-r from-primary via-primary to-blue-600 shadow-lg">
                         <Star className="w-3 h-3 fill-current" />
-                        Par défaut
+                        {t.bankAccounts.defaultBadge}
                       </Badge>
                     </div>
                   )}
@@ -353,7 +353,7 @@ export default function BankAccounts() {
                         className="gap-2"
                       >
                         <Trash2 className="w-4 h-4" />
-                        {deleteAccountMutation.isPending ? 'Suppression...' : 'Supprimer'}
+                        {deleteAccountMutation.isPending ? t.bankAccounts.deleting : t.bankAccounts.delete}
                       </Button>
                     </div>
                   </div>
@@ -393,7 +393,7 @@ export default function BankAccounts() {
 
             <div className="space-y-2">
               <Label htmlFor="bankSearch" className="text-sm font-semibold">
-                Banque
+                {t.bankAccounts.bankName}
               </Label>
               
               {selectedBank ? (
@@ -432,7 +432,7 @@ export default function BankAccounts() {
                         id="bankSearch"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Rechercher une banque (ex: BNP, Société, Chase, etc.)"
+                        placeholder={t.bankAccounts.searchBankPlaceholder}
                         className="pl-10 border-border/50 focus:border-primary"
                         data-testid="input-bank-search"
                         onFocus={() => {
@@ -470,7 +470,7 @@ export default function BankAccounts() {
 
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <div className="flex-1 border-t border-border"></div>
-                    <span>ou saisir manuellement</span>
+                    <span>{t.bankAccounts.orManualEntry}</span>
                     <div className="flex-1 border-t border-border"></div>
                   </div>
 
@@ -493,7 +493,7 @@ export default function BankAccounts() {
             <div className="space-y-2">
               <Label htmlFor="bic" className="text-sm font-semibold">
                 {t.bankAccounts.bic}
-                {!selectedBank && <span className="text-muted-foreground font-normal ml-1">(Optionnel)</span>}
+                {!selectedBank && <span className="text-muted-foreground font-normal ml-1">{t.bankAccounts.optional}</span>}
               </Label>
               <Input
                 id="bic"
@@ -518,7 +518,7 @@ export default function BankAccounts() {
                 value={formData.iban}
                 onChange={(e) => handleIbanChange(e.target.value)}
                 placeholder={selectedBank && selectedBank.ibanLength > 0 
-                  ? `Format ${selectedBank.country}: ${selectedBank.ibanLength} caractères` 
+                  ? `${t.bankAccounts.formatExpected} ${selectedBank.country}: ${selectedBank.ibanLength} ${t.bankAccounts.characters}` 
                   : "FR76 1234 5678 9012 3456 7890 123"}
                 className="font-mono border-border/50 focus:border-primary"
                 data-testid="input-iban"
@@ -528,7 +528,7 @@ export default function BankAccounts() {
               )}
               {selectedBank && selectedBank.ibanLength > 0 && (
                 <p className="text-xs text-muted-foreground">
-                  Format attendu : {selectedBank.ibanLength} caractères pour {selectedBank.countryName}
+                  {t.bankAccounts.formatExpected} : {selectedBank.ibanLength} {t.bankAccounts.charactersFor} {selectedBank.countryName}
                 </p>
               )}
             </div>

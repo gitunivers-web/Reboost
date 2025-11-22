@@ -1337,6 +1337,16 @@ type TranslationKeys = {
     addFirstAccount: string;
     deleteSuccessDesc: string;
     deleteError: string;
+    defaultBadge: string;
+    deleting: string;
+    searchBankPlaceholder: string;
+    orManualEntry: string;
+    optional: string;
+    formatExpected: string;
+    characters: string;
+    charactersFor: string;
+    invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => string;
+    invalidIbanLength: (country: string, expected: number, actual: number) => string;
   };
   welcomeModal: {
     title: string;
@@ -3797,6 +3807,18 @@ export const translations: Record<Language, TranslationKeys> = {
       addFirstAccount: 'Ajouter votre premier compte',
       deleteSuccessDesc: 'Le compte bancaire a été supprimé avec succès.',
       deleteError: 'Impossible de supprimer le compte bancaire.',
+      defaultBadge: 'Par défaut',
+      deleting: 'Suppression...',
+      searchBankPlaceholder: 'Rechercher une banque (ex: BNP, Société, Chase, etc.)',
+      orManualEntry: 'ou saisir manuellement',
+      optional: '(Optionnel)',
+      formatExpected: 'Format attendu',
+      characters: 'caractères',
+      charactersFor: 'caractères pour',
+      invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => 
+        `Le code pays de l'IBAN (${ibanCountry}) ne correspond pas au pays de la banque (${bankCountry}).`,
+      invalidIbanLength: (country: string, expected: number, actual: number) => 
+        `Format IBAN invalide pour ${country}. Attendu : ${expected} caractères (actuellement ${actual}).`,
     },
     welcomeModal: {
       title: 'Bienvenue sur ALTUS',
@@ -6379,6 +6401,18 @@ export const translations: Record<Language, TranslationKeys> = {
       addFirstAccount: 'Add your first account',
       deleteSuccessDesc: 'The bank account has been successfully deleted.',
       deleteError: 'Unable to delete the bank account.',
+      defaultBadge: 'Default',
+      deleting: 'Deleting...',
+      searchBankPlaceholder: 'Search for a bank (e.g.: HSBC, Chase, BNP, etc.)',
+      orManualEntry: 'or enter manually',
+      optional: '(Optional)',
+      formatExpected: 'Expected format',
+      characters: 'characters',
+      charactersFor: 'characters for',
+      invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => 
+        `The IBAN country code (${ibanCountry}) does not match the bank country (${bankCountry}).`,
+      invalidIbanLength: (country: string, expected: number, actual: number) => 
+        `Invalid IBAN format for ${country}. Expected: ${expected} characters (currently ${actual}).`,
     },
     welcomeModal: {
       title: 'Welcome to ALTUS',
@@ -8856,6 +8890,18 @@ export const translations: Record<Language, TranslationKeys> = {
       addFirstAccount: 'Añadir su primera cuenta',
       deleteSuccessDesc: 'La cuenta bancaria ha sido eliminada exitosamente.',
       deleteError: 'No se puede eliminar la cuenta bancaria.',
+      defaultBadge: 'Predeterminado',
+      deleting: 'Eliminando...',
+      searchBankPlaceholder: 'Buscar un banco (ej: Santander, BBVA, Chase, etc.)',
+      orManualEntry: 'o ingresar manualmente',
+      optional: '(Opcional)',
+      formatExpected: 'Formato esperado',
+      characters: 'caracteres',
+      charactersFor: 'caracteres para',
+      invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => 
+        `El código de país del IBAN (${ibanCountry}) no coincide con el país del banco (${bankCountry}).`,
+      invalidIbanLength: (country: string, expected: number, actual: number) => 
+        `Formato IBAN inválido para ${country}. Esperado: ${expected} caracteres (actualmente ${actual}).`,
     },
     welcomeModal: {
       title: 'Bienvenido a ALTUS',
@@ -11431,6 +11477,18 @@ export const translations: Record<Language, TranslationKeys> = {
       addFirstAccount: 'Adicionar sua primeira conta',
       deleteSuccessDesc: 'A conta bancária foi excluída com sucesso.',
       deleteError: 'Não foi possível excluir a conta bancária.',
+      defaultBadge: 'Padrão',
+      deleting: 'Excluindo...',
+      searchBankPlaceholder: 'Buscar um banco (ex: Itaú, Bradesco, Santander, etc.)',
+      orManualEntry: 'ou inserir manualmente',
+      optional: '(Opcional)',
+      formatExpected: 'Formato esperado',
+      characters: 'caracteres',
+      charactersFor: 'caracteres para',
+      invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => 
+        `O código do país do IBAN (${ibanCountry}) não corresponde ao país do banco (${bankCountry}).`,
+      invalidIbanLength: (country: string, expected: number, actual: number) => 
+        `Formato de IBAN inválido para ${country}. Esperado: ${expected} caracteres (atualmente ${actual}).`,
     },
     welcomeModal: {
       title: 'Bem-vindo à Altus Finances Group',
@@ -13817,6 +13875,18 @@ export const translations: Record<Language, TranslationKeys> = {
       addFirstAccount: 'Aggiungi il tuo primo conto',
       deleteSuccessDesc: 'Il conto bancario è stato eliminato con successo.',
       deleteError: 'Impossibile eliminare il conto bancario.',
+      defaultBadge: 'Predefinito',
+      deleting: 'Eliminazione in corso...',
+      searchBankPlaceholder: 'Cerca una banca (es: Intesa, UniCredit, BNP, etc.)',
+      orManualEntry: 'o inserire manualmente',
+      optional: '(Facoltativo)',
+      formatExpected: 'Formato previsto',
+      characters: 'caratteri',
+      charactersFor: 'caratteri per',
+      invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => 
+        `Il codice paese dell\'IBAN (${ibanCountry}) non corrisponde al paese della banca (${bankCountry}).`,
+      invalidIbanLength: (country: string, expected: number, actual: number) => 
+        `Formato IBAN non valido per ${country}. Previsti: ${expected} caratteri (attualmente ${actual}).`,
     },
     welcomeModal: {
       title: 'Benvenuto in Altus Finances Group',
@@ -16289,6 +16359,18 @@ export const translations: Record<Language, TranslationKeys> = {
       addFirstAccount: 'Ihr erstes Konto hinzufügen',
       deleteSuccessDesc: 'Das Bankkonto wurde erfolgreich gelöscht.',
       deleteError: 'Bankkonto konnte nicht gelöscht werden.',
+      defaultBadge: 'Standard',
+      deleting: 'Wird gelöscht...',
+      searchBankPlaceholder: 'Suchen Sie eine Bank (z.B.: Deutsche Bank, Commerzbank, etc.)',
+      orManualEntry: 'oder manuell eingeben',
+      optional: '(Optional)',
+      formatExpected: 'Erwartetes Format',
+      characters: 'Zeichen',
+      charactersFor: 'Zeichen für',
+      invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => 
+        `Der IBAN-Ländercode (${ibanCountry}) stimmt nicht mit dem Bankland (${bankCountry}) überein.`,
+      invalidIbanLength: (country: string, expected: number, actual: number) => 
+        `Ungültiges IBAN-Format für ${country}. Erwartet: ${expected} Zeichen (aktuell ${actual}).`,
     },
     welcomeModal: {
       title: 'Willkommen bei der Altus Finances Group',
@@ -18731,6 +18813,18 @@ export const translations: Record<Language, TranslationKeys> = {
       addFirstAccount: 'Uw eerste rekening toevoegen',
       deleteSuccessDesc: 'De bankrekening is succesvol verwijderd.',
       deleteError: 'Kan bankrekening niet verwijderen.',
+      defaultBadge: 'Standaard',
+      deleting: 'Verwijderen...',
+      searchBankPlaceholder: 'Zoek een bank (bijv.: ING, ABN AMRO, Rabobank, etc.)',
+      orManualEntry: 'of handmatig invoeren',
+      optional: '(Optioneel)',
+      formatExpected: 'Verwacht formaat',
+      characters: 'tekens',
+      charactersFor: 'tekens voor',
+      invalidIbanCountryCode: (ibanCountry: string, bankCountry: string) => 
+        `De IBAN-landcode (${ibanCountry}) komt niet overeen met het land van de bank (${bankCountry}).`,
+      invalidIbanLength: (country: string, expected: number, actual: number) => 
+        `Ongeldig IBAN-formaat voor ${country}. Verwacht: ${expected} tekens (momenteel ${actual}).`,
     },
     welcomeModal: {
       title: 'Welkom bij Altus Finances Group',
