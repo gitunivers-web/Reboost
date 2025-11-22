@@ -13,6 +13,7 @@ type NotificationTranslations = {
   transfer_completed: NotificationContent;
   transfer_approved: NotificationContent;
   transfer_suspended: NotificationContent;
+  transfer_initiated: NotificationContent;
   code_issued: NotificationContent;
   kyc_approved: NotificationContent;
   kyc_rejected: NotificationContent;
@@ -22,7 +23,14 @@ type NotificationTranslations = {
   loan_under_review: NotificationContent;
   loan_contract_generated: NotificationContent;
   loan_contract_signed: NotificationContent;
+  admin_message: NotificationContent;
 };
+
+function interpolate(template: string, params: Record<string, any>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key) => {
+    return params[key] !== undefined ? String(params[key]) : match;
+  });
+}
 
 export const notificationTranslations: Record<Language, NotificationTranslations> = {
   fr: {
@@ -53,6 +61,10 @@ export const notificationTranslations: Record<Language, NotificationTranslations
     transfer_suspended: {
       title: 'Transfert suspendu',
       message: 'Votre transfert a été suspendu.',
+    },
+    transfer_initiated: {
+      title: 'Transfert initié',
+      message: 'Votre demande de transfert a été initiée et est en cours de traitement.',
     },
     code_issued: {
       title: 'Code de validation émis',
@@ -90,6 +102,10 @@ export const notificationTranslations: Record<Language, NotificationTranslations
       title: 'Contrat signé reçu',
       message: 'Nous avons reçu votre contrat signé. Votre prêt sera traité sous peu.',
     },
+    admin_message: {
+      title: 'Nouveau message administrateur',
+      message: '{subject}',
+    },
   },
   en: {
     loan_approved: {
@@ -119,6 +135,10 @@ export const notificationTranslations: Record<Language, NotificationTranslations
     transfer_suspended: {
       title: 'Transfer Suspended',
       message: 'Your transfer has been suspended.',
+    },
+    transfer_initiated: {
+      title: 'Transfer Initiated',
+      message: 'Your transfer request has been initiated and is being processed.',
     },
     code_issued: {
       title: 'Validation Code Issued',
@@ -155,6 +175,10 @@ export const notificationTranslations: Record<Language, NotificationTranslations
     loan_contract_signed: {
       title: 'Signed Contract Received',
       message: 'We have received your signed contract. Your loan will be processed shortly.',
+    },
+    admin_message: {
+      title: 'New Admin Message',
+      message: '{subject}',
     },
   },
   es: {
@@ -222,6 +246,14 @@ export const notificationTranslations: Record<Language, NotificationTranslations
       title: 'Contrato Firmado Recibido',
       message: 'Hemos recibido su contrato firmado. Su préstamo será procesado en breve.',
     },
+    transfer_initiated: {
+      title: 'Transferencia Iniciada',
+      message: 'Su solicitud de transferencia ha sido iniciada y está siendo procesada.',
+    },
+    admin_message: {
+      title: 'Nuevo Mensaje del Administrador',
+      message: '{subject}',
+    },
   },
   pt: {
     loan_approved: {
@@ -287,6 +319,14 @@ export const notificationTranslations: Record<Language, NotificationTranslations
     loan_contract_signed: {
       title: 'Contrato Assinado Recebido',
       message: 'Recebemos seu contrato assinado. Seu empréstimo será processado em breve.',
+    },
+    transfer_initiated: {
+      title: 'Transferência Iniciada',
+      message: 'Sua solicitação de transferência foi iniciada e está sendo processada.',
+    },
+    admin_message: {
+      title: 'Nova Mensagem do Administrador',
+      message: '{subject}',
     },
   },
   it: {
@@ -354,6 +394,14 @@ export const notificationTranslations: Record<Language, NotificationTranslations
       title: 'Contratto Firmato Ricevuto',
       message: 'Abbiamo ricevuto il tuo contratto firmato. Il tuo prestito sarà elaborato a breve.',
     },
+    transfer_initiated: {
+      title: 'Trasferimento Iniziato',
+      message: 'La tua richiesta di trasferimento è stata avviata ed è in corso di elaborazione.',
+    },
+    admin_message: {
+      title: 'Nuovo Messaggio Amministratore',
+      message: '{subject}',
+    },
   },
   de: {
     loan_approved: {
@@ -419,6 +467,14 @@ export const notificationTranslations: Record<Language, NotificationTranslations
     loan_contract_signed: {
       title: 'Unterschriebener Vertrag Erhalten',
       message: 'Wir haben Ihren unterschriebenen Vertrag erhalten. Ihr Kredit wird in Kürze bearbeitet.',
+    },
+    transfer_initiated: {
+      title: 'Überweisung Eingeleitet',
+      message: 'Ihr Überweisungsantrag wurde eingeleitet und wird bearbeitet.',
+    },
+    admin_message: {
+      title: 'Neue Admin-Nachricht',
+      message: '{subject}',
     },
   },
   nl: {
@@ -486,12 +542,30 @@ export const notificationTranslations: Record<Language, NotificationTranslations
       title: 'Ondertekend Contract Ontvangen',
       message: 'We hebben uw ondertekende contract ontvangen. Uw lening wordt binnenkort verwerkt.',
     },
+    transfer_initiated: {
+      title: 'Overboeking Geïnitieerd',
+      message: 'Uw overboekingsverzoek is geïnitieerd en wordt verwerkt.',
+    },
+    admin_message: {
+      title: 'Nieuw Beheerdersbericht',
+      message: '{subject}',
+    },
   },
 };
 
 export function getNotificationTranslation(
   type: keyof NotificationTranslations,
-  language: Language = 'fr'
+  language: Language = 'fr',
+  params?: Record<string, any>
 ): NotificationContent {
-  return notificationTranslations[language][type] || notificationTranslations['fr'][type];
+  const translation = notificationTranslations[language][type] || notificationTranslations['fr'][type];
+  
+  if (!params) {
+    return translation;
+  }
+  
+  return {
+    title: interpolate(translation.title, params),
+    message: interpolate(translation.message, params),
+  };
 }

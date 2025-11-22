@@ -282,22 +282,28 @@ export async function notifyLoanContractSigned(userId: string, loanId: string, a
 }
 
 export async function notifyAdminMessage(userId: string, subject: string, severity: 'info' | 'success' | 'warning' | 'error' = 'info') {
+  const language = await getUserLanguage(userId);
+  const translation = getNotificationTranslation('admin_message', language, { subject });
+  
   return await createUserNotification({
     userId,
     type: 'admin_message_sent',
-    title: 'New Admin Message',
-    message: subject,
+    title: translation.title,
+    message: translation.message,
     severity,
     metadata: { subject },
   });
 }
 
 export async function notifyTransferInitiated(userId: string, transferId: string, amount: string, recipientName: string) {
+  const language = await getUserLanguage(userId);
+  const translation = getNotificationTranslation('transfer_initiated', language);
+  
   return await createUserNotification({
     userId,
     type: 'transfer_initiated',
-    title: 'Transfer Initiated',
-    message: `Your transfer request has been initiated and is being processed.`,
+    title: translation.title,
+    message: translation.message,
     severity: 'success',
     metadata: { transferId, amount, recipientName },
   });
