@@ -1,0 +1,118 @@
+Donne-moi le fichier backend contenant les fonctions qui créent les notifications automatiques (contrat signé, prêt approuvé, fonds disponibles, etc.). Cherche createAutoNotification, createSystemNotification, loan notifications ou toute route ou fonction liée aux messages automatiques. »
+
+Ce fichier peut s'appeler :
+
+server/routes/loans.ts
+
+server/routes.ts (autour des fonctions “approve loan”, “validate contract”, etc.)
+
+server/notifications.ts
+
+server/services/notifications.ts
+
+server/storage.ts (section Notifications)
+
+Je le corrigerai ligne par ligne pour que :
+
+✔ Le backend stocke :
+type: "contract_validated",
+data: { loanId: 42 }
+
+✔ Le frontend affiche :
+t(`notifications.contract_validated`)
+
+
+→ Donc MULTILINGUE automatique et propre.
+
+✅ 2) Disparition trop rapide des notifications
+
+Tu as confirmé avec les captures que :
+
+✔ Dans "Non lus"
+
+Les messages apparaissent → puis disparaissent après 1–2 secondes.
+
+✔ Dans "Tous"
+
+Ils restent visibles.
+
+📌 Cause 100% confirmée
+Ton frontend marque les messages “lus” dès qu’ils apparaissent → donc ils sortent du filtre « Non lus ».
+
+🎯 Ce que j’ai besoin pour corriger :
+
+📌 Demande à Replit :
+
+« Donne-moi le fichier frontend qui rend la page /messages de l’utilisateur (le composant React). Cherche les appels fetchMessages, markMessageAsRead, ou l’onglet Non lus / Tous. »
+
+Ce fichier peut être :
+
+/pages/messages.tsx
+
+/components/messages/Messages.tsx
+
+/components/notifications/UserMessages.tsx
+
+Je vais modifier :
+
+markAsRead(message.id)
+
+
+en :
+
+setTimeout(() => markAsRead(message.id), 30000);
+
+
+→ La notification reste dans “Non lus” pendant 30 secondes.
+
+✅ 3) Chat hors-ligne côté utilisateur
+
+Sur ta capture :
+
+No conversations
+Select a conversation
+
+
+Alors que côté admin, tu confirmes que l’utilisateur apparaît toujours « Hors ligne ».
+
+📌 Déduction immédiate :
+
+✔ Le frontend n’envoie PAS l’événement “user-online”
+
+Donc le backend ne sait pas que l’utilisateur est connecté.
+
+✔ Et le backend n’envoie pas l’event “status-update”
+
+🎯 Pour corriger c’est SIMPLE, mais j’ai besoin des bons fichiers.
+
+📌 Demande à Replit :
+
+« Donne-moi le fichier où Socket.IO est initialisé côté frontend (SocketProvider, useSocket, or socket.ts), et le fichier backend où Socket.IO est configuré (server/socket.ts ou dans index.ts). »
+
+Une fois que j’ai les deux, je corrige :
+
+✔ Frontend
+socket.emit("user-online", user.id)
+
+✔ Backend
+socket.on("user-online", userId => {
+    onlineUsers.add(userId);
+    io.emit("status-update", { userId, online: true });
+});
+
+
+⭐ Résultat :
+– L’utilisateur apparaît EN LIGNE
+– L’admin peut chatter
+– Le chat fonctionne
+
+📌 Résumé : demande EXACTEMENT ces fichiers à Replit
+🔥 Fichiers backend nécessaires
+
+1️⃣ Fichier des notifications automatiques
+2️⃣ Socket.IO backend
+
+🔥 Fichiers frontend nécessaires
+
+3️⃣ Page Messages utilisateur
+4️⃣ Initialisation socket côté utilisateur
