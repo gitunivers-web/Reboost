@@ -1958,6 +1958,13 @@ type TranslationKeys = {
         noData: string;
       };
     };
+    sidebar: {
+      overview: string;
+      loans: string;
+      users: string;
+      contact: string;
+      chat: string;
+    };
     dashboard: {
       title: string;
       description: string;
@@ -4567,6 +4574,13 @@ export const translations: Record<Language, TranslationKeys> = {
           noData: 'Aucune donnée disponible',
         },
       },
+      sidebar: {
+        overview: 'Vue d\'ensemble',
+        loans: 'Demandes de prêts',
+        users: 'Utilisateurs',
+        contact: 'Contact',
+        chat: 'Chat Support',
+      },
       dashboard: {
         title: 'Console Admin',
         description: 'Vue d\'ensemble de la plateforme et gestion des utilisateurs',
@@ -7137,6 +7151,13 @@ export const translations: Record<Language, TranslationKeys> = {
           noResults: 'No results',
           noData: 'No data available',
         },
+      },
+      sidebar: {
+        overview: 'Overview',
+        loans: 'Loan Requests',
+        users: 'Users',
+        contact: 'Contact',
+        chat: 'Chat Support',
       },
       dashboard: {
         title: 'Admin Console',
@@ -9715,6 +9736,13 @@ export const translations: Record<Language, TranslationKeys> = {
           noResults: 'Sin resultados',
           noData: 'No hay datos disponibles',
         },
+      },
+      sidebar: {
+        overview: 'Vista General',
+        loans: 'Solicitudes de Préstamo',
+        users: 'Usuarios',
+        contact: 'Contacto',
+        chat: 'Chat de Soporte',
       },
       dashboard: {
         title: 'Consola de Administración',
@@ -12373,6 +12401,13 @@ export const translations: Record<Language, TranslationKeys> = {
         messages: {error: 'Erro', success: 'Sucesso', updated: 'Atualizado', approved: 'Aprovado', rejected: 'Rejeitado', deleted: 'Excluído', disbursed: 'Desembolsado', cannotApprove: 'Não é possível aprovar', cannotReject: 'Não é possível rejeitar', cannotDelete: 'Não é possível excluir', cannotUpdate: 'Não é possível atualizar', loadError: 'Erro ao carregar'},
         empty: {noResults: 'Sem resultados', noData: 'Nenhum dado disponível'},
       },
+      sidebar: {
+        overview: 'Visão Geral',
+        loans: 'Pedidos de Empréstimo',
+        users: 'Usuários',
+        contact: 'Contato',
+        chat: 'Chat de Suporte',
+      },
       dashboard: {
         title: 'Console de Administração',
         description: 'Visão geral da plataforma e gestão de usuários',
@@ -14596,6 +14631,13 @@ export const translations: Record<Language, TranslationKeys> = {
         labels: {user: 'Utente', userName: 'Nome utente', userEmail: 'Email utente', amount: 'Importo', type: 'Tipo', rate: 'Tasso', duration: 'Durata', status: 'Stato', date: 'Data', createdAt: 'Creato', actions: 'Azioni', fees: 'Commissioni', progress: 'Progresso', codes: 'Codici', recipient: 'Destinatario', contract: 'Contratto', months: 'mesi', total: 'Totale', active: 'attivi', pending: 'in sospeso', recent: 'Recenti', all: 'Tutti', noData: 'Nessun dato', loading: 'Caricamento...', error: 'Errore', success: 'Successo', balance: 'Saldo', loans: 'Prestiti'},
         messages: {error: 'Errore', success: 'Successo', updated: 'Aggiornato', approved: 'Approvato', rejected: 'Rifiutato', deleted: 'Eliminato', disbursed: 'Erogato', cannotApprove: 'Impossibile approvare', cannotReject: 'Impossibile rifiutare', cannotDelete: 'Impossibile eliminare', cannotUpdate: 'Impossibile aggiornare', loadError: 'Errore di caricamento'},
         empty: {noResults: 'Nessun risultato', noData: 'Nessun dato disponibile'},
+      },
+      sidebar: {
+        overview: 'Panoramica',
+        loans: 'Richieste di Prestito',
+        users: 'Utenti',
+        contact: 'Contatto',
+        chat: 'Chat di Supporto',
       },
       dashboard: {
         title: 'Console di Amministrazione',
@@ -17217,6 +17259,13 @@ export const translations: Record<Language, TranslationKeys> = {
         messages: {error: 'Fehler', success: 'Erfolg', updated: 'Aktualisiert', approved: 'Genehmigt', rejected: 'Abgelehnt', deleted: 'Gelöscht', disbursed: 'Ausgezahlt', cannotApprove: 'Kann nicht genehmigen', cannotReject: 'Kann nicht ablehnen', cannotDelete: 'Kann nicht löschen', cannotUpdate: 'Kann nicht aktualisieren', loadError: 'Ladefehler'},
         empty: {noResults: 'Keine Ergebnisse', noData: 'Keine Daten verfügbar'},
       },
+      sidebar: {
+        overview: 'Übersicht',
+        loans: 'Kreditanträge',
+        users: 'Benutzer',
+        contact: 'Kontakt',
+        chat: 'Support-Chat',
+      },
       dashboard: {
         title: 'Admin-Konsole',
         description: 'Plattformübersicht und Benutzerverwaltung',
@@ -19651,6 +19700,13 @@ export const translations: Record<Language, TranslationKeys> = {
         labels: {user: 'Gebruiker', userName: 'Gebruikersnaam', userEmail: 'Gebruikers-e-mail', amount: 'Bedrag', type: 'Type', rate: 'Tarief', duration: 'Looptijd', status: 'Status', date: 'Datum', createdAt: 'Aangemaakt', actions: 'Acties', fees: 'Kosten', progress: 'Voortgang', codes: 'Codes', recipient: 'Ontvanger', contract: 'Contract', months: 'maanden', total: 'Totaal', active: 'actief', pending: 'in behandeling', recent: 'Recent', all: 'Alle', noData: 'Geen gegevens', loading: 'Laden...', error: 'Fout', success: 'Succes', balance: 'Saldo', loans: 'Leningen'},
         messages: {error: 'Fout', success: 'Succes', updated: 'Bijgewerkt', approved: 'Goedgekeurd', rejected: 'Afgewezen', deleted: 'Verwijderd', disbursed: 'Uitbetaald', cannotApprove: 'Kan niet goedkeuren', cannotReject: 'Kan niet afwijzen', cannotDelete: 'Kan niet verwijderen', cannotUpdate: 'Kan niet bijwerken', loadError: 'Fout bij laden'},
         empty: {noResults: 'Geen resultaten', noData: 'Geen gegevens beschikbaar'},
+      },
+      sidebar: {
+        overview: 'Overzicht',
+        loans: 'Leningaanvragen',
+        users: 'Gebruikers',
+        contact: 'Contact',
+        chat: 'Ondersteuningschat',
       },
       dashboard: {
         title: 'Beheerdersconscole',

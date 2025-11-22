@@ -11,9 +11,11 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "@/lib/i18n";
 
 export function AppSidebarAdmin() {
   const [location] = useLocation();
+  const t = useTranslations();
 
   // Récupérer les compteurs de notifications en temps réel
   const { data: notificationCounts } = useQuery<{
@@ -28,17 +30,17 @@ export function AppSidebarAdmin() {
   });
 
   const menuItems = [
-    { label: "Vue d'ensemble", link: "/admin", icon: LayoutDashboard, count: 0 },
+    { label: t.admin.sidebar.overview, link: "/admin", icon: LayoutDashboard, count: 0 },
     { 
-      label: "Demandes de prêts", 
+      label: t.admin.sidebar.loans, 
       link: "/admin/loans", 
       icon: Landmark,
       count: (notificationCounts?.pendingLoans || 0) + (notificationCounts?.signedContracts || 0) + (notificationCounts?.transfersRequiringCode || 0)
     },
-    { label: "Utilisateurs", link: "/admin/users", icon: Users, count: 0 },
-    { label: "Contact", link: "/admin/contact", icon: MessageSquare, count: 0 },
+    { label: t.admin.sidebar.users, link: "/admin/users", icon: Users, count: 0 },
+    { label: t.admin.sidebar.contact, link: "/admin/contact", icon: MessageSquare, count: 0 },
     { 
-      label: "Chat Support", 
+      label: t.admin.sidebar.chat, 
       link: "/admin/chat", 
       icon: MessagesSquare,
       count: notificationCounts?.unreadMessages || 0
