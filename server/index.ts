@@ -70,11 +70,17 @@ console.log(`[CONFIG] Frontend URL: ${process.env.FRONTEND_URL || 'NOT SET'}`);
 console.log(`[CONFIG] Trust Proxy: enabled`);
 console.log('='.repeat(60));
 
+// Parse allowed Vercel domains from environment variable (comma-separated)
+const vercelDomains = process.env.VERCEL_DOMAINS 
+  ? process.env.VERCEL_DOMAINS.split(',').map(d => d.trim())
+  : [];
+
 const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [
       'https://altusfinancesgroup.com',
       'https://www.altusfinancesgroup.com',
-      process.env.FRONTEND_URL
+      process.env.FRONTEND_URL,
+      ...vercelDomains
     ].filter(Boolean)
   : ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000'];
 
@@ -82,13 +88,13 @@ app.use(cors({
   origin: (origin, callback) => {
     if (process.env.NODE_ENV !== 'production') {
       callback(null, true);
-    } else if (!origin || allowedOrigins.includes(origin)) {
+    } else if (!origin) {
+      callback(null, true);
+    } else if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error(`[CORS ERROR] ❌ Origin rejected: ${origin}`);
-        console.error(`[CORS ERROR] Allowed origins: ${JSON.stringify(allowedOrigins)}`);
-      }
+      console.error(`[CORS ERROR] ❌ Origin rejected: ${origin}`);
+      console.error(`[CORS ERROR] Allowed origins: ${JSON.stringify(allowedOrigins)}`);
       callback(new Error('Not allowed by CORS'));
     }
   },

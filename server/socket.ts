@@ -117,17 +117,33 @@ export function setupSocketIO(
   httpServer: HTTPServer,
   sessionMiddleware: RequestHandler
 ): SocketIOServer {
+  // Parse allowed Vercel domains from environment variable (comma-separated)
+  const vercelDomains = process.env.VERCEL_DOMAINS 
+    ? process.env.VERCEL_DOMAINS.split(',').map(d => d.trim())
+    : [];
+
   const allowedOrigins = process.env.NODE_ENV === 'production'
     ? [
         'https://altusfinancesgroup.com',
         'https://www.altusfinancesgroup.com',
-        process.env.FRONTEND_URL
+        process.env.FRONTEND_URL,
+        ...vercelDomains
       ].filter((origin): origin is string => typeof origin === 'string')
     : ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000', 'http://localhost:5000'];
 
   const io = new SocketIOServer(httpServer, {
     cors: {
-      origin: allowedOrigins,
+      origin: (origin, callback) => {
+        if (process.env.NODE_ENV !== 'production') {
+          callback(null, true);
+        } else if (!origin) {
+          callback(null, true);
+        } else if (allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       methods: ['GET', 'POST'],
       credentials: true
     }
