@@ -20,6 +20,7 @@ export type NotificationType =
   | 'fee_added'
   | 'account_status_changed'
   | 'admin_message_sent'
+  | '2fa_suggestion'
   | 'general';
 
 export interface CreateNotificationParams {
