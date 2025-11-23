@@ -1,7 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@/hooks/use-user";
-import { CometChatConversations, CometChatUsers } from "@cometchat/chat-uikit-react";
+import { 
+  CometChatConversations, 
+  CometChatUsers,
+  CometChatMessageList,
+  CometChatMessageHeader,
+  CometChatMessageComposer
+} from "@cometchat/chat-uikit-react";
 import { CometChatUIKit, UIKitSettingsBuilder } from "@cometchat/chat-uikit-react";
+import { CometChat } from "@cometchat/chat-sdk-javascript";
 import { getApiUrl } from "@/lib/queryClient";
 
 let isInitialized = false;
@@ -13,6 +20,7 @@ export default function ChatWidget() {
   const [isCometChatReady, setIsCometChatReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeView, setActiveView] = useState<ChatView>("conversations");
+  const [selectedUser, setSelectedUser] = useState<CometChat.User | null>(null);
   const { data: user } = useUser();
 
   const initializeCometChat = useCallback(async () => {
@@ -64,6 +72,15 @@ export default function ChatWidget() {
   }
 
   const isAdmin = user.role === 'admin';
+
+  const handleUserClick = (user: CometChat.User) => {
+    console.log("User clicked:", user);
+    setSelectedUser(user);
+  };
+
+  const handleBackToUsers = () => {
+    setSelectedUser(null);
+  };
 
   return (
     <>
@@ -153,9 +170,17 @@ export default function ChatWidget() {
                   </button>
                 </div>
               )}
-              <div style={{ height: isAdmin ? "calc(100% - 49px)" : "100%", overflow: "hidden" }}>
-                {isAdmin && activeView === "users" ? (
-                  <CometChatUsers />
+              <div style={{ height: isAdmin ? "calc(100% - 49px)" : "100%", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+                {isAdmin && activeView === "users" && !selectedUser ? (
+                  <CometChatUsers onItemClick={handleUserClick} />
+                ) : isAdmin && activeView === "users" && selectedUser ? (
+                  <>
+                    <CometChatMessageHeader user={selectedUser} onBack={handleBackToUsers} />
+                    <div style={{ flex: 1, overflow: "hidden" }}>
+                      <CometChatMessageList user={selectedUser} />
+                    </div>
+                    <CometChatMessageComposer user={selectedUser} />
+                  </>
                 ) : (
                   <CometChatConversations />
                 )}

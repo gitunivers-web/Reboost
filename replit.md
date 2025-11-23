@@ -24,12 +24,18 @@ Preferred communication style: Simple, everyday language.
   - `VITE_COMETCHAT_APP_ID`, `VITE_COMETCHAT_REGION`, `VITE_COMETCHAT_AUTH_KEY`
 - 📝 **DOCUMENTED:** Complete setup guide in `COMETCHAT_SETUP.md`
 - 🔐 **SECURITY:** Backend authentication endpoint protected by `requireAuth` middleware
-- 🎯 **STATUS:** Base infrastructure complete, ready for full chat UI implementation
+- ✅ **FIXED:** User selection and conversation initiation (November 23, 2025)
+  - Problem: Admin couldn't click on users in the Users tab to start a conversation
+  - Solution: Implemented manual message view using individual CometChat components
+  - Added `onItemClick` handler to `CometChatUsers` component
+  - Created complete message interface with `CometChatMessageHeader`, `CometChatMessageList`, and `CometChatMessageComposer`
+  - Users tab now properly handles: user selection → message view → back to user list
+  - File modified: `client/src/components/ChatWidget.tsx`
+- 🎯 **STATUS:** Full chat UI implementation complete and functional
 - 📋 **NEXT STEPS:** 
   - Create CometChat users (manual via dashboard or automatic via API)
-  - Replace placeholder widget with actual CometChat UI components
-  - Implement auto-login after user authentication
-  - Customize widget appearance
+  - Customize widget appearance and styling
+  - Add notification badges for unread messages
 
 ## Recent Changes (November 20, 2025)
 
