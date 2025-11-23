@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { useCometChatLogin } from "@/hooks/useCometChat";
+import { useUser } from "@/hooks/use-user";
 import { CometChatConversations } from "@cometchat/chat-uikit-react";
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [isCometChatReady, setIsCometChatReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { data: user } = useUser();
   const { login } = useCometChatLogin();
+
+  if (!user) {
+    return null;
+  }
 
   useEffect(() => {
     if (open && !isCometChatReady) {
