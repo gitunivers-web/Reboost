@@ -294,7 +294,7 @@ export default function Contracts() {
                           <Clock className="h-5 w-5 text-primary" />
                         </div>
                         <div>
-                          <p className="font-medium mb-1">Vérification en cours</p>
+                          <p className="font-medium mb-1">{t.auth.verificationInProgress}</p>
                           <p className="text-sm text-muted-foreground">
                             {t.contracts?.reviewMessage || 'Votre contrat signé a été reçu et est en cours de vérification par notre équipe. Vous serez notifié dès que les fonds seront débloqués.'}
                           </p>
