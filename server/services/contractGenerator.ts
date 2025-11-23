@@ -12,7 +12,7 @@ interface ContractData {
   language?: string;
 }
 
-type ContractLanguage = 'fr' | 'en' | 'de' | 'pt' | 'es';
+type ContractLanguage = 'fr' | 'en' | 'de' | 'pt' | 'es' | 'it' | 'nl';
 
 interface ContractTranslations {
   contractTitle: string;
@@ -185,7 +185,7 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     article6Title: 'Article 6 - Default of Payment',
     article6Content: 'In case of default on a monthly payment, late payment penalties of 5% per year will be applied to the remaining amounts due. After two consecutive unpaid installments, the Lender reserves the right to demand immediate repayment of the remaining capital.',
     article7Title: 'Article 7 – Borrower Insurance',
-    article7Content: 'Borrower insurance covering at minimum death and disability risk is <strong>strictly mandatory</strong>. The Borrower commits to provide proof of subscription before fund disbursement.',
+    article7Content: 'Borrower insurance remains optional, but coverage including at least death and disability risks presents significant advantages for the borrower. ALTUS FINANCES GROUP recommends its subscription, while leaving each borrower the freedom of their decision.',
     article8Title: 'Article 8 - Right of Withdrawal',
     article8Content: 'In accordance with applicable legal provisions, the Borrower has a withdrawal period of 14 calendar days from the signing of this contract.',
     article9Title: 'Article 9 - Applicable Law and Jurisdiction',
@@ -261,7 +261,7 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     article6Title: 'Artikel 6 - Zahlungsverzug',
     article6Content: 'Im Falle des Zahlungsverzugs einer monatlichen Rate werden Verzugszinsen von 5% pro Jahr auf die verbleibenden Beträge erhoben. Nach zwei aufeinanderfolgenden unbezahlten Raten behält sich der Darlehensgeber das Recht vor, die sofortige Rückzahlung des verbleibenden Kapitals zu verlangen.',
     article7Title: 'Artikel 7 – Darlehensversicherung',
-    article7Content: 'Eine Darlehensversicherung, die mindestens das Todesfall- und Invaliditätsrisiko abdeckt, ist <strong>streng obligatorisch</strong>. Der Darlehensnehmer verpflichtet sich, den Nachweis des Abschlusses vor der Auszahlung der Mittel zu erbringen.',
+    article7Content: 'Eine Darlehensversicherung bleibt fakultativ, aber eine Deckung, die mindestens die Risiken Tod und Invalidität umfasst, bietet erhebliche Vorteile für den Darlehensnehmer. ALTUS FINANCES GROUP empfiehlt deren Abschluss und überlässt jedem Darlehensnehmer die Freiheit seiner Entscheidung.',
     article8Title: 'Artikel 8 - Widerrufsrecht',
     article8Content: 'Gemäß den geltenden gesetzlichen Bestimmungen hat der Darlehensnehmer eine Widerrufsfrist von 14 Kalendertagen ab Unterzeichnung dieses Vertrags.',
     article9Title: 'Artikel 9 - Anwendbares Recht und zuständige Gerichte',
@@ -337,7 +337,7 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     article6Title: 'Artigo 6 - Inadimplência',
     article6Content: 'Em caso de inadimplência de uma mensalidade, serão aplicadas penalidades de atraso de 5% ao ano sobre os valores remanescentes devidos. Após duas mensalidades consecutivas não pagas, o Mutuante reserva-se o direito de exigir o reembolso imediato do capital remanescente.',
     article7Title: 'Artigo 7 – Seguro do Mutuário',
-    article7Content: 'A subscrição de um seguro do mutuário cobrindo no mínimo o risco de morte e invalidez é <strong>estritamente obrigatória</strong>. O Mutuário compromete-se a fornecer prova da subscrição antes do desembolso dos fundos.',
+    article7Content: 'A subscrição de um seguro do mutuário permanece facultativa, mas uma cobertura incluindo pelo menos os riscos de morte e invalidez apresenta vantagens significativas para o mutuário. ALTUS FINANCES GROUP recomenda a sua adesão, deixando a cada mutuário a liberdade da sua decisão.',
     article8Title: 'Artigo 8 - Direito de Retratação',
     article8Content: 'Em conformidade com as disposições legais em vigor, o Mutuário dispõe de um prazo de retratação de 14 dias corridos a contar da assinatura deste contrato.',
     article9Title: 'Artigo 9 - Lei Aplicável e Jurisdição Competente',
@@ -413,7 +413,7 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     article6Title: 'Artículo 6 - Incumplimiento de Pago',
     article6Content: 'En caso de incumplimiento de pago de una mensualidad, se aplicarán penalidades por demora del 5% anual sobre los montos restantes adeudados. Después de dos mensualidades consecutivas impagadas, el Prestamista se reserva el derecho de exigir el reembolso inmediato del capital restante.',
     article7Title: 'Artículo 7 – Seguro del Prestatario',
-    article7Content: 'La suscripción de un seguro del prestatario que cubra como mínimo el riesgo de muerte e invalidez es <strong>estrictamente obligatoria</strong>. El Prestatario se compromete a proporcionar prueba de la suscripción antes del desembolso de los fondos.',
+    article7Content: 'La suscripción de un seguro del prestatario sigue siendo opcional, pero una cobertura que incluya al menos los riesgos de muerte e invalidez presenta ventajas significativas para el prestatario. ALTUS FINANCES GROUP recomienda su adhesión, dejando a cada prestatario la libertad de su decisión.',
     article8Title: 'Artículo 8 - Derecho de Retractación',
     article8Content: 'De conformidad con las disposiciones legales vigentes, el Prestatario dispone de un plazo de retractación de 14 días calendario a partir de la firma de este contrato.',
     article9Title: 'Artículo 9 - Ley Aplicable y Jurisdicción Competente',
@@ -455,6 +455,158 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
       'lineOfCredit': 'Línea de Crédito',
       'commercialProperty': 'Préstamo Inmobiliario Comercial',
     }
+  },
+  it: {
+    contractTitle: 'Contratto di Prestito Professionale',
+    contractNumber: 'CONTRATTO DI PRESTITO N°',
+    borrowerInfo: 'Informazioni sul Mutuatario',
+    fullName: 'Nome Completo',
+    email: 'Email',
+    phone: 'Telefono',
+    company: 'Società',
+    siret: 'P.IVA',
+    loanDetails: 'Dettagli del Prestito',
+    loanType: 'Tipo di Prestito',
+    amountBorrowed: 'Importo Prestato',
+    annualInterestRate: 'Tasso di Interesse Annuo',
+    loanDuration: 'Durata del Prestito',
+    contractDate: 'Data del Contratto',
+    months: 'mesi',
+    loanConditions: 'Condizioni del Prestito',
+    article1Title: 'Articolo 1 - Oggetto del Contratto',
+    article1Content: (userName, amount, rate, duration) =>
+      `Il presente contratto ha per oggetto la concessione da parte di ALTUS FINANCE GROUP (di seguito "il Prestatore") a ${userName} (di seguito "il Mutuatario") di un prestito dell'importo di <strong>${amount} €</strong> al tasso di interesse annuo di <strong>${rate}%</strong> per una durata di <strong>${duration} mesi</strong>.`,
+    article2Title: 'Articolo 2 - Modalità di Rimborso',
+    article2Content: (duration, rate, monthly) =>
+      `Il Mutuatario si impegna a rimborsare il prestito secondo un piano mensile di ${duration} mesi. Ogni rata mensile comprenderà una parte del capitale preso in prestito e gli interessi calcolati al tasso annuo del ${rate}%. L'importo stimato della rata mensile è di <strong>${monthly} €</strong>.`,
+    article3Title: 'Articolo 3 - Tasso di Interesse e Costo Totale del Credito',
+    article3Content: (rate, totalInterest, totalRepayment) =>
+      `Il tasso di interesse applicato è fisso e ammonta al ${rate}% annuo. Il costo totale del credito, compresi gli interessi, è stimato in <strong>${totalInterest} €</strong>. L'importo totale da rimborsare ammonta quindi a <strong>${totalRepayment} €</strong>.`,
+    article4Title: 'Articolo 4 – Erogazione dei Fondi',
+    article4Content: 'I fondi del prestito saranno messi a disposizione del Mutuatario sul conto affiliato ALTUS FINANCE GROUP aperto a nome del Mutuatario all\'interno della rete ALTUS. Il Mutuatario riconosce e accetta che il pagamento iniziale sarà accreditato su questo conto affiliato, che è sua responsabilità avviare il trasferimento verso il suo conto bancario esterno, e che l\'erogazione effettiva dei fondi avverrà entro un massimo di 24 ore lavorative dalla ricezione del presente contratto debitamente firmato.',
+    article5Title: 'Articolo 5 - Rimborso Anticipato',
+    article5Content: 'Il Mutuatario ha la possibilità di procedere al rimborso anticipato, totale o parziale, del capitale residuo senza penalità. Qualsiasi richiesta di rimborso anticipato deve essere formulata per iscritto almeno 30 giorni prima della data desiderata.',
+    article6Title: 'Articolo 6 - Inadempienza di Pagamento',
+    article6Content: 'In caso di inadempienza di pagamento di una rata mensile, saranno applicate penalità di mora del 5% annuo sugli importi residui dovuti. Dopo due rate mensili consecutive non pagate, il Prestatore si riserva il diritto di esigere il rimborso immediato del capitale residuo.',
+    article7Title: 'Articolo 7 – Assicurazione del Mutuatario',
+    article7Content: 'La sottoscrizione di un\'assicurazione del mutuatario rimane facoltativa, ma una copertura che includa almeno i rischi di morte e invalidità presenta vantaggi significativi per il mutuatario. ALTUS FINANCES GROUP ne raccomanda l\'adesione, lasciando a ciascun mutuatario la libertà della propria decisione.',
+    article8Title: 'Articolo 8 - Diritto di Recesso',
+    article8Content: 'In conformità con le disposizioni legali in vigore, il Mutuatario dispone di un periodo di recesso di 14 giorni di calendario dalla firma del presente contratto.',
+    article9Title: 'Articolo 9 - Legge Applicabile e Giurisdizione Competente',
+    article9Content: 'Il presente contratto è regolato dalla legge lussemburghese. In caso di controversia, le parti si sforzeranno di trovare una soluzione amichevole. In mancanza, solo i tribunali competenti del Lussemburgo avranno giurisdizione.',
+    signatureSection: 'Firme',
+    madeInDuplicates: 'Fatto in due originali',
+    inLuxembourg: 'A Lussemburgo, il',
+    forAltus: 'Per ALTUS FINANCE GROUP',
+    lender: 'Il Prestatore',
+    borrower: 'Il Mutuatario',
+    preSigned: '✓ Documento pre-firmato e convalidato',
+    management: 'Direzione Generale',
+    altusStamp: 'ALTUS\nFINANCE\nGROUP',
+    luxembourg: 'Lussemburgo',
+    electronicSignature: 'Firma elettronica certificata',
+    date: 'Data',
+    signatureInstructions: 'Istruzioni per la firma:',
+    instruction1: '1. Scarica questo documento',
+    instruction2: '2. Stampa e firma con "Letto e approvato"',
+    instruction3: '3. Scansiona il documento firmato',
+    instruction4: '4. Rinvialo tramite la tua area clienti',
+    signatureLine: 'Firma preceduta da',
+    readAndApproved: '"Letto e approvato"',
+    confidentialNotice: 'Questo documento è confidenziale e destinato esclusivamente al destinatario. Qualsiasi riproduzione, distribuzione o uso non autorizzato è severamente vietato.',
+    shareCapital: 'Capitale Sociale',
+    headquarters: 'Sede Sociale',
+    tel: 'Tel',
+    loanTypes: {
+      'auto': 'Prestito Auto',
+      'mortgage': 'Prestito Ipotecario',
+      'green': 'Prestito Ecologico',
+      'renovation': 'Prestito Ristrutturazione',
+      'student': 'Prestito Studentesco',
+      'business': 'Prestito Professionale',
+      'personal': 'Prestito Personale',
+      'cashFlow': 'Prestito di Tesoreria',
+      'equipment': 'Prestito Attrezzatura',
+      'vehicleFleet': 'Prestito Flotta Veicoli',
+      'lineOfCredit': 'Linea di Credito',
+      'commercialProperty': 'Prestito Immobiliare Commerciale',
+    }
+  },
+  nl: {
+    contractTitle: 'Professionele Leningsovereenkomst',
+    contractNumber: 'LENINGSOVEREENKOMST NR',
+    borrowerInfo: 'Informatie over de Lener',
+    fullName: 'Volledige Naam',
+    email: 'E-mail',
+    phone: 'Telefoon',
+    company: 'Bedrijf',
+    siret: 'Bedrijfs-ID',
+    loanDetails: 'Leningsdetails',
+    loanType: 'Type Lening',
+    amountBorrowed: 'Geleend Bedrag',
+    annualInterestRate: 'Jaarlijks Rentepercentage',
+    loanDuration: 'Looptijd van de Lening',
+    contractDate: 'Contractdatum',
+    months: 'maanden',
+    loanConditions: 'Leningsvoorwaarden',
+    article1Title: 'Artikel 1 - Doel van het Contract',
+    article1Content: (userName, amount, rate, duration) =>
+      `Dit contract heeft tot doel de toekenning door ALTUS FINANCE GROUP (hierna "de Kredietgever") aan ${userName} (hierna "de Lener") van een lening van <strong>${amount} €</strong> tegen een jaarlijks rentepercentage van <strong>${rate}%</strong> voor een looptijd van <strong>${duration} maanden</strong>.`,
+    article2Title: 'Artikel 2 - Terugbetalingsvoorwaarden',
+    article2Content: (duration, rate, monthly) =>
+      `De Lener verbindt zich ertoe de lening terug te betalen volgens een maandelijks schema gedurende ${duration} maanden. Elke maandelijkse betaling omvat een deel van het geleende kapitaal en rente berekend tegen het jaarlijkse tarief van ${rate}%. Het geschatte maandelijkse bedrag bedraagt <strong>${monthly} €</strong>.`,
+    article3Title: 'Artikel 3 - Rentepercentage en Totale Kosten van het Krediet',
+    article3Content: (rate, totalInterest, totalRepayment) =>
+      `Het toegepaste rentepercentage is vast en bedraagt ${rate}% per jaar. De totale kosten van het krediet, inclusief rente, worden geschat op <strong>${totalInterest} €</strong>. Het totaal terug te betalen bedrag bedraagt dus <strong>${totalRepayment} €</strong>.`,
+    article4Title: 'Artikel 4 – Uitbetaling van de Fondsen',
+    article4Content: 'De leningsfondsen worden ter beschikking gesteld van de Lener op de ALTUS FINANCE GROUP-gelieerde rekening geopend op naam van de Lener binnen het ALTUS-netwerk. De Lener erkent en accepteert dat de initiële betaling wordt gecrediteerd op deze gelieerde rekening, dat het zijn verantwoordelijkheid is om de overboeking naar zijn externe bankrekening te starten, en dat de effectieve uitbetaling van de fondsen zal plaatsvinden binnen maximaal 24 werkuren na ontvangst van dit naar behoren ondertekende contract.',
+    article5Title: 'Artikel 5 - Vervroegde Terugbetaling',
+    article5Content: 'De Lener heeft de mogelijkheid om vervroegd, geheel of gedeeltelijk, het resterende kapitaal terug te betalen zonder boetes. Elk verzoek tot vervroegde terugbetaling moet minstens 30 dagen voor de gewenste datum schriftelijk worden ingediend.',
+    article6Title: 'Artikel 6 - Wanbetaling',
+    article6Content: 'In geval van wanbetaling van een maandelijkse betaling worden vertragingsboetes van 5% per jaar toegepast op de resterende verschuldigde bedragen. Na twee opeenvolgende onbetaalde termijnen behoudt de Kredietgever zich het recht voor om onmiddellijke terugbetaling van het resterende kapitaal te eisen.',
+    article7Title: 'Artikel 7 – Verzekering van de Lener',
+    article7Content: 'Het afsluiten van een lenerverzekering blijft optioneel, maar een dekking die ten minste de risico\'s van overlijden en invaliditeit omvat, biedt aanzienlijke voordelen voor de lener. ALTUS FINANCES GROUP beveelt het afsluiten ervan aan, terwijl elke lener de vrijheid van zijn beslissing behoudt.',
+    article8Title: 'Artikel 8 - Herroepingsrecht',
+    article8Content: 'In overeenstemming met de geldende wettelijke bepalingen heeft de Lener een herroepingsperiode van 14 kalenderdagen vanaf de ondertekening van dit contract.',
+    article9Title: 'Artikel 9 - Toepasselijk Recht en Bevoegde Rechtbank',
+    article9Content: 'Dit contract wordt beheerst door het Luxemburgse recht. In geval van geschil zullen de partijen streven naar een minnelijke oplossing. Bij gebrek daaraan zijn alleen de bevoegde rechtbanken van Luxemburg bevoegd.',
+    signatureSection: 'Handtekeningen',
+    madeInDuplicates: 'Opgesteld in twee originelen',
+    inLuxembourg: 'In Luxemburg, op',
+    forAltus: 'Voor ALTUS FINANCE GROUP',
+    lender: 'De Kredietgever',
+    borrower: 'De Lener',
+    preSigned: '✓ Vooraf ondertekend en gevalideerd document',
+    management: 'Algemeen Bestuur',
+    altusStamp: 'ALTUS\nFINANCE\nGROUP',
+    luxembourg: 'Luxemburg',
+    electronicSignature: 'Gecertificeerde elektronische handtekening',
+    date: 'Datum',
+    signatureInstructions: 'Instructies voor handtekening:',
+    instruction1: '1. Download dit document',
+    instruction2: '2. Print en onderteken met "Gelezen en goedgekeurd"',
+    instruction3: '3. Scan het ondertekende document',
+    instruction4: '4. Stuur het terug via uw klantenzone',
+    signatureLine: 'Handtekening voorafgegaan door',
+    readAndApproved: '"Gelezen en goedgekeurd"',
+    confidentialNotice: 'Dit document is vertrouwelijk en uitsluitend bestemd voor de ontvanger. Elke reproductie, verspreiding of ongeautoriseerd gebruik is ten strengste verboden.',
+    shareCapital: 'Maatschappelijk Kapitaal',
+    headquarters: 'Maatschappelijke Zetel',
+    tel: 'Tel',
+    loanTypes: {
+      'auto': 'Autolening',
+      'mortgage': 'Hypothecaire Lening',
+      'green': 'Groene Lening',
+      'renovation': 'Renovatielening',
+      'student': 'Studentenlening',
+      'business': 'Zakelijke Lening',
+      'personal': 'Persoonlijke Lening',
+      'cashFlow': 'Kasstroom Lening',
+      'equipment': 'Uitrustinglening',
+      'vehicleFleet': 'Wagenparkle ning',
+      'lineOfCredit': 'Kredietlijn',
+      'commercialProperty': 'Commercieel Vastgoed Lening',
+    }
   }
 };
 
@@ -463,11 +615,25 @@ const getContractTemplate = (data: ContractData): string => {
   const lang = (language as ContractLanguage) in contractTranslations ? language as ContractLanguage : 'fr';
   const t = contractTranslations[lang];
   
-  const amount = parseFloat(loan.amount).toLocaleString(lang === 'fr' ? 'fr-FR' : lang === 'de' ? 'de-DE' : lang === 'pt' ? 'pt-PT' : lang === 'es' ? 'es-ES' : 'en-US', { minimumFractionDigits: 2 });
+  const getLocale = (l: ContractLanguage): string => {
+    const localeMap: Record<ContractLanguage, string> = {
+      fr: 'fr-FR',
+      en: 'en-US',
+      de: 'de-DE',
+      pt: 'pt-PT',
+      es: 'es-ES',
+      it: 'it-IT',
+      nl: 'nl-NL'
+    };
+    return localeMap[l];
+  };
+  
+  const locale = getLocale(lang);
+  const amount = parseFloat(loan.amount).toLocaleString(locale, { minimumFractionDigits: 2 });
   const rate = parseFloat(loan.interestRate).toFixed(2);
-  const monthly = calculateMonthlyPayment(parseFloat(loan.amount), parseFloat(loan.interestRate), loan.duration).toLocaleString(lang === 'fr' ? 'fr-FR' : lang === 'de' ? 'de-DE' : lang === 'pt' ? 'pt-PT' : lang === 'es' ? 'es-ES' : 'en-US', { minimumFractionDigits: 2 });
-  const totalInterest = calculateTotalInterest(parseFloat(loan.amount), parseFloat(loan.interestRate), loan.duration).toLocaleString(lang === 'fr' ? 'fr-FR' : lang === 'de' ? 'de-DE' : lang === 'pt' ? 'pt-PT' : lang === 'es' ? 'es-ES' : 'en-US', { minimumFractionDigits: 2 });
-  const totalRepayment = calculateTotalRepayment(parseFloat(loan.amount), parseFloat(loan.interestRate), loan.duration).toLocaleString(lang === 'fr' ? 'fr-FR' : lang === 'de' ? 'de-DE' : lang === 'pt' ? 'pt-PT' : lang === 'es' ? 'es-ES' : 'en-US', { minimumFractionDigits: 2 });
+  const monthly = calculateMonthlyPayment(parseFloat(loan.amount), parseFloat(loan.interestRate), loan.duration).toLocaleString(locale, { minimumFractionDigits: 2 });
+  const totalInterest = calculateTotalInterest(parseFloat(loan.amount), parseFloat(loan.interestRate), loan.duration).toLocaleString(locale, { minimumFractionDigits: 2 });
+  const totalRepayment = calculateTotalRepayment(parseFloat(loan.amount), parseFloat(loan.interestRate), loan.duration).toLocaleString(locale, { minimumFractionDigits: 2 });
   const loanTypeName = t.loanTypes[loan.loanType] || loan.loanType;
   
   return `
