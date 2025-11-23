@@ -47,8 +47,6 @@ import UserSessionTracker from '@/components/UserSessionTracker';
 import { LoanDialogProvider } from '@/contexts/LoanDialogContext';
 import { ScrollingInfoBanner } from '@/components/fintech';
 import DiagnosticPage from '@/pages/DiagnosticPage';
-import ChatTest from '@/pages/ChatTest';
-import { ChatWidget } from '@/components/ChatWidget';
 
 function App() {
   const style = {
@@ -73,7 +71,6 @@ function App() {
             <Route path="/terms" component={Terms} />
             <Route path="/privacy" component={Privacy} />
             <Route path="/diagnostic" component={DiagnosticPage} />
-            <Route path="/chat-test" component={ChatTest} />
             <Route path="/auth" component={Auth} />
             <Route path="/login" component={Auth} />
             <Route path="/signup" component={Auth} />
@@ -138,7 +135,6 @@ function App() {
             </Route>
           </Switch>
           <Toaster />
-          <ChatWidget />
         </TooltipProvider>
       </QueryClientProvider>
     </HelmetProvider>

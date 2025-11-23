@@ -56,7 +56,6 @@ import {
 import { loanRequestAdminNotification } from "./notification-service";
 import cloudinary from "./config/cloudinary";
 import { PassThrough } from "stream";
-import { cometChatService } from "./cometchat";
 
 export async function registerRoutes(app: Express, sessionMiddleware: any): Promise<Server> {
   // SÉCURITÉ: Accès aux fichiers via endpoints protégés uniquement
@@ -1156,62 +1155,6 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
       res.status(500).json({ error: 'Erreur lors de la déconnexion' });
     }
   });
-
-  const chatTokenLimiter = rateLimit({
-    windowMs: 5 * 60 * 1000,
-    max: 10,
-    message: 'Trop de demandes de token de chat. Veuillez réessayer dans quelques minutes.',
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-
-  app.get("/api/cometchat/auth-token", requireAuth, chatTokenLimiter, async (req, res) => {
-    try {
-      const configCheck = cometChatService.checkConfiguration();
-      if (!configCheck.configured) {
-        return res.status(503).json({ error: configCheck.message });
-      }
-
-      const userId = req.session.userId;
-      if (!userId) {
-        return res.status(401).json({ error: 'Non authentifié' });
-      }
-
-      const user = await storage.getUser(userId);
-      if (!user) {
-        return res.status(404).json({ error: 'Utilisateur introuvable' });
-      }
-
-      try {
-        await cometChatService.createUser({
-          uid: user.id,
-          name: user.fullName,
-          avatar: user.profilePhoto || undefined,
-          metadata: {
-            email: user.email,
-            role: user.role,
-          }
-        });
-      } catch (error) {
-        console.log('User might already exist in CometChat, continuing...');
-      }
-
-      const authToken = await cometChatService.generateAuthToken(user.id);
-
-      res.json({
-        authToken,
-        user: {
-          uid: user.id,
-          name: user.fullName,
-          avatar: user.profilePhoto,
-        }
-      });
-    } catch (error: any) {
-      console.error('CometChat auth token error:', error);
-      res.status(500).json({ error: 'Erreur lors de la génération du token CometChat' });
-    }
-  });
-
 
   app.get("/api/auth/verify/:token", async (req, res) => {
     try {

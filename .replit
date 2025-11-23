@@ -72,5 +72,3 @@ expertMode = true
 PORT = "5000"
 
 [userenv.shared]
-VITE_COMETCHAT_APP_ID = "167192408198af0d"
-VITE_COMETCHAT_REGION = "eu"
