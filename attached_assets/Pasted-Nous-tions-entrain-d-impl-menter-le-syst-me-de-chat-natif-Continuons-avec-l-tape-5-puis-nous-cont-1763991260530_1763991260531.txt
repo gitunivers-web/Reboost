@@ -1,0 +1,106 @@
+Nous étions entrain d'implémenter le système de chat natif. Continuons avec l'étape 5 puis nous continuons avec les autres étapes. 
+
+Étape 5 : Frontend - Types et Hooks React Query
+Objectif : Préparer le frontend pour consommer l'API
+
+Fichier à créer : client/src/lib/chatQueries.ts
+
+Hooks React Query à créer :
+
+// QUERIES (GET)
+useConversations(userId)          // Liste des conversations
+useConversation(conversationId)   // Une conversation
+useMessages(conversationId)       // Messages d'une conv
+useUnreadCount(conversationId)    // Compteur non lus
+usePresence(userId)               // Statut d'un user
+useOnlineUsers()                  // Users en ligne
+// MUTATIONS (POST/PATCH)
+useCreateConversation()           // Créer conversation
+useSendMessage()                  // Envoyer message
+useMarkAsRead()                   // Marquer lu
+useUpdatePresence()               // Changer statut
+useAssignConversation()           // Assigner à admin (admin only)
+
+Fonctionnalités :
+
+Typage fort avec les types de @shared/schema
+Invalidation automatique du cache après mutations
+Optimistic updates pour l'UX
+Gestion des erreurs
+
+Étape 6 : Frontend - Composants UI de Base
+Objectif : Créer les briques de base de l'interface chat
+
+Dossier : client/src/components/chat/
+
+Composants à créer :
+
+1. Message.tsx - Bulle de message individuelle
+
+Props: {
+  message: ChatMessage
+  isOwn: boolean  // Message de l'utilisateur connecté
+}
+Features:
+- Design différent pour messages envoyés/reçus
+- Affichage timestamp
+- Indicateur de lecture (double check)
+- Support fichiers attachés
+- Avatar expéditeur
+
+2. MessageList.tsx - Liste scrollable des messages
+
+Props: {
+  messages: ChatMessage[]
+  currentUserId: string
+}
+Features:
+- Auto-scroll vers le bas
+- Groupement par date
+- Loading skeleton
+- Virtualisation si beaucoup de messages
+- "Scroll to bottom" button
+
+3. MessageInput.tsx - Zone de saisie
+
+Props: {
+  onSend: (content: string) => void
+  onTyping: () => void
+  disabled?: boolean
+}
+Features:
+- Textarea auto-expand
+- Bouton envoyer
+- Support Ctrl+Enter
+- Compteur caractères
+- Upload fichier (optionnel)
+- Indicateur de frappe
+
+4. TypingIndicator.tsx - Animation "en train de taper..."
+
+Props: {
+  isTyping: boolean
+  username?: string
+}
+Features:
+- Animation dots (...)
+- Texte personnalisé
+- Disparaît après timeout
+
+5. PresenceIndicator.tsx - Point vert/gris
+
+Props: {
+  status: 'online' | 'away' | 'offline'
+  size?: 'sm' | 'md' | 'lg'
+}
+Features:
+- Point coloré (vert/jaune/gris)
+- Tooltip avec statut
+- Animation pulse si online
+
+Design Fintech 2025 :
+
+Couleurs cohérentes avec votre thème
+Animations fluides (Framer Motion)
+Dark mode supporté
+Responsive mobile

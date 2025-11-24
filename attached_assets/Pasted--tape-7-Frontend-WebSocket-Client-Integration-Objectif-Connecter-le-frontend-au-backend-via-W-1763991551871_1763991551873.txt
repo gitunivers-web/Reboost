@@ -1,0 +1,139 @@
+Étape 7 : Frontend - WebSocket Client Integration
+Objectif : Connecter le frontend au backend via WebSockets
+
+Fichiers à créer :
+
+client/src/lib/socket.ts - Configuration client
+client/src/hooks/useSocket.ts - Hook de connexion
+client/src/hooks/useChatMessages.ts - Hook temps réel
+Package à installer :
+
+socket.io-client
+
+Hook useSocket.ts :
+
+export function useSocket() {
+  const [socket, setSocket] = useState<Socket | null>(null)
+  const [connected, setConnected] = useState(false)
+  
+  useEffect(() => {
+    // Connexion Socket.IO
+    // Gestion reconnexion
+    // Cleanup
+  }, [])
+  
+  return { socket, connected }
+}
+
+Hook useChatMessages.ts :
+
+export function useChatMessages(conversationId: string) {
+  const { socket } = useSocket()
+  const queryClient = useQueryClient()
+  
+  useEffect(() => {
+    if (!socket) return
+    
+    // S'abonner aux events
+    socket.emit('join_conversation', conversationId)
+    
+    socket.on('new_message', (message) => {
+      // Invalider cache messages
+      // Ajouter message optimistic
+    })
+    
+    socket.on('user_typing', (data) => {
+      // Afficher typing indicator
+    })
+    
+    // Cleanup
+    return () => {
+      socket.emit('leave_conversation', conversationId)
+    }
+  }, [socket, conversationId])
+  
+  return {
+    sendMessage: (content) => {
+      socket.emit('send_message', { conversationId, content })
+    },
+    startTyping: () => {
+      socket.emit('typing_start', { conversationId })
+    }
+  }
+}
+
+Fonctionnalités :
+
+Reconnexion automatique
+Gestion des erreurs réseau
+Synchronisation cache React Query
+Optimistic updates
+Events de présence
+
+
+Étape 8 : Frontend - ChatWindow et Widget Flottant + Intégration finale
+Objectif : Assembler tous les composants et intégrer dans l'app
+
+Composants finaux :
+
+1. ChatWindow.tsx - Fenêtre principale de chat
+
+Props: {
+  conversationId: string
+  onClose?: () => void
+}
+Structure:
+├─ Header (titre, statut, close button)
+├─ MessageList
+├─ TypingIndicator
+└─ MessageInput
+Features:
+- Chargement messages au mount
+- WebSocket connecté
+- Mark as read automatique
+- Responsive (mobile/desktop)
+
+2. ChatWidget.tsx - Bouton flottant + popup
+
+Structure:
+├─ Floating button (position: fixed)
+│  └─ Badge notification (compteur)
+└─ Popup (conditionnel)
+   ├─ ConversationList (si pas de conv active)
+   └─ ChatWindow (si conv sélectionnée)
+Features:
+- Bouton position bottom-right
+- Animation ouverture/fermeture
+- Badge rouge avec compteur total non lus
+- Son notification (optionnel)
+- Collapse/expand
+
+3. Intégration dans App.tsx :
+
+// Pour les utilisateurs
+<ChatWidget />  // Toujours visible
+// Pour les admins (page dédiée)
+<Route path="/admin/chat" component={AdminChat} />
+
+4. Page Admin (optionnel mais recommandé) :
+
+AdminChat.tsx:
+├─ Sidebar: Liste des conversations
+│  ├─ Filtres (open/closed)
+│  ├─ Search
+│  └─ ConversationCard (avec preview dernier message)
+└─ Main: ChatWindow sélectionnée
+Features:
+- Vue d'ensemble toutes conversations
+- Assigner conversations à soi-même
+- Clore conversations
+- Statistiques (temps réponse moyen)
+
+Polish final :
+
+Tests manuels complets
+Responsive sur mobile/tablette/desktop
+Animations polish
+Gestion erreurs/edge cases
+Notifications sonores (optionnel)
+Emoji picker (optionnel)
