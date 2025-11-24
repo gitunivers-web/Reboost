@@ -316,8 +316,8 @@ export default function TransferFlow() {
       
       setNextCode(computedNextCode);
       
-      // Si la progression simulée est très différente du backend, synchroniser
-      if (Math.abs(simulatedProgress - backendProgress) > 5) {
+      // Synchroniser uniquement si le backend est en avance (ne jamais reculer la barre)
+      if (backendProgress > simulatedProgress && Math.abs(simulatedProgress - backendProgress) > 5) {
         setSimulatedProgress(backendProgress);
       }
       
