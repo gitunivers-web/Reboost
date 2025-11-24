@@ -1,0 +1,258 @@
+Super — merci pour la précision de l’architecture. Je te fournis **un prompt complet en français** prêt à copier/coller dans Replit (ou transmettre à une personne/équipe) qui :
+
+* explique le problème (contexte monorepo vs Vercel+Render),
+* contient les patchs/conseils précis et tested-ready pour **Express (TypeScript) + Socket.IO** côté backend,
+* contient les modifications React + TypeScript côté frontend (Vite),
+* inclut les commandes de test et la liste d’environnements à configurer,
+* attache tes captures d’écran (chemins locaux fournis ci-dessous) pour faciliter le debug côté Replit.
+
+> J’ai inclus les chemins des images que tu as uploadées pour que Replit puisse les visualiser :
+>
+> * `/mnt/data/Capture d'écran 2025-11-24 220922.png`
+> * `/mnt/data/Capture d'écran 2025-11-24 220341.png`
+> * `/mnt/data/Capture d'écran 2025-11-24 221831.png`
+
+---
+
+# PROMPT COMPLET À COPIER / COLLER DANS REPLIT (FR)
+
+````
+Contexte rapide
+--------------
+Projet full-stack JavaScript / TypeScript :
+- Frontend : React + TypeScript, Vite, TanStack Query, Wouter, shadcn UI, Tailwind
+- Backend : Express (TypeScript), Socket.IO pour chat, express-session, JWT/bcrypt
+- DB : PostgreSQL
+Déploiement : Frontend → Vercel (https://altusfinancesgroup.com), Backend → Render (https://api.altusfinancesgroup.com)
+
+Problème rencontré (production)
+-------------------------------
+Sur Replit (monorepo) le chat fonctionnait correctement.  
+En prod (Vercel + Render) :
+- Socket.IO / WebSocket échoue (Invalid HTTP upgrade) si le client essaie d'upgrader sur `wss://api.altusfinancesgroup.com/`
+- Certaines requêtes fetch POST vont à `https://altusfinancesgroup.com/api/...` (404) — le front utilise des chemins relatifs
+- La console navigateur montre : `No 'Access-Control-Allow-Origin' header is present` (CORS) et `ERR_FAILED 502` parfois
+- Résultat : quand l’utilisateur envoie un message le widget se ferme et le message n’arrive jamais au backend
+
+Je fournis en pièces jointes 3 captures d’écran pour le debug :
+- /mnt/data/Capture d'écran 2025-11-24 220922.png
+- /mnt/data/Capture d'écran 2025-11-24 220341.png
+- /mnt/data/Capture d'écran 2025-11-24 221831.png
+
+Objectif pour toi (Replit)
+--------------------------
+1) Adapter/corriger le backend Express (TypeScript) pour Render :
+   - exposer un endpoint WebSocket explicite (ex: `/ws` ou `/api/chat/ws`) avec Socket.IO
+   - configurer CORS correctement (origin = https://altusfinancesgroup.com, credentials = true)
+   - s’assurer que toutes les routes API existent et sont préfixées `/api` (ex: POST /api/chat/send)
+   - configurer express-session + cookie avec `domain: '.altusfinancesgroup.com'`, `sameSite: 'none'`, `secure: true`
+   - permettre l’upgrade WebSocket sur Render (configuration socket.io + http server)
+   - logs détaillés pour tracer : connexion WS, réception message, route POST `/api/chat/send`
+
+2) Adapter/corriger le frontend React (TypeScript) :
+   - s’assurer que toutes les requêtes utilisent `import.meta.env.VITE_API_URL` (pas de chemins relatifs `/api/...`)
+   - `VITE_SOCKET_URL` doit pointer vers `wss://api.altusfinancesgroup.com/ws` (ou l’endpoint que tu exposes)
+   - utiliser `axios({ baseURL: API, withCredentials: true })` ou `fetch(..., { credentials: 'include' })`
+   - socket.io-client : `io(SOCKET_URL, { withCredentials: true, transports: ['websocket'] })`
+   - ajouter une logique de reconnexion raisonnable (exponential backoff)
+
+3) Fournir un patch / diff (git patch) applicable au repo qui :
+   - ajoute/modifie `src/server.ts` (Express + Socket.IO + CORS)
+   - modifie les fetch/axios dans le frontend pour utiliser `VITE_API_URL` et `credentials`
+   - instructions de déploiement pour Render (port binding, Procfile si nécessaire)
+
+4) Fournir tests manuels (curl) et checklist pour vérification après déploiement.
+
+Code proposé (à appliquer ou adapter)
+------------------------------------
+
+A) Backend (TypeScript + Express + Socket.IO)
+Fichier : `src/server.ts` (ou `src/app.ts`) — remplacer/adapter si déjà existant
+
+```ts
+import express from 'express';
+import http from 'http';
+import { Server as IOServer } from 'socket.io';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import connectPgSimple from 'connect-pg-simple'; // si tu utilises PG pour sessions
+import { json } from 'body-parser';
+import chatRoutes from './routes/chat'; // adapter selon ton arborescence
+
+const app = express();
+const server = http.createServer(app);
+
+const FRONT_ORIGIN = process.env.FRONTEND_ORIGIN || 'https://altusfinancesgroup.com';
+const API_PORT = Number(process.env.PORT || 10000);
+const SOCKET_PATH = process.env.SOCKET_PATH || '/ws'; // ou '/api/chat/ws'
+
+// CORS - important
+app.use(cors({
+  origin: FRONT_ORIGIN,
+  credentials: true,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization','X-Requested-With']
+}));
+
+app.use(json());
+app.use(cookieParser());
+
+// Session (exemple simple, à adapter pour PG store)
+const PgStore = connectPgSimple(session);
+app.use(session({
+  store: new PgStore({
+    // config du store PG si utilisé
+  }),
+  secret: process.env.SESSION_SECRET || 'replace-with-secure-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: true,           // true en prod https
+    sameSite: 'none',       // required for cross-site cookie
+    domain: '.altusfinancesgroup.com',
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
+}));
+
+// Routes API montées sous /api
+app.use('/api/chat', chatRoutes); // chatRoutes doit exporter POST /send, GET /unread etc
+app.get('/api/health', (_, res) => res.json({ status: 'ok' }));
+
+// Socket.IO
+const io = new IOServer(server, {
+  path: SOCKET_PATH,
+  cors: {
+    origin: FRONT_ORIGIN,
+    credentials: true,
+    methods: ['GET','POST']
+  },
+  allowEIO3: true
+});
+
+io.on('connection', (socket) => {
+  console.log('[CHAT WS] Connexion socket id=', socket.id, 'from', socket.handshake.address);
+  // récupérer session / user si besoin
+  socket.on('chat:send', async (payload) => {
+    console.log('[CHAT WS] chat:send payload=', payload);
+    // traiter message, sauver en DB, émettre aux destinataires
+    socket.emit('chat:ack', { status: 'ok', tempId: payload.tempId });
+  });
+  socket.on('disconnect', (reason) => {
+    console.log('[CHAT WS] disconnect', socket.id, reason);
+  });
+});
+
+// Démarrage
+server.listen(API_PORT, () => {
+  console.log(`API + WS listening on ${API_PORT}, socket path ${SOCKET_PATH}`);
+});
+````
+
+Points à vérifier côté backend :
+
+* `chatRoutes` doit exporter les routes REST attendues (ex : `POST /api/chat/send`)
+* chaque route doit `res.json(...)` — pas de redirection HTML
+* ajouter logs lorsque `/api/chat/send` est appelé (méthode, payload)
+
+B) Frontend (React + TypeScript)
+Exemple : `src/lib/api.ts`
+
+```ts
+import axios from 'axios';
+
+const API = import.meta.env.VITE_API_URL || 'https://api.altusfinancesgroup.com';
+export const api = axios.create({
+  baseURL: API,
+  withCredentials: true, // IMPORTANT pour cookies
+  headers: { 'Content-Type': 'application/json' }
+});
+```
+
+Exemple socket client : `src/lib/socket.ts`
+
+```ts
+import { io, Socket } from 'socket.io-client';
+
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'https://api.altusfinancesgroup.com';
+const SOCKET_PATH = import.meta.env.VITE_SOCKET_PATH || '/ws';
+
+export const socket: Socket = io(SOCKET_URL, {
+  path: SOCKET_PATH,
+  withCredentials: true,
+  transports: ['websocket'],
+  autoConnect: true
+});
+
+// events
+socket.on('connect', () => console.log('Socket connected', socket.id));
+socket.on('disconnect', (reason) => console.warn('Socket disconnected', reason));
+socket.on('connect_error', (err) => console.error('Socket connect_error', err));
+```
+
+Remplacer toutes les occurrences `fetch('/api/...')` par :
+
+```ts
+// fetch example
+const API = import.meta.env.VITE_API_URL || 'https://api.altusfinancesgroup.com';
+
+await fetch(`${API}/api/chat/send`, {
+  method: 'POST',
+  credentials: 'include',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ message, convoId })
+});
+```
+
+ou utiliser `api.post('/chat/send', { message, convoId })`.
+
+Env variables Vercel à configurer :
+
+* VITE_API_URL = `https://api.altusfinancesgroup.com`
+* VITE_SOCKET_URL = `https://api.altusfinancesgroup.com` (socket client utilisera `path` pour `wss`)
+* VITE_SOCKET_PATH = `/ws` (si tu choisis `/ws`)
+* VITE_SITE_URL = `https://altusfinancesgroup.com`
+
+## Checklist tests et debug
+
+1. Déployer backend sur Render. `curl -I https://api.altusfinancesgroup.com/api/health` doit renvoyer JSON 200.
+2. Vérifier headers CORS :
+   `curl -I https://api.altusfinancesgroup.com/api/notifications`
+   → regarder `Access-Control-Allow-Origin` (doit être `https://altusfinancesgroup.com`) et `Access-Control-Allow-Credentials: true`.
+3. Tester route POST via curl :
+
+   ```bash
+   curl -v -X POST 'https://api.altusfinancesgroup.com/api/chat/send' \
+     -H 'Content-Type:application/json' \
+     --data '{"message":"test","convoId":"tmp"}'
+   ```
+
+   → doit renvoyer 200 / 201 JSON (pas HTML 404)
+4. Tester socket (depuis node REPL ou navigateur) :
+
+   * console client : `Socket connected` ; côté serveur : log `[CHAT WS] Connexion socket id=...`
+5. Vérifier dans le navigateur l’onglet Réseau :
+
+   * OPTIONS preflight → 200/204, en-têtes CORS présents
+   * POST `/api/chat/send` → JSON 200/201 (pas 404)
+6. Si erreurs 502 / upgrade invalid : vérifier que Render expose le port correct et qu’il autorise WebSocket upgrades. S’assurer que le front utilise `wss://` en prod.
+
+## Demandes additionnelles pour toi (si tu veux que je génère le patch)
+
+* Si tu veux je peux générer ici un `git patch` complet avec les modifications (backend + frontend).
+* Ou alors, envoie-moi les fichiers `src/server.ts` (ou `src/app.ts`), `src/routes/chat.ts`, et le composant frontend qui envoie les messages (ex: `ChatWidget.tsx`) ; je te rendrai un patch prêt à appliquer.
+
+Merci — tu peux commencer par appliquer ces changements sur Replit et me dire si tu veux le patch complet.
+Les captures d’écran utiles pour le debug sont jointes :
+
+* /mnt/data/Capture d'écran 2025-11-24 220922.png
+* /mnt/data/Capture d'écran 2025-11-24 220341.png
+* /mnt/data/Capture d'écran 2025-11-24 221831.png
+
+```
+
+---
+
+Si tu veux, je peux **immédiatement générer le patch `git`** (diff) pour les fichiers du backend et du frontend en me basant sur les snippets ci-dessus. Dis-moi si tu préfères le patch ou que je modifie directement des fichiers que tu uploades (envoie `server.ts`, `chat.routes.ts`, `ChatWidget.tsx`).
+```
