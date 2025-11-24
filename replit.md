@@ -2,131 +2,11 @@
 
 ## Overview
 
-ALTUS is a multi-language professional loan management platform designed for business clients. It provides a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. The platform aims to foster trust, clarity, and data-driven decision-making with features like multi-language support (French, English, Spanish, Portuguese, Italian, German, Dutch), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. Its primary purpose is to equip business professionals and enterprises with robust tools for loan financing and financial management.
+ALTUS is a multi-language professional loan management platform designed for business clients. It provides a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. The platform aims to foster trust, clarity, and data-driven decision-making with features like multi-language support (French, English, Spanish, Portuguese, Italian, German, Dutch), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. Its primary purpose is to equip business professionals and enterprises with robust tools for loan financing and financial management, offering a robust and secure environment for financial operations.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
-
-## Recent Changes (November 24, 2025)
-
-### Native Real-Time Chat System - Production Ready ✅
-- ✅ **IMPLEMENTED:** Complete native chat system with WebSocket real-time communication
-  - Built from scratch replacing CometChat (which was removed due to visibility issues)
-  - Socket.IO integration for bidirectional real-time messaging
-  - Backend: 12 REST endpoints + WebSocket event handlers
-  - Frontend: 7 production-grade components + 3 optimized React Query hooks
-- ✅ **ARCHITECTURE:** Unread Ownership Model (Critical Innovation)
-  - Admins retain visibility of conversations with unread messages even after reassignment
-  - `getAdminConversationsForUnread` uses dual-query approach: assigned conversations UNION conversations with unreads
-  - Prevents orphaned unread messages during admin handoffs
-  - Automatic cleanup when messages marked as read (no manual intervention)
-  - Files: `server/storage.ts` (lines 2996-3039), `server/routes.ts`
-- ✅ **REAL-TIME SYNC:** Socket event system for instant synchronization
-  - Events: `new_message`, `message_read`, `conversation_assigned`, `unread_sync_required`
-  - Structured queryKeys: `['chat', 'unread', 'user', userId]`, `['chat', 'messages', conversationId]`
-  - Immediate cache refetch on reassignment (both previous and new admin)
-  - Message list invalidation ensures UI consistency post-reassignment
-  - File: `client/src/hooks/useChatNotifications.ts`
-- ✅ **SECURITY:** SQL injection vulnerability fixed
-  - Removed all `sql.raw()` usage in WHERE clauses
-  - Uses Drizzle's type-safe parameter binding (`eq`, `inArray`, `and`, `or`)
-  - Safe template literals for comparison operators only
-  - Production-ready for Vercel + Render + PostgreSQL deployment
-- ✅ **FEATURES:**
-  - User-to-Admin messaging (users initiate, admins respond)
-  - Admin conversation assignment & reassignment
-  - Unread message counters with real-time updates
-  - Badge notifications synced across all admin sessions
-  - Message read status tracking
-  - Conversation status management (open/closed)
-  - ChatWidget component: floating chat button with popup window
-  - AdminChat page: comprehensive conversation management interface
-- ✅ **PRODUCTION VALIDATIONS:**
-  - LSP: 0 diagnostics
-  - Architect approval after multiple iterations resolving unread synchronization issues
-  - Structured queryKeys prevent cache collisions
-  - Server-as-truth badge hydration (clears stale client-side counts)
-  - Zero unread counts returned for stable badge state (no flicker)
-  - Performance recommendation: Monitor dual-query approach telemetry in production
-- 📝 **Documentation:** Complete architecture documented in `CHAT_SYSTEM_PRODUCTION.md`
-- 🚀 **Status:** PRODUCTION-READY for altusfinancesgroup.com deployment
-
-### UI/UX Improvements - Layout & Scrolling Fixes
-- ✅ **FIXED:** Double scrollbar issue resolved
-  - Removed `mt-[37px]` and `overflow-hidden` from main authenticated layout container
-  - TopBar height mismatch corrected - uses natural layout flow with `min-h-screen`
-  - Single scroll context maintained with sticky header properly aligned
-  - File modified: `client/src/App.tsx`
-- ✅ **REMOVED:** CometChat integration completely removed from codebase
-  - Widget was not visible despite portal implementation
-  - Removed all CometChat packages, files, routes, and configuration
-  - Cleaned up: ChatWidget component, backend routes, main.tsx initialization
-  - Packages uninstalled: `@cometchat-pro/chat`, `@cometchat/chat-uikit-react`
-  - Files deleted: `client/src/components/ChatWidget.tsx`, `client/src/cometchat.ts`, `client/src/hooks/useCometChat.ts`, `COMETCHAT_SETUP.md`
-
-## Recent Changes (November 20, 2025)
-
-### Transfer Code System - Critical Fixes
-- ✅ **FIXED:** Code numbering in admin emails corrected from "1/5...6/5" to dynamic "1/6...6/6" format
-  - Email template now derives denominator from `vars.codes.length` for any code count
-  - File modified: `server/emailTemplates.ts`
-- ✅ **FIXED:** Eliminated duplicate email sending during transfer initiation
-  - Codes now sent ONLY once when admin confirms contract (at fund availability)
-  - Removed duplicate `sendTransferCodesAdminEmail` call from transfer initiation route
-  - File modified: `server/routes.ts`
-- ✅ **FIXED:** Transfer initialization state corrected
-  - Transfers now start at 0% progress WITHOUT being paused
-  - `isPaused=false` and `pausePercent=null` explicitly set at transfer creation
-  - Pause occurs ONLY when validation code with pausePercent is encountered
-  - File modified: `server/routes.ts`
-- ✅ **FIXED:** Code retrieval logic improved
-  - `getLoanTransferCodes` now correctly filters codes for active transfer
-  - Falls back to pre-generated codes if no active transfer exists
-  - Prevents mixing codes from different transfers
-  - File modified: `server/storage.ts`
-- 🎯 **VERIFIED:** Single source of truth for pause percentages
-  - Percentages generated randomly once at contract confirmation
-  - Stored in database with validation codes
-  - Reused across all surfaces (admin email, transfer progress, user validation)
-  - No regeneration or inconsistency possible
-
-### CRITICAL SECURITY FIX - Transfer Validation Bypass Removed
-- 🔴 **CRITICAL:** Identified and removed a major security vulnerability in the transfer workflow
-- ❌ Removed fake "verification" step that auto-completed transfers after 45 seconds WITHOUT validating security codes
-- ✅ Transfers now start in paused state (0% progress) immediately after initiation
-- ✅ Progress is strictly blocked until each security code is validated by admin
-- ✅ Removed automatic progression logic - transfers ONLY advance after code validation
-- ✅ Verified with architect: no bypass path remains, security codes are now mandatory
-- 📝 Modified file: `client/src/pages/TransferFlow.tsx`
-  - Removed 'verification' step from state machine
-  - Changed initial progress from 10% to 0%
-  - Set isPausedForCode to true by default
-  - Added critical security check: progression only if `justValidated === true`
-  - Deleted 74 lines of fake verification UI and logic
-
-## Recent Changes (November 16, 2025)
-
-### Footer Reorganization & Cleanup
-- ✅ Removed redundant "Resources" section from footer (all links duplicated in "Company" section)
-- ✅ Cleaned up "Legal" section - removed duplicate links (CGU/Terms, Cookies/Privacy pointed to same pages)
-- ✅ Streamlined footer from 5 sections to 4 sections (Brand, Solutions, Company, Legal)
-- ✅ Verified all 7 footer pages have complete premium content:
-  - Terms.tsx - 6 legal sections ✅
-  - Privacy.tsx - 7 privacy sections ✅
-  - Products.tsx - Complete product catalog with individual & business loans ✅
-  - About.tsx - Company mission, values, stats ✅
-  - Resources.tsx - Comprehensive FAQ ✅
-  - HowItWorks.tsx - 4-step process, documents, security ✅
-  - Contact.tsx - Contact form + company info ✅
-
-### Code Cleanup & Verification
-- ✅ Removed obsolete backup file `client/src/lib/i18n.ts.backup` (17,453 lines)
-- ✅ Fixed missing `notExists` import in `server/storage.ts`
-- ✅ Verified PDF contract header is professionally structured (ALTUS branding, company details, contract reference)
-- ✅ Verified transfer creation logic correctly filters loans (status='approved', fundsAvailabilityStatus='available', excludes loans with existing transfers)
-- ✅ Verified transfer amount is non-modifiable and pre-filled from approved loan amount
-- ✅ Verified single active loan rule prevents multiple concurrent loan requests
 
 ## System Architecture
 
@@ -158,18 +38,21 @@ Preferred communication style: Simple, everyday language.
 - Professional PDF contract redesign with premium styling, structured information, and specific legal clauses.
 - Automatic visual transfer progression with pause checkpoints requiring validation codes.
 - Multi-channel notification system for contract signatures, including persistent banners, bell notifications, and email notifications.
+- Admin messages with cross-domain WebSocket authentication and real-time native chat system.
+- Layout and scrolling issues resolved for a single scroll context.
 
 ### Technical Implementations
 
 - **Authentication:** Comprehensive forgot/reset password with email notifications and rate limiting. Email verification includes automatic login. TOTP-based Two-Factor Authentication (2FA) is optional. Single session enforcement and CSRF protection are implemented.
 - **Session Management & Error Handling:** Global 401/403 interceptor redirects to login. `SessionMonitor` ensures periodic session validation. Intelligent retry logic.
-- **Security Features:** IDOR protection, Zod validation, XSS protection, strong password requirements, UUID usernames, generic error messages, file upload validation with magic byte verification. Comprehensive rate limiting on sensitive endpoints. Encrypted 2FA secrets. SSL configuration hardened for production.
+- **Security Features:** IDOR protection, Zod validation, XSS protection, strong password requirements, UUID usernames, generic error messages, file upload validation with magic byte verification. Comprehensive rate limiting on sensitive endpoints. Encrypted 2FA secrets. SSL configuration hardened for production. Transfer validation now strictly requires security code input, removing any bypass paths.
 - **Loan Disbursement Workflow:** Multi-step approval process (Request -> Admin Approval -> Contract Signing -> Manual Admin Fund Disbursement).
-- **KYC Document Upload:** Local file system storage in `uploads/kyc_documents/` with file validation, sanitization (via Sharp for images, PDF-lib for PDFs), and cryptographic UUID identifiers. Documents are attached to admin notification emails via SendGrid.
-- **Profile Photo Upload:** Cloudinary cloud-based image storage with `type:'authenticated'`, automatic transformations, and secure HTTPS URLs. **Note:** Cloudinary is used ONLY for profile photos in the Dashboard.
+- **KYC Document Upload:** Local file system storage in `uploads/kyc_documents/` with file validation, sanitization, and cryptographic UUID identifiers. Documents are attached to admin notification emails via SendGrid.
+- **Profile Photo Upload:** Cloudinary cloud-based image storage.
 - **Signed Contracts:** Local file system storage in `uploads/signed-contracts/` with PDF validation and secure file handling.
 - **Notification System:** Database-backed persistent notifications with RESTful API, user ownership enforcement, `NotificationBell` component with polling, unread count badges, sound alerts, and a 2FA suggestion system. Supports multilingual notifications and covers 18 distinct critical user events.
 - **Loan Workflow Enhancement:** Implemented a 3-stage contract lifecycle with `status` and `contractStatus` fields for clear tracking.
+- **Transfer Code System:** Dynamic code numbering in admin emails and single source of truth for pause percentages stored in the database.
 
 ## External Dependencies
 
@@ -179,5 +62,5 @@ Preferred communication style: Simple, everyday language.
 **Form Management:** React Hook Form, Zod, `@hookform/resolvers`.
 **Authentication:** SendGrid for transactional email verification.
 **Two-Factor Authentication:** Speakeasy and qrcode libraries for TOTP generation and verification.
-**Cloud Storage:** Cloudinary for profile photo storage only. KYC documents and signed contracts use local file system storage.
+**Cloud Storage:** Cloudinary for profile photo storage only.
 **File Validation:** Sharp for image sanitization, PDF-lib for PDF sanitization, file-type for magic byte verification.
