@@ -131,14 +131,14 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
       }
     };
 
-    socket.on("new_message", handleNewMessage);
-    socket.on("message_read", handleMessageRead);
+    socket.on("chat:new-message", handleNewMessage);
+    socket.on("chat:read-receipt", handleMessageRead);
     socket.on("unread_sync_required", handleUnreadSync);
     socket.on("conversation_assigned", handleConversationAssigned);
 
     return () => {
-      socket.off("new_message", handleNewMessage);
-      socket.off("message_read", handleMessageRead);
+      socket.off("chat:new-message", handleNewMessage);
+      socket.off("chat:read-receipt", handleMessageRead);
       socket.off("unread_sync_required", handleUnreadSync);
       socket.off("conversation_assigned", handleConversationAssigned);
     };

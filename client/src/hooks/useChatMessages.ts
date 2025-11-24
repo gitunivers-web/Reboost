@@ -35,7 +35,7 @@ export function useChatMessages({
   useEffect(() => {
     if (!socket || !connected || !conversationId) return;
 
-    socket.emit("join_conversation", conversationId);
+    socket.emit("chat:join-conversation", conversationId);
 
     const handleNewMessage = (message: ChatMessage) => {
       queryClient.invalidateQueries({
@@ -58,24 +58,20 @@ export function useChatMessages({
       }
     };
 
-    const handleUserTyping = (data: { userId: string; username: string; conversationId: string }) => {
-      if (data.conversationId === conversationId) {
+    const handleUserTyping = (data: { userId: string; isTyping: boolean }) => {
+      if (data.isTyping) {
         setTypingUsers((prev) => {
           const exists = prev.some((u) => u.userId === data.userId);
           if (!exists) {
-            return [...prev, { userId: data.userId, username: data.username }];
+            return [...prev, { userId: data.userId, username: '' }];
           }
           return prev;
         });
 
         if (onTyping) {
-          onTyping({ userId: data.userId, username: data.username });
+          onTyping({ userId: data.userId, username: '' });
         }
-      }
-    };
-
-    const handleUserStoppedTyping = (data: { userId: string; conversationId: string }) => {
-      if (data.conversationId === conversationId) {
+      } else {
         setTypingUsers((prev) => prev.filter((u) => u.userId !== data.userId));
 
         if (onStoppedTyping) {
@@ -84,7 +80,7 @@ export function useChatMessages({
       }
     };
 
-    const handleMessageRead = (data: { conversationId: string; messageIds: string[] }) => {
+    const handleMessageRead = (data: { conversationId: string }) => {
       if (data.conversationId === conversationId) {
         queryClient.invalidateQueries({
           queryKey: ['chat', 'messages', conversationId],
@@ -103,17 +99,15 @@ export function useChatMessages({
       }
     };
 
-    socket.on("new_message", handleNewMessage);
-    socket.on("user_typing", handleUserTyping);
-    socket.on("user_stopped_typing", handleUserStoppedTyping);
-    socket.on("message_read", handleMessageRead);
+    socket.on("chat:new-message", handleNewMessage);
+    socket.on("chat:user-typing", handleUserTyping);
+    socket.on("chat:messages-read", handleMessageRead);
 
     return () => {
-      socket.emit("leave_conversation", conversationId);
-      socket.off("new_message", handleNewMessage);
-      socket.off("user_typing", handleUserTyping);
-      socket.off("user_stopped_typing", handleUserStoppedTyping);
-      socket.off("message_read", handleMessageRead);
+      socket.emit("chat:leave-conversation", conversationId);
+      socket.off("chat:new-message", handleNewMessage);
+      socket.off("chat:user-typing", handleUserTyping);
+      socket.off("chat:messages-read", handleMessageRead);
 
       if (typingTimeoutRef.current) {
         clearTimeout(typingTimeoutRef.current);
@@ -128,11 +122,10 @@ export function useChatMessages({
         return;
       }
 
-      socket.emit("send_message", {
+      socket.emit("chat:send-message", {
         conversationId,
         content,
         fileUrl,
-        fileName,
       });
     },
     [socket, connected, conversationId]
@@ -142,7 +135,7 @@ export function useChatMessages({
     if (!socket || !connected) return;
 
     setIsTyping(true);
-    socket.emit("typing_start", { conversationId });
+    socket.emit("chat:typing", { conversationId, isTyping: true });
 
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
@@ -157,7 +150,7 @@ export function useChatMessages({
     if (!socket || !connected) return;
 
     setIsTyping(false);
-    socket.emit("typing_stop", { conversationId });
+    socket.emit("chat:typing", { conversationId, isTyping: false });
 
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
