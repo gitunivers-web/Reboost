@@ -1,0 +1,52 @@
+2025-11-24T16:25:16.545814319Z ✅ Cloudinary configured successfully
+2025-11-24T16:25:16.548784278Z ============================================================
+2025-11-24T16:25:16.548804209Z [CONFIG] Environment: production
+2025-11-24T16:25:16.548809269Z [CONFIG] Cookie Domain: .altusfinancesgroup.com
+2025-11-24T16:25:16.548813389Z [CONFIG] Cookie SameSite: none
+2025-11-24T16:25:16.548817139Z [CONFIG] Cookie Secure: true
+2025-11-24T16:25:16.548821249Z [CONFIG] CORS Allowed Origins: production domains
+2025-11-24T16:25:16.548825249Z [CONFIG] Frontend URL: https://altusfinancesgroup.com
+2025-11-24T16:25:16.548829299Z [CONFIG] Trust Proxy: enabled
+2025-11-24T16:25:16.548833309Z ============================================================
+2025-11-24T16:25:16.950258133Z 4:25:16 PM [express] ✅ Backend API server listening on port 10000
+2025-11-24T16:25:16.950532278Z 4:25:16 PM [express] 🌍 Environment: production
+2025-11-24T16:25:16.950760022Z 4:25:16 PM [express] 🗄️ Database: Connected
+2025-11-24T16:25:16.950787602Z [CONFIG] FRONTEND_URL: https://altusfinancesgroup.com
+2025-11-24T16:25:16.950797992Z [CONFIG] Allowed Origins: ["https://altusfinancesgroup.com","https://www.altusfinancesgroup.com"]
+2025-11-24T16:25:16.950804702Z [CONFIG] Session Cookie Domain: .altusfinancesgroup.com
+2025-11-24T16:25:16.950812472Z [CONFIG] Session Cookie Secure: true
+2025-11-24T16:25:16.950901574Z [CONFIG] Session Cookie SameSite: none
+2025-11-24T16:25:17.564501719Z ℹ️ Compte administrateur existant: admin@altusfinancesgroup.com
+2025-11-24T16:25:21.954957469Z Expired OTPs cleaned up
+2025-11-24T16:25:22.126148774Z [CHAT WS] Utilisateur connecté: 1b9acdff-62b8-4f01-925e-1ae551ef7e81 (user)
+2025-11-24T16:25:22.131380851Z /opt/render/project/src/node_modules/pg-pool/index.js:45
+2025-11-24T16:25:22.131413401Z     Error.captureStackTrace(err)
+2025-11-24T16:25:22.131419271Z           ^
+2025-11-24T16:25:22.131424091Z 
+2025-11-24T16:25:22.131430761Z error: relation "chat_presence" does not exist
+2025-11-24T16:25:22.131438232Z     at /opt/render/project/src/node_modules/pg-pool/index.js:45:11
+2025-11-24T16:25:22.131445502Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-11-24T16:25:22.131452932Z     at async file:///opt/render/project/src/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-11-24T16:25:22.131479772Z     at async DatabaseStorage.getUserPresence (file:///opt/render/project/src/dist/index.js:1817:24)
+2025-11-24T16:25:22.131484742Z     at async DatabaseStorage.updateUserPresence (file:///opt/render/project/src/dist/index.js:1821:34)
+2025-11-24T16:25:22.131491322Z     at async Namespace.<anonymous> (file:///opt/render/project/src/dist/index.js:6714:7) {
+2025-11-24T16:25:22.131496562Z   length: 112,
+2025-11-24T16:25:22.131502473Z   severity: 'ERROR',
+2025-11-24T16:25:22.131508453Z   code: '42P01',
+2025-11-24T16:25:22.131513673Z   detail: undefined,
+2025-11-24T16:25:22.131519403Z   hint: undefined,
+2025-11-24T16:25:22.131523193Z   position: '60',
+2025-11-24T16:25:22.131526593Z   internalPosition: undefined,
+2025-11-24T16:25:22.131530513Z   internalQuery: undefined,
+2025-11-24T16:25:22.131536063Z   where: undefined,
+2025-11-24T16:25:22.131560094Z   schema: undefined,
+2025-11-24T16:25:22.131567434Z   table: undefined,
+2025-11-24T16:25:22.131572334Z   column: undefined,
+2025-11-24T16:25:22.131576984Z   dataType: undefined,
+2025-11-24T16:25:22.131600104Z   constraint: undefined,
+2025-11-24T16:25:22.131603264Z   file: 'parse_relation.c',
+2025-11-24T16:25:22.131606044Z   line: '1449',
+2025-11-24T16:25:22.131608934Z   routine: 'parserOpenTable'
+2025-11-24T16:25:22.131611664Z }
+2025-11-24T16:25:22.131614144Z 
+2025-11-24T16:25:22.131616924Z Node.js v22.16.0
