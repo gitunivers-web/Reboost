@@ -655,53 +655,46 @@ const getContractTemplate = (data: ContractData): string => {
     .header {
       background: #ffffff;
       color: #1a1a1a;
-      padding: 35px 45px;
+      padding: 30px 40px;
       margin: -2cm -2cm 30px -2cm;
       position: relative;
       border-bottom: 3px solid #2563eb;
+      text-align: center;
     }
     .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 30px;
-      text-align: left;
-      padding-bottom: 25px;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
       border-bottom: 1px solid rgba(37, 99, 235, 0.2);
-      gap: 20px;
     }
     .logo-section {
-      flex-shrink: 0;
-      min-width: 200px;
+      margin-bottom: 18px;
     }
     .logo {
-      font-size: 32pt;
+      font-size: 28pt;
       font-weight: 900;
-      letter-spacing: 3px;
-      margin-bottom: 6px;
+      letter-spacing: 2.5px;
+      margin-bottom: 5px;
       text-transform: uppercase;
       line-height: 1;
       color: #1e3a8a;
     }
     .logo-subtitle {
-      font-size: 12pt;
+      font-size: 11pt;
       opacity: 0.92;
       font-weight: 300;
-      letter-spacing: 2px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       color: #475569;
     }
     .header-info {
-      text-align: right;
-      font-size: 8.5pt;
-      line-height: 1.8;
-      flex-shrink: 0;
-      min-width: 280px;
+      font-size: 8pt;
+      line-height: 1.6;
+      color: #475569;
     }
     .header-info strong {
       display: block;
-      font-size: 9.5pt;
-      margin-bottom: 8px;
+      font-size: 9pt;
+      margin-bottom: 6px;
       letter-spacing: 0.3px;
       color: #1e3a8a;
       font-weight: 700;
@@ -710,7 +703,6 @@ const getContractTemplate = (data: ContractData): string => {
       display: block;
       opacity: 0.85;
       color: #475569;
-      white-space: nowrap;
     }
     .contract-ref {
       background: #f8fafc;
@@ -906,9 +898,7 @@ const getContractTemplate = (data: ContractData): string => {
         <span class="contact-line">www.altusfinancesgroup.com</span>
       </div>
     </div>
-    <div style="text-align: center;">
-      <div class="contract-ref">${t.contractNumber} ${loan.id.toUpperCase()}</div>
-    </div>
+    <div class="contract-ref">${t.contractNumber} ${loan.id.toUpperCase()}</div>
   </div>
 
   <h1>${t.contractTitle}</h1>
