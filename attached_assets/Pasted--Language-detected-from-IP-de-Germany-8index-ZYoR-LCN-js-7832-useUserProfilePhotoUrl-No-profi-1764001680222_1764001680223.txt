@@ -1,0 +1,1236 @@
+🌍 Language detected from IP: de (Germany)
+8index-ZYoR_LCN.js:7832 [useUserProfilePhotoUrl] No profile photo in user data: undefined
+index-ZYoR_LCN.js:7832 [useUserProfilePhotoUrl] No profile photo in user data: Object
+index-ZYoR_LCN.js:7832 [useUserProfilePhotoUrl] No profile photo in user data: Object
+index-ZYoR_LCN.js:7921 ✅ Socket connected: 2XEx2q2XHIkiTlOpAAAB
+index-ZYoR_LCN.js:7832 [useUserProfilePhotoUrl] No profile photo in user data: Object
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications/unread-count:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at Object.start (index-ZYoR_LCN.js:48:11672)
+    at Aoe.execute (index-ZYoR_LCN.js:48:30544)
+    at async m (index-ZYoR_LCN.js:7921:77255)
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications/unread-count:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications/unread-count:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at Object.start (index-ZYoR_LCN.js:48:11672)
+    at Aoe.execute (index-ZYoR_LCN.js:48:30544)
+    at async m (index-ZYoR_LCN.js:7921:77255)
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:7921 ❌ Socket disconnected: transport close
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at Object.start (index-ZYoR_LCN.js:48:11672)
+    at Aoe.execute (index-ZYoR_LCN.js:48:30544)
+    at async m (index-ZYoR_LCN.js:7921:77255)
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications/unread-count:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:7921 Failed to create conversation: TypeError: Failed to fetch
+    at Ye (index-ZYoR_LCN.js:48:864248)
+    at async Object.mutationFn (index-ZYoR_LCN.js:7921:22256)
+m @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/csrf-token:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/chat/conversations:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:7921 Failed to create conversation: TypeError: Failed to fetch
+    at Ye (index-ZYoR_LCN.js:48:864248)
+    at async Object.mutationFn (index-ZYoR_LCN.js:7921:22256)
+m @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications/unread-count:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+api.altusfinancesgroup.com/api/notifications/unread-count:1  Failed to load resource: net::ERR_FAILEDComprendre cette erreur
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/csrf-token' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/csrf-token net::ERR_FAILED 503 (Service Unavailable)
+Jpe @ index-ZYoR_LCN.js:48
+Ye @ index-ZYoR_LCN.js:48
+mutationFn @ index-ZYoR_LCN.js:7921
+fn @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:48 Failed to fetch CSRF token: TypeError: Failed to fetch
+    at Jpe (index-ZYoR_LCN.js:48:862964)
+    at Ye (index-ZYoR_LCN.js:48:864203)
+    at Object.mutationFn (index-ZYoR_LCN.js:7921:22262)
+    at Object.fn (index-ZYoR_LCN.js:48:29774)
+    at v (index-ZYoR_LCN.js:48:11189)
+    at index-ZYoR_LCN.js:48:11531
+Jpe @ index-ZYoR_LCN.js:48
+await in Jpe
+Ye @ index-ZYoR_LCN.js:48
+mutationFn @ index-ZYoR_LCN.js:7921
+fn @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/chat/conversations' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  POST https://api.altusfinancesgroup.com/api/chat/conversations net::ERR_FAILED
+Ye @ index-ZYoR_LCN.js:48
+await in Ye
+mutationFn @ index-ZYoR_LCN.js:7921
+fn @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921 Failed to create conversation: TypeError: Failed to fetch
+    at Ye (index-ZYoR_LCN.js:48:864248)
+    at async Object.mutationFn (index-ZYoR_LCN.js:7921:22256)
+m @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+conversations:1  Failed to load resource: the server responded with a status of 404 ()Comprendre cette erreur
+1b9acdff-62b8-4f01-925e-1ae551ef7e81:1  Failed to load resource: the server responded with a status of 404 ()Comprendre cette erreur
+index-ZYoR_LCN.js:7921  GET https://altusfinancesgroup.com/api/chat/conversations 404 (Not Found)
+queryFn @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921  GET https://altusfinancesgroup.com/api/chat/unread/1b9acdff-62b8-4f01-925e-1ae551ef7e81 404 (Not Found)
+queryFn @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921 ✅ Socket connected: FZt4ubtpbWDIeGJlAAAB
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 502 (Bad Gateway)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 502 (Bad Gateway)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921  GET https://altusfinancesgroup.com/api/chat/conversations 404 (Not Found)
+queryFn @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921  GET https://altusfinancesgroup.com/api/chat/unread/1b9acdff-62b8-4f01-925e-1ae551ef7e81 404 (Not Found)
+queryFn @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921  GET https://altusfinancesgroup.com/api/chat/unread/1b9acdff-62b8-4f01-925e-1ae551ef7e81 404 (Not Found)
+queryFn @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921  GET https://altusfinancesgroup.com/api/chat/conversations 404 (Not Found)
+queryFn @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921 ❌ Socket disconnected: transport close
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921
+doOpen @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+_open @ index-ZYoR_LCN.js:7921
+Ol @ index-ZYoR_LCN.js:7921
+Cvt @ index-ZYoR_LCN.js:7921
+Avt @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onerror @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+_onError @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onError @ index-ZYoR_LCN.js:7921
+ws.onerror @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921
+doOpen @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+_open @ index-ZYoR_LCN.js:7921
+Ol @ index-ZYoR_LCN.js:7921
+Cvt @ index-ZYoR_LCN.js:7921
+Avt @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onerror @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+_onError @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onError @ index-ZYoR_LCN.js:7921
+ws.onerror @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921
+doOpen @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+_open @ index-ZYoR_LCN.js:7921
+Ol @ index-ZYoR_LCN.js:7921
+Cvt @ index-ZYoR_LCN.js:7921
+Avt @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onerror @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+_onError @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onError @ index-ZYoR_LCN.js:7921
+ws.onerror @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921
+doOpen @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+_open @ index-ZYoR_LCN.js:7921
+Ol @ index-ZYoR_LCN.js:7921
+Cvt @ index-ZYoR_LCN.js:7921
+Avt @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onerror @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+_onError @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onError @ index-ZYoR_LCN.js:7921
+ws.onerror @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+index-ZYoR_LCN.js:7921 WebSocket connection to 'wss://api.altusfinancesgroup.com/socket.io/?EIO=4&transport=websocket' failed: 
+createSocket @ index-ZYoR_LCN.js:7921
+doOpen @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+_open @ index-ZYoR_LCN.js:7921
+Ol @ index-ZYoR_LCN.js:7921
+Cvt @ index-ZYoR_LCN.js:7921
+Avt @ index-ZYoR_LCN.js:7921
+open @ index-ZYoR_LCN.js:7921
+(anonyme) @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+index-ZYoR_LCN.js:7921 🔴 Socket connection error: websocket error
+(anonyme) @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onerror @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+i @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+_onError @ index-ZYoR_LCN.js:7921
+Cn.emit @ index-ZYoR_LCN.js:7921
+onError @ index-ZYoR_LCN.js:7921
+ws.onerror @ index-ZYoR_LCN.js:7921Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/user' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/user net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications/unread-count' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications/unread-count net::ERR_FAILED 503 (Service Unavailable)
+(anonyme) @ index-ZYoR_LCN.js:48
+i @ index-ZYoR_LCN.js:48
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.then
+(anonyme) @ index-ZYoR_LCN.js:48
+Promise.catch
+v @ index-ZYoR_LCN.js:48
+start @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+setInterval
+setInterval @ index-ZYoR_LCN.js:48
+setInterval @ index-ZYoR_LCN.js:48
+dU @ index-ZYoR_LCN.js:48
+uU @ index-ZYoR_LCN.js:48
+onQueryUpdate @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48
+batch @ index-ZYoR_LCN.js:48
+$o @ index-ZYoR_LCN.js:48
+fetch @ index-ZYoR_LCN.js:48
+await in fetch
+a0 @ index-ZYoR_LCN.js:48
+(anonyme) @ index-ZYoR_LCN.js:48Comprendre cette erreur
+dashboard:1 Access to fetch at 'https://api.altusfinancesgroup.com/api/notifications' from origin 'https://altusfinancesgroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Comprendre cette erreur
+index-ZYoR_LCN.js:48  GET https://api.altusfinancesgroup.com/api/notifications net::ERR_FAILED 503 (Service Unavailable)
