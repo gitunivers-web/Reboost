@@ -258,6 +258,47 @@ export const messages = pgTable("messages", {
   conversationIdx: index("messages_conversation_idx").on(table.senderId, table.receiverId, table.createdAt),
 }));
 
+// Chat System Tables
+export const chatConversations = pgTable("chat_conversations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  assignedAdminId: varchar("assigned_admin_id"),
+  subject: text("subject"),
+  status: text("status").notNull().default("open"),
+  lastMessageAt: timestamp("last_message_at"),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+}, (table) => ({
+  userIdIdx: index("chat_conversations_user_id_idx").on(table.userId),
+  adminIdIdx: index("chat_conversations_admin_id_idx").on(table.assignedAdminId),
+  statusIdx: index("chat_conversations_status_idx").on(table.status),
+}));
+
+export const chatMessages = pgTable("chat_messages", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  conversationId: varchar("conversation_id").notNull(),
+  senderId: varchar("sender_id").notNull(),
+  senderType: text("sender_type").notNull(),
+  content: text("content").notNull(),
+  messageType: text("message_type").notNull().default("text"),
+  fileUrl: text("file_url"),
+  fileName: text("file_name"),
+  isRead: boolean("is_read").notNull().default(false),
+  readAt: timestamp("read_at"),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+}, (table) => ({
+  conversationIdIdx: index("chat_messages_conversation_id_idx").on(table.conversationId),
+  senderIdIdx: index("chat_messages_sender_id_idx").on(table.senderId),
+  createdAtIdx: index("chat_messages_created_at_idx").on(table.createdAt),
+}));
+
+export const chatPresence = pgTable("chat_presence", {
+  userId: varchar("user_id").primaryKey(),
+  status: text("status").notNull().default("offline"),
+  lastSeen: timestamp("last_seen").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+});
+
 export const amortizationSchedule = pgTable("amortization_schedule", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   loanId: varchar("loan_id").notNull(),
@@ -298,6 +339,11 @@ export const insertNotificationSchema = createInsertSchema(notifications).omit({
 export const insertMessageSchema = createInsertSchema(messages).omit({ id: true, createdAt: true });
 export const insertAmortizationScheduleSchema = createInsertSchema(amortizationSchedule).omit({ id: true, createdAt: true });
 
+// Chat System Schemas
+export const insertChatConversationSchema = createInsertSchema(chatConversations).omit({ id: true, createdAt: true, updatedAt: true });
+export const insertChatMessageSchema = createInsertSchema(chatMessages).omit({ id: true, createdAt: true });
+export const insertChatPresenceSchema = createInsertSchema(chatPresence).omit({ updatedAt: true });
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Loan = typeof loans.$inferSelect;
@@ -330,6 +376,14 @@ export type Message = typeof messages.$inferSelect;
 export type InsertMessage = z.infer<typeof insertMessageSchema>;
 export type AmortizationSchedule = typeof amortizationSchedule.$inferSelect;
 export type InsertAmortizationSchedule = z.infer<typeof insertAmortizationScheduleSchema>;
+
+// Chat System Types
+export type ChatConversation = typeof chatConversations.$inferSelect;
+export type InsertChatConversation = z.infer<typeof insertChatConversationSchema>;
+export type ChatMessage = typeof chatMessages.$inferSelect;
+export type InsertChatMessage = z.infer<typeof insertChatMessageSchema>;
+export type ChatPresence = typeof chatPresence.$inferSelect;
+export type InsertChatPresence = z.infer<typeof insertChatPresenceSchema>;
 
 // Type sécurisé pour les métadonnées de code sans exposer les valeurs sensibles
 export type TransferCodeMetadata = {
