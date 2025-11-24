@@ -88,7 +88,7 @@ function App() {
               <LoanDialogProvider>
                 <TopBar />
                 <SidebarProvider style={style as React.CSSProperties}>
-                  <div className="flex min-h-screen w-full mt-[37px] overflow-hidden">
+                  <div className="flex min-h-screen w-full">
                     <AppSidebar />
                     <div className="flex flex-col flex-1">
                       {/* Fintech Premium Header */}

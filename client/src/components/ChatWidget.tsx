@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { useUser } from "@/hooks/use-user";
 import { 
   CometChatConversations, 
@@ -147,7 +148,7 @@ export default function ChatWidget() {
     }
   };
 
-  return (
+  return createPortal(
     <>
       <Button
         data-testid="button-chat-widget"
@@ -267,6 +268,7 @@ export default function ChatWidget() {
           )}
         </Card>
       )}
-    </>
+    </>,
+    document.body
   );
 }
