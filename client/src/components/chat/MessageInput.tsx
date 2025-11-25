@@ -27,6 +27,7 @@ export function MessageInput({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
@@ -171,7 +172,7 @@ export function MessageInput({
                   data-testid="input-file"
                 />
                 <input
-                  ref={fileInputRef}
+                  ref={imageInputRef}
                   type="file"
                   accept="image/*"
                   onChange={handleImageSelect}
@@ -191,16 +192,7 @@ export function MessageInput({
                 <Button
                   size="icon"
                   variant="ghost"
-                  onClick={() => {
-                    const imageInput = document.createElement('input');
-                    imageInput.type = 'file';
-                    imageInput.accept = 'image/*';
-                    imageInput.onchange = (e: any) => {
-                      const file = e.target.files?.[0];
-                      if (file) setSelectedFile(file);
-                    };
-                    imageInput.click();
-                  }}
+                  onClick={() => imageInputRef.current?.click()}
                   disabled={disabled}
                   data-testid="button-attach-image"
                   title="Send photo"
