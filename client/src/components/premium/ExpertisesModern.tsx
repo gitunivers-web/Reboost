@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Building2, User, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
 import { useTranslations } from "@/lib/i18n";
 
 const expertiseIcons = [Building2, User, RefreshCw, Sparkles];
@@ -13,6 +13,7 @@ const expertiseColors = [
 
 export default function ExpertisesModern() {
   const t = useTranslations();
+  const [, setLocation] = useLocation();
   
   return (
     <section className="relative py-24 bg-white">
@@ -65,20 +66,14 @@ export default function ExpertisesModern() {
                 </div>
 
                 {/* CTA */}
-                <a 
-                  href="/expertise"
-                  className="inline-flex items-center gap-2 text-indigo-600 font-semibold group-hover:gap-3 transition-all duration-300 cursor-pointer"
+                <button 
+                  onClick={() => setLocation('/expertise')}
+                  className="inline-flex items-center gap-2 text-indigo-600 font-semibold group-hover:gap-3 transition-all duration-300 cursor-pointer bg-transparent border-0 p-0"
                   data-testid={`button-expertise-learn-more-${index}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.location.hash = '';
-                    window.history.pushState(null, '', '/expertise');
-                    window.dispatchEvent(new PopStateEvent('popstate'));
-                  }}
                 >
                   {expertise.learnMore}
                   <ArrowRight className="h-4 w-4" />
-                </a>
+                </button>
 
                 {/* Gradient overlay on hover */}
                 <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${expertiseColors[index]} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />

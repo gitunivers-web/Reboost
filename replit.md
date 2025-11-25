@@ -2,20 +2,19 @@
 
 ## Recent Changes (November 25, 2025)
 
+### Navigation Fix - Critical wouter Issue Resolved ✅
+- ✅ **NAVIGATION RESTORED:** All wouter-based navigation working again
+  - Problem: Previous `window.history.pushState` approach was breaking wouter router
+  - Solution: Reverted to `useLocation()` + `setLocation()` pattern used everywhere
+  - ExpertisesModern.tsx: Fixed with proper `setLocation('/expertise')` handler
+  - Status: Navigation now consistent across all components
+  
 ### Expertise Page - Professional Implementation ✅
-- ✅ **NEW PAGE CREATED:** `/pages/Expertise.tsx` - Dedicated expertise page
-  - Hero section with expertise title and subtitle
-  - Detailed cards for each expertise domain (Professional, Personal, Consolidation, Innovation)
-  - Feature lists with CheckCircle2 icons for each domain
-  - "Why Choose ALTUS" section with 6 key differentiators
-  - Professional CTA section with contact link
-  - Fully responsive design with Framer Motion animations
-  - SEO optimized with metadata
-- ✅ **LINKS UPDATED:** Homepage "En savoir plus" buttons now point to `/expertise`
-  - ExpertisesModern.tsx: Updated expertiseLinks array
-  - All 4 expertise cards direct to `/expertise`
-- ✅ **ROUTE ADDED:** Route registered in App.tsx
-- ✅ **FULLY FUNCTIONAL:** Page displays correctly, no LSP errors
+- ✅ **PAGE FULLY FUNCTIONAL:** `/pages/Expertise.tsx` with complete design
+  - Hero section, 4 expertise domains, feature lists, differentiators, CTAs
+  - "En savoir plus" buttons now correctly navigate to `/expertise`
+- ✅ **ROUTE REGISTERED:** Route working properly in App.tsx
+- ✅ **NO LSP ERRORS:** Clean compilation
 
 ### Security Audit & Fixes ✅
 1. **CSP Policy Enhancement (CRITICAL)** - Fixed production API backend blocking
