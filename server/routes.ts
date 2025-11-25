@@ -3767,28 +3767,12 @@ Tous les codes de validation ont été vérifiés avec succès.`,
         );
       const unreadMessages = Number(unreadMessagesResult[0]?.count || 0);
 
-      // Contrats en attente de signature utilisateur (admin a généré, user must sign)
-      const awaitingUserSignatureContracts = allLoans.filter(loan =>
-        loan.contractStatus === 'awaiting_user_signature' &&
-        loan.contractUrl &&
-        !loan.deletedAt
-      ).length;
-
-      // Contrats en attente de révision admin (user a renvoyé signé, admin must review)
-      const awaitingAdminReviewContracts = allLoans.filter(loan =>
-        loan.contractStatus === 'awaiting_admin_review' &&
-        loan.signedContractUrl &&
-        !loan.deletedAt
-      ).length;
-
       res.json({
         pendingLoans,
         signedContracts,
         transfersRequiringCode,
         unreadMessages,
-        awaitingUserSignatureContracts,
-        awaitingAdminReviewContracts,
-        total: pendingLoans + signedContracts + transfersRequiringCode + unreadMessages + awaitingUserSignatureContracts + awaitingAdminReviewContracts
+        total: pendingLoans + signedContracts + transfersRequiringCode + unreadMessages
       });
     } catch (error) {
       console.error('Error fetching admin notifications count:', error);

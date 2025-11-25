@@ -28,8 +28,6 @@ export default function AdminDashboard() {
     signedContracts: number;
     transfersRequiringCode: number;
     unreadMessages: number;
-    awaitingUserSignatureContracts: number;
-    awaitingAdminReviewContracts: number;
     total: number;
   }>({
     queryKey: ["/api/admin/notifications-count"],
