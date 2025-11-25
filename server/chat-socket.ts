@@ -126,20 +126,27 @@ export function initializeChatSocket(httpServer: HTTPServer, storage: IStorage, 
         const message = await storage.createChatMessage({
           conversationId,
           senderId: userId,
-          senderType: userRole,
+          senderType: userRole === 'admin' ? 'admin' : 'user',
           content,
           fileUrl,
         });
 
-        io.to(`conversation:${conversationId}`).emit('chat:new-message', message);
+        // Émettre le message à TOUS les clients (incluant l'expéditeur)
+        io.to(`conversation:${conversationId}`).emit('chat:new-message', {
+          ...message,
+          isRead: false, // Les nouveaux messages sont toujours non-lus pour le destinataire
+        });
 
+        // Notifier le destinataire (utilisateur ou admin) des messages non lus
         const recipientUserId = userRole === 'admin' ? conversation.userId : conversation.assignedAdminId;
         if (recipientUserId) {
-          io.to(`user:${recipientUserId}`).emit('chat:unread-count', {
-            conversationId,
-            count: await storage.getUnreadMessageCount(conversationId, recipientUserId),
+          // Invalider le cache unread du destinataire
+          io.to(`user:${recipientUserId}`).emit('unread_sync_required', { 
+            userId: recipientUserId 
           });
         }
+        
+        console.log(`[CHAT WS] Message créé: ${message.id} pour conversation ${conversationId}`);
       } catch (error) {
         console.error('[CHAT WS] Erreur envoi message:', error);
         socket.emit('error', { message: 'Erreur lors de l\'envoi du message' });

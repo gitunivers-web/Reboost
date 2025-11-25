@@ -122,13 +122,38 @@ export function useChatMessages({
         return;
       }
 
+      // Optimistic update: ajouter le message immédiatement au cache
+      const optimisticMessage: ChatMessage = {
+        id: `temp-${Date.now()}`,
+        conversationId,
+        senderId: currentUser?.id || '',
+        senderType: currentUser?.role === 'admin' ? 'admin' : 'user',
+        content,
+        messageType: 'text',
+        isRead: true, // Le message de l'expéditeur est toujours "lu" pour lui
+        readAt: new Date(), // Marqué comme lu maintenant
+        createdAt: new Date(),
+        fileUrl: fileUrl || null,
+        fileName: fileName || null,
+      };
+
+      // Mettre à jour le cache React Query avec le message optimiste
+      queryClient.setQueryData(
+        ['chat', 'messages', conversationId],
+        (oldData: ChatMessage[] | undefined) => {
+          if (!oldData) return [optimisticMessage];
+          return [...oldData, optimisticMessage];
+        }
+      );
+
+      // Envoyer le message via socket
       socket.emit("chat:send-message", {
         conversationId,
         content,
         fileUrl,
       });
     },
-    [socket, connected, conversationId]
+    [socket, connected, conversationId, queryClient, currentUser]
   );
 
   const startTyping = useCallback(() => {
