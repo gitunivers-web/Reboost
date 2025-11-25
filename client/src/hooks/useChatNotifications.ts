@@ -102,15 +102,27 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
     };
 
     const handleUnreadCountUpdate = (data: { conversationId: string; count: number }) => {
-      // Update immediately when backend sends direct count (faster than refetch)
+      // Update local unread counts state for regular users
       setUnreadCounts((prev) => ({
         ...prev,
         [data.conversationId]: data.count,
       }));
       
-      // IMPORTANT: Do NOT invalidate conversations here - it causes refetch and overwrites our unread count
-      // The unread count will be refreshed when user opens the conversation via useChatMessages
-      // Just keep the local state updated
+      // Update admin conversation queries in cache (without refetch)
+      // This ensures the unread badge persists for admins until they open the chat
+      queryClient.setQueriesData(
+        { queryKey: ['chat', 'conversations', 'admin'], exact: false },
+        (oldData: any) => {
+          if (Array.isArray(oldData)) {
+            return oldData.map((conv: any) =>
+              conv.id === data.conversationId
+                ? { ...conv, unreadCount: data.count }
+                : conv
+            );
+          }
+          return oldData;
+        }
+      );
     };
 
     const handleUnreadSync = async (data: { userId: string }) => {
