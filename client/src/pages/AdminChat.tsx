@@ -33,8 +33,14 @@ export default function AdminChat() {
 
   const filteredConversations = allConversations.filter((conv) => {
     if (statusFilter !== "all" && conv.status !== statusFilter) return false;
-    if (searchQuery && !conv.userId.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false;
+    if (searchQuery) {
+      const userName = (conv as any).userName || conv.userId;
+      const userEmail = (conv as any).userEmail || '';
+      const searchLower = searchQuery.toLowerCase();
+      if (!userName.toLowerCase().includes(searchLower) && 
+          !userEmail.toLowerCase().includes(searchLower)) {
+        return false;
+      }
     }
     return true;
   });
@@ -178,8 +184,8 @@ export default function AdminChat() {
           <ChatWindow
             conversationId={selectedConversation.id}
             currentUserId={user?.id || ""}
-            title={`Conversation avec ${selectedConversation.userId}`}
-            subtitle={`Créée ${formatDistanceToNow(new Date(selectedConversation.createdAt), {
+            title={`Conversation avec ${(selectedConversation as any).userName || selectedConversation.userId}`}
+            subtitle={`${(selectedConversation as any).userEmail ? `(${(selectedConversation as any).userEmail}) - ` : ''}Créée ${formatDistanceToNow(new Date(selectedConversation.createdAt), {
               addSuffix: true,
               locale: fr,
             })}`}
@@ -228,8 +234,13 @@ function ConversationCard({
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex-1 min-w-0">
             <h4 className="font-medium truncate" data-testid="text-conversation-user">
-              {conversation.userId}
+              {(conversation as any).userName || conversation.userId}
             </h4>
+            {(conversation as any).userEmail && (
+              <p className="text-xs text-muted-foreground truncate">
+                {(conversation as any).userEmail}
+              </p>
+            )}
             {conversation.lastMessageAt && (
               <p className="text-xs text-muted-foreground">
                 {formatDistanceToNow(new Date(conversation.lastMessageAt), {

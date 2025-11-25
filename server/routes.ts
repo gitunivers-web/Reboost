@@ -4675,7 +4675,21 @@ ${urls.map(url => `  <url>
         adminId as string | undefined,
         status as string | undefined
       );
-      res.json(conversations);
+
+      // Enrichir les conversations avec les infos utilisateur
+      const enrichedConversations = await Promise.all(
+        conversations.map(async (conv) => {
+          const userData = await storage.getUser(conv.userId);
+          return {
+            ...conv,
+            userName: userData?.fullName || conv.userId,
+            userEmail: userData?.email || '',
+            userPhone: userData?.phone || '',
+          };
+        })
+      );
+
+      res.json(enrichedConversations);
     } catch (error: any) {
       console.error('[CHAT] Erreur récupération conversations admin:', error);
       res.status(500).json({ error: 'Erreur lors de la récupération des conversations' });
