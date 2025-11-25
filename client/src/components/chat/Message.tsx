@@ -108,7 +108,7 @@ export function Message({ message, isOwn, senderName, senderAvatar }: MessagePro
           )}
 
           {message.fileUrl && isPdfFile(message.fileName, message.fileUrl) && (
-            <div className="mt-2 space-y-2">
+            <div className="mt-2">
               {showPdfPreview && message.fileUrl ? (
                 <PdfViewer
                   storagePath={getFileUrl(message.fileUrl) || message.fileUrl}
@@ -116,32 +116,23 @@ export function Message({ message, isOwn, senderName, senderAvatar }: MessagePro
                   onClose={() => setShowPdfPreview(false)}
                 />
               ) : (
-                <div className="border border-current border-opacity-20 rounded-md p-3 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <FileText className="h-5 w-5" />
-                    <span className="text-sm font-medium truncate">{message.fileName}</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => setShowPdfPreview(true)}
-                      className="flex-1 text-xs h-8"
-                      data-testid={`btn-view-pdf-${message.id}`}
+                <div
+                  className="w-40 h-40 rounded-md p-3 flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-opacity bg-gradient-to-br from-red-500 to-red-600 text-white"
+                  onClick={() => setShowPdfPreview(true)}
+                  data-testid={`pdf-thumbnail-${message.id}`}
+                >
+                  <FileText className="h-12 w-12 mb-2" />
+                  <span className="text-xs font-medium text-center truncate max-w-32">{message.fileName}</span>
+                  <span className="text-xs opacity-80 mt-1">PDF</span>
+                  <div className="mt-2 text-xs opacity-70 flex gap-1">
+                    <a
+                      href={getFileUrl(message.fileUrl)}
+                      download
+                      className="underline hover:opacity-100"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      Voir PDF
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      asChild
-                      className="flex-1 text-xs h-8"
-                      data-testid={`btn-download-pdf-${message.id}`}
-                    >
-                      <a href={getFileUrl(message.fileUrl)} download>
-                        Télécharger
-                      </a>
-                    </Button>
+                      Télécharger
+                    </a>
                   </div>
                 </div>
               )}
