@@ -63,13 +63,13 @@ export function Message({ message, isOwn, senderName, senderAvatar }: MessagePro
   return (
     <div
       className={cn(
-        "flex gap-3 mb-6",
-        isOwn ? "flex-row-reverse" : "flex-row"
+        "flex gap-4 mb-8",
+        isOwn ? "flex-row-reverse justify-end" : "flex-row justify-start"
       )}
       data-testid={`message-${message.id}`}
     >
       {!isOwn && (
-        <Avatar className="h-8 w-8 flex-shrink-0">
+        <Avatar className="h-9 w-9 flex-shrink-0 mt-1">
           <AvatarImage src={senderAvatar} alt={senderName} />
           <AvatarFallback>{getInitials(senderName)}</AvatarFallback>
         </Avatar>
@@ -77,8 +77,8 @@ export function Message({ message, isOwn, senderName, senderAvatar }: MessagePro
 
       <div
         className={cn(
-          "flex flex-col gap-1 max-w-[70%]",
-          isOwn ? "items-end" : "items-start"
+          "flex flex-col gap-2",
+          isOwn ? "items-end max-w-xl" : "items-start max-w-2xl"
         )}
       >
         {!isOwn && senderName && (
@@ -96,11 +96,11 @@ export function Message({ message, isOwn, senderName, senderAvatar }: MessagePro
           )}
         >
           {message.fileUrl && message.fileName && isImageFile(message.fileName) && (
-            <div className="mt-2">
+            <div className="my-2">
               <img
                 src={getFileUrl(message.fileUrl)}
                 alt={message.fileName}
-                className="max-w-xs rounded-md max-h-64 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                className="max-w-sm rounded-md max-h-96 object-cover cursor-pointer hover:opacity-90 transition-opacity"
                 onClick={() => window.open(getFileUrl(message.fileUrl)!, '_blank')}
                 data-testid={`img-attachment-${message.id}`}
               />

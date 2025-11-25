@@ -9,7 +9,7 @@ interface PdfViewerProps {
 export function PdfViewer({ storagePath, fileName }: PdfViewerProps) {
   return (
     <div className="relative group">
-      <div className="w-72 h-96 rounded-md overflow-hidden bg-slate-100 dark:bg-slate-900 border flex items-center justify-center">
+      <div className="w-96 h-full max-h-96 rounded-md overflow-hidden bg-slate-100 dark:bg-slate-900 border flex items-center justify-center">
         <iframe
           src={storagePath}
           title={fileName}

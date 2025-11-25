@@ -60,19 +60,20 @@ export function MessageList({
       const item = flattenedItems[index];
       if (item.type === "date") return 60;
       // Estimate larger size to account for images/PDFs
-      // Images can be up to 256px (max-h-64) + padding/margins
+      // Images can be up to 384px (max-h-96) + padding/margins
       const message = item.message;
       if (message?.fileUrl && message?.fileName) {
+        const fileName = message.fileName.toLowerCase();
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-        const isPdf = message.fileName.toLowerCase().endsWith('.pdf');
-        if (imageExtensions.some(ext => message.fileName.toLowerCase().endsWith(ext))) {
-          return 350; // Image + text + spacing
+        const isPdf = fileName.endsWith('.pdf');
+        if (imageExtensions.some(ext => fileName.endsWith(ext))) {
+          return 450; // Image (up to 384px) + text + spacing
         }
         if (isPdf) {
-          return 200; // PDF card + spacing
+          return 450; // PDF preview (up to 384px) + spacing
         }
       }
-      return 120; // Text-only message
+      return 100; // Text-only message
     },
     overscan: 10,
   });
@@ -158,10 +159,10 @@ export function MessageList({
     <div className="flex-1 relative">
       <div
         ref={containerRef}
-        className="absolute inset-0 overflow-y-auto p-6"
+        className="absolute inset-0 overflow-y-auto px-6 py-8"
         data-testid="message-list-container"
       >
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div
             style={{
               height: `${virtualizer.getTotalSize()}px`,
