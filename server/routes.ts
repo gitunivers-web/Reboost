@@ -1411,6 +1411,7 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
           nextPaymentDate: formatDate(loan.nextPaymentDate),
           totalRepaid: parseFloat(loan.totalRepaid),
           status: loan.status,
+          contractStatus: loan.contractStatus,
           contractUrl: loan.contractUrl,
           signedContractUrl: loan.signedContractUrl,
           loanReference: getOrGenerateLoanReference(loan),
