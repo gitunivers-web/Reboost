@@ -4676,15 +4676,17 @@ ${urls.map(url => `  <url>
         status as string | undefined
       );
 
-      // Enrichir les conversations avec les infos utilisateur
+      // Enrichir les conversations avec les infos utilisateur et unread count
       const enrichedConversations = await Promise.all(
         conversations.map(async (conv) => {
           const userData = await storage.getUser(conv.userId);
+          const unreadCount = await storage.getUnreadMessageCount(conv.id, conv.assignedAdminId || '');
           return {
             ...conv,
             userName: userData?.fullName || conv.userId,
             userEmail: userData?.email || '',
             userPhone: userData?.phone || '',
+            unreadCount: unreadCount,
           };
         })
       );

@@ -251,9 +251,16 @@ function ConversationCard({
             )}
           </div>
 
-          <Badge variant={conversation.status === "open" ? "default" : "secondary"}>
-            {conversation.status === "open" ? "Ouverte" : "Fermée"}
-          </Badge>
+          <div className="flex items-center gap-2">
+            {(conversation as any).unreadCount > 0 && (
+              <Badge variant="destructive" className="flex items-center justify-center h-6 w-6 rounded-full p-0" data-testid={`badge-unread-${conversation.id}`}>
+                {(conversation as any).unreadCount > 99 ? "99+" : (conversation as any).unreadCount}
+              </Badge>
+            )}
+            <Badge variant={conversation.status === "open" ? "default" : "secondary"}>
+              {conversation.status === "open" ? "Ouverte" : "Fermée"}
+            </Badge>
+          </div>
         </div>
 
         {conversation.assignedAdminId && (

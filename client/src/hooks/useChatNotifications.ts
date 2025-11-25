@@ -72,6 +72,13 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
       queryClient.invalidateQueries({
         queryKey: ['chat', 'conversations', 'user', userId],
       });
+      // IMPORTANT: Also invalidate admin conversations (important for admins receiving messages)
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'conversations', 'admin'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'conversations', 'detail', message.conversationId],
+      });
       queryClient.invalidateQueries({
         queryKey: ['chat', 'unread', 'user', userId],
       });
