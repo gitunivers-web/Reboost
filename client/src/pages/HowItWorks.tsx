@@ -4,7 +4,7 @@ import SEO from '@/components/SEO';
 import { useTranslations } from '@/lib/i18n';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { motion } from 'framer-motion';
 import { 
   FileText, 
@@ -24,6 +24,7 @@ import { getOfficialStats } from '@/lib/constants';
 
 export default function HowItWorks() {
   const t = useTranslations();
+  const [, setLocation] = useLocation();
 
   const steps = [
     {
@@ -346,12 +347,15 @@ export default function HowItWorks() {
               {t.howItWorks.ctaSubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/loans/new">
-                <Button size="lg" className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-6 text-lg font-semibold min-w-[220px]">
-                  {t.howItWorks.ctaRequestButton}
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                onClick={() => setLocation('/login')}
+                className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-6 text-lg font-semibold min-w-[220px]"
+                data-testid="button-apply-now"
+              >
+                {t.howItWorks.ctaRequestButton}
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
               <Link href="/contact">
                 <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold min-w-[220px]">
                   {t.howItWorks.ctaContactButton}

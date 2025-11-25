@@ -1,4 +1,4 @@
-import { Building2, User, Briefcase, RefreshCcw, TrendingUp, Home } from 'lucide-react';
+import { Building2, User, Briefcase, RefreshCcw, TrendingUp, Home, ArrowRight } from 'lucide-react';
 import { useTranslations } from '@/lib/i18n';
 import { motion } from 'framer-motion';
 import { useLocation } from 'wouter';
@@ -98,16 +98,8 @@ export default function ExpertiseSection() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group cursor-pointer"
+                className="group"
                 data-testid={`card-expertise-${index}`}
-                onClick={() => setLocation('/expertise')}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    setLocation('/expertise');
-                  }
-                }}
               >
                 <div className="relative h-full bg-card rounded-xl p-6 md:p-8 hover-elevate active-elevate-2 overflow-visible transition-all duration-300">
                   <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${area.gradient} mb-6 transition-transform duration-300 group-hover:scale-110`}>
@@ -125,6 +117,24 @@ export default function ExpertiseSection() {
               </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* Single CTA Button Below Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-12 text-center"
+        >
+          <button
+            onClick={() => setLocation('/products')}
+            data-testid="button-explore-loans"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover-elevate active-elevate-2 transition-all duration-300"
+          >
+            {t.expertise?.learnMoreButton || 'En savoir plus'}
+            <ArrowRight className="w-5 h-5" />
+          </button>
         </motion.div>
       </div>
     </section>

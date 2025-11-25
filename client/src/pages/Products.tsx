@@ -119,12 +119,12 @@ export default function Products() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group cursor-pointer"
                   data-testid={`card-individual-loan-${index}`}
-                  onClick={() => setLocation('/loans/new')}
+                  onClick={() => setLocation('/how-it-works')}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
-                      setLocation('/loans/new');
+                      setLocation('/how-it-works');
                     }
                   }}
                 >
@@ -205,12 +205,12 @@ export default function Products() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group cursor-pointer"
                   data-testid={`card-business-loan-${index}`}
-                  onClick={() => setLocation('/loans/new')}
+                  onClick={() => setLocation('/how-it-works')}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
-                      setLocation('/loans/new');
+                      setLocation('/how-it-works');
                     }
                   }}
                 >

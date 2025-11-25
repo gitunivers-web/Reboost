@@ -1,5 +1,32 @@
 # ALTUS - Professional Loan Platform
 
+## Recent Changes (November 25, 2025)
+
+### Optimized Navigation Flow - COMPLETE ✅
+**Major Improvement:** Restructured entire user journey for clarity and engagement
+- **Strategic Redesign - NEW LOGIC:**
+  1. **Homepage** "Nos domaines d'expertise" (4 cards)
+     - Removed "En savoir plus" button from each card (cleaner look)
+     - Added **ONE central button below all 4 cards** → `/products` 
+     - Reason: Single CTA focuses user attention, guides to next step
+  2. **Products Page** `/products` ("Nos prêts")
+     - Individual & Business loan cards now redirect → `/how-it-works`
+     - Reason: Show users the process BEFORE they commit to application
+  3. **How It Works Page** `/how-it-works`
+     - Explains 4-step process + required documents
+     - "Apply Now" button → `/login` (not `/loans/new`)
+     - Reason: Application must happen in authenticated user space
+- **User Flow Logic:**
+  - Step 1: **Discover** (Homepage) → Understand what ALTUS offers
+  - Step 2: **Learn** (Products) → See available loan types
+  - Step 3: **Understand** (How It Works) → Learn process + required docs
+  - Step 4: **Act** (Login) → Actually apply (requires authentication)
+- **Files Modified:**
+  - `client/src/components/ExpertiseSection.tsx` - Single CTA button, cleaner cards
+  - `client/src/pages/Products.tsx` - Cards now redirect to `/how-it-works`
+  - `client/src/pages/HowItWorks.tsx` - Apply button now directs to `/login`
+- **Status:** ✅ Tested & working - logical UX flow that guides conversion
+
 ## Overview
 
 ALTUS is a multi-language professional loan management platform designed for business clients. It provides a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. The platform aims to foster trust, clarity, and data-driven decision-making with features like multi-language support (French, English, Spanish, Portuguese, Italian, German, Dutch), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. Its primary purpose is to equip business professionals and enterprises with robust tools for loan financing and financial management, offering a robust and secure environment for financial operations.
@@ -40,6 +67,7 @@ Preferred communication style: Simple, everyday language.
 - Multi-channel notification system for contract signatures, including persistent banners, bell notifications, and email notifications.
 - Admin messages with cross-domain WebSocket authentication and real-time native chat system.
 - Dashboard sidebar with official ALTUS brand SVG logo.
+- **NEW: Optimized navigation flow with clear user journey:** Discover → Learn → Understand → Apply
 
 ### Technical Implementations
 
