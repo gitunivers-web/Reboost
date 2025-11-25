@@ -4699,6 +4699,23 @@ ${urls.map(url => `  <url>
     },
   });
 
+  // Direct local upload endpoint (fallback)
+  app.post("/api/chat/upload", requireAuth, requireCSRF, chatUpload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file provided' });
+      }
+      
+      const fileUrl = req.file.filename;
+      const fileName = req.file.originalname;
+      
+      res.json({ fileUrl, fileName });
+    } catch (error: any) {
+      console.error('[CHAT] Upload error:', error);
+      res.status(500).json({ error: 'File upload failed' });
+    }
+  });
+
   // Request presigned upload URL for Supabase Storage
   app.post("/api/chat/upload/request", requireAuth, requireCSRF, async (req, res) => {
     try {

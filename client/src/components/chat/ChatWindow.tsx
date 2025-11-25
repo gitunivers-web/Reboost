@@ -74,47 +74,33 @@ export function ChatWindow({
   const handleSendMessage = async (content: string, file?: File) => {
     if (file) {
       try {
-        // Step 1: Get CSRF token
+        // Get CSRF token
         const csrfResponse = await fetch(getApiUrl('/api/csrf-token'), {
           credentials: 'include',
         });
         const { csrfToken } = await csrfResponse.json();
 
-        // Step 2: Request presigned upload URL
-        const uploadRequestResponse = await fetch(getApiUrl('/api/chat/upload/request'), {
+        // Upload file using FormData
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        const uploadResponse = await fetch(getApiUrl('/api/chat/upload'), {
           method: 'POST',
-          body: JSON.stringify({
-            fileName: file.name,
-            fileType: file.type,
-          }),
+          body: formData,
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json',
             'X-CSRF-Token': csrfToken,
           },
         });
 
-        if (!uploadRequestResponse.ok) {
-          throw new Error('Failed to get upload URL');
-        }
-
-        const { uploadUrl, storagePath } = await uploadRequestResponse.json();
-
-        // Step 3: Upload file directly to Supabase Storage using presigned URL
-        const uploadResponse = await fetch(uploadUrl, {
-          method: 'PUT',
-          body: file,
-          headers: {
-            'Content-Type': file.type,
-          },
-        });
-
         if (!uploadResponse.ok) {
-          throw new Error('File upload to storage failed');
+          throw new Error('File upload failed');
         }
 
-        // Step 4: Send message with storage path reference
-        sendMessage(content, storagePath, file.name);
+        const { fileUrl, fileName } = await uploadResponse.json();
+
+        // Send message with file reference
+        sendMessage(content, fileUrl, fileName);
       } catch (error) {
         console.error('Failed to upload file:', error);
         // Still send message without file if upload fails
