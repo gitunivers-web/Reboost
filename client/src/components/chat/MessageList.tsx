@@ -58,9 +58,23 @@ export function MessageList({
     getScrollElement: () => containerRef.current,
     estimateSize: (index) => {
       const item = flattenedItems[index];
-      return item.type === "date" ? 60 : 120;
+      if (item.type === "date") return 60;
+      // Estimate larger size to account for images/PDFs
+      // Images can be up to 256px (max-h-64) + padding/margins
+      const message = item.message;
+      if (message.fileUrl && message.fileName) {
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+        const isPdf = message.fileName.toLowerCase().endsWith('.pdf');
+        if (imageExtensions.some(ext => message.fileName.toLowerCase().endsWith(ext))) {
+          return 350; // Image + text + spacing
+        }
+        if (isPdf) {
+          return 200; // PDF card + spacing
+        }
+      }
+      return 120; // Text-only message
     },
-    overscan: 5,
+    overscan: 10,
   });
 
   const scrollToBottom = (smooth = true) => {
