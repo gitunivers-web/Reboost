@@ -89,7 +89,7 @@ export function Message({ message, isOwn, senderName, senderAvatar }: MessagePro
 
         <div
           className={cn(
-            "rounded-md px-4 py-3 space-y-3",
+            "rounded-md px-4 py-3 space-y-3 overflow-hidden",
             isOwn
               ? "bg-primary text-primary-foreground"
               : "bg-muted"
