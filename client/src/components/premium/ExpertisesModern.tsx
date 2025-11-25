@@ -85,7 +85,7 @@ export default function ExpertisesModern() {
             data-testid="button-learn-more-all-expertises"
             className="inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold text-lg rounded-lg hover:shadow-2xl active:scale-95 transition-all duration-300 hover-elevate active-elevate-2"
           >
-            En savoir plus sur nos prêts
+            {t.premium.expertises.ctaButton}
             <ArrowRight className="h-5 w-5" />
           </button>
         </motion.div>

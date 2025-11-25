@@ -4928,7 +4928,6 @@ export const translations: Record<Language, TranslationKeys> = {
       expertises: {
         title: 'Nos domaines d\'expertise',
         subtitle: 'Des solutions financières complètes pour chaque besoin, chaque projet, chaque ambition',
-        ctaButton: 'En savoir plus sur nos prêts',
         items: [
           {
             title: 'Financement professionnel',
@@ -7596,7 +7595,6 @@ export const translations: Record<Language, TranslationKeys> = {
       expertises: {
         title: 'Our areas of expertise',
         subtitle: 'Comprehensive financial solutions for every need, every project, every ambition',
-        ctaButton: 'Learn more about our loans',
         items: [
           {
             title: 'Business financing',
@@ -10258,7 +10256,6 @@ export const translations: Record<Language, TranslationKeys> = {
       expertises: {
         title: 'Nuestras áreas de experiencia',
         subtitle: 'Soluciones financieras completas para cada necesidad, cada proyecto, cada ambición',
-        ctaButton: 'Obtener más información sobre nuestros préstamos',
         items: [
           {
             title: 'Financiación empresarial',
@@ -12684,7 +12681,6 @@ export const translations: Record<Language, TranslationKeys> = {
       expertises: {
         title: 'Nossas áreas de expertise',
         subtitle: 'Soluções financeiras completas para cada necessidade, cada projeto, cada ambição',
-        ctaButton: 'Saiba mais sobre nossos empréstimos',
         items: [
           {
             title: 'Financiamento profissional',
@@ -15292,7 +15288,6 @@ export const translations: Record<Language, TranslationKeys> = {
       expertises: {
         title: 'I nostri settori di competenza',
         subtitle: 'Soluzioni finanziarie complete per ogni esigenza, ogni progetto, ogni ambizione',
-        ctaButton: 'Scopri di più sui nostri prestiti',
         items: [
           {
             title: 'Finanziamento professionale',
@@ -17718,7 +17713,6 @@ export const translations: Record<Language, TranslationKeys> = {
       expertises: {
         title: 'Unsere Fachgebiete',
         subtitle: 'Umfassende Finanzlösungen für jeden Bedarf, jedes Projekt, jede Ambition',
-        ctaButton: 'Erfahren Sie mehr über unsere Kredite',
         items: [
           {
             title: 'Professionelle Finanzierung',
@@ -20248,7 +20242,6 @@ export const translations: Record<Language, TranslationKeys> = {
       expertises: {
         title: 'Onze expertisegebieden',
         subtitle: 'Volledige financiële oplossingen voor elke behoefte, elk project, elke ambitie',
-        ctaButton: 'Meer informatie over onze leningen',
         items: [
           {
             title: 'Professionele financiering',
