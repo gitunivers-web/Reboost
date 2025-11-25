@@ -1,4 +1,4 @@
-import { useTranslations } from '@/lib/i18n';
+import { useTranslations, useLanguage } from '@/lib/i18n';
 import { useDashboard, useUpcomingRepaymentsChart } from '@/hooks/use-dashboard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useUser } from '@/hooks/use-user';
@@ -105,6 +105,7 @@ const getMockCashflowData = (t: ReturnType<typeof useTranslations>) => [
 
 export default function Dashboard() {
   const t = useTranslations();
+  const { language } = useLanguage();
   const { data: dashboardData, isLoading: isDashboardLoading, error: dashboardError } = useDashboard();
   const { data: repaymentsData, isLoading: isRepaymentsLoading } = useUpcomingRepaymentsChart();
   const { data: user } = useUser();
@@ -119,8 +120,8 @@ export default function Dashboard() {
     loan.contractUrl
   ) || [];
 
-  // Get current language for translations
-  const contractNotif = getContractsNotificationText(user?.preferredLanguage || 'en');
+  // Get current language for translations (using current app language, not user preference from DB)
+  const contractNotif = getContractsNotificationText(language);
   
   const getGreeting = () => {
     const hour = new Date().getHours();
