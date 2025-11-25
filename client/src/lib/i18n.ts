@@ -262,21 +262,6 @@ type TranslationKeys = {
     selectConversation: string;
     selectConversationDesc: string;
   };
-    widget: {
-      title: string;
-      subtitle: string;
-    };
-    window: {
-      title: string;
-      online: string;
-      offline: string;
-      typing: string;
-      typingGeneral: string;
-    };
-    input: {
-      placeholder: string;
-      sendHint: string;
-    };
   dashboard: {
     welcome: string;
     currentBalance: string;
@@ -2601,21 +2586,6 @@ export const translations: Record<Language, TranslationKeys> = {
       noConversations: 'Aucune conversation',
       selectConversation: 'Sélectionnez une conversation',
       selectConversationDesc: 'Choisissez une conversation pour commencer à discuter',
-      widget: {
-        title: 'Support ALTUS',
-        subtitle: 'Nous sommes là pour vous aider',
-      },
-      window: {
-        title: 'Chat Support',
-        online: 'En ligne',
-        offline: 'Hors ligne',
-        typing: 'est en train d\'écrire...',
-        typingGeneral: 'En train d\'écrire...',
-      },
-      input: {
-        placeholder: 'Écrivez votre message...',
-        sendHint: 'Appuyez sur Ctrl+Entrée pour envoyer',
-      },
     },
     dashboard: {
       welcome: 'Bienvenue',
