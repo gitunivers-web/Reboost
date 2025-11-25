@@ -91,6 +91,31 @@ export function initializeChatSocket(httpServer: HTTPServer, storage: IStorage, 
       io.emit('user:presence', { userId, status: 'online' });
     }
 
+    // CRITICAL: Send existing unread counts to client on reconnection after page refresh
+    // This ensures the badge persists after refresh by hydrating from persistent unread counts in DB
+    try {
+      const conversations = await storage.getUserConversations(userId);
+      for (const conversation of conversations) {
+        // For admins: get unread count for admin in user's conversation
+        // For users: get unread count for user in admin's conversation
+        const isAdmin = userRole === 'admin';
+        const targetUserId = isAdmin ? conversation.userId : conversation.assignedAdminId;
+        
+        if (targetUserId === userId) {
+          const unreadCount = await storage.getUnreadMessageCount(conversation.id, userId);
+          if (unreadCount > 0) {
+            socket.emit('chat:unread-count', {
+              conversationId: conversation.id,
+              count: unreadCount,
+            });
+            console.log(`[CHAT WS] Hydrated unread count for ${userId} on reconnection: conversation ${conversation.id} = ${unreadCount}`);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('[CHAT WS] Error hydrating unread counts on reconnection:', error);
+    }
+
     socket.on('chat:join-conversation', async (conversationId: string) => {
       try {
         const { authorized } = await checkConversationAccess(conversationId, userId, userRole);
