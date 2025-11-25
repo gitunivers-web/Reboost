@@ -177,6 +177,7 @@ export function useChatMessages({
         conversationId,
         content,
         fileUrl,
+        fileName,
       });
     },
     [socket, connected, conversationId, queryClient, currentUser]

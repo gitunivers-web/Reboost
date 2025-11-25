@@ -2,6 +2,39 @@
 
 ## Recent Changes (November 25, 2025)
 
+### ✅ CHAT FILE ATTACHMENTS WITH PREVIEW - COMPLETE 📎🖼️
+**Images Display Inline + PDF Previews**
+- ✅ **Backend File Upload** (`/api/chat/upload`)
+  - Secure multer storage in `/uploads/chat/`
+  - 50MB file size limit
+  - Whitelist: JPG, PNG, GIF, PDF, Word, Excel, TXT
+  - Returns `fileUrl` and `fileName`
+- ✅ **Backend File Download** (`/api/chat/file/:filename`)
+  - Authenticated route (requires login)
+  - Path traversal protection
+  - Secure file serving
+- ✅ **Frontend Message Display**
+  - **Images (JPG, PNG, GIF):** Display inline in chat, clickable to open
+  - **PDFs:** Show preview box with "View PDF" and "Download" buttons
+  - **Other Files:** Download link with file icon
+- ✅ **ChatWindow Integration**
+  - Paperclip icon uploads any file type
+  - Image icon uploads images only
+  - Files uploaded before message sent
+  - Automatic fallback if upload fails
+- ✅ **Real-time Socket Updates**
+  - Both `fileUrl` and `fileName` sent via socket
+  - Optimistic message updates with file info
+  - Visible on both User and Admin sides
+- **Files Modified:**
+  - `server/routes.ts` - Added upload/download routes + multer config
+  - `client/src/components/chat/Message.tsx` - Added file display logic
+  - `client/src/components/chat/ChatWindow.tsx` - Added file upload handler
+  - `client/src/hooks/useChatMessages.ts` - Fixed fileName socket emit
+- **Testing:** ✅ Images display inline, PDFs show preview panel, all file types download correctly
+
+---
+
 ### ✅ CHAT UNREAD BADGE PERSISTENCE - RESOLVED 🎉
 **Real-time Chat Notifications - CRITICAL BUG FIXED**
 - ✅ **Problem:** Unread message badge disappeared after page refresh (socket reconnection didn't hydrate counts)
