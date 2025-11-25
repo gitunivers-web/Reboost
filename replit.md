@@ -62,9 +62,19 @@
    - No action needed
 
 ### UI Updates ✅
-- **Logo Replacement:** New ALTUS branding logo added to public folder (`/public/logo.png`)
-  - Larger, high-quality design in user dashboard and homepage header
-  - Displays in both light and dark modes
+- **Dashboard Sidebar Logo Redesign (November 25, 2025)** ✅
+  - Replaced old icon-based logo with official ALTUS brand SVG logo
+  - **New Design:** Professional SVG with golden triangle (A), navy wave, and brand text
+  - **Location:** Dashboard sidebar header (`client/src/components/AppSidebar.tsx`)
+  - **Features:**
+    - Golden triangle icon representing "A" for ALTUS
+    - Navy blue wave arc beneath the triangle
+    - "ALTUS" text in professional navy blue
+    - "FINANCE GROUP" subtitle in complementary gray
+    - Smooth drop-shadow with hover elevation effect
+    - Responsive sizing that adapts to sidebar width
+  - **Proportions:** Elegant 1:1 aspect ratio, centered positioning
+  - **Status:** ✅ Fully integrated and tested on dashboard
 
 ### Multilingual Chat (Previous Session) ✅
 - Full i18n support for 7 languages in chat widget/window/input components

@@ -74,27 +74,25 @@ export default function AppSidebar() {
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar backdrop-blur-xl">
       <SidebarContent className="px-3 py-4">
-        {/* Logo Section - Professional Branding */}
-        <div className="px-3 py-6 mb-6" data-testid="sidebar-logo">
+        {/* Logo Section - Official ALTUS Branding */}
+        <div className="px-2 py-4 mb-6" data-testid="sidebar-logo">
           <div className="flex flex-col items-center gap-3">
-            {/* Icon with gradient background */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 blur-lg rounded-2xl" />
-              <div className="relative bg-gradient-to-br from-primary to-primary/80 p-3 rounded-2xl shadow-lg">
-                <TrendingUp className="w-8 h-8 text-primary-foreground" />
-              </div>
-            </div>
-
-            {/* Brand name with elegant typography */}
-            <div className="text-center space-y-1">
-              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary via-primary/90 to-primary/80 bg-clip-text text-transparent">
-                ALTUS
-              </h1>
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
-                Finances Group
-              </p>
-            </div>
-
+            {/* ALTUS Official Logo SVG - Professional Design */}
+            <svg viewBox="0 0 300 320" className="w-28 h-auto drop-shadow-md hover:drop-shadow-lg transition-all duration-300" xmlns="http://www.w3.org/2000/svg">
+              {/* Gold Triangle A */}
+              <polygon points="150,50 240,190 200,190" fill="#D4A85A" />
+              <polygon points="150,50 100,190 140,190" fill="#C49A48" />
+              
+              {/* Navy Blue Wave Arc */}
+              <path d="M 120 160 Q 150 140 180 160" stroke="#003366" strokeWidth="24" fill="none" strokeLinecap="round" />
+              
+              {/* ALTUS Text */}
+              <text x="150" y="250" fontSize="52" fontWeight="bold" textAnchor="middle" fill="#003366" fontFamily="Arial, sans-serif">ALTUS</text>
+              
+              {/* Finance Group Subtitle */}
+              <text x="150" y="285" fontSize="20" textAnchor="middle" fill="#666666" fontFamily="Arial, sans-serif" fontWeight="500" letterSpacing="2">FINANCE GROUP</text>
+            </svg>
+            
             {/* Subtle divider */}
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
           </div>
