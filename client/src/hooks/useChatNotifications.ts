@@ -94,6 +94,22 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
       });
     };
 
+    const handleUnreadCountUpdate = (data: { conversationId: string; count: number }) => {
+      // Update immediately when backend sends direct count (faster than refetch)
+      setUnreadCounts((prev) => ({
+        ...prev,
+        [data.conversationId]: data.count,
+      }));
+      
+      // Also invalidate related queries for consistency
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'unread', 'user', userId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'conversations', 'user', userId],
+      });
+    };
+
     const handleUnreadSync = async (data: { userId: string }) => {
       // Force immediate refetch of unread counts when assignment changes
       if (data.userId === userId) {
@@ -133,12 +149,14 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
 
     socket.on("chat:new-message", handleNewMessage);
     socket.on("chat:read-receipt", handleMessageRead);
+    socket.on("chat:unread-count", handleUnreadCountUpdate);
     socket.on("unread_sync_required", handleUnreadSync);
     socket.on("conversation_assigned", handleConversationAssigned);
 
     return () => {
       socket.off("chat:new-message", handleNewMessage);
       socket.off("chat:read-receipt", handleMessageRead);
+      socket.off("chat:unread-count", handleUnreadCountUpdate);
       socket.off("unread_sync_required", handleUnreadSync);
       socket.off("conversation_assigned", handleConversationAssigned);
     };

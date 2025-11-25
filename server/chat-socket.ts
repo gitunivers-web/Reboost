@@ -140,10 +140,21 @@ export function initializeChatSocket(httpServer: HTTPServer, storage: IStorage, 
         // Notifier le destinataire (utilisateur ou admin) des messages non lus
         const recipientUserId = userRole === 'admin' ? conversation.userId : conversation.assignedAdminId;
         if (recipientUserId) {
-          // Invalider le cache unread du destinataire
+          // Obtenir le nouveau count de messages non lus
+          const unreadCount = await storage.getUnreadMessageCount(conversationId, recipientUserId);
+          
+          // Envoyer DIRECTEMENT le nouveau count (pas de refetch, update immédiat)
+          io.to(`user:${recipientUserId}`).emit('chat:unread-count', {
+            conversationId,
+            count: unreadCount,
+          });
+          
+          // AUSSI invalider le cache pour les autres onglets/sessions
           io.to(`user:${recipientUserId}`).emit('unread_sync_required', { 
             userId: recipientUserId 
           });
+          
+          console.log(`[CHAT WS] Unread count mis à jour pour ${recipientUserId}: ${unreadCount} pour conversation ${conversationId}`);
         }
         
         console.log(`[CHAT WS] Message créé: ${message.id} pour conversation ${conversationId}`);
