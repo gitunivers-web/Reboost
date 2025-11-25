@@ -25,50 +25,53 @@ import { SignedContractUpload } from '@/components/SignedContractUpload';
 import { useState } from 'react';
 import { DashboardCard, SectionTitle, UserStat } from '@/components/fintech';
 
-const contractsNotificationTranslations: Record<string, { title: string; messageSingular: string; messagePlural: string; buttonLabel: string }> = {
-  fr: {
-    title: 'Contrats en attente de signature',
-    messageSingular: 'Vous avez 1 contrat à signer. Complétez-le pour activer votre prêt.',
-    messagePlural: 'Vous avez {count} contrats à signer. Complétez-les pour activer vos prêts.',
-    buttonLabel: 'Voir',
-  },
-  en: {
-    title: 'Contracts Awaiting Signature',
-    messageSingular: 'You have 1 contract to sign. Complete it to activate your loan.',
-    messagePlural: 'You have {count} contracts to sign. Complete them to activate your loans.',
-    buttonLabel: 'View',
-  },
-  de: {
-    title: 'Unterzeichnungspflichtige Verträge',
-    messageSingular: 'Sie haben 1 Vertrag zu unterzeichnen. Vollständig es, um Ihr Darlehen zu aktivieren.',
-    messagePlural: 'Sie haben {count} Verträge zu unterzeichnen. Vollständig sie, um Ihre Darlehen zu aktivieren.',
-    buttonLabel: 'Ansehen',
-  },
-  pt: {
-    title: 'Contratos Pendentes de Assinatura',
-    messageSingular: 'Você tem 1 contrato para assinar. Conclua-o para ativar seu empréstimo.',
-    messagePlural: 'Você tem {count} contratos para assinar. Conclua-os para ativar seus empréstimos.',
-    buttonLabel: 'Ver',
-  },
-  es: {
-    title: 'Contratos pendientes de firma',
-    messageSingular: 'Tiene 1 contrato para firmar. Complételo para activar su préstamo.',
-    messagePlural: 'Tiene {count} contratos para firmar. Complételos para activar sus préstamos.',
-    buttonLabel: 'Ver',
-  },
-  it: {
-    title: 'Contratti in attesa di firma',
-    messageSingular: 'Hai 1 contratto da firmare. Completalo per attivare il tuo prestito.',
-    messagePlural: 'Hai {count} contratti da firmare. Completali per attivare i tuoi prestiti.',
-    buttonLabel: 'Visualizza',
-  },
-  nl: {
-    title: 'Contracten wachten op ondertekening',
-    messageSingular: 'U hebt 1 contract te ondertekenen. Voltooi het om uw lening te activeren.',
-    messagePlural: 'U hebt {count} contracten te ondertekenen. Voltooi ze om uw leningen te activeren.',
-    buttonLabel: 'Bekijken',
-  },
-};
+function getContractsNotificationText(language: string) {
+  const translations: Record<string, { title: string; messageSingular: string; messagePlural: string; buttonLabel: string }> = {
+    fr: {
+      title: 'Contrats en attente de signature',
+      messageSingular: 'Vous avez 1 contrat à signer. Complétez-le pour activer votre prêt.',
+      messagePlural: 'Vous avez {count} contrats à signer. Complétez-les pour activer vos prêts.',
+      buttonLabel: 'Voir',
+    },
+    en: {
+      title: 'Contracts Awaiting Signature',
+      messageSingular: 'You have 1 contract to sign. Complete it to activate your loan.',
+      messagePlural: 'You have {count} contracts to sign. Complete them to activate your loans.',
+      buttonLabel: 'View',
+    },
+    de: {
+      title: 'Unterzeichnungspflichtige Verträge',
+      messageSingular: 'Sie haben 1 Vertrag zu unterzeichnen. Vollständig es, um Ihr Darlehen zu aktivieren.',
+      messagePlural: 'Sie haben {count} Verträge zu unterzeichnen. Vollständig sie, um Ihre Darlehen zu aktivieren.',
+      buttonLabel: 'Ansehen',
+    },
+    pt: {
+      title: 'Contratos Pendentes de Assinatura',
+      messageSingular: 'Você tem 1 contrato para assinar. Conclua-o para ativar seu empréstimo.',
+      messagePlural: 'Você tem {count} contratos para assinar. Conclua-os para ativar seus empréstimos.',
+      buttonLabel: 'Ver',
+    },
+    es: {
+      title: 'Contratos pendientes de firma',
+      messageSingular: 'Tiene 1 contrato para firmar. Complételo para activar su préstamo.',
+      messagePlural: 'Tiene {count} contratos para firmar. Complételos para activar sus préstamos.',
+      buttonLabel: 'Ver',
+    },
+    it: {
+      title: 'Contratti in attesa di firma',
+      messageSingular: 'Hai 1 contratto da firmare. Completalo per attivare il tuo prestito.',
+      messagePlural: 'Hai {count} contratti da firmare. Completali per attivare i tuoi prestiti.',
+      buttonLabel: 'Visualizza',
+    },
+    nl: {
+      title: 'Contracten wachten op ondertekening',
+      messageSingular: 'U hebt 1 contract te ondertekenen. Voltooi het om uw lening te activeren.',
+      messagePlural: 'U hebt {count} contracten te ondertekenen. Voltooi ze om uw leningen te activeren.',
+      buttonLabel: 'Bekijken',
+    },
+  };
+  return translations[language.toLowerCase()] || translations.en;
+}
 
 function DashboardSkeleton() {
   return (
@@ -117,8 +120,7 @@ export default function Dashboard() {
   ) || [];
 
   // Get current language for translations
-  const currentLang = (user?.preferredLanguage || 'en').toLowerCase() as keyof typeof contractsNotificationTranslations;
-  const contractNotif = contractsNotificationTranslations[currentLang] || contractsNotificationTranslations.en;
+  const contractNotif = getContractsNotificationText(user?.preferredLanguage || 'en');
   
   const getGreeting = () => {
     const hour = new Date().getHours();
