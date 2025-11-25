@@ -89,10 +89,10 @@ export function Message({ message, isOwn, senderName, senderAvatar }: MessagePro
 
         <div
           className={cn(
-            "rounded-md px-4 py-3 space-y-3 overflow-hidden",
+            "rounded-md px-4 py-3 space-y-3",
             isOwn
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted"
+              ? "text-primary-foreground"
+              : ""
           )}
         >
           {message.fileUrl && message.fileName && isImageFile(message.fileName) && (
