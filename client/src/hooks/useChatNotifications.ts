@@ -54,7 +54,8 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
         counts[conversationId] = count;
       });
       
-      console.log('[CHAT NOTIFICATIONS] API refetch received, updating unread counts:', counts);
+      const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+      console.warn('[CHAT NOTIFICATIONS] ⚠️ API REFETCH happened! This OVERWRITES socket updates. Total:', total, 'Counts:', counts);
       setUnreadCounts(counts);
     }
   }, [serverUnreadCounts]);
@@ -91,16 +92,22 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
       queryClient.invalidateQueries({
         queryKey: ['chat', 'conversations', 'user', userId],
       });
+      console.log('[CHAT NOTIFICATIONS] Invalidated messages and conversations cache (NOT unread counts)');
     };
 
     const handleUnreadCountUpdate = (data: { conversationId: string; count: number }) => {
       console.log('[CHAT NOTIFICATIONS] Socket chat:unread-count received:', data);
       
       // Update local unread counts state for regular users
-      setUnreadCounts((prev) => ({
-        ...prev,
-        [data.conversationId]: data.count,
-      }));
+      setUnreadCounts((prev) => {
+        const updated = {
+          ...prev,
+          [data.conversationId]: data.count,
+        };
+        const total = Object.values(updated).reduce((sum, count) => sum + count, 0);
+        console.log('[CHAT NOTIFICATIONS] Unread counts updated. New total:', total, 'All counts:', updated);
+        return updated;
+      });
       
       // For admins: invalidate conversations query to refetch with updated unreadCount
       // setQueriesData doesn't work if conversations aren't already cached
