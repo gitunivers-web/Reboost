@@ -35,12 +35,12 @@ export function ChatWindow({
 }: ChatWindowProps) {
   const { connected } = useSocket();
   const { language } = useLanguage();
-  const t = translations[language];
+  const t = translations[language || 'fr'] || translations['fr'];
   const { data: messages = [], isLoading } = useMessages(conversationId);
   const markAsReadMutation = useMarkAsRead();
   const [typingUsername, setTypingUsername] = useState<string | null>(null);
 
-  const defaultTitle = title || t.chat.window.title;
+  const defaultTitle = title || t?.chat?.window?.title || 'Conversation';
   const defaultSubtitle = subtitle;
 
   const { sendMessage, startTyping, typingUsers } = useChatMessages({
@@ -112,7 +112,7 @@ export function ChatWindow({
                   )}
                 />
                 <span className="text-xs text-muted-foreground" data-testid="text-connection-status">
-                  {connected ? t.chat.window.online : t.chat.window.offline}
+                  {connected ? (t?.chat?.window?.online || 'En ligne') : (t?.chat?.window?.offline || 'Hors ligne')}
                 </span>
               </div>
             )}
@@ -144,8 +144,8 @@ export function ChatWindow({
           <TypingIndicator 
             isTyping={isTyping} 
             username={displayTypingUsername}
-            typingText={t.chat.window.typing}
-            typingGeneralText={t.chat.window.typingGeneral}
+            typingText={t?.chat?.window?.typing || 'écrit...'}
+            typingGeneralText={t?.chat?.window?.typingGeneral || 'Quelqu\'un écrit...'}
           />
         )}
 
@@ -154,8 +154,8 @@ export function ChatWindow({
           onTyping={startTyping}
           disabled={!connected}
           allowFileUpload={false}
-          placeholder={t.chat.input.placeholder}
-          sendHint={t.chat.input.sendHint}
+          placeholder={t?.chat?.input?.placeholder || 'Écrivez votre message...'}
+          sendHint={t?.chat?.input?.sendHint || 'Appuyez sur Entrée pour envoyer'}
         />
       </CardContent>
     </Card>
