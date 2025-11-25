@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { FaEnvelope, FaLock, FaUser, FaPhone, FaBuilding } from 'react-icons/fa';
-import { ArrowLeft, Hash, FileText } from 'lucide-react';
+import { ArrowLeft, Hash, FileText, Eye, EyeOff } from 'lucide-react';
 import { useLanguage, useTranslations } from '@/lib/i18n';
 import { translateBackendMessage } from '@/lib/translateBackendMessage';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -24,6 +24,9 @@ export default function Auth() {
   const t = useTranslations();
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const [accountType, setAccountType] = useState<'personal' | 'business'>('personal');
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const loginSchema = useMemo(() => z.object({
     email: z.string().email(t.auth.emailInvalid),
@@ -299,11 +302,19 @@ export default function Auth() {
                         <FaLock className="text-gray-500 dark:text-gray-400" />
                         <Input
                           {...field}
-                          type="password"
+                          type={showLoginPassword ? "text" : "password"}
                           placeholder="••••••••"
                           className="border-0 bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                           data-testid="input-login-password"
                         />
+                        <button
+                          type="button"
+                          onClick={() => setShowLoginPassword(!showLoginPassword)}
+                          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                          data-testid="button-toggle-login-password"
+                        >
+                          {showLoginPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </button>
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -541,11 +552,19 @@ export default function Auth() {
                           <FaLock className="text-gray-500 dark:text-gray-400" />
                           <Input
                             {...field}
-                            type="password"
+                            type={showSignupPassword ? "text" : "password"}
                             placeholder="••••••••"
                             className="border-0 bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                             data-testid="input-signup-password"
                           />
+                          <button
+                            type="button"
+                            onClick={() => setShowSignupPassword(!showSignupPassword)}
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                            data-testid="button-toggle-signup-password"
+                          >
+                            {showSignupPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </button>
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -564,11 +583,19 @@ export default function Auth() {
                           <FaLock className="text-gray-500 dark:text-gray-400" />
                           <Input
                             {...field}
-                            type="password"
+                            type={showConfirmPassword ? "text" : "password"}
                             placeholder="••••••••"
                             className="border-0 bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                             data-testid="input-confirmPassword"
                           />
+                          <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                            data-testid="button-toggle-confirm-password"
+                          >
+                            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </button>
                         </div>
                       </FormControl>
                       <FormMessage />
