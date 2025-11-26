@@ -3841,6 +3841,54 @@ Tous les codes de validation ont été vérifiés avec succès.`,
     }
   });
 
+  app.post("/api/admin/clear-notifications-dashboard", requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      const allLoans = await storage.getAllLoans();
+      let cleared = 0;
+      
+      for (const loan of allLoans) {
+        const user = await storage.getUser(loan.userId);
+        if (user) {
+          const deletedPending = await storage.deleteAllNotificationsByType(user.id, 'loan_pending_admin');
+          const deletedSigned = await storage.deleteAllNotificationsByType(user.id, 'contract_signed_admin');
+          if (deletedPending || deletedSigned) cleared++;
+        }
+      }
+      
+      await storage.createAuditLog({
+        actorId: req.session.userId!,
+        actorRole: 'admin',
+        action: 'clear_notifications',
+        entityType: 'admin_dashboard',
+        entityId: 'dashboard',
+        metadata: { clearedCount: cleared }
+      });
+      
+      res.json({ success: true, message: 'Toutes les notifications ont été supprimées' });
+    } catch (error) {
+      console.error('Error clearing notifications:', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression des notifications' });
+    }
+  });
+
+  app.post("/api/admin/reset-statistics-dashboard", requireAdmin, requireCSRF, adminLimiter, async (req, res) => {
+    try {
+      await storage.createAuditLog({
+        actorId: req.session.userId!,
+        actorRole: 'admin',
+        action: 'reset_statistics',
+        entityType: 'admin_dashboard',
+        entityId: 'dashboard',
+        metadata: { timestamp: new Date() }
+      });
+      
+      res.json({ success: true, message: 'Les statistiques ont été réinitialisées' });
+    } catch (error) {
+      console.error('Error resetting statistics:', error);
+      res.status(500).json({ error: 'Erreur lors de la réinitialisation des statistiques' });
+    }
+  });
+
   app.get("/api/admin/audit-logs", requireAdmin, async (req, res) => {
     try {
       const limit = req.query.limit ? parseInt(req.query.limit as string) : 100;

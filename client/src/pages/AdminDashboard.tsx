@@ -1,15 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Users, ArrowRightLeft, DollarSign, Activity, FileCheck, FileSignature, ShieldCheck, MessageSquare, Bell, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Users, ArrowRightLeft, DollarSign, Activity, FileCheck, FileSignature, ShieldCheck, MessageSquare, Bell, AlertCircle, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useLocation } from "wouter";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+import { queryClient } from "@/lib/queryClient";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 
 export default function AdminDashboard() {
   const t = useTranslations();
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
+  const [showClearNotifications, setShowClearNotifications] = useState(false);
+  const [showResetStatistics, setShowResetStatistics] = useState(false);
   
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ["/api/admin/stats"],
@@ -41,17 +58,72 @@ export default function AdminDashboard() {
 
   const hasNotifications = (notificationCounts?.total || 0) > 0;
 
+  const clearNotificationsMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("POST", "/api/admin/clear-notifications-dashboard", {});
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/notifications-count"] });
+      setShowClearNotifications(false);
+      toast({
+        title: "Succès",
+        description: "Toutes les notifications ont été supprimées",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Erreur",
+        description: error?.message || "Erreur lors de la suppression des notifications",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const resetStatisticsMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("POST", "/api/admin/reset-statistics-dashboard", {});
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      setShowResetStatistics(false);
+      toast({
+        title: "Succès",
+        description: "Les statistiques ont été réinitialisées",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Erreur",
+        description: error?.message || "Erreur lors de la réinitialisation",
+        variant: "destructive",
+      });
+    },
+  });
+
   return (
     <AdminLayout title={t.admin.dashboard.title}>
       {/* Actions Urgentes - Cartes d'Alertes */}
       {!notificationsLoading && hasNotifications && (
         <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <Bell className="w-5 h-5 text-amber-600" />
-            <h2 className="text-xl font-bold text-gray-900">{t.admin.dashboard.actionsRequired}</h2>
-            <Badge variant="destructive" className="ml-2">
-              {notificationCounts?.total}
-            </Badge>
+          <div className="flex items-center justify-between gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <Bell className="w-5 h-5 text-amber-600" />
+              <h2 className="text-xl font-bold text-gray-900">{t.admin.dashboard.actionsRequired}</h2>
+              <Badge variant="destructive" className="ml-2">
+                {notificationCounts?.total}
+              </Badge>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowClearNotifications(true)}
+              disabled={clearNotificationsMutation.isPending}
+              className="flex gap-2 items-center"
+              data-testid="button-clear-notifications"
+            >
+              <Trash2 className="w-4 h-4" />
+              Effacer
+            </Button>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -188,6 +260,21 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+
+      {/* Management Buttons */}
+      <div className="mb-6 flex gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowResetStatistics(true)}
+          disabled={resetStatisticsMutation.isPending}
+          className="flex gap-2 items-center"
+          data-testid="button-reset-statistics"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Réinitialiser les statistiques
+        </Button>
+      </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -341,6 +428,52 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Clear Notifications Dialog */}
+      <AlertDialog open={showClearNotifications} onOpenChange={setShowClearNotifications}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Effacer toutes les notifications</AlertDialogTitle>
+            <AlertDialogDescription>
+              Êtes-vous sûr de vouloir supprimer toutes les notifications ? Cette action est irréversible.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex justify-end gap-2">
+            <AlertDialogCancel data-testid="button-cancel-clear-notifications">Annuler</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => clearNotificationsMutation.mutate()}
+              disabled={clearNotificationsMutation.isPending}
+              data-testid="button-confirm-clear-notifications"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {clearNotificationsMutation.isPending ? "Suppression..." : "Supprimer"}
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Reset Statistics Dialog */}
+      <AlertDialog open={showResetStatistics} onOpenChange={setShowResetStatistics}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Réinitialiser les statistiques</AlertDialogTitle>
+            <AlertDialogDescription>
+              Êtes-vous sûr de vouloir réinitialiser les statistiques du tableau de bord ? Cette action est irréversible.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex justify-end gap-2">
+            <AlertDialogCancel data-testid="button-cancel-reset-statistics">Annuler</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => resetStatisticsMutation.mutate()}
+              disabled={resetStatisticsMutation.isPending}
+              data-testid="button-confirm-reset-statistics"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {resetStatisticsMutation.isPending ? "Réinitialisation..." : "Réinitialiser"}
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminLayout>
   );
 }
