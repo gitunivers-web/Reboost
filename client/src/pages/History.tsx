@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useLocation } from 'wouter';
+import { Link } from 'wouter';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -37,7 +37,6 @@ function HistorySkeleton() {
 
 export default function History() {
   const t = useTranslations();
-  const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
 
@@ -224,67 +223,67 @@ export default function History() {
         ) : (
           <DashboardCard className="overflow-hidden p-0">
             <div className="divide-y divide-border/50">
-              {filteredTransactions.map((transaction, index) => (
-                <div
-                  key={transaction.id}
-                  onClick={() => {
-                    if (transaction.transferId) {
-                      setLocation(`/transfer/${transaction.transferId}`);
-                    } else if (transaction.type === 'debit' && transaction.description.toLowerCase().includes('transfer')) {
-                      setLocation(`/transfer/${transaction.id}`);
-                    }
-                  }}
-                  className={`p-5 hover-elevate active-elevate-2 transition-all ${
-                    (transaction.transferId || (transaction.type === 'debit' && transaction.description.toLowerCase().includes('transfer')))
-                      ? 'cursor-pointer'
-                      : ''
-                  } ${index === 0 ? 'rounded-t-2xl' : ''} ${
+              {filteredTransactions.map((transaction, index) => {
+                const isTransfer = transaction.type === 'debit' && transaction.description.toLowerCase().includes('transfer');
+                const transferUrl = transaction.transferId ? `/transfer/${transaction.transferId}` : (isTransfer ? `/transfer/${transaction.id}` : null);
+                
+                const content = (
+                  <div className={`p-5 hover-elevate active-elevate-2 transition-all ${index === 0 ? 'rounded-t-2xl' : ''} ${
                     index === filteredTransactions.length - 1 ? 'rounded-b-2xl' : ''
-                  }`}
-                  data-testid={`row-transaction-${transaction.id}`}
-                >
-                  <div className="flex items-center gap-5">
-                    {/* Icon */}
-                    <div className="flex-shrink-0">
-                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm ${
-                        transaction.type === 'credit' ? 'bg-gradient-to-br from-accent/15 to-accent/5' :
-                        transaction.type === 'debit' ? 'bg-gradient-to-br from-destructive/15 to-destructive/5' :
-                        'bg-gradient-to-br from-muted to-muted/50'
-                      }`}>
-                        {getTypeIcon(transaction.type)}
+                  }`}>
+                    <div className="flex items-center gap-5">
+                      {/* Icon */}
+                      <div className="flex-shrink-0">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm ${
+                          transaction.type === 'credit' ? 'bg-gradient-to-br from-accent/15 to-accent/5' :
+                          transaction.type === 'debit' ? 'bg-gradient-to-br from-destructive/15 to-destructive/5' :
+                          'bg-gradient-to-br from-muted to-muted/50'
+                        }`}>
+                          {getTypeIcon(transaction.type)}
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Transaction Info */}
-                    <div className="flex-1 min-w-0 space-y-2">
-                      <h3 className="font-bold text-lg text-foreground truncate">{transaction.description}</h3>
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <Badge variant="outline" className="text-xs font-medium">
-                          {getTypeLabel(transaction.type)}
-                        </Badge>
-                        <span className="text-xs text-muted-foreground font-medium">
-                          {formatDate(transaction.createdAt)}
-                        </span>
+                      {/* Transaction Info */}
+                      <div className="flex-1 min-w-0 space-y-2">
+                        <h3 className="font-bold text-lg text-foreground truncate">{transaction.description}</h3>
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <Badge variant="outline" className="text-xs font-medium">
+                            {getTypeLabel(transaction.type)}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground font-medium">
+                            {formatDate(transaction.createdAt)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Amount */}
-                    <div className="flex-shrink-0 text-right">
-                      <p className={`text-2xl font-bold font-mono tracking-tight ${
-                        transaction.type === 'credit' ? 'text-accent' :
-                        transaction.type === 'debit' ? 'text-destructive' :
-                        'text-muted-foreground'
-                      }`}>
-                        {transaction.type === 'credit' ? '+' : '-'}
-                        {formatCurrency(transaction.amount)}
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1.5 font-mono">
-                        ID: {transaction.id.slice(0, 8)}...
-                      </p>
+                      {/* Amount */}
+                      <div className="flex-shrink-0 text-right">
+                        <p className={`text-2xl font-bold font-mono tracking-tight ${
+                          transaction.type === 'credit' ? 'text-accent' :
+                          transaction.type === 'debit' ? 'text-destructive' :
+                          'text-muted-foreground'
+                        }`}>
+                          {transaction.type === 'credit' ? '+' : '-'}
+                          {formatCurrency(transaction.amount)}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1.5 font-mono">
+                          ID: {transaction.id.slice(0, 8)}...
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+                
+                return (
+                  <div key={transaction.id} data-testid={`row-transaction-${transaction.id}`}>
+                    {transferUrl ? (
+                      <Link href={transferUrl}>{content}</Link>
+                    ) : (
+                      content
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </DashboardCard>
         )}
