@@ -332,6 +332,7 @@ export default function TransferFlow() {
       
       setLastValidatedSequence(currentCodeSequence);
       setIsPausedForCode(false);
+      setNextCode(null);
       setCurrentCodeSequence(prev => prev + 1);
       
       refetchTransfer();
