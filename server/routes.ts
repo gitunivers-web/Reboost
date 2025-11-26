@@ -85,21 +85,22 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
     }
 
     // Enhanced session validation with detailed debugging for cross-domain issues
+    let debugInfo: any = {};
     if (!req.session || !req.session.csrfToken) {
       // 🔒 Log sensitive data only in development
+      debugInfo = {
+        hasSession: !!req.session,
+        sessionId: req.session?.id,
+        path: req.path,
+        method: req.method,
+        userId: req.session?.userId,
+        cookieHeader: req.headers.cookie ? 'PRESENT' : 'MISSING',
+        hasSessionIdCookie: req.headers.cookie?.includes('sessionId') || false,
+        origin: req.headers.origin,
+        host: req.headers.host,
+        referer: req.headers.referer,
+      };
       if (process.env.NODE_ENV !== 'production') {
-        const debugInfo = {
-          hasSession: !!req.session,
-          sessionId: req.session?.id,
-          path: req.path,
-          method: req.method,
-          userId: req.session?.userId,
-          cookieHeader: req.headers.cookie ? 'PRESENT' : 'MISSING',
-          hasSessionIdCookie: req.headers.cookie?.includes('sessionId') || false,
-          origin: req.headers.origin,
-          host: req.headers.host,
-          referer: req.headers.referer,
-        };
         console.error('[CSRF-ERROR] Session invalide ou token CSRF manquant', debugInfo);
       } else {
         console.error('[CSRF-ERROR] Session validation failed');
@@ -132,18 +133,18 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
     const token = req.headers['x-csrf-token'] || req.body._csrf;
     if (!token || token !== req.session.csrfToken) {
       // 🔒 Log sensitive data only in development
+      debugInfo = {
+        tokenProvided: !!token,
+        tokenMatch: token === req.session.csrfToken,
+        path: req.path,
+        method: req.method,
+        userId: req.session?.userId,
+        sessionId: req.session?.id,
+        origin: req.headers.origin,
+        host: req.headers.host,
+        referer: req.headers.referer,
+      };
       if (process.env.NODE_ENV !== 'production') {
-        const debugInfo = {
-          tokenProvided: !!token,
-          tokenMatch: token === req.session.csrfToken,
-          path: req.path,
-          method: req.method,
-          userId: req.session?.userId,
-          sessionId: req.session?.id,
-          origin: req.headers.origin,
-          host: req.headers.host,
-          referer: req.headers.referer,
-        };
         console.error('[CSRF-ERROR] Token CSRF invalide', debugInfo);
       } else {
         console.error('[CSRF-ERROR] CSRF token validation failed');
