@@ -325,14 +325,13 @@ export default function Dashboard() {
         {/* Quick Actions - Fintech Style */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4 w-full">
           <Link href="/transfer/new">
-            <Button size="sm" sm:size="lg" className="gap-1 sm:gap-2 shadow-md w-full text-xs sm:text-sm" data-testid="button-new-transfer">
+            <Button size="sm" className="gap-1 sm:gap-2 shadow-md w-full text-xs sm:text-sm" data-testid="button-new-transfer">
               <Send className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>{t.dashboard.newTransfer}</span>
             </Button>
           </Link>
           <Button 
             size="sm" 
-            sm:size="lg"
             variant="outline" 
             className="gap-1 sm:gap-2 w-full text-xs sm:text-sm" 
             onClick={() => setLoanModalOpen(true)}
@@ -342,7 +341,7 @@ export default function Dashboard() {
             <span>{t.dashboard.requestLoan}</span>
           </Button>
           <Link href="/accounts">
-            <Button size="sm" sm:size="lg" variant="outline" className="gap-1 sm:gap-2 w-full text-xs sm:text-sm" data-testid="button-manage-accounts">
+            <Button size="sm" variant="outline" className="gap-1 sm:gap-2 w-full text-xs sm:text-sm" data-testid="button-manage-accounts">
               <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>{t.dashboard.manageAccounts}</span>
             </Button>
@@ -499,10 +498,10 @@ export default function Dashboard() {
               <p className="text-xs text-muted-foreground mb-1">Intérêts payés</p>
               <p className="text-2xl font-bold text-foreground" data-testid="text-monthly-interest">
                 {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(
-                  dashboardData.fees
+                  Number(dashboardData.fees
                     .filter(f => f.createdAt && new Date(f.createdAt).getMonth() === new Date().getMonth())
                     .filter(f => f.feeType.toLowerCase().includes('intérêt') || f.feeType.toLowerCase().includes('interest'))
-                    .reduce((sum, f) => sum + parseFloat(f.amount), 0)
+                    .reduce((sum, f) => sum + parseFloat(f.amount), 0))
                 )}
               </p>
             </div>
@@ -510,9 +509,9 @@ export default function Dashboard() {
               <p className="text-xs text-muted-foreground mb-1">Frais appliqués</p>
               <p className="text-2xl font-bold text-destructive" data-testid="text-monthly-fees">
                 {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(
-                  dashboardData.fees
+                  Number(dashboardData.fees
                     .filter(f => f.createdAt && new Date(f.createdAt).getMonth() === new Date().getMonth())
-                    .reduce((sum, f) => sum + parseFloat(f.amount), 0)
+                    .reduce((sum, f) => sum + parseFloat(f.amount), 0))
                 )}
               </p>
             </div>
@@ -526,7 +525,7 @@ export default function Dashboard() {
               <p className="text-xs text-muted-foreground mb-1">Remboursement</p>
               <p className="text-2xl font-bold text-primary" data-testid="text-monthly-repayment">
                 {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(
-                  dashboardData.loans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0)
+                  Number(dashboardData.loans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0))
                 )}
               </p>
             </div>
