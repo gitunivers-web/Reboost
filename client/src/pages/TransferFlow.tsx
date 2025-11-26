@@ -345,8 +345,8 @@ export default function TransferFlow() {
         const progressDelta = targetPercent - simulatedProgress;
         const duration = progressDelta * 1000; // 1000ms = 1 seconde par %
         animateProgress(simulatedProgress, targetPercent, duration, computedNextCode?.sequence);
-      } else if (!justValidated && !isFirstCode) {
-        // FORCER la pause tant qu'aucun code n'a été validé (sauf pour le premier)
+      } else if (simulatedProgress >= targetPercent && !justValidated) {
+        // FORCER la pause UNIQUEMENT quand on atteint le pourcentage d'arrêt
         setIsPausedForCode(true);
         // Annuler toute animation en cours
         if (animationFrameRef.current) {
