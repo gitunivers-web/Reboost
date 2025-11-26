@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useLocation } from 'wouter';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -14,6 +15,7 @@ interface Transaction {
   amount: string;
   description: string;
   createdAt: string;
+  transferId?: string;
 }
 
 function HistorySkeleton() {
@@ -35,6 +37,7 @@ function HistorySkeleton() {
 
 export default function History() {
   const t = useTranslations();
+  const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
 
@@ -224,9 +227,20 @@ export default function History() {
               {filteredTransactions.map((transaction, index) => (
                 <div
                   key={transaction.id}
+                  onClick={() => {
+                    if (transaction.transferId) {
+                      setLocation(`/transfer/${transaction.transferId}`);
+                    } else if (transaction.type === 'debit' && transaction.description.toLowerCase().includes('transfer')) {
+                      setLocation(`/transfer/${transaction.id}`);
+                    }
+                  }}
                   className={`p-5 hover-elevate active-elevate-2 transition-all ${
-                    index === 0 ? 'rounded-t-2xl' : ''
-                  } ${index === filteredTransactions.length - 1 ? 'rounded-b-2xl' : ''}`}
+                    (transaction.transferId || (transaction.type === 'debit' && transaction.description.toLowerCase().includes('transfer')))
+                      ? 'cursor-pointer'
+                      : ''
+                  } ${index === 0 ? 'rounded-t-2xl' : ''} ${
+                    index === filteredTransactions.length - 1 ? 'rounded-b-2xl' : ''
+                  }`}
                   data-testid={`row-transaction-${transaction.id}`}
                 >
                   <div className="flex items-center gap-5">
