@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { Check, CheckCheck, FileText, Download } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -128,7 +128,7 @@ export function Message({ message, isOwn, senderName, senderAvatar, nextMessage 
               <span className="text-xs text-muted-foreground" data-testid="text-timestamp">
                 {formatDistanceToNow(new Date(message.createdAt), {
                   addSuffix: true,
-                  locale: fr,
+                  locale: enUS,
                 })}
               </span>
 
@@ -160,7 +160,7 @@ export function Message({ message, isOwn, senderName, senderAvatar, nextMessage 
               <span className="text-xs text-muted-foreground" data-testid="text-timestamp">
                 {formatDistanceToNow(new Date(message.createdAt), {
                   addSuffix: true,
-                  locale: fr,
+                  locale: enUS,
                 })}
               </span>
 
@@ -205,7 +205,7 @@ export function Message({ message, isOwn, senderName, senderAvatar, nextMessage 
               <span className="text-xs text-muted-foreground" data-testid="text-timestamp">
                 {formatDistanceToNow(new Date(message.createdAt), {
                   addSuffix: true,
-                  locale: fr,
+                  locale: enUS,
                 })}
               </span>
 

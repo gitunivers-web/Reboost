@@ -13,8 +13,8 @@ export function TypingIndicator({
   isTyping,
   username,
   className,
-  typingText = "est en train d'écrire...",
-  typingGeneralText = "En train d'écrire...",
+  typingText = "is typing...",
+  typingGeneralText = "Someone is typing...",
 }: TypingIndicatorProps) {
   if (!isTyping) return null;
 

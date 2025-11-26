@@ -128,7 +128,7 @@ export function MessageInput({
               onClick={removeFile}
               data-testid="button-remove-file"
             >
-              Retirer
+              Remove
             </Button>
           </div>
         )}

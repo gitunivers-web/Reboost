@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { format, isToday, isYesterday, isSameDay } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { ArrowDown } from "lucide-react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
@@ -114,12 +114,12 @@ export function MessageList({
 
   const getDateLabel = (date: Date) => {
     if (isToday(date)) {
-      return "Aujourd'hui";
+      return "Today";
     }
     if (isYesterday(date)) {
-      return "Hier";
+      return "Yesterday";
     }
-    return format(date, "EEEE d MMMM yyyy", { locale: fr });
+    return format(date, "EEEE d MMMM yyyy", { locale: enUS });
   };
 
   if (isLoading) {
@@ -148,8 +148,8 @@ export function MessageList({
     return (
       <div className="flex-1 flex items-center justify-center p-6" data-testid="empty-messages">
         <div className="text-center text-muted-foreground">
-          <p className="text-lg mb-2">Aucun message</p>
-          <p className="text-sm">Commencez la conversation en envoyant un message</p>
+          <p className="text-lg mb-2">No messages</p>
+          <p className="text-sm">Start a conversation by sending a message</p>
         </div>
       </div>
     );
