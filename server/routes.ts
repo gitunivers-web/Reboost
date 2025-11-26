@@ -2591,6 +2591,43 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
     }
   });
 
+  // Vérifier si l'utilisateur a un transfert en cours (pour redirection automatique)
+  app.get("/api/transfers/active", requireAuth, async (req, res) => {
+    try {
+      const activeTransfer = await storage.getActiveTransferForUser(req.session.userId!);
+      
+      if (activeTransfer) {
+        // Récupérer les infos du prêt associé pour le contexte
+        const loan = activeTransfer.loanId ? await storage.getLoan(activeTransfer.loanId) : null;
+        
+        res.json({
+          hasActiveTransfer: true,
+          transfer: {
+            id: activeTransfer.id,
+            status: activeTransfer.status,
+            progressPercent: activeTransfer.progressPercent,
+            codesValidated: activeTransfer.codesValidated,
+            requiredCodes: activeTransfer.requiredCodes,
+            amount: activeTransfer.amount,
+            recipient: activeTransfer.recipient,
+            createdAt: activeTransfer.createdAt,
+            loanId: activeTransfer.loanId,
+          },
+          loan: loan ? {
+            id: loan.id,
+            amount: loan.amount,
+            loanType: loan.loanType,
+          } : null,
+        });
+      } else {
+        res.json({ hasActiveTransfer: false });
+      }
+    } catch (error) {
+      console.error('Error checking active transfer:', error);
+      res.status(500).json({ error: 'Failed to check active transfer' });
+    }
+  });
+
   app.post("/api/transfers", requireAuth, requireCSRF, transferLimiter, async (req, res) => {
     try {
       const validated = insertTransferSchema.parse({

@@ -59,6 +59,27 @@ function translateCodeContext(codeContext: string | null | undefined, t: ReturnT
   return codeContext;
 }
 
+// Type pour la réponse de l'API transfert actif
+interface ActiveTransferResponse {
+  hasActiveTransfer: boolean;
+  transfer?: {
+    id: string;
+    status: string;
+    progressPercent: number;
+    codesValidated: number;
+    requiredCodes: number;
+    amount: string;
+    recipient: string;
+    createdAt: string;
+    loanId: string | null;
+  };
+  loan?: {
+    id: string;
+    amount: string;
+    loanType: string;
+  } | null;
+}
+
 export default function TransferFlow() {
   const [, params] = useRoute('/transfer/:id');
   const [, setLocation] = useLocation();
@@ -74,6 +95,7 @@ export default function TransferFlow() {
   const [validationCode, setValidationCode] = useState('');
   const [transferId, setTransferId] = useState(params?.id || '');
   const [verificationProgress, setVerificationProgress] = useState(0);
+  const [isCheckingActiveTransfer, setIsCheckingActiveTransfer] = useState(!params?.id);
   
   // Sync transferId with params.id whenever it changes
   useEffect(() => {
@@ -92,6 +114,32 @@ export default function TransferFlow() {
   const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const notificationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+
+  // Vérifier si un transfert est déjà en cours pour cet utilisateur
+  const { data: activeTransferData, isLoading: isLoadingActiveTransfer } = useQuery<ActiveTransferResponse>({
+    queryKey: ['/api/transfers/active'],
+    enabled: !params?.id, // Ne vérifier que si on n'a pas déjà un ID de transfert dans l'URL
+  });
+
+  // Redirection automatique vers le transfert en cours
+  useEffect(() => {
+    if (!params?.id && !isLoadingActiveTransfer && activeTransferData?.hasActiveTransfer && activeTransferData.transfer) {
+      const activeTransfer = activeTransferData.transfer;
+      
+      // Afficher une notification de reprise
+      toast({
+        title: t.transferFlow.toast.transferInProgressTitle || 'Transfert en cours',
+        description: `${t.transferFlow.toast.alreadyInProgressDesc || 'Reprise du transfert'} (${activeTransfer.progressPercent}%)`,
+      });
+      
+      // Rediriger vers le transfert en cours après un court délai
+      setTimeout(() => {
+        setLocation(`/transfer/${activeTransfer.id}`);
+      }, 500);
+    } else if (!params?.id && !isLoadingActiveTransfer) {
+      setIsCheckingActiveTransfer(false);
+    }
+  }, [params?.id, isLoadingActiveTransfer, activeTransferData, setLocation, toast, t]);
 
   const { data: externalAccounts } = useQuery<ExternalAccount[]>({
     queryKey: ['/api/external-accounts'],
@@ -445,6 +493,20 @@ export default function TransferFlow() {
       sequence: currentCodeSequence,
     });
   };
+
+  // Afficher un écran de chargement pendant la vérification du transfert actif
+  if (isCheckingActiveTransfer || (isLoadingActiveTransfer && !params?.id)) {
+    return (
+      <div className="bg-background min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
+          <p className="text-muted-foreground">
+            {t.transferFlow.progress.verifying || 'Vérification en cours...'}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (step === 'form') {
     return (

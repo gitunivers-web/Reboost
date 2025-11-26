@@ -87,6 +87,8 @@ export interface IStorage {
   createTransferWithCodes(insertTransfer: InsertTransfer, codesCount?: number): Promise<{ transfer: Transfer; codes: TransferValidationCode[] }>;
   createTransfer(transfer: InsertTransfer): Promise<Transfer>;
   updateTransfer(id: string, transfer: Partial<Transfer>): Promise<Transfer | undefined>;
+  getActiveTransferForUser(userId: string): Promise<Transfer | null>;
+  getActiveTransferForLoan(loanId: string): Promise<Transfer | null>;
   
   getUserFees(userId: string): Promise<Fee[]>;
   createFee(fee: InsertFee): Promise<Fee>;
@@ -1688,7 +1690,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getLoansAvailableForTransfer(userId: string): Promise<Loan[]> {
-    const result = await db
+    // Récupérer les prêts actifs avec fonds disponibles
+    const activeLoans = await db
       .select()
       .from(loans)
       .where(
@@ -1696,17 +1699,67 @@ export class DatabaseStorage implements IStorage {
           eq(loans.userId, userId),
           eq(loans.status, 'active'),
           eq(loans.fundsAvailabilityStatus, 'available'),
-          isNull(loans.deletedAt),
-          notExists(
-            db
-              .select()
-              .from(transfers)
-              .where(eq(transfers.loanId, loans.id))
-          )
+          isNull(loans.deletedAt)
         )
       );
     
-    return result;
+    // Pour chaque prêt, vérifier s'il a un transfert complété
+    const availableLoans: Loan[] = [];
+    for (const loan of activeLoans) {
+      const loanTransfers = await db
+        .select()
+        .from(transfers)
+        .where(eq(transfers.loanId, loan.id));
+      
+      // Un prêt est disponible si:
+      // - Il n'a aucun transfert
+      // - OU il a un transfert en cours (pas complété) - pour permettre la reprise
+      const hasCompletedTransfer = loanTransfers.some(t => t.status === 'completed');
+      
+      if (!hasCompletedTransfer) {
+        availableLoans.push(loan);
+      }
+    }
+    
+    return availableLoans;
+  }
+
+  async getActiveTransferForUser(userId: string): Promise<Transfer | null> {
+    // Chercher un transfert en cours (pending ou in-progress) pour cet utilisateur
+    const result = await db
+      .select()
+      .from(transfers)
+      .where(
+        and(
+          eq(transfers.userId, userId),
+          or(
+            eq(transfers.status, 'pending'),
+            eq(transfers.status, 'in-progress')
+          )
+        )
+      )
+      .limit(1);
+    
+    return result[0] || null;
+  }
+
+  async getActiveTransferForLoan(loanId: string): Promise<Transfer | null> {
+    // Chercher un transfert en cours pour ce prêt spécifique
+    const result = await db
+      .select()
+      .from(transfers)
+      .where(
+        and(
+          eq(transfers.loanId, loanId),
+          or(
+            eq(transfers.status, 'pending'),
+            eq(transfers.status, 'in-progress')
+          )
+        )
+      )
+      .limit(1);
+    
+    return result[0] || null;
   }
 
   async getLoan(id: string): Promise<Loan | undefined> {
