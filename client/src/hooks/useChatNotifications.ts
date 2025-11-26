@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSocket } from "./useSocket";
 import { useConversations } from "@/lib/chatQueries";
+import { getApiUrl } from "@/lib/queryClient";
 import type { ChatMessage } from "@shared/schema";
 
 interface UseChatNotificationsReturn {
@@ -30,7 +31,7 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
   const { data: serverUnreadCounts } = useQuery<Array<{ conversationId: string; count: number }>>({
     queryKey: ['chat', 'unread', 'user', userId],
     queryFn: async () => {
-      const res = await fetch(`/api/chat/unread/${userId}`, {
+      const res = await fetch(getApiUrl(`/api/chat/unread/${userId}`), {
         credentials: "include"
       });
       if (!res.ok) throw new Error("Failed to fetch unread counts");
