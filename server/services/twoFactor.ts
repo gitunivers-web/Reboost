@@ -1,5 +1,6 @@
 import speakeasy from 'speakeasy';
 import QRCode from 'qrcode';
+import { decryptSecret } from './encryption';
 
 export function generateTwoFactorSecret(email: string): { secret: string; otpauthUrl: string } {
   const secret = speakeasy.generateSecret({
@@ -24,7 +25,22 @@ export async function generateQRCode(otpauthUrl: string): Promise<string> {
   }
 }
 
-export function verifyTwoFactorToken(secret: string, token: string): boolean {
+/**
+ * Vérifie un token TOTP - déchiffre automatiquement le secret s'il est chiffré
+ */
+export function verifyTwoFactorToken(encryptedOrPlainSecret: string, token: string): boolean {
+  let secret = encryptedOrPlainSecret;
+  
+  // Tente de déchiffrer si le secret semble chiffré (format salt:iv:tag:encrypted)
+  if (encryptedOrPlainSecret.includes(':') && encryptedOrPlainSecret.split(':').length === 4) {
+    try {
+      secret = decryptSecret(encryptedOrPlainSecret);
+    } catch (error) {
+      console.error('Failed to decrypt TOTP secret, trying as plaintext:', error);
+      // Continue avec le secret en clair en cas d'erreur
+    }
+  }
+  
   return speakeasy.totp.verify({
     secret,
     encoding: 'base32',
