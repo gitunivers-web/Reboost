@@ -232,7 +232,7 @@ export default function AppSidebar() {
       {/* Footer - Premium fintech user profile */}
       <SidebarFooter className="px-3 pb-4 border-t border-sidebar-border bg-sidebar/50 backdrop-blur-sm">
         <SidebarMenu className="space-y-2 pt-3">
-          <div>
+          <SidebarMenuItem>
             {isUserLoading ? (
               <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-sidebar-accent/50">
                 <Skeleton className="h-11 w-11 rounded-xl" />
@@ -264,7 +264,7 @@ export default function AppSidebar() {
                 </div>
               </div>
             ) : null}
-          </div>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={handleLogout}
