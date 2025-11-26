@@ -302,7 +302,7 @@ export default function AdminChat() {
           </div>
         )}
       </div>
-      </div>
+    </div>
     </>
   );
 }
