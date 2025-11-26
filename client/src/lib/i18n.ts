@@ -322,19 +322,6 @@ type TranslationKeys = {
     monthMar: string;
     monthApr: string;
     monthJun: string;
-    kycStatusApproved: "Verificado",
-    kycStatusPending: "Pendiente",
-    kycStatusRejected: "Rechazado",
-    upcomingPaymentAlert: "Próximo Pago",
-    upcomingPaymentAlertDesc: "Tiene un pago vencido en los próximos 7 días",
-    monthSummary: "Resumen Mensual",
-    monthSummaryDesc: "Estadísticas financieras del mes actual",
-    monthlyInterest: "Intereses Pagados",
-    monthlyFees: "Comisiones Aplicadas",
-    monthlyCredit: "Crédito Utilizado",
-    monthlyRepayment: "Reembolso",
-    exportCSV: "Exportar CSV",
-    downloadAmortization: "Tabla de Amortización",
     monthMay: string;
   };
   loan: {
@@ -2400,19 +2387,6 @@ const howItWorksEN = {
 
 export const translations: Record<Language, TranslationKeys> = {
   fr: {
-    kycStatusApproved: "Approuvé",
-    kycStatusPending: "En attente",
-    kycStatusRejected: "Rejeté",
-    upcomingPaymentAlert: "Paiement prévu très bientôt",
-    upcomingPaymentAlertDesc: "Vous avez un paiement prévu dans les 7 prochains jours",
-    monthSummary: "Résumé du mois",
-    monthSummaryDesc: "Statistiques financières du mois en cours",
-    monthlyInterest: "Intérêts payés",
-    monthlyFees: "Frais appliqués",
-    monthlyCredit: "Crédits utilisés",
-    monthlyRepayment: "Remboursement",
-    exportCSV: "Exporter CSV",
-    downloadAmortization: "Tableau d'amortissement",
     topbar: {
       encryption: '🔒 Chiffrement bancaire AES-256',
       sepaTransfers: '🏦 Transferts SEPA sécurisés',
