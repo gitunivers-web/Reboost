@@ -501,7 +501,7 @@ export default function TransferFlow() {
         <div className="text-center space-y-4">
           <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
           <p className="text-muted-foreground">
-            {t.transferFlow.progress.verifying || 'Vérification en cours...'}
+            {t.transferFlow.progress.titleInProgress || 'Vérification en cours...'}
           </p>
         </div>
       </div>
