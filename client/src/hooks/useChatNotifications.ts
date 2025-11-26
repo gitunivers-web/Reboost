@@ -67,6 +67,27 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
   useEffect(() => {
     if (!socket || !connected || !userId) return;
 
+    const handleUnreadCountUpdate = (data: { conversationId: string; count: number }) => {
+      console.log('[CHAT NOTIFICATIONS] Socket event: unread-count updated for conversation', data.conversationId, '=', data.count);
+      
+      // Update local state immediately
+      setUnreadCounts(prev => ({
+        ...prev,
+        [data.conversationId]: data.count,
+      }));
+      
+      // CRITICAL: Invalidate React Query cache so AdminChat badge updates in real-time
+      // This ensures the UI reflects the unread count immediately without page refresh
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'conversations', 'admin'],
+        exact: false,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'conversations', 'user'],
+        exact: false,
+      });
+    };
+
     const handleNewMessage = (message: ChatMessage) => {
       // CRITICAL: Do NOT invalidate conversations here - the backend will send chat:unread-count separately
       // Invalidating here causes refetch that overwrites the unread count before chat:unread-count arrives
