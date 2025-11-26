@@ -3492,6 +3492,13 @@ Tous les codes de validation ont été vérifiés avec succès.`,
 
   app.delete("/api/admin/users/:id", requireAdmin, requireCSRF, async (req, res) => {
     try {
+      const userToDelete = await storage.getUser(req.params.id);
+      
+      // Prevent deletion of admin accounts - this is a critical security measure
+      if (userToDelete?.role === 'admin') {
+        return res.status(403).json({ error: 'Les comptes administrateur ne peuvent pas être supprimés' });
+      }
+      
       const deleted = await storage.deleteUser(req.params.id);
       if (!deleted) {
         return res.status(404).json({ error: 'User not found' });
@@ -3520,6 +3527,21 @@ Tous les codes de validation ont été vérifiés avec succès.`,
       });
       
       const { userIds, reason } = bulkDeleteSchema.parse(req.body);
+      
+      // Check if any of the users to delete are admins - prevent deletion of admin accounts
+      const adminUsersInSelection = [];
+      for (const id of userIds) {
+        const user = await storage.getUser(id);
+        if (user?.role === 'admin') {
+          adminUsersInSelection.push(user.email || id);
+        }
+      }
+      
+      if (adminUsersInSelection.length > 0) {
+        return res.status(403).json({ 
+          error: `Les comptes administrateur ne peuvent pas être supprimés: ${adminUsersInSelection.join(', ')}` 
+        });
+      }
       
       const results = {
         success: [] as string[],
