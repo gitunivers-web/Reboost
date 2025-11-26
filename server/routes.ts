@@ -86,20 +86,24 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
 
     // Enhanced session validation with detailed debugging for cross-domain issues
     if (!req.session || !req.session.csrfToken) {
-      const debugInfo = {
-        hasSession: !!req.session,
-        sessionId: req.session?.id,
-        path: req.path,
-        method: req.method,
-        userId: req.session?.userId,
-        cookieHeader: req.headers.cookie ? 'PRESENT' : 'MISSING',
-        hasSessionIdCookie: req.headers.cookie?.includes('sessionId') || false,
-        origin: req.headers.origin,
-        host: req.headers.host,
-        referer: req.headers.referer,
-      };
-      
-      console.error('[CSRF-ERROR] Session invalide ou token CSRF manquant', debugInfo);
+      // 🔒 Log sensitive data only in development
+      if (process.env.NODE_ENV !== 'production') {
+        const debugInfo = {
+          hasSession: !!req.session,
+          sessionId: req.session?.id,
+          path: req.path,
+          method: req.method,
+          userId: req.session?.userId,
+          cookieHeader: req.headers.cookie ? 'PRESENT' : 'MISSING',
+          hasSessionIdCookie: req.headers.cookie?.includes('sessionId') || false,
+          origin: req.headers.origin,
+          host: req.headers.host,
+          referer: req.headers.referer,
+        };
+        console.error('[CSRF-ERROR] Session invalide ou token CSRF manquant', debugInfo);
+      } else {
+        console.error('[CSRF-ERROR] Session validation failed');
+      }
       
       // More detailed error message for production debugging
       let errorMessage = 'Session invalide. Veuillez vous reconnecter.';
@@ -127,19 +131,23 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
 
     const token = req.headers['x-csrf-token'] || req.body._csrf;
     if (!token || token !== req.session.csrfToken) {
-      const debugInfo = {
-        tokenProvided: !!token,
-        tokenMatch: token === req.session.csrfToken,
-        path: req.path,
-        method: req.method,
-        userId: req.session?.userId,
-        sessionId: req.session?.id,
-        origin: req.headers.origin,
-        host: req.headers.host,
-        referer: req.headers.referer,
-      };
-      
-      console.error('[CSRF-ERROR] Token CSRF invalide', debugInfo);
+      // 🔒 Log sensitive data only in development
+      if (process.env.NODE_ENV !== 'production') {
+        const debugInfo = {
+          tokenProvided: !!token,
+          tokenMatch: token === req.session.csrfToken,
+          path: req.path,
+          method: req.method,
+          userId: req.session?.userId,
+          sessionId: req.session?.id,
+          origin: req.headers.origin,
+          host: req.headers.host,
+          referer: req.headers.referer,
+        };
+        console.error('[CSRF-ERROR] Token CSRF invalide', debugInfo);
+      } else {
+        console.error('[CSRF-ERROR] CSRF token validation failed');
+      }
       
       return res.status(403).json({ 
         error: 'Session expirée. Veuillez recharger la page et réessayer.',
@@ -2709,8 +2717,13 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
     console.log('========================================');
     console.log(`[TRANSFER-INITIATE] ${requestId} - DÉBUT`);
     console.log(`[TRANSFER-INITIATE] ${requestId} - Timestamp: ${new Date().toISOString()}`);
-    console.log(`[TRANSFER-INITIATE] ${requestId} - UserId: ${req.session.userId}`);
-    console.log(`[TRANSFER-INITIATE] ${requestId} - Request body:`, JSON.stringify(req.body, null, 2));
+    // 🔒 Log userId only in development
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[TRANSFER-INITIATE] ${requestId} - UserId: ${req.session.userId}`);
+      console.log(`[TRANSFER-INITIATE] ${requestId} - Request body:`, JSON.stringify(req.body, null, 2));
+    } else {
+      console.log(`[TRANSFER-INITIATE] ${requestId} - Transfer initiated by authenticated user`);
+    }
     
     try {
       const { amount, externalAccountId, recipient, loanId } = req.body;
@@ -2736,7 +2749,12 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
 
       console.log(`[TRANSFER-INITIATE] ${requestId} - Étape 3: Vérification propriétaire du prêt`);
       if (loan.userId !== req.session.userId) {
-        console.error(`[TRANSFER-INITIATE] ${requestId} - ERREUR: Accès refusé - loan.userId: ${loan.userId} vs session.userId: ${req.session.userId}`);
+        // 🔒 Log sensitive data only in development
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(`[TRANSFER-INITIATE] ${requestId} - ERREUR: Accès refusé - loan.userId: ${loan.userId} vs session.userId: ${req.session.userId}`);
+        } else {
+          console.error(`[TRANSFER-INITIATE] ${requestId} - ERREUR: Access denied - unauthorized loan access`);
+        }
         return res.status(403).json({ error: 'Accès refusé - ce prêt ne vous appartient pas' });
       }
 

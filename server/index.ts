@@ -164,14 +164,15 @@ const sessionMiddleware = session({
 app.use(sessionMiddleware);
 
 app.use((req, res, next) => {
-  // Enhanced debug logs for cross-domain session issues
-  if (process.env.NODE_ENV === 'production' || process.env.DEBUG_SESSIONS === 'true') {
+  // 🔒 Enhanced debug logs for cross-domain session issues (dev only)
+  // 🚫 Filtered in production to prevent exposure of sensitive data
+  if (process.env.NODE_ENV !== 'production' || process.env.DEBUG_SESSIONS === 'true') {
     const isApiRequest = req.path.startsWith('/api');
     const hasSession = !!req.session?.id;
     const isAuthenticated = !!req.session?.userId;
     
     if (isApiRequest && (!hasSession || !isAuthenticated)) {
-      console.log('=== [SESSION DEBUG] ===');
+      console.log('=== [SESSION DEBUG] (DEV ONLY) ===');
       console.log(`[SESSION] ${req.method} ${req.path}`);
       console.log(`[SESSION] Origin: ${req.headers.origin || 'NO ORIGIN'}`);
       console.log(`[SESSION] Referer: ${req.headers.referer || 'NO REFERER'}`);
@@ -183,7 +184,7 @@ app.use((req, res, next) => {
       console.log(`[SESSION] Session Exists: ${hasSession ? 'YES' : 'NO'}`);
       console.log(`[SESSION] Authenticated: ${isAuthenticated ? 'YES' : 'NO'}`);
       console.log(`[SESSION] CSRF Token Header: ${req.headers['x-csrf-token'] ? 'PRESENT' : 'MISSING'}`);
-      console.log('======================');
+      console.log('=====================================');
     }
   }
   next();
