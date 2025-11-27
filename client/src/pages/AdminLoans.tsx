@@ -181,8 +181,8 @@ export default function AdminLoans() {
   const handleBulkDelete = () => {
     if (selectedLoans.size === 0) {
       toast({
-        title: "Aucune sélection",
-        description: "Veuillez sélectionner au moins un prêt à supprimer",
+        title: t.admin?.common?.messages?.noSelection || "Aucune sélection",
+        description: t.admin?.common?.messages?.selectAtLeastOne || "Veuillez sélectionner au moins un prêt à supprimer",
         variant: "destructive",
       });
       return;

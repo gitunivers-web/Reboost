@@ -446,7 +446,7 @@ export default function AdminDashboard() {
               data-testid="button-confirm-clear-notifications"
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {clearNotificationsMutation.isPending ? "Suppression..." : "Supprimer"}
+              {clearNotificationsMutation.isPending ? t.admin?.common?.messages?.deleting || "Suppression..." : t.admin?.common?.actions?.delete || "Supprimer"}
             </AlertDialogAction>
           </div>
         </AlertDialogContent>
@@ -469,7 +469,7 @@ export default function AdminDashboard() {
               data-testid="button-confirm-reset-statistics"
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {resetStatisticsMutation.isPending ? "Réinitialisation..." : "Réinitialiser"}
+              {resetStatisticsMutation.isPending ? t.admin?.common?.messages?.resetting || "Réinitialisation..." : t.admin?.common?.actions?.reset || "Réinitialiser"}
             </AlertDialogAction>
           </div>
         </AlertDialogContent>

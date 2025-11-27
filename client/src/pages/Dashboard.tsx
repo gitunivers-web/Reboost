@@ -170,7 +170,7 @@ export default function Dashboard() {
                   </summary>
                   <div className="mt-2 space-y-1 font-mono">
                     <p><strong>API URL:</strong> {apiUrl}/api/dashboard</p>
-                    <p><strong>Erreur:</strong> {dashboardError ? String(dashboardError) : "Aucune donnée reçue"}</p>
+                    <p><strong>Erreur:</strong> {dashboardError ? String(dashboardError) : t.dashboard?.noDataReceived || "Aucune donnée reçue"}</p>
                     <p><strong>Variables d'environnement:</strong></p>
                     <ul className="ml-4 space-y-1">
                       <li>VITE_API_URL: {import.meta.env.VITE_API_URL || "(non défini)"}</li>

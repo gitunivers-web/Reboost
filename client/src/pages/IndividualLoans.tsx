@@ -208,8 +208,8 @@ export default function IndividualLoans() {
                       <div className="inline-flex p-4 rounded-full bg-muted/50 mb-4">
                         <CheckCircle2 className="h-12 w-12 text-muted-foreground/50" />
                       </div>
-                      <p className="text-lg font-medium mb-2">Aucun prêt actif</p>
-                      <p className="text-sm text-muted-foreground">Vos prêts actifs apparaîtront ici</p>
+                      <p className="text-lg font-medium mb-2">{t.dashboard.noActiveLoans}</p>
+                      <p className="text-sm text-muted-foreground">{t.dashboard.noActiveLoansDesc}</p>
                     </CardContent>
                   </Card>
                 )}
@@ -258,7 +258,7 @@ export default function IndividualLoans() {
 
                           <GlassPanel intensity="medium" className="p-4 bg-secondary/5">
                             <p className="text-sm text-muted-foreground">
-                              Votre demande de prêt est en cours de révision par notre équipe.
+                              {t.loan.reviewInProgress || 'Votre demande de prêt est en cours de révision par notre équipe.'}
                             </p>
                           </GlassPanel>
                         </div>
@@ -271,8 +271,8 @@ export default function IndividualLoans() {
                       <div className="inline-flex p-4 rounded-full bg-muted/50 mb-4">
                         <Clock className="h-12 w-12 text-muted-foreground/50" />
                       </div>
-                      <p className="text-lg font-medium mb-2">Aucune demande en attente</p>
-                      <p className="text-sm text-muted-foreground">Vos demandes en attente apparaîtront ici</p>
+                      <p className="text-lg font-medium mb-2">{t.loan.noPendingRequests || 'Aucune demande en attente'}</p>
+                      <p className="text-sm text-muted-foreground">{t.loan.noPendingRequestsDesc || 'Vos demandes en attente apparaîtront ici'}</p>
                     </CardContent>
                   </Card>
                 )}

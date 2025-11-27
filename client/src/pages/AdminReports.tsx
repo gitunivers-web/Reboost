@@ -127,7 +127,7 @@ export default function AdminReports() {
                   {(!auditLogs || (Array.isArray(auditLogs) && auditLogs.length === 0)) && (
                     <TableRow>
                       <TableCell colSpan={4} className="text-center text-muted-foreground">
-                        Aucun log d'audit disponible
+                        {t.admin?.audit?.noLogs || 'Aucun log d\'audit disponible'}
                       </TableCell>
                     </TableRow>
                   )}
