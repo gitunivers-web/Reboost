@@ -50,13 +50,17 @@ function getErrorMessage(status: number): string {
   return messages[lang]?.[status] || messages['en']?.[status] || 'Une erreur s\'est produite';
 }
 
-// In production: use the API subdomain URL
-// In development on Replit: window.location.origin is the Replit dev domain
-// In development locally: use empty string for same-port requests via Vite proxy
+// API URL configuration
+// Production: Use the dedicated API subdomain (https://api.altusfinancesgroup.com)
+// Development (Replit/localhost): Use empty string to proxy via Vite to same port
 const API_BASE_URL = 
-  typeof window !== 'undefined' && window.location.hostname === 'localhost' 
+  typeof window !== 'undefined' && (
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname.includes('replit.dev')
+  )
     ? '' 
-    : '';
+    : 'https://api.altusfinancesgroup.com';
 
 export function getApiUrl(path: string): string {
   if (!path.startsWith('/')) {
