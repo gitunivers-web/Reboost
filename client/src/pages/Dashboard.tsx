@@ -245,11 +245,11 @@ export default function Dashboard() {
           {user && (
             <div className="flex items-center gap-2">
               <Badge 
-                variant={user.kycStatus === 'approved' ? 'default' : user.kycStatus === 'pending' ? 'secondary' : 'destructive'}
+                variant={user.kycStatus === 'verified' ? 'default' : user.kycStatus === 'pending' ? 'secondary' : 'destructive'}
                 className="text-xs whitespace-nowrap"
                 data-testid="badge-kyc-status"
               >
-                KYC: {user.kycStatus === 'approved' ? '✓ ' + t.dashboard.kycStatusApproved : user.kycStatus === 'pending' ? '⏳ ' + t.dashboard.kycStatusPending : '✗ ' + t.dashboard.kycStatusRejected}
+                KYC: {user.kycStatus === 'verified' ? '✓ Validé' : user.kycStatus === 'pending' ? '⏳ En attente' : user.kycStatus === 'rejected' ? '✗ Rejeté' : '? Non soumis'}
               </Badge>
             </div>
           )}
