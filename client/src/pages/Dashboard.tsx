@@ -625,8 +625,8 @@ export default function Dashboard() {
                         </div>
                         
                         <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">{t.dashboard.duration || 'Durée'}</span>
-                          <span className="font-semibold">{loan.duration} {t.dashboard.months || 'mois'}</span>
+                          <span className="text-muted-foreground">{t.dashboard.duration}</span>
+                          <span className="font-semibold">{loan.duration} {t.dashboard.months}</span>
                         </div>
                       </div>
                     </div>
