@@ -375,7 +375,7 @@ export default function Dashboard() {
                 data-testid="button-view-payments"
               >
                 <Clock className="w-4 h-4" />
-                <span>Détails</span>
+                <span>Details</span>
               </Button>
             </Link>
           </div>
@@ -500,7 +500,7 @@ export default function Dashboard() {
                 {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(
                   Number(dashboardData.fees
                     .filter(f => f.createdAt && new Date(f.createdAt).getMonth() === new Date().getMonth())
-                    .filter(f => f.feeType.toLowerCase().includes('intérêt') || f.feeType.toLowerCase().includes('interest'))
+                    .filter(f => f.feeType.toLowerCase().includes('interest') || f.feeType.toLowerCase().includes('intérêt'))
                     .reduce((sum, f) => sum + parseFloat(f.amount), 0))
                 )}
               </p>
