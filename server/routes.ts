@@ -4430,7 +4430,7 @@ Tous les codes de validation ont été vérifiés avec succès.`,
         severity: 'success',
       });
 
-      emitUserUpdate(req.params.id);
+      emitUserUpdate(req.params.id, 'updated', { kycStatus: 'verified' });
       res.json(updated[0]);
     } catch (error: any) {
       console.error('KYC approval error:', error);
