@@ -4077,6 +4077,12 @@ Tous les codes de validation ont été vérifiés avec succès.`,
       if (contractGenerated && contractUrl) {
         await notifyLoanContractGenerated(loan.userId, loan.id, loan.amount);
         
+        // Auto-update KYC status to verified when loan is approved AND contract is generated
+        if (user.kycStatus !== 'verified') {
+          await storage.updateUser(user.id, { kycStatus: 'verified' });
+          console.log(`KYC status automatically set to verified for user ${user.id} (loan approved with contract)`);
+        }
+        
         try {
           const { sendContractEmail } = await import('./email');
           await sendContractEmail(

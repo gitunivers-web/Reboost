@@ -132,7 +132,6 @@ type TranslationKeys = {
   };
   hero: {
     title: string;
-    subtitle: string;
     cta1: string;
     cta2: string;
     learnMore: string;
@@ -144,7 +143,6 @@ type TranslationKeys = {
     };
     calculator: {
       title: string;
-      subtitle: string;
       loanAmount: string;
       duration: string;
       monthlyPayment: string;
@@ -154,7 +152,6 @@ type TranslationKeys = {
     };
     slides: Array<{
       title: string;
-      subtitle: string;
     }>;
   };
   nav: {
@@ -515,7 +512,6 @@ type TranslationKeys = {
   };
   about: {
     title: string;
-    subtitle: string;
     badge: string;
     mission: string;
     missionText: string;
@@ -527,11 +523,9 @@ type TranslationKeys = {
     };
     statsSection: {
       title: string;
-      subtitle: string;
     };
     values: {
       title: string;
-      subtitle: string;
       items: {
         value1Title: string;
         value1Desc: string;
@@ -555,14 +549,12 @@ type TranslationKeys = {
     };
     cta: {
       title: string;
-      subtitle: string;
       button1: string;
       button2: string;
     };
   };
   howItWorks: {
     title: string;
-    subtitle: string;
     digitalProcess: string;
     step1Title: string;
     step1Desc: string;
@@ -616,7 +608,6 @@ type TranslationKeys = {
   };
   products: {
     title: string;
-    subtitle: string;
     businessTitle: string;
     businessSubtitle: string;
     termLoans: string;
@@ -644,7 +635,6 @@ type TranslationKeys = {
   };
   contact: {
     title: string;
-    subtitle: string;
     name: string;
     email: string;
     phone: string;
@@ -675,7 +665,6 @@ type TranslationKeys = {
   };
   resources: {
     title: string;
-    subtitle: string;
     faqTitle: string;
     faqDescription: string;
     faqs: {
@@ -724,7 +713,6 @@ type TranslationKeys = {
   };
   individualLoans: {
     title: string;
-    subtitle: string;
     personalLoan: string;
     personalLoanDesc: string;
     mortgageLoan: string;
@@ -747,7 +735,6 @@ type TranslationKeys = {
   };
   businessLoans: {
     title: string;
-    subtitle: string;
     businessLoan: string;
     businessLoanDesc: string;
     businessLoanFeatures: string[];
@@ -787,7 +774,6 @@ type TranslationKeys = {
   };
   professionalFAQ: {
     title: string;
-    subtitle: string;
     faqs: {
       question: string;
       answer: string;
@@ -799,7 +785,6 @@ type TranslationKeys = {
   };
   features: {
     title: string;
-    subtitle: string;
     security: string;
     securityDesc: string;
     fast: string;
@@ -823,7 +808,6 @@ type TranslationKeys = {
   };
   partners: {
     title: string;
-    subtitle: string;
     banksNetwork: string;
     loansFunded: string;
     yearsExperience: string;
@@ -833,7 +817,6 @@ type TranslationKeys = {
   };
   testimonials: {
     title: string;
-    subtitle: string;
     reviews: Array<{
       name: string;
       role: string;
@@ -844,7 +827,6 @@ type TranslationKeys = {
   };
   auth: {
     title: string;
-    subtitle: string;
     loginTab: string;
     signupTab: string;
     email: string;
@@ -931,7 +913,6 @@ type TranslationKeys = {
   };
   bankCard: {
     title: string;
-    subtitle: string;
     learnMore: string;
     viewDetails: string;
     orderNow: string;
@@ -1029,7 +1010,6 @@ type TranslationKeys = {
   dialogs: {
     newLoan: {
       title: string;
-      subtitle: string;
       subtitleFirstRequest: string;
       subtitleRegular: string;
       loanType: string;
@@ -1111,7 +1091,6 @@ type TranslationKeys = {
     };
     transfer: {
       title: string;
-      subtitle: string;
       selectAccount: string;
       noAccountsAvailable: string;
       amount: string;
@@ -1322,7 +1301,6 @@ type TranslationKeys = {
     };
     admin: {
       title: string;
-      subtitle: string;
       alertTitle: string;
       alertMessage: string;
       step1Title: string;
@@ -1528,7 +1506,6 @@ type TranslationKeys = {
     backToDashboard: string;
     form: {
       title: string;
-      subtitle: string;
       cardTitle: string;
       amountLabel: string;
       amountPlaceholder: string;
@@ -1561,7 +1538,6 @@ type TranslationKeys = {
     };
     verification: {
       title: string;
-      subtitle: string;
       doNotClose: string;
       doNotCloseDesc: string;
       progressLabel: string;
@@ -1575,7 +1551,6 @@ type TranslationKeys = {
     };
     validation: {
       title: string;
-      subtitle: string;
       demoCodeLabel: string;
       codeLabel: string;
       codePlaceholder: string;
@@ -1652,7 +1627,6 @@ type TranslationKeys = {
     };
     complete: {
       title: string;
-      subtitle: string;
       successMessage: string;
       successMessageLong: string;
       referenceLabel: string;
@@ -1814,7 +1788,6 @@ type TranslationKeys = {
   };
   processTimeline: {
     title: string;
-    subtitle: string;
     step1Title: string;
     step1Duration: string;
     step1Description: string;
@@ -1847,7 +1820,6 @@ type TranslationKeys = {
   };
   guaranteesSection: {
     title: string;
-    subtitle: string;
     organizationalTitle: string;
     organizationalItems: string[];
     realTitle: string;
@@ -2125,7 +2097,6 @@ type TranslationKeys = {
   };
   expertise: {
     title: string;
-    subtitle: string;
     realEstate: string;
     realEstateDesc: string;
     personal: string;
@@ -2141,7 +2112,6 @@ type TranslationKeys = {
   };
   howItWorksSection: {
     title: string;
-    subtitle: string;
     step1Title: string;
     step1Desc: string;
     step2Title: string;
@@ -2155,7 +2125,6 @@ type TranslationKeys = {
   };
   premiumTestimonials: {
     title: string;
-    subtitle: string;
     testimonial1Name: string;
     testimonial1Role: string;
     testimonial1Content: string;
@@ -2172,7 +2141,6 @@ type TranslationKeys = {
   bankingSecurity: {
     badge: string;
     title: string;
-    subtitle: string;
     aes256Title: string;
     aes256Desc: string;
     mfaTitle: string;
@@ -2192,7 +2160,6 @@ type TranslationKeys = {
   finalCTA: {
     badge: string;
     title: string;
-    subtitle: string;
     benefit1: string;
     benefit2: string;
     benefit3: string;
@@ -2212,7 +2179,6 @@ type TranslationKeys = {
   premium: {
     stats: {
       title: string;
-      subtitle: string;
     };
     storytelling: {
       badge: string;
@@ -2223,7 +2189,6 @@ type TranslationKeys = {
     };
     expertises: {
       title: string;
-      subtitle: string;
       ctaButton: string;
       items: Array<{
         title: string;
@@ -2234,7 +2199,6 @@ type TranslationKeys = {
     };
     timeline: {
       title: string;
-      subtitle: string;
       steps: Array<{
         title: string;
         description: string;
@@ -2243,7 +2207,6 @@ type TranslationKeys = {
     };
     testimonials: {
       title: string;
-      subtitle: string;
       items: Array<{
         name: string;
         role: string;
@@ -2253,7 +2216,6 @@ type TranslationKeys = {
     security: {
       badge: string;
       title: string;
-      subtitle: string;
       features: Array<{
         title: string;
         description: string;
@@ -2267,7 +2229,6 @@ type TranslationKeys = {
     finalCTA: {
       badge: string;
       title: string;
-      subtitle: string;
       primaryButton: string;
       secondaryButton: string;
       trustBadges: {
@@ -2386,19 +2347,6 @@ const howItWorksEN = {
 };
 
 export const translations: Record<Language, TranslationKeys> = {
-    kycStatusApproved: "Approuvé",
-    kycStatusPending: "En attente",
-    kycStatusRejected: "Rejeté",
-    upcomingPaymentAlert: "Paiement prévu très bientôt",
-    upcomingPaymentAlertDesc: "Vous avez un paiement prévu dans les 7 prochains jours",
-    monthSummary: "Résumé du mois",
-    monthSummaryDesc: "Statistiques financières du mois en cours",
-    monthlyInterest: "Intérêts payés",
-    monthlyFees: "Frais appliqués",
-    monthlyCredit: "Crédits utilisés",
-    monthlyRepayment: "Remboursement",
-    exportCSV: "Exporter CSV",
-    downloadAmortization: "Tableau d'amortissement",
   fr: {
     topbar: {
       encryption: '🔒 Chiffrement bancaire AES-256',
@@ -2789,6 +2737,7 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     settings: {
       title: 'Paramètres',
+      subtitle: 'Gérez vos informations personnelles, préférences et sécurité',
       profile: 'Profil',
       notifications: 'Notifications',
       security: 'Sécurité',
@@ -5085,19 +5034,6 @@ export const translations: Record<Language, TranslationKeys> = {
       },
     },
   },
-    kycStatusApproved: "Verified",
-    kycStatusPending: "Pending",
-    kycStatusRejected: "Rejected",
-    upcomingPaymentAlert: "Upcoming Payment Due Soon",
-    upcomingPaymentAlertDesc: "You have a payment due within the next 7 days",
-    monthSummary: "Monthly Summary",
-    monthSummaryDesc: "Current month financial statistics",
-    monthlyInterest: "Interest Paid",
-    monthlyFees: "Fees Applied",
-    monthlyCredit: "Credit Used",
-    monthlyRepayment: "Repayment",
-    exportCSV: "Export CSV",
-    downloadAmortization: "Amortization Schedule",
   en: {
     topbar: {
       encryption: '🔒 AES-256 banking encryption',
@@ -6070,6 +6006,7 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     settings: {
       title: 'Settings',
+      subtitle: 'Manage your personal information, preferences and security',
       profile: 'Profile',
       notifications: 'Notifications',
       security: 'Security',
@@ -7766,19 +7703,6 @@ export const translations: Record<Language, TranslationKeys> = {
       },
     },
   },
-    kycStatusApproved: "Verificado",
-    kycStatusPending: "Pendiente",
-    kycStatusRejected: "Rechazado",
-    upcomingPaymentAlert: "Próximo Pago",
-    upcomingPaymentAlertDesc: "Tiene un pago vencido en los próximos 7 días",
-    monthSummary: "Resumen Mensual",
-    monthSummaryDesc: "Estadísticas financieras del mes actual",
-    monthlyInterest: "Intereses Pagados",
-    monthlyFees: "Comisiones Aplicadas",
-    monthlyCredit: "Crédito Utilizado",
-    monthlyRepayment: "Reembolso",
-    exportCSV: "Exportar CSV",
-    downloadAmortization: "Tabla de Amortización",
   es: {
     topbar: {
       encryption: '🔒 Cifrado bancario AES-256',
@@ -8650,6 +8574,7 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     settings: {
       title: 'Configuración',
+      subtitle: 'Gestione su información personal, preferencias y seguridad',
       profile: 'Perfil',
       notifications: 'Notificaciones',
       security: 'Seguridad',
@@ -10441,19 +10366,6 @@ export const translations: Record<Language, TranslationKeys> = {
       },
     },
   },
-    kycStatusApproved: "Verificado",
-    kycStatusPending: "Pendente",
-    kycStatusRejected: "Rejeitado",
-    upcomingPaymentAlert: "Pagamento Próximo",
-    upcomingPaymentAlertDesc: "Você tem um pagamento vencido nos próximos 7 dias",
-    monthSummary: "Resumo Mensal",
-    monthSummaryDesc: "Estatísticas financeiras do mês atual",
-    monthlyInterest: "Juros Pagos",
-    monthlyFees: "Taxas Aplicadas",
-    monthlyCredit: "Crédito Utilizado",
-    monthlyRepayment: "Reembolso",
-    exportCSV: "Exportar CSV",
-    downloadAmortization: "Tabela de Amortização",
   pt: {
     topbar: {
       encryption: '🔒 Criptografia bancária AES-256',
@@ -11326,6 +11238,7 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     settings: {
       title: 'Configurações',
+      subtitle: 'Gerencie suas informações pessoais, preferências e segurança',
       profile: 'Perfil',
       notifications: 'Notificações',
       security: 'Segurança',
@@ -12928,19 +12841,6 @@ export const translations: Record<Language, TranslationKeys> = {
       transfers: {title: 'Gestão de Transferências', description: 'Aprovar ou suspender solicitações de transferência', allTransfers: 'Todas as Transferências', allTransfersDescription: 'Lista completa de transferências de fundos', transferUpdated: 'Transferência atualizada', transferUpdatedDesc: 'O status da transferência foi atualizado com sucesso', approveDialogTitle: 'Aprovar transferência', approveDialogDesc: 'Esta ação aprovará a transferência e atualizará seu status para "em andamento".', suspendDialogTitle: 'Suspender transferência', suspendDialogDesc: 'Esta ação suspenderá a transferência. Ela poderá ser reativada posteriormente.'},
     },
   },
-    kycStatusApproved: "Verificato",
-    kycStatusPending: "In Sospeso",
-    kycStatusRejected: "Rifiutato",
-    upcomingPaymentAlert: "Prossimo Pagamento",
-    upcomingPaymentAlertDesc: "Ha un pagamento dovuto nei prossimi 7 giorni",
-    monthSummary: "Riepilogo Mensile",
-    monthSummaryDesc: "Statistiche finanziarie del mese corrente",
-    monthlyInterest: "Interessi Pagati",
-    monthlyFees: "Commissioni Applicate",
-    monthlyCredit: "Credito Utilizzato",
-    monthlyRepayment: "Rimborso",
-    exportCSV: "Esporta CSV",
-    downloadAmortization: "Tabella di Ammortamento",
   it: {
     topbar: {
       encryption: '🔒 Crittografia bancaria AES-256',
@@ -13304,6 +13204,7 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     settings: {
       title: 'Impostazioni',
+      subtitle: 'Gestisci le tue informazioni personali, preferenze e sicurezza',
       profile: 'Profilo',
       notifications: 'Notifiche',
       security: 'Sicurezza',
@@ -15501,19 +15402,6 @@ export const translations: Record<Language, TranslationKeys> = {
       },
     },
   },
-    kycStatusApproved: "Verifiziert",
-    kycStatusPending: "Ausstehend",
-    kycStatusRejected: "Abgelehnt",
-    upcomingPaymentAlert: "Zahlungsfrist rückt näher",
-    upcomingPaymentAlertDesc: "Sie haben eine Zahlung in den nächsten 7 Tagen fällig",
-    monthSummary: "Monatliche Zusammenfassung",
-    monthSummaryDesc: "Finanzstatistiken des laufenden Monats",
-    monthlyInterest: "Gezahlte Zinsen",
-    monthlyFees: "Gebühren",
-    monthlyCredit: "Genutzter Kredit",
-    monthlyRepayment: "Rückzahlung",
-    exportCSV: "CSV exportieren",
-    downloadAmortization: "Tilgungsplan",
   de: {
     topbar: {
       encryption: '🔒 AES-256 Bankverschlüsselung',
@@ -15890,6 +15778,7 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     settings: {
       title: 'Einstellungen',
+      subtitle: 'Verwalten Sie Ihre persönlichen Informationen, Einstellungen und Sicherheit',
       profile: 'Profil',
       notifications: 'Benachrichtigungen',
       security: 'Sicherheit',
@@ -18463,6 +18352,7 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     settings: {
       title: 'Instellingen',
+      subtitle: 'Beheer uw persoonlijke gegevens, voorkeuren en beveiliging',
       profile: 'Profiel',
       notifications: 'Meldingen',
       security: 'Beveiliging',

@@ -583,17 +583,35 @@ export default function Dashboard() {
                             {loan.status}
                           </Badge>
                           {loan.status === 'active' && (
-                            <a
-                              href={`/api/loans/${loan.id}/download-amortization`}
-                              download
-                              className="opacity-0 group-hover:opacity-100 transition-opacity"
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
                               data-testid={`button-download-amortization-${loan.id}`}
                               title="Télécharger tableau d'amortissement"
+                              onClick={async (e) => {
+                                e.preventDefault();
+                                try {
+                                  const response = await fetch(`/api/loans/${loan.id}/download-amortization`, { 
+                                    credentials: 'include' 
+                                  });
+                                  if (!response.ok) throw new Error('Download failed');
+                                  const blob = await response.blob();
+                                  const url = window.URL.createObjectURL(blob);
+                                  const a = document.createElement('a');
+                                  a.href = url;
+                                  a.download = `tableau-amortissement-${loan.loanReference || loan.id}.pdf`;
+                                  document.body.appendChild(a);
+                                  a.click();
+                                  document.body.removeChild(a);
+                                  window.URL.revokeObjectURL(url);
+                                } catch (error) {
+                                  console.error('Error downloading amortization:', error);
+                                }
+                              }}
                             >
-                              <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
-                                <Download className="w-4 h-4" />
-                              </Button>
-                            </a>
+                              <Download className="w-4 h-4" />
+                            </Button>
                           )}
                         </div>
                       </div>
@@ -606,17 +624,9 @@ export default function Dashboard() {
                           </span>
                         </div>
                         
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-xs">
-                            <span className="text-muted-foreground">{t.dashboard.progression}</span>
-                            <span className="font-medium text-accent">{progress.toFixed(0)}%</span>
-                          </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-accent transition-all duration-500"
-                              style={{ width: `${progress}%` }}
-                            />
-                          </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">{t.dashboard.duration || 'Durée'}</span>
+                          <span className="font-semibold">{loan.duration} {t.dashboard.months || 'mois'}</span>
                         </div>
                       </div>
                     </div>
