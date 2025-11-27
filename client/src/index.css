@@ -61,7 +61,7 @@
 
   --muted-foreground: 220 18% 48%;  /* Texte secondaire lisible */
 
-  --accent: 220 10% 96%;             /* Neutre léger pour hover/active states */
+  --accent: 248 60% 65%;            /* Violet indigo pour accent */
 
   --accent-foreground: 0 0% 100%;
 }
@@ -198,9 +198,9 @@
 
   --muted-foreground: 220 15% 70%;
 
-  --accent: 166 65% 52%;              /* Vert succès lumineux */
 
-  --accent-foreground: 222 47% 7%;
+
+
 
   --gold: 43 85% 65%;
 
