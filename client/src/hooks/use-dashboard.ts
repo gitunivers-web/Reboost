@@ -63,9 +63,7 @@ export function useAvailableFundsChart() {
 export function useUpcomingRepaymentsChart() {
   return useQuery<Array<{
     month: string;
-    loan1: number;
-    loan2: number;
-    loan3: number;
+    amount: number;
   }>>({
     queryKey: ['/api/charts/upcoming-repayments'],
   });

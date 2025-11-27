@@ -3498,8 +3498,12 @@ Tous les codes de validation ont été vérifiés avec succès.`,
       
       const activeLoans = userLoans.filter(loan => loan.status === 'active');
       
+      if (activeLoans.length === 0) {
+        return res.json([]);
+      }
+      
       const data = months.map((month, index) => {
-        const result: any = { month };
+        let totalAmount = 0;
         
         activeLoans.forEach((loan, loanIndex) => {
           const loanAmount = parseFloat(loan.amount);
@@ -3507,14 +3511,13 @@ Tous les codes de validation ont été vérifiés avec succès.`,
           const basePayment = monthlyPayment + (monthlyPayment * parseFloat(loan.interestRate) / 100 / 12);
           
           const monthlyVariation = Math.sin((index + loanIndex) * 0.7) * (basePayment * 0.1);
-          result[`loan${loanIndex + 1}`] = Math.round(basePayment + monthlyVariation);
+          totalAmount += Math.round(basePayment + monthlyVariation);
         });
         
-        for (let i = activeLoans.length; i < 3; i++) {
-          result[`loan${i + 1}`] = 0;
-        }
-        
-        return result;
+        return {
+          month,
+          amount: totalAmount
+        };
       });
       
       res.json(data);
