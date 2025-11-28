@@ -187,6 +187,8 @@ export default function TransferFlow() {
       } else if (status === 'in-progress' || status === 'pending') {
         setStep('progress');
         setCurrentCodeSequence((transferData.transfer.codesValidated || 0) + 1);
+        // Sync progress from server
+        setSimulatedProgress(transferData.transfer.progressPercent || 0);
       }
       
       setIsLoadingExistingTransfer(false);
@@ -868,12 +870,15 @@ export default function TransferFlow() {
     ];
 
     const computeVisibleSteps = () => {
+      // Use server progress for display, fall back to simulated
+      const currentProgress = transfer?.progressPercent ?? simulatedProgress;
+      
       // Helper pour calculer le statut de chaque étape
       const getStepStatus = (step: typeof allStepsMetadata[0]) => ({
         ...step,
-        completed: simulatedProgress > step.pauseThreshold,
-        inProgress: simulatedProgress > (step.sequence === 1 ? 0 : allStepsMetadata[step.sequence - 2].pauseThreshold) 
-                    && simulatedProgress <= step.pauseThreshold
+        completed: currentProgress > step.pauseThreshold,
+        inProgress: currentProgress > (step.sequence === 1 ? 0 : allStepsMetadata[step.sequence - 2].pauseThreshold) 
+                    && currentProgress <= step.pauseThreshold
       });
 
       // Step 1 et Step 2 sont TOUJOURS visibles
@@ -882,9 +887,9 @@ export default function TransferFlow() {
 
       // La 3ème position change selon la progression
       let thirdStep;
-      if (simulatedProgress <= 33) {
+      if (currentProgress <= 33) {
         thirdStep = getStepStatus(allStepsMetadata[2]); // Step 3: Vérification des fonds
-      } else if (simulatedProgress <= 50) {
+      } else if (currentProgress <= 50) {
         thirdStep = getStepStatus(allStepsMetadata[3]); // Step 4: Validation bancaire
       } else {
         thirdStep = getStepStatus(allStepsMetadata[4]); // Step 5: Finalisation
@@ -995,7 +1000,7 @@ export default function TransferFlow() {
 
     const renderProgressCard = () => (
       <div className="bg-white shadow-sm rounded-xl p-6 flex flex-col items-center">
-        <ProgressCircle percent={Math.round(simulatedProgress)} />
+        <ProgressCircle percent={Math.round(transfer?.progressPercent ?? simulatedProgress)} />
         <div className="mt-4 text-center">
           <p className="text-sm text-muted-foreground">{t.transferFlow.progress.progressLabelShort} {t.transferFlow.progress.transferProgressLabel}</p>
         </div>
