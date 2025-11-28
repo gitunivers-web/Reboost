@@ -251,6 +251,10 @@ export default function TransferFlow() {
           // Marquer l'hydratation comme faite pour ce transfert
           initialHydrationDoneRef.current = true;
           lastHydratedTransferIdRef.current = transferId;
+          
+          // ⚠️ TRÈS IMPORTANT: Mettre à jour prevCodesValidatedRef pour éviter une fausse détection de "nouveau transfert"
+          // Si on ne fait pas cela, le useEffect d'animation penserait que c'est un nouveau transfert et relancerait l'animation
+          prevCodesValidatedRef.current = codesValidated;
         }
       }
     } else {

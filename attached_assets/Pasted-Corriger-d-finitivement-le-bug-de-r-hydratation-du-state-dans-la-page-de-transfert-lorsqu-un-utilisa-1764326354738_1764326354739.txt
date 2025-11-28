@@ -1,0 +1,104 @@
+Corriger définitivement le bug de réhydratation du state dans la page de transfert lorsqu’un utilisateur quitte et revient dans le workflow.
+Le frontend doit reprendre la progression EXACTEMENT où le backend l’a enregistrée (ex : 35%) et redemander un code si nécessaire.
+
+🚨 PROBLÈME À CORRIGER
+
+Actuellement :
+
+quand l’utilisateur quitte la page,
+
+puis revient en cliquant sur son transfert en cours,
+
+👉 la progression retombe à 10%
+👉 le code n'est pas demandé
+👉 le transfert passe en “pending”
+👉 l’UI n’utilise pas les données du backend
+
+C’est un problème de réhydratation incorrecte du state local.
+
+✅ CE QU’IL FAUT FAIRE
+✔️ 1. Ne plus réinitialiser le state avec des valeurs par défaut
+
+Les valeurs suivantes NE doivent PAS être initialisées à 0/false :
+
+simulatedProgress
+lastValidatedSequence
+currentCodeSequence
+isPausedForCode
+pausePercent
+
+
+Elles doivent être hydratées depuis les données du backend dès le chargement.
+
+🧩 CODE À INTÉGRER (OU APPROCHE EXACTE À METTRE EN PLACE)
+
+Dans le composant où est gérée la progression (TransferFlow.jsx ou équivalent), appliquer ceci :
+
+useEffect(() => {
+    if (!transferData) return;
+
+    // 1. Hydratation FULL à partir du backend
+    setSimulatedProgress(transferData.progressPercent || 0);
+    setLastValidatedSequence(transferData.codesValidated || 0);
+
+    // 2. Détermination de la séquence actuelle
+    setCurrentCodeSequence((transferData.codesValidated || 0) + 1);
+
+    // 3. Si un code est attendu, on remet le flag en mode pause
+    if (transferData.status === 'waiting_for_code') {
+        setIsPausedForCode(true);
+        setPausePercent(transferData.progressPercent);
+    } else {
+        setIsPausedForCode(false);
+    }
+}, [transferData]);
+
+🛠️ Et supprimer tout code comme ceci :
+
+❌ Valeurs par défaut fixées au montage :
+
+const [simulatedProgress, setSimulatedProgress] = useState(0);
+const [lastValidatedSequence, setLastValidatedSequence] = useState(0);
+const [currentCodeSequence, setCurrentCodeSequence] = useState(1);
+const [isPausedForCode, setIsPausedForCode] = useState(false);
+const [pausePercent, setPausePercent] = useState(10);
+
+
+➡️ Cette logique est INCORRECTE, elle écrase les données du backend.
+
+🔄 EN PLUS : mise à jour correcte lors de la validation du code
+const handleCodeValidated = () => {
+    setLastValidatedSequence(prev => prev + 1);
+    setCurrentCodeSequence(prev => prev + 1);
+    setIsPausedForCode(false);
+
+    // On repart du percent réel en base
+    setSimulatedProgress(transferData.progressPercent);
+};
+
+🧠 EXTREMEMENT IMPORTANT
+
+Le backend renvoie toujours :
+
+progressPercent
+
+codesValidated
+
+step / statut (pending, in_progress, waiting_for_code)
+
+Le frontend doit toujours prendre ces valeurs comme source de vérité.
+Jamais des valeurs par défaut.
+
+🎯 ATTENDU APRÈS CORRECTION
+
+Si le transfert était à 35%, l’UI démarre à 35% sans animation incorrecte.
+
+Si un code était attendu, l’UI affiche directement le champ de code.
+
+Le transfert ne retombe plus à 10%.
+
+L’état ne passe plus en “pending” sans raison.
+
+La progression reprend proprement même après plusieurs interruptions.
+
+✔️ Merci de corriger le composant en vous basant EXACTEMENT sur cette logique.
