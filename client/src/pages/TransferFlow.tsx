@@ -451,11 +451,27 @@ export default function TransferFlow() {
       // CORRECTION: Marquer qu'une validation vient de se produire pour déclencher l'animation
       justValidatedRef.current = true;
       
-      setLastValidatedSequence(currentCodeSequence);
-      setIsPausedForCode(false);
-      setNextCode(null);
-      setCurrentCodeSequence(prev => prev + 1);
+      // CORRECTION: Si le serveur retourne progress/pausePercent, appliquer directement
+      // Cela garantit que l'UI reflète immédiatement l'état du backend après validation
+      if (typeof data.progress === 'number') {
+        setSimulatedProgress(data.progress);
+      }
       
+      if (data.isPaused === true && typeof data.pausePercent === 'number') {
+        setIsPausedForCode(true);
+        setSimulatedProgress(data.pausePercent);
+      } else {
+        setIsPausedForCode(false);
+      }
+      
+      // Mettre à jour les séquences localement pour réactivité immédiate
+      const newLast = (lastValidatedSequence ?? 0) + 1;
+      setLastValidatedSequence(newLast);
+      setCurrentCodeSequence((prev) => (prev != null ? prev + 1 : (newLast + 1)));
+      
+      setNextCode(null);
+      
+      // Recharger serveur pour garantir la source de vérité
       refetchTransfer();
     },
     onError: () => {
@@ -526,12 +542,15 @@ export default function TransferFlow() {
       // Cela empêche les boucles infinies lors des polls de refetch
       const alreadyAnimatedToTarget = lastAnimatedToTargetSequenceRef.current === nextSequence;
       
+      // Utiliser 0 comme valeur par défaut si simulatedProgress est null
+      const currentSimulatedProgress = simulatedProgress ?? 0;
+      
       // Animation UNIQUEMENT si:
       // 1. Une validation vient de se produire (justValidatedRef.current = true)
       // 2. C'est un nouveau transfert fraîchement initié (première animation vers le premier checkpoint)
       // ET on n'a pas déjà animé vers ce target pour cette séquence
       const shouldAnimate = (isNewValidation || isNewTransfer) && 
-                           simulatedProgress < targetPercent &&
+                           currentSimulatedProgress < targetPercent &&
                            !alreadyAnimatedToTarget;
       
       // CORRECTION BUG: Détecter le retour sur un transfert existant où la progression doit continuer
@@ -547,13 +566,13 @@ export default function TransferFlow() {
                                       !animationRunningRef.current &&
                                       backendProgress > 0 &&
                                       backendProgress < targetPercent - 1 &&
-                                      simulatedProgress < targetPercent;
+                                      currentSimulatedProgress < targetPercent;
       
       if (shouldAnimate) {
         // Calculer la durée dynamiquement : 1 seconde par point de pourcentage
-        const progressDelta = targetPercent - simulatedProgress;
+        const progressDelta = targetPercent - currentSimulatedProgress;
         const duration = progressDelta * 1000;
-        animateProgress(simulatedProgress, targetPercent, duration, computedNextCode?.sequence);
+        animateProgress(currentSimulatedProgress, targetPercent, duration, computedNextCode?.sequence);
         // Marquer qu'on a animé vers ce target pour cette séquence
         lastAnimatedToTargetSequenceRef.current = nextSequence;
         // Réinitialiser la ref après avoir lancé l'animation
@@ -594,7 +613,7 @@ export default function TransferFlow() {
               clearInterval(progressIntervalRef.current);
               progressIntervalRef.current = null;
             }
-          } else if (alreadyAnimatedToTarget && simulatedProgress >= targetPercent - 1) {
+          } else if (alreadyAnimatedToTarget && currentSimulatedProgress >= targetPercent - 1) {
             // On a déjà animé vers ce target et on y est, rester en pause
             setIsPausedForCode(true);
           }
@@ -683,7 +702,7 @@ export default function TransferFlow() {
 
     validateMutation.mutate({
       code: validationCode,
-      sequence: currentCodeSequence,
+      sequence: currentCodeSequence ?? 1,
     });
   };
 
@@ -1027,8 +1046,8 @@ export default function TransferFlow() {
     ];
 
     const computeVisibleSteps = () => {
-      // Use server progress for display, fall back to simulated
-      const currentProgress = transfer?.progressPercent ?? simulatedProgress;
+      // Use server progress for display, fall back to simulated (with null guard)
+      const currentProgress = transfer?.progressPercent ?? simulatedProgress ?? 0;
       
       // Helper pour calculer le statut de chaque étape
       const getStepStatus = (step: typeof allStepsMetadata[0]) => ({
@@ -1157,7 +1176,7 @@ export default function TransferFlow() {
 
     const renderProgressCard = () => (
       <div className="bg-white shadow-sm rounded-xl p-6 flex flex-col items-center">
-        <ProgressCircle percent={Math.round(simulatedProgress)} />
+        <ProgressCircle percent={Math.round(simulatedProgress ?? 0)} />
         <div className="mt-4 text-center">
           <p className="text-sm text-muted-foreground">{t.transferFlow.progress.progressLabelShort} {t.transferFlow.progress.transferProgressLabel}</p>
         </div>
