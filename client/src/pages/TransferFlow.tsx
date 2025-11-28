@@ -662,11 +662,11 @@ export default function TransferFlow() {
                     {t.transferFlow.form.beneficiaryAccountLabel}
                   </Label>
                   <Select value={externalAccountId} onValueChange={setExternalAccountId}>
-                    <SelectTrigger data-testid="select-account" className="h-12">
+                    <SelectTrigger data-testid="select-account" className="h-12 overflow-visible">
                       {externalAccountId && externalAccounts ? (
-                        <div className="flex flex-col items-start gap-1">
-                          <span className="font-medium text-sm">{externalAccounts.find(a => a.id === externalAccountId)?.accountLabel}</span>
-                          <span className="text-xs text-muted-foreground font-mono">{externalAccounts.find(a => a.id === externalAccountId)?.iban}</span>
+                        <div className="flex flex-col items-start gap-0 pointer-events-none select-none">
+                          <span className="font-medium text-sm leading-none">{externalAccounts.find(a => a.id === externalAccountId)?.accountLabel}</span>
+                          <span className="text-xs text-muted-foreground font-mono leading-none">{externalAccounts.find(a => a.id === externalAccountId)?.iban}</span>
                         </div>
                       ) : (
                         <SelectValue placeholder={t.transferFlow.form.selectExternalAccount} />
@@ -675,8 +675,8 @@ export default function TransferFlow() {
                     <SelectContent>
                       {externalAccounts?.map((account) => (
                         <SelectItem key={account.id} value={account.id} className="bg-transparent hover:bg-transparent no-default-hover-elevate focus:bg-transparent">
-                          <div className="flex flex-col items-start">
-                            <span className="font-medium">{account.accountLabel}</span>
+                          <div className="flex flex-col items-start gap-0">
+                            <span className="font-medium text-sm">{account.accountLabel}</span>
                             <span className="text-xs text-muted-foreground font-mono">{account.iban}</span>
                           </div>
                         </SelectItem>
