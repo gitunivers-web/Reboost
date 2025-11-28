@@ -1720,7 +1720,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserLoans(userId: string): Promise<Loan[]> {
-    return await db.select().from(loans).where(eq(loans.userId, userId));
+    // CORRECTION: Exclure les prêts supprimés (soft delete) pour que le solde
+    // disparaisse du compte utilisateur quand un admin supprime une demande
+    return await db.select().from(loans).where(
+      and(
+        eq(loans.userId, userId),
+        isNull(loans.deletedAt)
+      )
+    );
   }
 
   async getLoansAvailableForTransfer(userId: string): Promise<Loan[]> {
