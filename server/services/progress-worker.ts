@@ -26,7 +26,7 @@ export function enqueueProgressJob(job: ProgressJob): void {
   console.log(`[PROGRESS WORKER] Enqueuing job ${jobKey}: ${job.startPercent}% -> ${job.targetPercent}%`);
   
   let currentPercent = job.startPercent;
-  const incrementStep = 0.5;
+  const incrementStep = 2;
   const intervalMs = 1000;
   
   const timer = setInterval(async () => {
