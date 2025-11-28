@@ -1536,8 +1536,8 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
             : 'account',
         })),
         borrowingCapacity: {
-          maxCapacity: parseFloat(data.user.maxLoanAmount || "500000"),
-          currentCapacity: parseFloat(data.user.maxLoanAmount || "500000") - data.balance,
+          maxCapacity: data.user.accountType === 'business' || data.user.accountType === 'professional' ? 2000000 : 500000,
+          currentCapacity: (data.user.accountType === 'business' || data.user.accountType === 'professional' ? 2000000 : 500000) - data.balance,
         },
       };
 
