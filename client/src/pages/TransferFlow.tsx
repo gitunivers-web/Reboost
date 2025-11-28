@@ -251,18 +251,35 @@ export default function TransferFlow() {
     // On est en pause si:
     // 1. Le backend dit explicitement isPaused = true
     // 2. OU si la progression actuelle >= pausePercent du code en attente
+    // 
+    // CORRECTION BUG CRITIQUE: Si prevCodesValidatedRef.current === null, c'est un nouveau
+    // transfert initié depuis le formulaire. Dans ce cas, NE PAS forcer isPausedForCode à false
+    // car l'animation va s'en occuper et le mettre à true quand elle atteint le seuil.
+    const isNewlyInitiatedTransfer = prevCodesValidatedRef.current === null;
+    
     if (server.isPaused) {
       setIsPausedForCode(true);
     } else if (nextCodeMeta && nextCodeMeta.pausePercent) {
       const targetPercent = nextCodeMeta.pausePercent;
       // Si la progression actuelle est >= au pourcentage cible - 1, on attend un code
-      setIsPausedForCode(backendProgress >= targetPercent - 1);
-    } else {
+      const shouldPause = backendProgress >= targetPercent - 1;
+      // Pour un nouveau transfert, ne pas forcer à false - laisser l'animation gérer
+      if (shouldPause || !isNewlyInitiatedTransfer) {
+        setIsPausedForCode(shouldPause);
+      }
+    } else if (!isNewlyInitiatedTransfer) {
+      // Ne pas forcer à false pour un nouveau transfert
       setIsPausedForCode(false);
     }
     
     // ⚠️ TRÈS IMPORTANT: Mettre à jour les refs pour éviter les fausses détections
-    prevCodesValidatedRef.current = codesValidated;
+    // CORRECTION BUG CRITIQUE: Si prevCodesValidatedRef est null, cela signifie qu'on vient
+    // d'initier un transfert depuis le formulaire (via initiateMutation.onSuccess).
+    // Dans ce cas, NE PAS écraser la valeur null - laisser l'animation useEffect détecter
+    // que c'est un nouveau transfert et lancer l'animation automatique vers le premier seuil.
+    if (prevCodesValidatedRef.current !== null) {
+      prevCodesValidatedRef.current = codesValidated;
+    }
     justValidatedRef.current = false;
     lastAnimatedToTargetSequenceRef.current = codesValidated > 0 ? nextSeqFromServer : null;
     
