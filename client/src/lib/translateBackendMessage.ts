@@ -14,6 +14,10 @@ const messageMapping: Record<string, { key: string; path: string[] }> = {
     key: 'accountCreationError',
     path: ['auth']
   },
+  'Un compte avec cet email existe déjà. Veuillez vous connecter ou utiliser une autre adresse email.': {
+    key: 'emailAlreadyExists',
+    path: ['auth']
+  },
   
   // Auth - Login
   'Identifiants invalides': {

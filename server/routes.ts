@@ -655,7 +655,7 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
       
       const existingUser = await storage.getUserByEmail(email);
       if (existingUser) {
-        return res.status(400).json({ error: 'Impossible de créer le compte. Veuillez vérifier vos informations.' });
+        return res.status(400).json({ error: 'Un compte avec cet email existe déjà. Veuillez vous connecter ou utiliser une autre adresse email.' });
       }
       
       const hashedPassword = await bcrypt.hash(password, 12);

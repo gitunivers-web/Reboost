@@ -3384,6 +3384,7 @@ export const translations: Record<Language, TranslationKeys> = {
       invalidCredentials: 'Identifiants invalides',
       pleaseVerifyEmail: 'Veuillez vérifier votre email avant de vous connecter',
       accountCreationError: 'Impossible de créer le compte. Veuillez vérifier vos informations.',
+      emailAlreadyExists: 'Un compte avec cet email existe déjà. Veuillez vous connecter ou utiliser une autre adresse email.',
       twoFactorEnabledSuccess: 'Authentification à deux facteurs activée avec succès',
       twoFactorDisabledSuccess: 'Authentification à deux facteurs désactivée',
       passwordResetSuccess: 'Mot de passe réinitialisé avec succès. Vous pouvez maintenant vous connecter.',
