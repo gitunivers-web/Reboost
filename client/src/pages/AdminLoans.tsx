@@ -409,7 +409,7 @@ export default function AdminLoans() {
                       </>
                     )}
 
-                    {!loan.contractUrl ? (
+                    {!loan.signedContractUrl ? (
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <span className="w-full">
@@ -426,7 +426,9 @@ export default function AdminLoans() {
                           </span>
                         </TooltipTrigger>
                         <TooltipContent>
-                          Le contrat doit d'abord être généré. Approuvez la demande pour générer le contrat.
+                          {!loan.contractUrl 
+                            ? "Le contrat doit d'abord être généré. Approuvez la demande pour générer le contrat."
+                            : "En attente du contrat signé par l'utilisateur. Le client doit télécharger, signer et renvoyer le contrat depuis son espace."}
                         </TooltipContent>
                       </Tooltip>
                     ) : (
@@ -444,9 +446,9 @@ export default function AdminLoans() {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Confirmer le contrat</AlertDialogTitle>
+                            <AlertDialogTitle>Confirmer le contrat signé</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Cette action va confirmer le contrat pour {loan.userName} et générer automatiquement 6 codes de validation de transfert. Les fonds seront ensuite prêts pour le déblocage.
+                              Le contrat signé par {loan.userName} a été reçu. Cette action va confirmer le contrat et générer automatiquement 6 codes de validation de transfert. Les fonds seront ensuite prêts pour le déblocage.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
@@ -675,7 +677,7 @@ export default function AdminLoans() {
                         </>
                       )}
 
-                      {!loan.contractUrl ? (
+                      {!loan.signedContractUrl ? (
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <span>
@@ -691,7 +693,9 @@ export default function AdminLoans() {
                             </span>
                           </TooltipTrigger>
                           <TooltipContent>
-                            Le contrat doit d'abord être généré. Approuvez la demande pour générer le contrat.
+                            {!loan.contractUrl 
+                              ? "Le contrat doit d'abord être généré. Approuvez la demande pour générer le contrat."
+                              : "En attente du contrat signé par l'utilisateur. Le client doit télécharger, signer et renvoyer le contrat depuis son espace."}
                           </TooltipContent>
                         </Tooltip>
                       ) : (
@@ -708,9 +712,9 @@ export default function AdminLoans() {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Confirmer le contrat</AlertDialogTitle>
+                              <AlertDialogTitle>Confirmer le contrat signé</AlertDialogTitle>
                               <AlertDialogDescription>
-                                Cette action va confirmer le contrat pour {loan.userName} et générer automatiquement 6 codes de validation de transfert. Les fonds seront ensuite prêts pour le déblocage.
+                                Le contrat signé par {loan.userName} a été reçu. Cette action va confirmer le contrat et générer automatiquement 6 codes de validation de transfert. Les fonds seront ensuite prêts pour le déblocage.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
