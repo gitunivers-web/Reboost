@@ -649,11 +649,16 @@ export default function TransferFlow() {
                                       backendProgress < targetPercent &&
                                       currentSimulatedProgress < targetPercent;
       
+      // Configuration production-ready de la vitesse de progression
+      // Utilise VITE_TRANSFER_PROGRESS_SPEED (env var), par défaut 0.5% par seconde
+      const SPEED_PERCENT_PER_SECOND = parseFloat(
+        import.meta.env.VITE_TRANSFER_PROGRESS_SPEED || '0.5'
+      );
+
       if (shouldAnimate) {
-        // Calculer la durée dynamiquement : vitesse constante de 0.5% par seconde
-        // duration = (progressDelta / 0.5) * 1000 = progressDelta * 2000 ms
+        // Calculer la durée dynamiquement : vitesse constante (configurable)
+        // duration = (progressDelta / SPEED_PERCENT_PER_SECOND) * 1000 ms
         const progressDelta = targetPercent - currentSimulatedProgress;
-        const SPEED_PERCENT_PER_SECOND = 0.5;
         const duration = (progressDelta / SPEED_PERCENT_PER_SECOND) * 1000;
         animateProgress(currentSimulatedProgress, targetPercent, duration, computedNextCode?.sequence);
         // Marquer qu'on a animé vers ce target pour cette séquence
@@ -664,7 +669,6 @@ export default function TransferFlow() {
         // CORRECTION BUG: Continuer l'animation depuis backendProgress vers targetPercent
         // Ceci gère le cas où l'utilisateur revient sur un transfert en cours
         const progressDelta = targetPercent - backendProgress;
-        const SPEED_PERCENT_PER_SECOND = 0.5;
         const duration = (progressDelta / SPEED_PERCENT_PER_SECOND) * 1000;
         
         // D'abord synchroniser avec le backend

@@ -6,6 +6,14 @@ ALTUS is a multi-language professional loan management platform designed for bus
 
 ## Recent Changes (November 29, 2025)
 
+- **Transfer Progress Animation Velocity (Production-Ready):** Implemented configurable progress bar animation speed for production deployment:
+  - Set progress bar animation speed to **0.5% per second** (constant velocity regardless of random backend percentage jumps)
+  - Configuration stored in environment variable `VITE_TRANSFER_PROGRESS_SPEED` (default: 0.5)
+  - Formula: `duration = (progressDelta / speed) * 1000` milliseconds
+  - Allows easy adjustments in production without recompilation
+  - Affects all transfer progress animations: initial progression, post-code-validation animations, and return-to-transfer continuations
+  - Example: 20% delta at 0.5% per second = 40 seconds animation duration
+
 - **Transfer Progress Page Cleanup & Corrections:** Fixed TypeScript errors and ensured full multilinguality across transfer flow:
   - Corrected type assertion for `transfer.transferNetwork` in progress display to eliminate LSP error
   - Unified translation system between transfer form and progress page using `getTranslatedNetworkInfo()` helper
@@ -61,6 +69,20 @@ ALTUS is a multi-language professional loan management platform designed for bus
 ## User Preferences
 
 Preferred communication style: Simple, everyday language. High standards for security, SEO, and code quality - all implementations must be production-ready.
+
+## Configuration & Environment Variables
+
+### Transfer Progress Animation Speed
+- **Variable:** `VITE_TRANSFER_PROGRESS_SPEED`
+- **Type:** Float (percentage per second)
+- **Default:** `0.5` (0.5% per second)
+- **Location:** Client-side environment variable (frontend only)
+- **Usage:** Controls the animation velocity of the transfer progress bar
+- **Production Setting:** `VITE_TRANSFER_PROGRESS_SPEED=0.5` (slow, professional progression)
+- **Example values:**
+  - `0.3` = Very slow (20% delta = 66 seconds)
+  - `0.5` = Standard slow (20% delta = 40 seconds) **← Current production**
+  - `1.0` = Normal (20% delta = 20 seconds)
 
 ## System Architecture
 
