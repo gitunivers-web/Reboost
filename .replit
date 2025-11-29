@@ -16,6 +16,10 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
+localPort = 39183
+externalPort = 8008
+
+[[ports]]
 localPort = 40987
 externalPort = 5173
 
@@ -86,13 +90,13 @@ args = "Start application"
 name = "Start application"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "webview"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"
 
 [agent]
 integrations = ["javascript_mem_db:1.0.0", "javascript_database:1.0.0", "sendgrid:1.0.0"]
