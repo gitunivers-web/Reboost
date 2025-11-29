@@ -1,0 +1,47 @@
+Necesito que analices y corrijas un problema específico en mi sistema de chat (full-stack JavaScript). 
+El backend ya funciona correctamente, el problema está únicamente en el front-end.
+
+🎯 Problema:
+Las imágenes y los archivos que se envían en el chat aparecen “rotos”, no se muestran, o se muestran como una URL sin previsualización. Además, los mensajes largos en el input no hacen salto de línea y rompen el diseño.
+
+📌 Información técnica relevante sobre mi proyecto:
+- El envío de archivos funciona correctamente:
+    - Se cargan con FormData a: POST /api/chat/upload
+    - El backend guarda los archivos limpios en: /uploads/chat/[UUID]_[filename]
+    - El backend responde correctamente con: { fileUrl, fileName, mimeType }
+    - Socket.IO transmite solo la URL y el nombre del archivo, NO el buffer.
+- El componente que muestra los mensajes es: client/src/components/chat/Message.tsx
+- El componente que renderiza el chat es: client/src/components/chat/ChatWindow.tsx
+- El input del mensaje está en: client/src/components/chat/MessageInput.tsx
+
+📌 Funcionamiento actual (confirmado):
+- fileUrl recibido en el frontend tiene este formato: "/uploads/chat/[UUID]_[filename]"
+- El backend sirve los archivos correctamente desde ese path.
+- El problema está en cómo el front-end construye la URL final y cómo renderiza el archivo.
+
+🧩 Tareas que debes realizar:
+1. Revisar y corregir el componente Message.tsx para que:
+   - Las imágenes se muestren correctamente (<img/> funcionando)
+   - Los PDFs se abran correctamente (si es necesario usar un <iframe> o visor)
+   - Los archivos no-imagen muestren un enlace correcto de descarga
+
+2. Asegurar que getFileUrl() construye una URL ABSOLUTA válida:
+   Ejemplo correcto:
+   https://api.altusfinancesgroup.com/uploads/chat/[UUID]_[filename]
+
+3. Arreglar el input del chat:
+   - Activar el salto de línea automático en el textarea o input
+   - Prevenir que el texto largo rompa el diseño
+   - Permitir crecimiento automático del input (auto-resize)
+
+4. NO modificar nada del backend.  
+   El backend ya funciona perfectamente y no debe tocarse.
+
+🎯 Objetivo final:
+Que las imágenes se muestren en el chat, los PDFs se abran correctamente y el input de texto no rompa el diseño.
+
+Por favor genera:
+- El código corregido para Message.tsx
+- El código corregido para getFileUrl()
+- La corrección del input (CSS + JSX)
+- Explica por qué ocurría el problema y qué solución implementaste

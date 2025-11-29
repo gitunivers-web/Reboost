@@ -142,7 +142,8 @@ export function MessageInput({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={disabled}
-              className="min-h-[60px] max-h-[200px] resize-none"
+              className="min-h-[60px] max-h-[200px] resize-none whitespace-pre-wrap break-words"
+              style={{ overflow: 'hidden' }}
               data-testid="input-message"
             />
 
