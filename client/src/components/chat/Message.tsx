@@ -99,7 +99,7 @@ export function Message({ message, isOwn, senderName, senderAvatar, nextMessage 
 
       <div
         className={cn(
-          "flex flex-col gap-2 relative",
+          "flex flex-col gap-2 relative min-w-0",
           isOwn ? "items-end max-w-xs ms-auto" : "items-start max-w-sm"
         )}
       >
@@ -226,12 +226,12 @@ export function Message({ message, isOwn, senderName, senderAvatar, nextMessage 
         {message.content && (
           <div
             className={cn(
-              "flex items-center gap-2 px-3 relative z-10 flex-col",
+              "flex items-center gap-2 px-3 relative z-10 flex-col min-w-0",
               getSpacing(),
               isOwn ? "items-end" : "items-start"
             )}
           >
-            <p className="text-sm whitespace-pre-wrap break-words" data-testid="text-message-content">
+            <p className="text-sm whitespace-pre-wrap break-words overflow-wrap break-word" data-testid="text-message-content">
               {message.content}
             </p>
             <span className="text-xs text-muted-foreground" data-testid="text-timestamp">
