@@ -4,6 +4,17 @@
 
 ALTUS is a multi-language professional loan management platform designed for business clients. It provides a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. The platform aims to foster trust, clarity, and data-driven decision-making with features like multi-language support (French, English, Spanish, Portuguese, Italian, German, Dutch), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. Its primary purpose is to equip business professionals and enterprises with robust tools for loan financing and financial management, offering a robust and secure environment for financial operations.
 
+## Recent Changes (November 29, 2025)
+
+- **Transfer Network Type Integration:** Integrated the transfer-types.ts system into TransferFlow to automatically detect and display transfer network types:
+  - Detects SEPA vs SWIFT based on recipient bank country (from IBAN)
+  - Displays network type, processing time, and network fees in transfer form before submission
+  - Shows transfer network information in the progress view during transfer execution
+  - New database columns: `transfer_network` (text), `network_fees` (numeric), `processing_time` (text)
+  - Source country defaults to 'LU' (Luxembourg) for all transfer network detection
+  - SEPA transfers show "SEPA Credit Transfer" with "Zone SEPA" badge, 1-2 business days, no fees
+  - SWIFT transfers show "Virement International SWIFT" with 3-5 business days, variable fees
+
 ## Recent Changes (November 28, 2025)
 
 - **Transfer Progress Animation Bug Fix:** Fixed critical issue where transfer progress would get stuck at 0% when users returned to an in-progress transfer after validating a code. The fix adds a tracking mechanism (`lastAnimatedToTargetSequenceRef`) that:
