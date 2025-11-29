@@ -61,19 +61,31 @@ if (!process.env.SESSION_SECRET) {
 // Cookie domain configuration
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
+// Detect Replit environment (uses HTTPS and requires Secure cookies)
+const IS_REPLIT = !IS_PRODUCTION && (
+  process.env.REPL_ID !== undefined || 
+  process.env.REPLIT_DEPLOYMENT !== undefined ||
+  process.env.REPL_SLUG !== undefined
+);
+
 // In production: use '.altusfinancesgroup.com' to share cookies between frontend and api subdomains
 // In development: undefined (same domain only)
 const COOKIE_DOMAIN = IS_PRODUCTION ? '.altusfinancesgroup.com' : undefined;
 
 // In production: use 'none' for cross-domain cookies (frontend on altusfinancesgroup.com, api on api.altusfinancesgroup.com)
-// In development: use 'lax' (frontend and backend on same localhost)
-const SAME_SITE_POLICY = IS_PRODUCTION ? 'none' : 'lax';
+// In Replit development: use 'none' with secure:true (Replit uses HTTPS proxy)
+// In local development: use 'lax' (frontend and backend on same localhost)
+const SAME_SITE_POLICY = IS_PRODUCTION ? 'none' : (IS_REPLIT ? 'none' : 'lax');
+
+// Cookies must be Secure when SameSite=none, and Replit uses HTTPS
+const COOKIE_SECURE = IS_PRODUCTION || IS_REPLIT;
 
 console.log('='.repeat(60));
 console.log(`[CONFIG] Environment: ${process.env.NODE_ENV || 'development'}`);
+console.log(`[CONFIG] Is Replit: ${IS_REPLIT}`);
 console.log(`[CONFIG] Cookie Domain: ${COOKIE_DOMAIN || 'undefined (same domain only)'}`);
 console.log(`[CONFIG] Cookie SameSite: ${SAME_SITE_POLICY}`);
-console.log(`[CONFIG] Cookie Secure: ${IS_PRODUCTION}`);
+console.log(`[CONFIG] Cookie Secure: ${COOKIE_SECURE}`);
 console.log(`[CONFIG] CORS Allowed Origins: ${IS_PRODUCTION ? 'production domains' : 'localhost'}`);
 console.log(`[CONFIG] Frontend URL: ${process.env.FRONTEND_URL || 'NOT SET'}`);
 console.log(`[CONFIG] Trust Proxy: enabled`);
@@ -170,7 +182,7 @@ const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: IS_PRODUCTION,
+    secure: COOKIE_SECURE,
     httpOnly: true,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     sameSite: SAME_SITE_POLICY,
@@ -283,8 +295,9 @@ app.get('/healthz', (req, res) => {
       session: {
         configured: !!sessionStore,
         cookieDomain: COOKIE_DOMAIN || 'none',
-        secure: IS_PRODUCTION,
-        sameSite: IS_PRODUCTION ? 'none' : 'lax',
+        secure: COOKIE_SECURE,
+        sameSite: SAME_SITE_POLICY,
+        isReplit: IS_REPLIT,
       },
       cors: {
         allowedOrigins: allowedOrigins.length > 0 ? allowedOrigins : ['development-mode'],
