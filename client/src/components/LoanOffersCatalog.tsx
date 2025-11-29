@@ -3,11 +3,13 @@ import { useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getLoanOffersByAccountType, type LoanOffer } from '@shared/loan-offers';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, AlertCircle, Info } from 'lucide-react';
 import { useTranslations, useLanguage } from '@/lib/i18n';
 import { getTranslatedLoanOffers } from '@/lib/loan-offer-i18n';
+import { useUserStats } from '@/hooks/use-user-stats';
 
 interface LoanOffersCatalogProps {
   onRequestLoan: (offer: LoanOffer) => void;
@@ -17,9 +19,12 @@ export default function LoanOffersCatalog({ onRequestLoan }: LoanOffersCatalogPr
   const t = useTranslations();
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<'individual' | 'business'>('individual');
+  const { data: stats } = useUserStats();
 
   const individualOffers = getTranslatedLoanOffers(getLoanOffersByAccountType('individual'), language);
   const businessOffers = getTranslatedLoanOffers(getLoanOffersByAccountType('business'), language);
+  
+  const isMaxLoansReached = stats && stats.activeLoans >= stats.maxActiveLoans;
 
   const handleOfferClick = (offer: LoanOffer) => {
     onRequestLoan(offer);
@@ -94,12 +99,14 @@ export default function LoanOffersCatalog({ onRequestLoan }: LoanOffersCatalogPr
                 )}
 
                 <Button
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                  disabled={isMaxLoansReached}
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleOfferClick(offer);
                   }}
                   data-testid={`button-request-${offer.id}`}
+                  title={isMaxLoansReached ? `Limite atteinte: ${stats?.activeLoans}/${stats?.maxActiveLoans} prêts actifs` : undefined}
                 >
                   {t.loanOffers.requestButton}
                 </Button>
@@ -112,23 +119,54 @@ export default function LoanOffersCatalog({ onRequestLoan }: LoanOffersCatalogPr
   );
 
   return (
-    <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'individual' | 'business')} className="w-full">
-      <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
-        <TabsTrigger value="individual" data-testid="tab-individual-loans">
-          {t.loanOffers.individualTab}
-        </TabsTrigger>
-        <TabsTrigger value="business" data-testid="tab-business-loans">
-          {t.loanOffers.businessTab}
-        </TabsTrigger>
-      </TabsList>
+    <div className="space-y-6">
+      {stats && (
+        <>
+          {isMaxLoansReached && (
+            <Alert variant="destructive" className="max-w-2xl mx-auto">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Vous avez atteint le nombre maximum de prêts actifs pour votre tier <strong>{stats.tier}</strong> ({stats.activeLoans}/{stats.maxActiveLoans}). Veuillez compléter un prêt pour en demander un nouveau.
+              </AlertDescription>
+            </Alert>
+          )}
+          {!isMaxLoansReached && stats.completedLoans > 0 && stats.completedLoans < 2 && (
+            <Alert className="max-w-2xl mx-auto">
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                Complétez {2 - stats.completedLoans} prêt(s) supplémentaire(s) pour débloquer le tier <strong>Silver</strong> et augmenter votre limite à 2 prêts actifs.
+              </AlertDescription>
+            </Alert>
+          )}
+          {!isMaxLoansReached && stats.completedLoans >= 2 && stats.completedLoans < 5 && stats.tier === 'silver' && (
+            <Alert className="max-w-2xl mx-auto">
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                Complétez {5 - stats.completedLoans} prêt(s) supplémentaire(s) pour débloquer le tier <strong>Gold</strong> et augmenter votre limite à 3 prêts actifs.
+              </AlertDescription>
+            </Alert>
+          )}
+        </>
+      )}
+      
+      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'individual' | 'business')} className="w-full">
+        <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+          <TabsTrigger value="individual" data-testid="tab-individual-loans">
+            {t.loanOffers.individualTab}
+          </TabsTrigger>
+          <TabsTrigger value="business" data-testid="tab-business-loans">
+            {t.loanOffers.businessTab}
+          </TabsTrigger>
+        </TabsList>
 
-      <TabsContent value="individual" className="space-y-6">
-        {renderOffers(individualOffers, 'individual')}
-      </TabsContent>
+        <TabsContent value="individual" className="space-y-6">
+          {renderOffers(individualOffers, 'individual')}
+        </TabsContent>
 
-      <TabsContent value="business" className="space-y-6">
-        {renderOffers(businessOffers, 'business')}
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="business" className="space-y-6">
+          {renderOffers(businessOffers, 'business')}
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
