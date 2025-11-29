@@ -1,0 +1,34 @@
+Le projet est déjà en production front-end deployé sur vercel: altusfinancesgroup.com et backend sur render: api.altusfinancesgroup.com, avec PostgreSQL render comme database. Replit, environnement de développement. La database url est connecté dans les secret replit. Redemarre le service pour t'y connecter.
+
+Verifie que le système defini ci-dessous est bien integré dans la page et surtout qu'il est bien multilingue. 
+
+Architecture Actuelle 🏗️
+1. Système de types de transfert (transfer-types.ts)
+
+Détecte automatiquement le réseau recommandé (SEPA, SWIFT, ACH, etc.) selon les pays source/destination
+Stocke les informations bancaires par pays (IBAN, validations, frais)
+Fonction clé: getRecommendedTransferNetwork(fromCountry, toCountry) → retourne le type optimal
+2. Pages de transfert (TransferFlow.tsx & progress)
+
+Actuellement : Crée des transferts basiques sans spécifier le type de réseau
+Endpoint utilisé : /api/transfers/initiate
+Données transmises : Amount, recipient, loan ID, codes de validation
+N'utilise PAS encore : Le système de types de transfert
+Intégration Manquante ⚠️
+Actuellement, le système de types de transfert est créé mais pas intégré aux pages. Voici ce qui devrait se passer :
+
+// Dans TransferFlow.tsx - lors de la création du transfert:
+import { getRecommendedTransferNetwork } from '@/data/transfer-types';
+// Avant de créer le transfert:
+const transferNetwork = getRecommendedTransferNetwork(
+  userCountry,        // Ex: "FR"
+  recipientCountry    // Ex: "DE"
+);
+// Puis envoyer: { amount, recipient, transferNetwork, fees: transferNetwork.fees }
+
+Ce Qui Devrait Être Amélioré
+Page de création : Afficher le type de transfert détecté (ex: "Transfert SEPA sécurisé")
+Page de progression : Montrer les frais applicables selon le réseau
+Backend : Sauvegarder transferType et networkFees dans la table transfers
+Dashboard : Afficher les frais et informations du réseau pour chaque transfert
+Voulez-vous que j'intègre maintenant le système de types de transfert aux pages TransferFlow et de progression ? Cela ajouterait l'affichage du type de transfert détecté, les frais applicables, et sauvegarderait cette information dans la base de données.
