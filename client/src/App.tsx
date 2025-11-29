@@ -31,6 +31,7 @@ import AdminChat from '@/pages/AdminChat';
 import Expertise from '@/pages/Expertise';
 import ProtectedLayout from '@/components/ProtectedLayout';
 import TransferDemo from '@/pages/transfer-demo';
+import ProgressMock from '@/pages/ProgressMock';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
             <Route path="/privacy" component={Privacy} />
             <Route path="/diagnostic" component={DiagnosticPage} />
             <Route path="/transfer-demo" component={TransferDemo} />
+            <Route path="/progress-mock" component={ProgressMock} />
             <Route path="/auth" component={Auth} />
             <Route path="/login" component={Auth} />
             <Route path="/signup" component={Auth} />
