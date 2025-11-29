@@ -650,9 +650,9 @@ export default function TransferFlow() {
                                       currentSimulatedProgress < targetPercent;
       
       if (shouldAnimate) {
-        // Calculer la durée dynamiquement : 1 seconde par point de pourcentage
+        // Calculer la durée dynamiquement : 2 secondes par point de pourcentage (ralenti)
         const progressDelta = targetPercent - currentSimulatedProgress;
-        const duration = progressDelta * 1000;
+        const duration = progressDelta * 2000;
         animateProgress(currentSimulatedProgress, targetPercent, duration, computedNextCode?.sequence);
         // Marquer qu'on a animé vers ce target pour cette séquence
         lastAnimatedToTargetSequenceRef.current = nextSequence;
@@ -662,7 +662,7 @@ export default function TransferFlow() {
         // CORRECTION BUG: Continuer l'animation depuis backendProgress vers targetPercent
         // Ceci gère le cas où l'utilisateur revient sur un transfert en cours
         const progressDelta = targetPercent - backendProgress;
-        const duration = progressDelta * 1000;
+        const duration = progressDelta * 2000;
         
         // D'abord synchroniser avec le backend
         setSimulatedProgress(backendProgress);
