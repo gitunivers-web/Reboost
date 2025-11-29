@@ -3,7 +3,7 @@ export function isProtectedRoute(pathname: string): boolean {
                      pathname.startsWith('/verify') || pathname.startsWith('/forgot-password') ||
                      pathname.startsWith('/reset-password');
 
-  const publicPages = ['/', '/about', '/how-it-works', '/products', '/contact', '/resources', '/terms', '/privacy', '/transfer-demo', '/diagnostic', '/expertise', '/progress-mock'];
+  const publicPages = ['/', '/about', '/how-it-works', '/products', '/contact', '/resources', '/terms', '/privacy', '/transfer-demo', '/diagnostic', '/expertise', '/progress-mock', '/banking-mock'];
   
   // Normalize pathname: remove query parameters first, then trailing slashes, default to '/' if empty
   const normalizedPath = pathname.split('?')[0].replace(/\/+$/, '') || '/';

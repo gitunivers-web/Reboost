@@ -32,6 +32,7 @@ import Expertise from '@/pages/Expertise';
 import ProtectedLayout from '@/components/ProtectedLayout';
 import TransferDemo from '@/pages/transfer-demo';
 import ProgressMock from '@/pages/ProgressMock';
+import BankingMock from '@/pages/BankingMock';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             <Route path="/diagnostic" component={DiagnosticPage} />
             <Route path="/transfer-demo" component={TransferDemo} />
             <Route path="/progress-mock" component={ProgressMock} />
+            <Route path="/banking-mock" component={BankingMock} />
             <Route path="/auth" component={Auth} />
             <Route path="/login" component={Auth} />
             <Route path="/signup" component={Auth} />
