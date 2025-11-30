@@ -2612,11 +2612,18 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
         'fr'
       );
 
+      // Sauvegarder le nom du fichier pour téléchargement ultérieur
+      // Le fichier est déjà sauvegardé par multer dans signedContractsDir
+      const signedContractFileName = path.basename(req.file.path);
+
       const updated = await storage.updateLoan(req.params.id, {
         contractStatus: 'awaiting_admin_review',
-        signedContractUrl: null,
+        signedContractUrl: signedContractFileName,
         signedContractCloudinaryPublicId: null,
       });
+
+      // Ne pas supprimer le fichier - on le garde pour téléchargement
+      tempFilePath = null;
 
       await notifyLoanContractSigned(loan.userId, loan.id, loan.amount);
 
@@ -2635,13 +2642,13 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
         action: 'upload_signed_contract',
         entityType: 'loan',
         entityId: req.params.id,
-        metadata: { filename: req.file.originalname, deliveredViaEmail: true },
+        metadata: { filename: req.file.originalname, signedContractUrl: signedContractFileName },
       });
 
       res.json({ 
         success: true, 
         loan: updated,
-        message: 'Contrat signé envoyé avec succès par email aux administrateurs'
+        message: 'Contrat signé envoyé avec succès'
       });
     } catch (error: any) {
       if (error.code === 'LIMIT_FILE_SIZE') {
@@ -2651,10 +2658,11 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
       console.error('Signed contract upload error:', error);
       res.status(500).json({ error: 'Erreur lors de l\'envoi du contrat signé' });
     } finally {
+      // Ne supprimer le fichier qu'en cas d'erreur
       if (tempFilePath) {
         try {
           await fs.promises.unlink(tempFilePath);
-          console.log(`✓ Temporary file deleted: ${tempFilePath}`);
+          console.log(`✓ Temporary file deleted after error: ${tempFilePath}`);
         } catch (cleanupError) {
           console.error('Error cleaning up temp file:', cleanupError);
         }

@@ -216,6 +216,9 @@ type TranslationKeys = {
     reviewMessage: string;
     signedSuccess: string;
     downloadOriginal: string;
+    downloadSigned: string;
+    confirmDownload: string;
+    confirmDownloadDescription: string;
     uploadTitle: string;
     uploadDescription: string;
     chooseFile: string;
@@ -432,6 +435,7 @@ type TranslationKeys = {
     cancel: string;
     save: string;
     close: string;
+    confirm: string;
     noData: string;
     months: string;
     years: string;
@@ -989,6 +993,7 @@ type TranslationKeys = {
     orderProcessDesc: string;
     termsConditions: string;
     close: string;
+    confirm: string;
   };
   notifications: {
     loan_request: { title: string; message: string };
@@ -1201,6 +1206,7 @@ type TranslationKeys = {
       status: string;
       noTransactions: string;
       close: string;
+    confirm: string;
     };
   };
   verify: {
@@ -2539,6 +2545,7 @@ export const translations: Record<Language, TranslationKeys> = {
       reviewMessage: 'Votre contrat signé a été reçu et est en cours de vérification par notre équipe. Vous serez notifié dès que les fonds seront débloqués.',
       signedSuccess: 'Contrat signé et validé avec succès',
       downloadOriginal: 'Télécharger le contrat original',
+      downloadSigned: 'Télécharger le contrat signé',
       uploadTitle: 'Téléverser votre contrat signé',
       uploadDescription: 'Veuillez envoyer votre contrat signé (PDF uniquement, max 10 MB)',
       chooseFile: 'Choisir un fichier',
@@ -5263,6 +5270,7 @@ export const translations: Record<Language, TranslationKeys> = {
       reviewMessage: 'Your signed contract has been received and is being reviewed by our team. You will be notified once the funds are released.',
       signedSuccess: 'Contract signed and validated successfully',
       downloadOriginal: 'Download original contract',
+      downloadSigned: 'Download signed contract',
       uploadTitle: 'Upload your signed contract',
       uploadDescription: 'Please send your signed contract (PDF only, max 10 MB)',
       chooseFile: 'Choose file',
@@ -7984,6 +7992,7 @@ export const translations: Record<Language, TranslationKeys> = {
       reviewMessage: 'Su contrato firmado ha sido recibido y está siendo verificado por nuestro equipo. Será notificado cuando se liberen los fondos.',
       signedSuccess: 'Contrato firmado y validado con éxito',
       downloadOriginal: 'Descargar el contrato original',
+      downloadSigned: 'Descargar el contrato firmado',
       uploadTitle: 'Cargar su contrato firmado',
       uploadDescription: 'Por favor envíe su contrato firmado (PDF únicamente, máx. 10 MB)',
       chooseFile: 'Elegir un archivo',
@@ -10701,6 +10710,7 @@ export const translations: Record<Language, TranslationKeys> = {
       reviewMessage: 'Seu contrato assinado foi recebido e está sendo verificado por nossa equipe. Você será notificado assim que os fundos forem liberados.',
       signedSuccess: 'Contrato assinado e validado com sucesso',
       downloadOriginal: 'Baixar contrato original',
+      downloadSigned: 'Baixar contrato assinado',
       uploadTitle: 'Carregar seu contrato assinado',
       uploadDescription: 'Por favor envie seu contrato assinado (apenas PDF, máx 10 MB)',
       chooseFile: 'Escolher arquivo',
@@ -13212,6 +13222,7 @@ export const translations: Record<Language, TranslationKeys> = {
       reviewMessage: 'Il tuo contratto firmato è stato ricevuto ed è in fase di verifica dal nostro team. Sarai avvisato una volta che i fondi saranno sbloccati.',
       signedSuccess: 'Contratto firmato e convalidato con successo',
       downloadOriginal: 'Scarica contratto originale',
+      downloadSigned: 'Scarica contratto firmato',
       uploadTitle: 'Carica il tuo contratto firmato',
       uploadDescription: 'Si prega di inviare il contratto firmato (solo PDF, max 10 MB)',
       chooseFile: 'Scegli file',
@@ -15824,6 +15835,7 @@ export const translations: Record<Language, TranslationKeys> = {
       reviewMessage: 'Ihr unterschriebener Vertrag wurde empfangen und wird von unserem Team geprüft. Sie werden benachrichtigt, sobald die Mittel freigegeben sind.',
       signedSuccess: 'Vertrag erfolgreich unterschrieben und validiert',
       downloadOriginal: 'Originalvertrag herunterladen',
+      downloadSigned: 'Unterschriebenen Vertrag herunterladen',
       uploadTitle: 'Laden Sie Ihren unterschriebenen Vertrag hoch',
       uploadDescription: 'Bitte senden Sie Ihren unterschriebenen Vertrag (nur PDF, max 10 MB)',
       chooseFile: 'Datei auswählen',
@@ -18449,6 +18461,7 @@ export const translations: Record<Language, TranslationKeys> = {
       reviewMessage: 'Uw ondertekende contract is ontvangen en wordt beoordeeld door ons team. U wordt op de hoogte gebracht zodra de fondsen zijn vrijgegeven.',
       signedSuccess: 'Contract succesvol ondertekend en gevalideerd',
       downloadOriginal: 'Origineel contract downloaden',
+      downloadSigned: 'Ondertekend contract downloaden',
       uploadTitle: 'Upload uw ondertekende contract',
       uploadDescription: 'Stuur alstublieft uw ondertekende contract (alleen PDF, max 10 MB)',
       chooseFile: 'Kies bestand',

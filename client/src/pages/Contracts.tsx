@@ -81,6 +81,31 @@ export default function Contracts() {
     setShowDownloadConfirm(true);
   };
 
+  const handleDownloadSignedContract = async (loanId: string) => {
+    try {
+      const url = getApiUrl(`/api/loans/${loanId}/signed-contract/download`);
+      const response = await fetch(url, {
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors du téléchargement du contrat signé');
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `contrat_signe_${loanId}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error('Error downloading signed contract:', error);
+    }
+  };
+
   const performDownload = async () => {
     if (!loanIdToDownload) return;
     
@@ -371,6 +396,18 @@ export default function Contracts() {
                     </div>
 
                     <div className="space-y-3">
+                      {loan.signedContractUrl && (
+                        <Button 
+                          variant="default" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={() => handleDownloadSignedContract(loan.id)}
+                          data-testid={`button-download-signed-${loan.id}`}
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          {t.contracts?.downloadSigned || 'Télécharger le contrat signé'}
+                        </Button>
+                      )}
                       {loan.contractUrl && (
                         <Button 
                           variant="outline" 
