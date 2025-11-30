@@ -152,9 +152,21 @@ export function initializeChatSocket(httpServer: HTTPServer, storage: IStorage, 
       fileName?: string;
     }) => {
       try {
-        const { conversationId, content, fileUrl, fileName } = data;
+        let { conversationId, content, fileUrl, fileName } = data;
 
-        const { authorized, conversation } = await checkConversationAccess(conversationId, userId, userRole);
+        let { authorized, conversation } = await checkConversationAccess(conversationId, userId, userRole);
+        
+        // Si la conversation n'existe pas et que l'utilisateur n'est pas admin, créer une nouvelle conversation
+        if (!authorized && userRole !== 'admin') {
+          conversation = await storage.createConversation({
+            userId,
+            subject: 'Support Chat',
+          });
+          conversationId = conversation.id;
+          authorized = true;
+          console.log(`[CHAT WS] Nouvelle conversation créée automatiquement: ${conversationId} pour l'utilisateur ${userId}`);
+        }
+
         if (!authorized || !conversation) {
           return socket.emit('error', { message: 'Accès non autorisé' });
         }

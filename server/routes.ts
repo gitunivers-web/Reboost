@@ -5542,7 +5542,21 @@ ${urls.map(url => `  <url>
       }
 
       // Vérifier que la conversation existe et que l'utilisateur y a accès
-      const conversation = await storage.getConversation(validation.data.conversationId);
+      let conversation = await storage.getConversation(validation.data.conversationId);
+      
+      // Si la conversation n'existe pas et que l'utilisateur n'est pas admin, créer une nouvelle conversation
+      if (!conversation && user?.role !== 'admin') {
+        conversation = await storage.createConversation({
+          userId,
+          subject: 'Support Chat',
+        });
+        
+        // Mettre à jour validation.data avec le nouvel ID de conversation
+        validation.data.conversationId = conversation.id;
+        
+        console.log(`[CHAT] Nouvelle conversation créée automatiquement: ${conversation.id} pour l'utilisateur ${userId}`);
+      }
+
       if (!conversation) {
         return res.status(404).json({ error: 'Conversation non trouvée' });
       }
