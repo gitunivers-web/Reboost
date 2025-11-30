@@ -221,7 +221,7 @@ export default function AdminChat() {
           <div className="flex-1 overflow-y-auto p-2">
             {filteredConversations.length === 0 ? (
               <div className="text-center text-muted-foreground p-6" data-testid="empty-conversations">
-                <p>{t.admin?.chat?.noConversations || 'Aucune conversation'}</p>
+                <p>Aucune conversation</p>
               </div>
             ) : (
               <div className="space-y-2">
