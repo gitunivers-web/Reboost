@@ -408,18 +408,6 @@ export default function Contracts() {
                           {t.contracts?.downloadSigned || 'Télécharger le contrat signé'}
                         </Button>
                       )}
-                      {loan.contractUrl && (
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="w-full hover-elevate"
-                          onClick={() => handleDownloadContract(loan.id)}
-                          data-testid={`button-download-original-${loan.id}`}
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          {t.contracts?.downloadOriginal || 'Télécharger le contrat original'}
-                        </Button>
-                      )}
                       {loan.signedContractUrl && (
                         <GlassPanel intensity="medium" className="p-4 bg-accent/5 border-accent/20">
                           <p className="text-sm flex items-center gap-2">
