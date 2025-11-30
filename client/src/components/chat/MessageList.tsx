@@ -81,25 +81,18 @@ export function MessageList({
           return 500; // PDF preview (up to 384px) + spacing + margins
         }
       }
-      // Text-only message: ULTRA-CONSERVATIVE estimate to prevent virtualizer overlap
-      // Account for both wide admin window AND narrow user chat modal:
-      // - On narrow windows: ~30-40 chars per line (vs 50 on wider)
-      // - Bubble padding: py-2.5 (10px) + px-4 (16px) = 26px
-      // - Timestamp + icon: 20px
-      // - Message gaps: 12px
-      // - Total base: ~70px
-      // 
-      // For 300 chars on narrow window: ~8-10 lines instead of 6
+      // Text-only message: accurate estimate to prevent excessive spacing
+      // Reduced from ultra-conservative to compact messages naturally
       const contentLength = message?.content?.length || 0;
       // Use 35 chars/line to account for narrow user chat modal
       const estimatedLines = Math.max(1, Math.ceil(contentLength / 35));
-      // Ultra-conservative base for maximum safety
-      const baseHeight = 85;
-      // Very generous line height (text 14px + spacing + buffer = 36px)
-      const lineHeight = 36;
+      // Base height: bubble padding (20px) + timestamp + spacing (20px) = ~40px
+      const baseHeight = 50;
+      // Line height: text 14px + line spacing + breathing room = 22px
+      const lineHeight = 22;
       const textEstimate = baseHeight + (estimatedLines * lineHeight);
-      // Ultra-aggressive bounds: min 130px, max 700px (for 500 char messages)
-      return Math.min(700, Math.max(130, textEstimate));
+      // Safe bounds: min 70px for single line, max 700px for 500 char messages
+      return Math.min(700, Math.max(70, textEstimate));
     },
     overscan: 50, // Aggressive overscan to prevent virtualizer overlap issues
   });
