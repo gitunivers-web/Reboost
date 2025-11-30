@@ -59,7 +59,8 @@ export default function AdminLoans() {
       'awaiting_admin_review',
       'signed_pending_processing',
       'signed_pending_admin',
-      'signed_pending_validation'
+      'signed_pending_validation',
+      'signed'
     ];
     return pendingReviewStatuses.includes(loan.contractStatus);
   };
