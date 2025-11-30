@@ -80,21 +80,22 @@ export function MessageList({
         }
       }
       // Text-only message: estimate based on content length
-      // For 300 char limit with realistic line breaking:
-      // - Bubble padding: py-2.5 = 10px + px-4 = 16px width = 20px height total
-      // - Timestamp: 15-20px
-      // - Gaps and margins: 15px
-      // - With max-width 75%, ~50 chars per line at 24px per line (including spacing)
+      // AGGRESSIVE estimation to prevent virtualizer overlap issues
+      // - Bubble: py-2.5 (10px) + px-4 (16px) = 26px total padding
+      // - Timestamp + icon: 20px
+      // - Avatar spacing (when needed): 8px
+      // - Gap between messages: 12px
+      // - Total base spacing: ~66px
+      // - With max-width 75%, realistic ~50 chars per line
       const contentLength = message?.content?.length || 0;
-      // Estimate: ~50 chars per line (due to max-w-[75%] and padding)
       const estimatedLines = Math.max(1, Math.ceil(contentLength / 50));
-      // Conservative base: padding (20) + timestamp (15) + gaps (10) + margin-bottom (12)
-      const baseHeight = 57;
-      // Each line with text (14px) + spacing (10px)
-      const lineHeight = 24;
+      // VERY conservative base to ensure no overlap
+      const baseHeight = 75;
+      // More generous line height estimate (text 14px + spacing 12px + extra buffer 6px)
+      const lineHeight = 32;
       const textEstimate = baseHeight + (estimatedLines * lineHeight);
-      // Minimum 100px for even short messages, maximum 400px for safety
-      return Math.min(400, Math.max(100, textEstimate));
+      // Aggressive bounds: min 120px, max 450px
+      return Math.min(450, Math.max(120, textEstimate));
     },
     overscan: 20,
   });
