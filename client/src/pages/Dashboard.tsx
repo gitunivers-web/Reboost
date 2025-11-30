@@ -667,15 +667,25 @@ export default function Dashboard() {
                                     credentials: 'include' 
                                   });
                                   if (!response.ok) throw new Error('Download failed');
-                                  const blob = await response.blob();
+                                  
+                                  const contentType = response.headers.get('content-type');
+                                  if (!contentType || !contentType.includes('application/pdf')) {
+                                    throw new Error('Invalid response type');
+                                  }
+                                  
+                                  const arrayBuffer = await response.arrayBuffer();
+                                  const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
                                   const url = window.URL.createObjectURL(blob);
                                   const a = document.createElement('a');
                                   a.href = url;
                                   a.download = `tableau-amortissement-${loan.loanReference || loan.id}.pdf`;
+                                  a.style.display = 'none';
                                   document.body.appendChild(a);
                                   a.click();
-                                  document.body.removeChild(a);
-                                  window.URL.revokeObjectURL(url);
+                                  setTimeout(() => {
+                                    document.body.removeChild(a);
+                                    window.URL.revokeObjectURL(url);
+                                  }, 100);
                                 } catch (error) {
                                   console.error('Error downloading amortization:', error);
                                 }
