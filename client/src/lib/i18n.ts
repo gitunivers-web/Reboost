@@ -1706,6 +1706,8 @@ type TranslationKeys = {
       amountLabel: string;
       recipientLabel: string;
       feesLabel: string;
+      statusLabel: string;
+      dateLabel: string;
       securityNote: string;
       securityDescription: string;
       viewTransfers: string;
@@ -4303,6 +4305,8 @@ export const translations: Record<Language, TranslationKeys> = {
         returnToDashboard: 'Retour au tableau de bord',
         returnButton: 'Retour au tableau de bord',
         amountLabel: 'Montant',
+        statusLabel: 'Statut',
+        dateLabel: 'Date',
         recipientLabel: 'Bénéficiaire',
         feesLabel: 'Frais',
         securityNote: 'Transaction sécurisée',
@@ -7074,6 +7078,8 @@ export const translations: Record<Language, TranslationKeys> = {
         returnToDashboard: 'Return to Dashboard',
         returnButton: 'Return to Dashboard',
         amountLabel: 'Amount',
+        statusLabel: 'Status',
+        dateLabel: 'Date',
         recipientLabel: 'Recipient',
         feesLabel: 'Fees',
         securityNote: 'Secure Transaction',
@@ -9713,6 +9719,8 @@ export const translations: Record<Language, TranslationKeys> = {
         referenceLabel: 'Referencia',
         reference: 'Referencia',
         returnToDashboard: 'Volver al panel',
+        statusLabel: 'Estado',
+        dateLabel: 'Fecha',
         returnButton: 'Volver al panel',
         amountLabel: 'Monto',
         recipientLabel: 'Beneficiario',
@@ -12441,6 +12449,8 @@ export const translations: Record<Language, TranslationKeys> = {
         referenceLabel: 'Referência',
         reference: 'Referência',
         returnToDashboard: 'Voltar ao painel',
+        statusLabel: 'Status',
+        dateLabel: 'Data',
         returnButton: 'Voltar ao painel',
         amountLabel: 'Valor',
         recipientLabel: 'Beneficiário',
@@ -15004,6 +15014,8 @@ export const translations: Record<Language, TranslationKeys> = {
         successMessage: 'Il tuo trasferimento è stato elaborato con successo',
         successMessageLong: 'Il tuo trasferimento è stato completato con successo. I fondi saranno disponibili entro 24-72 ore.',
         referenceLabel: 'Riferimento',
+        statusLabel: 'Stato',
+        dateLabel: 'Data',
         reference: 'Riferimento',
         returnToDashboard: 'Torna al pannello',
         returnButton: 'Torna al pannello',
@@ -17670,6 +17682,8 @@ export const translations: Record<Language, TranslationKeys> = {
         successMessage: 'Ihre Überweisung wurde erfolgreich verarbeitet',
         successMessageLong: 'Ihre Überweisung wurde erfolgreich abgeschlossen. Die Mittel sind innerhalb von 24 bis 72 Stunden verfügbar.',
         referenceLabel: 'Referenz',
+        statusLabel: 'Status',
+        dateLabel: 'Datum',
         reference: 'Referenz',
         returnToDashboard: 'Zurück zum Dashboard',
         returnButton: 'Zurück zum Dashboard',
@@ -20287,6 +20301,8 @@ export const translations: Record<Language, TranslationKeys> = {
         title: 'Overschrijving voltooid',
         subtitle: 'Uw overschrijving is succesvol uitgevoerd',
         successMessage: 'Uw overboeking is succesvol verwerkt',
+        statusLabel: 'Status',
+        dateLabel: 'Datum',
         successMessageLong: 'Uw overdracht is succesvol voltooid. De fondsen zijn binnen 24 tot 72 uur beschikbaar.',
         referenceLabel: 'Referentie',
         reference: 'Referentie',

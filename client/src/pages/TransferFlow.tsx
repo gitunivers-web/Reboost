@@ -1563,7 +1563,7 @@ export default function TransferFlow() {
                     <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                       <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400" />
                     </div>
-                    <span className="text-sm text-muted-foreground">Statut</span>
+                    <span className="text-sm text-muted-foreground">{t.transferFlow.complete.statusLabel}</span>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
@@ -1576,7 +1576,7 @@ export default function TransferFlow() {
                     <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
                       <Clock className="w-4 h-4 text-muted-foreground" />
                     </div>
-                    <span className="text-sm text-muted-foreground">Date</span>
+                    <span className="text-sm text-muted-foreground">{t.transferFlow.complete.dateLabel}</span>
                   </div>
                   <span className="text-sm text-foreground capitalize">
                     {formattedDate}
