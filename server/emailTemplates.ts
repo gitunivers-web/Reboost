@@ -7,6 +7,168 @@ function escapeHtml(unsafe: string): string {
     .replace(/'/g, "&#039;");
 }
 
+function getEmailBaseUrl(): string {
+  if (process.env.NODE_ENV === 'production' && process.env.FRONTEND_URL) {
+    return process.env.FRONTEND_URL;
+  }
+  return process.env.REPLIT_DEV_DOMAIN 
+    ? `https://${process.env.REPLIT_DEV_DOMAIN}` 
+    : 'https://altusfinancesgroup.com';
+}
+
+function getEmailLogoUrl(): string {
+  return `${getEmailBaseUrl()}/logo.png`;
+}
+
+interface EmailHeaderOptions {
+  title?: string;
+  subtitle?: string;
+  gradientColors?: string;
+  showLogo?: boolean;
+}
+
+function getEmailHeader(options: EmailHeaderOptions = {}): string {
+  const {
+    title = '',
+    subtitle = '',
+    gradientColors = 'linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #c9a227 100%)',
+    showLogo = true
+  } = options;
+  
+  const logoUrl = getEmailLogoUrl();
+  
+  return `
+    <tr>
+      <td align="center" style="background: ${gradientColors}; padding: 30px 20px;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          ${showLogo ? `
+          <tr>
+            <td align="center" style="padding-bottom: 15px;">
+              <img src="${logoUrl}" alt="Altus Finances Group" width="180" height="auto" style="display: block; max-width: 180px; height: auto;" />
+            </td>
+          </tr>
+          ` : ''}
+          ${title ? `
+          <tr>
+            <td align="center">
+              <h1 style="margin: 0; font-size: 24px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">${title}</h1>
+            </td>
+          </tr>
+          ` : ''}
+          ${subtitle ? `
+          <tr>
+            <td align="center" style="padding-top: 8px;">
+              <p style="margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); font-family: Arial, sans-serif;">${subtitle}</p>
+            </td>
+          </tr>
+          ` : ''}
+        </table>
+      </td>
+    </tr>
+  `;
+}
+
+function getEmailFooter(footerText: string): string {
+  const currentYear = new Date().getFullYear();
+  const logoUrl = getEmailLogoUrl();
+  
+  return `
+    <tr>
+      <td align="center" style="background-color: #f8fafc; padding: 30px 20px; border-top: 1px solid #e2e8f0;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding-bottom: 15px;">
+              <img src="${logoUrl}" alt="Altus Finances Group" width="120" height="auto" style="display: block; max-width: 120px; height: auto; opacity: 0.8;" />
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <p style="margin: 0; font-size: 12px; color: #64748b; font-family: Arial, sans-serif;">
+                &copy; ${currentYear} ALTUS FINANCES GROUP. ${footerText}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  `;
+}
+
+function getEmailWrapper(content: string, language: string = 'fr'): string {
+  return `
+<!DOCTYPE html>
+<html lang="${language}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ALTUS FINANCES GROUP</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style type="text/css">
+    /* Reset styles */
+    body, table, td, p, a, li, blockquote {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    table, td {
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+    img {
+      -ms-interpolation-mode: bicubic;
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+    /* Responsive styles */
+    @media only screen and (max-width: 600px) {
+      .email-container {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .content-padding {
+        padding: 20px 15px !important;
+      }
+      .mobile-center {
+        text-align: center !important;
+      }
+      .mobile-full-width {
+        width: 100% !important;
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f4f4f4;">
+    <tr>
+      <td align="center" style="padding: 20px 10px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          ${content}
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `;
+}
+
 export type Language = 'fr' | 'en' | 'es' | 'pt' | 'it' | 'de' | 'nl';
 type TemplateType = 'verification' | 'welcome' | 'contract' | 'fundingRelease' | 'otp' | 'resetPassword' | 
   'loanRequestUser' | 'loanRequestAdmin' | 'kycUploadedAdmin' | 'loanApprovedUser' | 
@@ -1584,63 +1746,46 @@ const translations = {
 function getVerificationTemplate(lang: Language, vars: VerificationVariables): EmailTemplate {
   const t = translations[lang].verification;
   const accountTypes = translations[lang].accountTypes;
-  const currentYear = new Date().getFullYear();
   
   const translatedAccountType = (accountTypes as any)[vars.accountTypeText] || vars.accountTypeText;
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-        .link { color: #2563eb; word-break: break-all; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">ALTUS FINANCES GROUP</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">${t.tagline}</p>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          <p>${t.thankYou} <strong>${escapeHtml(translatedAccountType)}</strong>.</p>
-          <p>${t.instruction}</p>
-          <div style="text-align: center;">
-            <a href="${vars.verificationUrl}" class="button">${t.buttonText}</a>
-          </div>
-          <p style="margin-top: 20px;">${t.alternativeText}</p>
-          <p class="link">${vars.verificationUrl}</p>
-          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-            ${t.disclaimerText}
-          </p>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+  const emailContent = `
+    ${getEmailHeader({ subtitle: t.tagline })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">${t.thankYou} <strong>${escapeHtml(translatedAccountType)}</strong>.</p>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">${t.instruction}</p>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 30px 0;">
+              <a href="${vars.verificationUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.buttonText}</a>
+            </td>
+          </tr>
+        </table>
+        <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0 0 10px 0;">${t.alternativeText}</p>
+        <p style="color: #2563eb; font-size: 14px; word-break: break-all; margin: 0 0 30px 0;">${vars.verificationUrl}</p>
+        <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          ${t.disclaimerText}
+        </p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.greeting} ${vars.fullName},
-    
-    ${t.textVersion.thankYou} ${translatedAccountType}.
-    
-    ${t.textVersion.instruction}
-    ${vars.verificationUrl}
-    
-    ${t.textVersion.disclaimer}
-    
-    ${t.textVersion.signature}
+${t.greeting} ${vars.fullName},
+
+${t.textVersion.thankYou} ${translatedAccountType}.
+
+${t.textVersion.instruction}
+${vars.verificationUrl}
+
+${t.textVersion.disclaimer}
+
+${t.textVersion.signature}
   `;
 
   return {
@@ -1653,66 +1798,58 @@ function getVerificationTemplate(lang: Language, vars: VerificationVariables): E
 function getWelcomeTemplate(lang: Language, vars: WelcomeVariables): EmailTemplate {
   const t = translations[lang].welcome;
   const accountTypes = translations[lang].accountTypes;
-  const currentYear = new Date().getFullYear();
   
   const translatedAccountType = (accountTypes as any)[vars.accountTypeText] || vars.accountTypeText;
-  const featuresHtml = t.features.map(feature => `<li>${feature}</li>`).join('');
+  const featuresHtml = t.features.map(feature => `
+    <tr>
+      <td style="padding: 8px 0 8px 25px; color: #374151; font-size: 15px; position: relative;">
+        <span style="position: absolute; left: 0; color: #10b981;">&#10003;</span>
+        ${feature}
+      </td>
+    </tr>
+  `).join('');
   const featuresText = t.features.map((feature, index) => `${index + 1}. ${feature}`).join('\n');
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          <p>${t.verifiedMessage} <strong>${escapeHtml(translatedAccountType)}</strong> ${t.activeMessage}</p>
-          <p>${t.featuresIntro}</p>
-          <ul>
-            ${featuresHtml}
-          </ul>
-          <div style="text-align: center;">
-            <a href="${vars.loginUrl}" class="button">${t.buttonText}</a>
-          </div>
-          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-            ${t.supportText}
-          </p>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">${t.verifiedMessage} <strong>${escapeHtml(translatedAccountType)}</strong> ${t.activeMessage}</p>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 15px 0;">${t.featuresIntro}</p>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 25px;">
+          ${featuresHtml}
+        </table>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 10px 0 30px 0;">
+              <a href="${vars.loginUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.buttonText}</a>
+            </td>
+          </tr>
+        </table>
+        <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          ${t.supportText}
+        </p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.greeting} ${vars.fullName},
-    
-    ${t.verifiedMessage} ${translatedAccountType} ${t.activeMessage}
-    
-    ${t.featuresIntro}
-    ${featuresText}
-    
-    ${t.buttonText}: ${vars.loginUrl}
-    
-    ${t.supportText}
-    
-    ALTUS FINANCES GROUP
+${t.greeting} ${vars.fullName},
+
+${t.verifiedMessage} ${translatedAccountType} ${t.activeMessage}
+
+${t.featuresIntro}
+${featuresText}
+
+${t.buttonText}: ${vars.loginUrl}
+
+${t.supportText}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -1724,102 +1861,104 @@ function getWelcomeTemplate(lang: Language, vars: WelcomeVariables): EmailTempla
 
 function getContractTemplate(lang: Language, vars: ContractVariables): EmailTemplate {
   const t = translations[lang].contract;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #10b981; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .info-box { background: white; border-left: 4px solid #10b981; padding: 15px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-        .steps { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
-        .step { margin: 15px 0; padding-left: 30px; position: relative; }
-        .step::before { content: "✓"; position: absolute; left: 0; background: #10b981; color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">${t.headerSubtitle}</p>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          <p>${t.approvedMessage} <strong>${escapeHtml(vars.amount)} €</strong> ${t.approvedMessage2}</p>
-          
-          <div class="info-box">
-            <p style="margin: 0;"><strong>${t.contractReadyTitle}</strong></p>
-            <p style="margin: 10px 0 0 0; font-size: 14px; color: #6b7280;">${t.referenceLabel} ${escapeHtml(vars.loanId)}</p>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, subtitle: t.headerSubtitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #10b981 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.approvedMessage} <strong>${escapeHtml(vars.amount)} EUR</strong> ${t.approvedMessage2}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f0fdf4; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px; border-left: 4px solid #10b981;">
+              <p style="margin: 0 0 5px 0; font-weight: bold; color: #1f2937; font-size: 16px;">${t.contractReadyTitle}</p>
+              <p style="margin: 0; font-size: 14px; color: #6b7280;">${t.referenceLabel} ${escapeHtml(vars.loanId)}</p>
+            </td>
+          </tr>
+        </table>
 
-          <div class="steps">
-            <h3 style="margin-top: 0; color: #1f2937;">${t.nextStepsTitle}</h3>
-            <div class="step">
-              <strong>${t.step1Title}</strong><br>
-              <span style="color: #6b7280; font-size: 14px;">${t.step1Text}</span>
-            </div>
-            <div class="step">
-              <strong>${t.step2Title}</strong><br>
-              <span style="color: #6b7280; font-size: 14px;">${t.step2Text}</span>
-            </div>
-            <div class="step">
-              <strong>${t.step3Title}</strong><br>
-              <span style="color: #6b7280; font-size: 14px;">${t.step3Text} ${escapeHtml(vars.fromEmail)}</span>
-            </div>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 25px;">
+              <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 16px;">${t.nextStepsTitle}</h3>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td style="padding: 10px 0 10px 30px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 10px; width: 20px; height: 20px; background: #10b981; color: white; border-radius: 50%; display: inline-block; text-align: center; line-height: 20px; font-size: 12px;">1</span>
+                    <strong style="color: #1f2937;">${t.step1Title}</strong><br>
+                    <span style="color: #6b7280; font-size: 14px;">${t.step1Text}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0 10px 30px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 10px; width: 20px; height: 20px; background: #10b981; color: white; border-radius: 50%; display: inline-block; text-align: center; line-height: 20px; font-size: 12px;">2</span>
+                    <strong style="color: #1f2937;">${t.step2Title}</strong><br>
+                    <span style="color: #6b7280; font-size: 14px;">${t.step2Text}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0 10px 30px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 10px; width: 20px; height: 20px; background: #10b981; color: white; border-radius: 50%; display: inline-block; text-align: center; line-height: 20px; font-size: 12px;">3</span>
+                    <strong style="color: #1f2937;">${t.step3Title}</strong><br>
+                    <span style="color: #6b7280; font-size: 14px;">${t.step3Text} ${escapeHtml(vars.fromEmail)}</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
 
-          <div style="text-align: center;">
-            <a href="${vars.dashboardUrl}" class="button">${t.downloadButton}</a>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${vars.dashboardUrl}" style="display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.downloadButton}</a>
+            </td>
+          </tr>
+        </table>
 
-          <p style="margin-top: 30px; padding: 15px; background: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
-            <strong>${t.importantTitle}</strong> ${t.importantMessage}
-          </p>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fef3c7; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-left: 4px solid #f59e0b;">
+              <p style="margin: 0; color: #92400e; font-size: 14px;"><strong>${t.importantTitle}</strong> ${t.importantMessage}</p>
+            </td>
+          </tr>
+        </table>
 
-          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-            ${t.accessNote}
-          </p>
-        </div>
-        <div class="footer">
-          <p>${t.contactText} ${escapeHtml(vars.fromEmail)}</p>
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          ${t.accessNote}<br><br>${t.contactText} ${escapeHtml(vars.fromEmail)}
+        </p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.greeting} ${vars.fullName},
-    
-    ${t.headerTitle}
-    
-    ${t.approvedMessage} ${vars.amount} € ${t.approvedMessage2}
-    
-    ${t.contractReadyTitle}
-    ${t.referenceLabel} ${vars.loanId}
-    
-    ${t.nextStepsTitle}
-    1. ${t.step1Title}: ${t.step1Text}
-    2. ${t.step2Title}: ${t.step2Text}
-    3. ${t.step3Title}: ${t.step3Text} ${vars.fromEmail}
-    
-    ${t.downloadButton}: ${vars.dashboardUrl}
-    
-    ${t.importantTitle} ${t.importantMessage}
-    
-    ${t.accessNote}
-    
-    ${t.contactText} ${vars.fromEmail}
-    
-    ALTUS FINANCES GROUP
+${t.greeting} ${vars.fullName},
+
+${t.headerTitle}
+
+${t.approvedMessage} ${vars.amount} EUR ${t.approvedMessage2}
+
+${t.contractReadyTitle}
+${t.referenceLabel} ${vars.loanId}
+
+${t.nextStepsTitle}
+1. ${t.step1Title}: ${t.step1Text}
+2. ${t.step2Title}: ${t.step2Text}
+3. ${t.step3Title}: ${t.step3Text} ${vars.fromEmail}
+
+${t.downloadButton}: ${vars.dashboardUrl}
+
+${t.importantTitle} ${t.importantMessage}
+
+${t.accessNote}
+
+${t.contactText} ${vars.fromEmail}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -1831,94 +1970,88 @@ function getContractTemplate(lang: Language, vars: ContractVariables): EmailTemp
 
 function getFundingReleaseTemplate(lang: Language, vars: FundingReleaseVariables): EmailTemplate {
   const t = translations[lang].fundingRelease;
-  const currentYear = new Date().getFullYear();
-  const dashboardUrl = `${process.env.REPLIT_DEV_DOMAIN || 'http://localhost:5000'}/dashboard`;
+  const dashboardUrl = `${getEmailBaseUrl()}/dashboard`;
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #10b981; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .info-box { background: white; border-left: 4px solid #10b981; padding: 15px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-        .reminder-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">${t.headerSubtitle}</p>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          <p>${t.releaseMessage} <strong>${escapeHtml(vars.amount)} €</strong> ${t.releaseMessage2}</p>
-          
-          <div class="info-box">
-            <p style="margin: 0;"><strong>${t.availabilityTitle}</strong></p>
-            <p style="margin: 10px 0 0 0; font-size: 14px; color: #6b7280;">${t.referenceLabel} ${escapeHtml(vars.loanId)}</p>
-            <p style="margin: 10px 0 0 0;">${t.availabilityText}</p>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, subtitle: t.headerSubtitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #10b981 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.releaseMessage} <strong>${escapeHtml(vars.amount)} EUR</strong> ${t.releaseMessage2}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f0fdf4; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px; border-left: 4px solid #10b981;">
+              <p style="margin: 0 0 5px 0; font-weight: bold; color: #1f2937; font-size: 16px;">${t.availabilityTitle}</p>
+              <p style="margin: 0 0 10px 0; font-size: 14px; color: #6b7280;">${t.referenceLabel} ${escapeHtml(vars.loanId)}</p>
+              <p style="margin: 0; font-size: 14px; color: #374151;">${t.availabilityText}</p>
+            </td>
+          </tr>
+        </table>
 
-          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #1f2937;">${t.nextStepsTitle}</h3>
-            <ul>
-              <li>${t.step1}</li>
-              <li>${t.step2}</li>
-              <li>${t.step3}</li>
-            </ul>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px;">
+              <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.nextStepsTitle}</h3>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step1}</td></tr>
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step2}</td></tr>
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step3}</td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
 
-          <div style="text-align: center;">
-            <a href="${dashboardUrl}" class="button">${t.dashboardButton}</a>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${dashboardUrl}" style="display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.dashboardButton}</a>
+            </td>
+          </tr>
+        </table>
 
-          <div class="reminder-box">
-            <p style="margin: 0;"><strong>${t.reminderTitle}</strong></p>
-            <p style="margin: 10px 0 0 0;">${t.reminderText}</p>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fef3c7; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-left: 4px solid #f59e0b;">
+              <p style="margin: 0 0 5px 0; font-weight: bold; color: #92400e; font-size: 14px;">${t.reminderTitle}</p>
+              <p style="margin: 0; color: #92400e; font-size: 14px;">${t.reminderText}</p>
+            </td>
+          </tr>
+        </table>
 
-          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-            ${t.supportText}
-          </p>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          ${t.supportText}
+        </p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.greeting} ${vars.fullName},
-    
-    ${t.headerTitle}
-    
-    ${t.releaseMessage} ${vars.amount} € ${t.releaseMessage2}
-    
-    ${t.referenceLabel} ${vars.loanId}
-    ${t.availabilityText}
-    
-    ${t.nextStepsTitle}
-    - ${t.step1}
-    - ${t.step2}
-    - ${t.step3}
-    
-    ${t.dashboardButton}: ${dashboardUrl}
-    
-    ${t.reminderTitle}
-    ${t.reminderText}
-    
-    ${t.supportText}
-    
-    ALTUS FINANCES GROUP
+${t.greeting} ${vars.fullName},
+
+${t.headerTitle}
+
+${t.releaseMessage} ${vars.amount} EUR ${t.releaseMessage2}
+
+${t.referenceLabel} ${vars.loanId}
+${t.availabilityText}
+
+${t.nextStepsTitle}
+- ${t.step1}
+- ${t.step2}
+- ${t.step3}
+
+${t.dashboardButton}: ${dashboardUrl}
+
+${t.reminderTitle}
+${t.reminderText}
+
+${t.supportText}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -1930,82 +2063,74 @@ function getFundingReleaseTemplate(lang: Language, vars: FundingReleaseVariables
 
 function getLoanRequestUserTemplate(lang: Language, vars: LoanRequestUserVariables): EmailTemplate {
   const t = translations[lang].loanRequestUser;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .info-box { background: white; border-left: 4px solid #2563eb; padding: 15px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          <p>${t.confirmationMessage} <strong>${escapeHtml(vars.loanType)}</strong> ${t.confirmationMessage2} <strong>${escapeHtml(vars.amount)} €</strong>.</p>
-          
-          <div class="info-box">
-            <p style="margin: 0;"><strong>${t.referenceLabel}</strong> ${escapeHtml(vars.reference)}</p>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.confirmationMessage} <strong>${escapeHtml(vars.loanType)}</strong> ${t.confirmationMessage2} <strong>${escapeHtml(vars.amount)} EUR</strong>.</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #eff6ff; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px; border-left: 4px solid #2563eb;">
+              <p style="margin: 0; font-weight: bold; color: #1f2937; font-size: 16px;"><strong>${t.referenceLabel}</strong> ${escapeHtml(vars.reference)}</p>
+            </td>
+          </tr>
+        </table>
 
-          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #1f2937;">${t.nextStepsTitle}</h3>
-            <ul>
-              <li>${t.step1}</li>
-              <li>${t.step2}</li>
-              <li>${t.step3}</li>
-            </ul>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px;">
+              <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.nextStepsTitle}</h3>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step1}</td></tr>
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step2}</td></tr>
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step3}</td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
 
-          <p>${t.dashboardText}</p>
-          
-          <div style="text-align: center;">
-            <a href="${vars.dashboardUrl}" class="button">${t.dashboardButton}</a>
-          </div>
+        <p style="color: #374151; font-size: 16px; margin: 0 0 25px 0;">${t.dashboardText}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${vars.dashboardUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.dashboardButton}</a>
+            </td>
+          </tr>
+        </table>
 
-          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-            ${t.supportText}
-          </p>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          ${t.supportText}
+        </p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.greeting} ${vars.fullName},
-    
-    ${t.confirmationMessage} ${vars.loanType} ${t.confirmationMessage2} ${vars.amount} €.
-    
-    ${t.referenceLabel} ${vars.reference}
-    
-    ${t.nextStepsTitle}
-    - ${t.step1}
-    - ${t.step2}
-    - ${t.step3}
-    
-    ${t.dashboardText}
-    
-    ${t.dashboardButton}: ${vars.dashboardUrl}
-    
-    ${t.supportText}
-    
-    ALTUS FINANCES GROUP
+${t.greeting} ${vars.fullName},
+
+${t.confirmationMessage} ${vars.loanType} ${t.confirmationMessage2} ${vars.amount} EUR.
+
+${t.referenceLabel} ${vars.reference}
+
+${t.nextStepsTitle}
+- ${t.step1}
+- ${t.step2}
+- ${t.step3}
+
+${t.dashboardText}
+
+${t.dashboardButton}: ${vars.dashboardUrl}
+
+${t.supportText}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -2018,7 +2143,6 @@ function getLoanRequestUserTemplate(lang: Language, vars: LoanRequestUserVariabl
 function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVariables): EmailTemplate {
   const t = translations[lang].loanRequestAdmin;
   const accountTypes = translations[lang].accountTypes;
-  const currentYear = new Date().getFullYear();
   
   const accountTypeText = vars.accountType === 'personal' ? accountTypes.personal : accountTypes.business;
   const phoneDisplay = vars.phone || 'N/A';
@@ -2026,7 +2150,7 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
   const documentsRows = vars.documents.length > 0 
     ? vars.documents.map(doc => `
       <tr>
-        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${escapeHtml(doc.documentType)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #374151;">${escapeHtml(doc.documentType)}</td>
         <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">
           <a href="${doc.fileUrl}" style="color: #f59e0b; text-decoration: none; font-weight: 500;">${t.downloadLabel}</a>
         </td>
@@ -2034,128 +2158,99 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
     `).join('')
     : `<tr><td colspan="2" style="padding: 12px; text-align: center; color: #6b7280;">${t.noDocuments}</td></tr>`;
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 700px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #f59e0b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .info-table { background: white; border-radius: 8px; padding: 20px; margin: 20px 0; }
-        .info-row { display: flex; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
-        .info-row:last-child { border-bottom: none; }
-        .info-label { font-weight: bold; width: 180px; color: #6b7280; }
-        .info-value { color: #1f2937; }
-        .documents-section { margin: 25px 0; }
-        .documents-title { font-size: 18px; font-weight: bold; color: #1f2937; margin-bottom: 15px; }
-        .documents-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
-        .documents-table th { background: #f59e0b; color: white; padding: 12px; text-align: left; font-weight: bold; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <p>${t.message}</p>
-          
-          <div class="info-table">
-            <div class="info-row">
-              <div class="info-label">${t.applicantLabel}</div>
-              <div class="info-value">${escapeHtml(vars.fullName)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.emailLabel}</div>
-              <div class="info-value">${escapeHtml(vars.email)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.phoneLabel}</div>
-              <div class="info-value">${escapeHtml(phoneDisplay)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.accountTypeLabel}</div>
-              <div class="info-value">${escapeHtml(accountTypeText)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.amountLabel}</div>
-              <div class="info-value">${escapeHtml(vars.amount)} €</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.durationLabel}</div>
-              <div class="info-value">${vars.duration} ${t.monthsLabel}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.loanTypeLabel}</div>
-              <div class="info-value">${escapeHtml(vars.loanType)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.referenceLabel}</div>
-              <div class="info-value">${escapeHtml(vars.reference)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.userIdLabel}</div>
-              <div class="info-value">${escapeHtml(vars.userId)}</div>
-            </div>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #f59e0b 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.message}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.applicantLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.fullName)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.emailLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.email)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.phoneLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(phoneDisplay)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.accountTypeLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(accountTypeText)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.amountLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.amount)} EUR</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.durationLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${vars.duration} ${t.monthsLabel}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.loanTypeLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.loanType)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.referenceLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.reference)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;"><strong style="color: #6b7280;">${t.userIdLabel}</strong></td>
+            <td style="padding: 15px; color: #1f2937;">${escapeHtml(vars.userId)}</td>
+          </tr>
+        </table>
 
-          <div class="documents-section">
-            <div class="documents-title">${t.documentsTitle}</div>
-            <table class="documents-table">
-              <thead>
-                <tr>
-                  <th>${t.documentTypeLabel}</th>
-                  <th>${t.downloadLabel}</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${documentsRows}
-              </tbody>
-            </table>
-          </div>
+        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.documentsTitle}</h3>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <th style="background: #f59e0b; color: white; padding: 12px; text-align: left; font-weight: bold;">${t.documentTypeLabel}</th>
+            <th style="background: #f59e0b; color: white; padding: 12px; text-align: left; font-weight: bold;">${t.downloadLabel}</th>
+          </tr>
+          ${documentsRows}
+        </table>
 
-          <div style="text-align: center;">
-            <a href="${vars.reviewUrl}" class="button">${t.actionButton}</a>
-          </div>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${vars.reviewUrl}" style="display: inline-block; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.actionButton}</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const documentsText = vars.documents.length > 0
-    ? vars.documents.map(doc => `- ${doc.documentType}: ${doc.fileUrl}`).join('\n    ')
+    ? vars.documents.map(doc => `- ${doc.documentType}: ${doc.fileUrl}`).join('\n')
     : t.noDocuments;
 
   const text = `
-    ${t.headerTitle}
-    
-    ${t.message}
-    
-    ${t.applicantLabel} ${vars.fullName}
-    ${t.emailLabel} ${vars.email}
-    ${t.phoneLabel} ${phoneDisplay}
-    ${t.accountTypeLabel} ${accountTypeText}
-    ${t.amountLabel} ${vars.amount} €
-    ${t.durationLabel} ${vars.duration} ${t.monthsLabel}
-    ${t.loanTypeLabel} ${vars.loanType}
-    ${t.referenceLabel} ${vars.reference}
-    ${t.userIdLabel} ${vars.userId}
-    
-    ${t.documentsTitle}
-    ${documentsText}
-    
-    ${t.actionButton}: ${vars.reviewUrl}
-    
-    ALTUS FINANCES GROUP
+${t.headerTitle}
+
+${t.message}
+
+${t.applicantLabel} ${vars.fullName}
+${t.emailLabel} ${vars.email}
+${t.phoneLabel} ${phoneDisplay}
+${t.accountTypeLabel} ${accountTypeText}
+${t.amountLabel} ${vars.amount} EUR
+${t.durationLabel} ${vars.duration} ${t.monthsLabel}
+${t.loanTypeLabel} ${vars.loanType}
+${t.referenceLabel} ${vars.reference}
+${t.userIdLabel} ${vars.userId}
+
+${t.documentsTitle}
+${documentsText}
+
+${t.actionButton}: ${vars.reviewUrl}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -2167,84 +2262,64 @@ function getLoanRequestAdminTemplate(lang: Language, vars: LoanRequestAdminVaria
 
 function getKYCUploadedAdminTemplate(lang: Language, vars: KycUploadedAdminVariables): EmailTemplate {
   const t = translations[lang].kycUploadedAdmin;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #8b5cf6; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .info-table { background: white; border-radius: 8px; padding: 20px; margin: 20px 0; }
-        .info-row { display: flex; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
-        .info-row:last-child { border-bottom: none; }
-        .info-label { font-weight: bold; width: 150px; color: #6b7280; }
-        .info-value { color: #1f2937; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <p>${t.message}</p>
-          
-          <div class="info-table">
-            <div class="info-row">
-              <div class="info-label">${t.userLabel}</div>
-              <div class="info-value">${escapeHtml(vars.fullName)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.emailLabel}</div>
-              <div class="info-value">${escapeHtml(vars.email)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.documentTypeLabel}</div>
-              <div class="info-value">${escapeHtml(vars.documentType)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.loanTypeLabel}</div>
-              <div class="info-value">${escapeHtml(vars.loanType)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.userIdLabel}</div>
-              <div class="info-value">${escapeHtml(vars.userId)}</div>
-            </div>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #8b5cf6 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.message}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.userLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.fullName)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.emailLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.email)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.documentTypeLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.documentType)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.loanTypeLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.loanType)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;"><strong style="color: #6b7280;">${t.userIdLabel}</strong></td>
+            <td style="padding: 15px; color: #1f2937;">${escapeHtml(vars.userId)}</td>
+          </tr>
+        </table>
 
-          <div style="text-align: center;">
-            <a href="${vars.reviewUrl}" class="button">${t.actionButton}</a>
-          </div>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${vars.reviewUrl}" style="display: inline-block; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.actionButton}</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.headerTitle}
-    
-    ${t.message}
-    
-    ${t.userLabel} ${vars.fullName}
-    ${t.emailLabel} ${vars.email}
-    ${t.documentTypeLabel} ${vars.documentType}
-    ${t.loanTypeLabel} ${vars.loanType}
-    ${t.userIdLabel} ${vars.userId}
-    
-    ${t.actionButton}: ${vars.reviewUrl}
-    
-    ALTUS FINANCES GROUP
+${t.headerTitle}
+
+${t.message}
+
+${t.userLabel} ${vars.fullName}
+${t.emailLabel} ${vars.email}
+${t.documentTypeLabel} ${vars.documentType}
+${t.loanTypeLabel} ${vars.loanType}
+${t.userIdLabel} ${vars.userId}
+
+${t.actionButton}: ${vars.reviewUrl}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -2256,89 +2331,83 @@ function getKYCUploadedAdminTemplate(lang: Language, vars: KycUploadedAdminVaria
 
 function getLoanApprovedUserTemplate(lang: Language, vars: LoanApprovedUserVariables): EmailTemplate {
   const t = translations[lang].loanApprovedUser;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #10b981; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .info-box { background: white; border-left: 4px solid #10b981; padding: 15px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-        .warning-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">${t.headerSubtitle}</p>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          <p>${t.approvalMessage} <strong>${escapeHtml(vars.loanType)}</strong> <strong>${escapeHtml(vars.amount)} €</strong> ${t.approvalMessage2}</p>
-          
-          <div class="info-box">
-            <p style="margin: 0;"><strong>${t.referenceLabel}</strong> ${escapeHtml(vars.reference)}</p>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, subtitle: t.headerSubtitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #10b981 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.approvalMessage} <strong>${escapeHtml(vars.loanType)}</strong> <strong>${escapeHtml(vars.amount)} EUR</strong> ${t.approvalMessage2}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f0fdf4; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px; border-left: 4px solid #10b981;">
+              <p style="margin: 0; font-weight: bold; color: #1f2937; font-size: 16px;"><strong>${t.referenceLabel}</strong> ${escapeHtml(vars.reference)}</p>
+            </td>
+          </tr>
+        </table>
 
-          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #1f2937;">${t.nextStepsTitle}</h3>
-            <ul>
-              <li>${t.step1}</li>
-              <li>${t.step2}</li>
-              <li>${t.step3}</li>
-            </ul>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px;">
+              <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.nextStepsTitle}</h3>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step1}</td></tr>
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step2}</td></tr>
+                <tr><td style="padding: 5px 0 5px 20px; color: #374151; font-size: 14px;">&#8226; ${t.step3}</td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
 
-          <div style="text-align: center;">
-            <a href="${vars.loginUrl}" class="button">${t.loginButton}</a>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${vars.loginUrl}" style="display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.loginButton}</a>
+            </td>
+          </tr>
+        </table>
 
-          <div class="warning-box">
-            <p style="margin: 0; color: #92400e;"><strong>${t.importantTitle}</strong> ${t.importantMessage}</p>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fef3c7; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-left: 4px solid #f59e0b;">
+              <p style="margin: 0; color: #92400e; font-size: 14px;"><strong>${t.importantTitle}</strong> ${t.importantMessage}</p>
+            </td>
+          </tr>
+        </table>
 
-          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-            ${t.supportText}
-          </p>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          ${t.supportText}
+        </p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.greeting} ${vars.fullName},
-    
-    ${t.headerTitle}
-    ${t.headerSubtitle}
-    
-    ${t.approvalMessage} ${vars.loanType} ${vars.amount} € ${t.approvalMessage2}
-    
-    ${t.referenceLabel} ${vars.reference}
-    
-    ${t.nextStepsTitle}
-    - ${t.step1}
-    - ${t.step2}
-    - ${t.step3}
-    
-    ${t.loginButton}: ${vars.loginUrl}
-    
-    ${t.importantTitle} ${t.importantMessage}
-    
-    ${t.supportText}
-    
-    ALTUS FINANCES GROUP
+${t.greeting} ${vars.fullName},
+
+${t.headerTitle}
+${t.headerSubtitle}
+
+${t.approvalMessage} ${vars.loanType} ${vars.amount} EUR ${t.approvalMessage2}
+
+${t.referenceLabel} ${vars.reference}
+
+${t.nextStepsTitle}
+- ${t.step1}
+- ${t.step2}
+- ${t.step3}
+
+${t.loginButton}: ${vars.loginUrl}
+
+${t.importantTitle} ${t.importantMessage}
+
+${t.supportText}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -2350,89 +2419,69 @@ function getLoanApprovedUserTemplate(lang: Language, vars: LoanApprovedUserVaria
 
 function getTransferInitiatedAdminTemplate(lang: Language, vars: TransferInitiatedAdminVariables): EmailTemplate {
   const t = translations[lang].transferInitiatedAdmin;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #ec4899; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .info-table { background: white; border-radius: 8px; padding: 20px; margin: 20px 0; }
-        .info-row { display: flex; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
-        .info-row:last-child { border-bottom: none; }
-        .info-label { font-weight: bold; width: 150px; color: #6b7280; }
-        .info-value { color: #1f2937; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <p>${t.message}</p>
-          
-          <div class="info-table">
-            <div class="info-row">
-              <div class="info-label">${t.userLabel}</div>
-              <div class="info-value">${escapeHtml(vars.fullName)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.emailLabel}</div>
-              <div class="info-value">${escapeHtml(vars.email)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.amountLabel}</div>
-              <div class="info-value">${escapeHtml(vars.amount)} €</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.recipientLabel}</div>
-              <div class="info-value">${escapeHtml(vars.recipient)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.transferIdLabel}</div>
-              <div class="info-value">${escapeHtml(vars.transferId)}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">${t.userIdLabel}</div>
-              <div class="info-value">${escapeHtml(vars.userId)}</div>
-            </div>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #ec4899 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.message}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.userLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.fullName)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.emailLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.email)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.amountLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.amount)} EUR</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.recipientLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.recipient)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.transferIdLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.transferId)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;"><strong style="color: #6b7280;">${t.userIdLabel}</strong></td>
+            <td style="padding: 15px; color: #1f2937;">${escapeHtml(vars.userId)}</td>
+          </tr>
+        </table>
 
-          <div style="text-align: center;">
-            <a href="${vars.reviewUrl}" class="button">${t.actionButton}</a>
-          </div>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${vars.reviewUrl}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.actionButton}</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.headerTitle}
-    
-    ${t.message}
-    
-    ${t.userLabel} ${vars.fullName}
-    ${t.emailLabel} ${vars.email}
-    ${t.amountLabel} ${vars.amount} €
-    ${t.recipientLabel} ${vars.recipient}
-    ${t.transferIdLabel} ${vars.transferId}
-    ${t.userIdLabel} ${vars.userId}
-    
-    ${t.actionButton}: ${vars.reviewUrl}
-    
-    ALTUS FINANCES GROUP
+${t.headerTitle}
+
+${t.message}
+
+${t.userLabel} ${vars.fullName}
+${t.emailLabel} ${vars.email}
+${t.amountLabel} ${vars.amount} EUR
+${t.recipientLabel} ${vars.recipient}
+${t.transferIdLabel} ${vars.transferId}
+${t.userIdLabel} ${vars.userId}
+
+${t.actionButton}: ${vars.reviewUrl}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -2444,89 +2493,76 @@ function getTransferInitiatedAdminTemplate(lang: Language, vars: TransferInitiat
 
 function getTransferCodeUserTemplate(lang: Language, vars: TransferCodeUserVariables): EmailTemplate {
   const t = translations[lang].transferCodeUser;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .code-section { background: #f8f9fa; border: 2px solid #667eea; border-radius: 8px; padding: 30px; text-align: center; margin: 30px 0; }
-        .code-title { color: #667eea; font-size: 14px; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        .code { font-size: 42px; font-weight: bold; color: #667eea; letter-spacing: 8px; font-family: 'Courier New', monospace; }
-        .code-sequence { color: #666666; font-size: 14px; margin-top: 10px; }
-        .expiration { color: #666666; font-size: 14px; margin-top: 15px; }
-        .warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .info-box { background: white; border-left: 4px solid #667eea; padding: 15px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          
-          <div class="info-box">
-            <p style="margin: 0;"><strong>${t.transferInfoTitle}</strong></p>
-            <p style="margin: 10px 0 0 0; font-size: 14px; color: #6b7280;">${t.amountLabel} ${escapeHtml(vars.amount)} €</p>
-            <p style="margin: 5px 0 0 0; font-size: 14px; color: #6b7280;">${t.recipientLabel} ${escapeHtml(vars.recipient)}</p>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #667eea 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #eff6ff; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px; border-left: 4px solid #667eea;">
+              <p style="margin: 0 0 10px 0; font-weight: bold; color: #1f2937; font-size: 16px;">${t.transferInfoTitle}</p>
+              <p style="margin: 0 0 5px 0; font-size: 14px; color: #6b7280;">${t.amountLabel} ${escapeHtml(vars.amount)} EUR</p>
+              <p style="margin: 0; font-size: 14px; color: #6b7280;">${t.recipientLabel} ${escapeHtml(vars.recipient)}</p>
+            </td>
+          </tr>
+        </table>
 
-          <p>${t.instruction}</p>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.instruction}</p>
 
-          <div class="code-section">
-            <div class="code-title">${t.codeTitle}</div>
-            <div class="code">${escapeHtml(vars.code)}</div>
-            <div class="code-sequence">${t.codeSequence} ${vars.codeSequence} ${t.codeOf} ${vars.totalCodes}</div>
-            <div class="expiration">${t.expirationText}</div>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f8fafc; border: 2px solid #667eea; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td align="center" style="padding: 30px;">
+              <p style="color: #667eea; font-size: 14px; font-weight: 600; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px;">${t.codeTitle}</p>
+              <p style="font-size: 42px; font-weight: bold; color: #667eea; letter-spacing: 8px; font-family: 'Courier New', monospace; margin: 0 0 10px 0;">${escapeHtml(vars.code)}</p>
+              <p style="color: #666666; font-size: 14px; margin: 0 0 10px 0;">${t.codeSequence} ${vars.codeSequence} ${t.codeOf} ${vars.totalCodes}</p>
+              <p style="color: #666666; font-size: 14px; margin: 0;">${t.expirationText}</p>
+            </td>
+          </tr>
+        </table>
 
-          <div class="warning-box">
-            <p style="margin: 0; color: #856404;">${t.securityWarning}</p>
-          </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fff3cd; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-left: 4px solid #ffc107;">
+              <p style="margin: 0; color: #856404; font-size: 14px;">${t.securityWarning}</p>
+            </td>
+          </tr>
+        </table>
 
-          <p style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-            ${t.notYouText}
-          </p>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <p style="color: #6b7280; font-size: 14px; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          ${t.notYouText}
+        </p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
+  const html = getEmailWrapper(emailContent, lang);
+
   const text = `
-    ${t.greeting} ${vars.fullName},
-    
-    ${t.headerTitle}
-    
-    ${t.transferInfoTitle}
-    ${t.amountLabel} ${vars.amount} €
-    ${t.recipientLabel} ${vars.recipient}
-    
-    ${t.instruction}
-    
-    ${t.codeTitle}
-    ${vars.code}
-    ${t.codeSequence} ${vars.codeSequence} ${t.codeOf} ${vars.totalCodes}
-    
-    ${t.expirationText}
-    
-    ${t.securityWarning}
-    
-    ${t.notYouText}
-    
-    ALTUS FINANCES GROUP
+${t.greeting} ${vars.fullName},
+
+${t.headerTitle}
+
+${t.transferInfoTitle}
+${t.amountLabel} ${vars.amount} EUR
+${t.recipientLabel} ${vars.recipient}
+
+${t.instruction}
+
+${t.codeTitle}
+${vars.code}
+${t.codeSequence} ${vars.codeSequence} ${t.codeOf} ${vars.totalCodes}
+
+${t.expirationText}
+
+${t.securityWarning}
+
+${t.notYouText}
+
+ALTUS FINANCES GROUP
   `;
 
   return {
@@ -2538,115 +2574,173 @@ function getTransferCodeUserTemplate(lang: Language, vars: TransferCodeUserVaria
 
 function getTransferCompletedUserTemplate(lang: Language, vars: TransferCompletedUserVariables): EmailTemplate {
   const t = (translations as any)[lang]?.transferCompletedUser || translations.fr.transferCompletedUser;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .success-box { background: #d1fae5; border-left: 4px solid #10b981; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .info-box { background: white; border-left: 4px solid #667eea; padding: 15px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <h2 style="color: #1f2937; margin-top: 0;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
-          <div class="success-box">
-            <p style="margin: 0; color: #065f46;">${t.congratulationsMessage}</p>
-          </div>
-          <h3>${t.summaryTitle}</h3>
-          <div class="info-box">
-            <p style="margin: 5px 0;"><strong>${t.amountLabel}</strong> ${escapeHtml(vars.amount)} €</p>
-            <p style="margin: 5px 0;"><strong>${t.recipientLabel}</strong> ${escapeHtml(vars.recipient)}</p>
-            <p style="margin: 5px 0;"><strong>${t.ibanLabel}</strong> ${escapeHtml(vars.recipientIban)}</p>
-            <p style="margin: 5px 0;"><strong>${t.referenceLabel}</strong> ${escapeHtml(vars.transferId)}</p>
-          </div>
-          <h3>${t.availabilityTitle}</h3>
-          <p>${t.availabilityMessage}</p>
-          <h3>${t.supportTitle}</h3>
-          <p>${t.supportMessage}</p>
-          <p><strong>${t.supportEmail}</strong> ${escapeHtml(vars.supportEmail)}</p>
-          <p style="margin-top: 30px;">${t.thanksMessage}</p>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #10b981 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 20px; font-family: Arial, sans-serif;">${t.greeting} ${escapeHtml(vars.fullName)},</h2>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #d1fae5; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px; border-left: 4px solid #10b981;">
+              <p style="margin: 0; color: #065f46; font-size: 16px;">${t.congratulationsMessage}</p>
+            </td>
+          </tr>
+        </table>
+        
+        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.summaryTitle}</h3>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.amountLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.amount)} EUR</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.recipientLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.recipient)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.ibanLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.recipientIban)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;"><strong style="color: #6b7280;">${t.referenceLabel}</strong></td>
+            <td style="padding: 15px; color: #1f2937;">${escapeHtml(vars.transferId)}</td>
+          </tr>
+        </table>
+        
+        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.availabilityTitle}</h3>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.availabilityMessage}</p>
+        
+        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.supportTitle}</h3>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 10px 0;">${t.supportMessage}</p>
+        <p style="color: #374151; font-size: 16px; margin: 0 0 25px 0;"><strong>${t.supportEmail}</strong> ${escapeHtml(vars.supportEmail)}</p>
+        
+        <p style="color: #374151; font-size: 16px; margin: 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">${t.thanksMessage}</p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
-  const text = `${t.greeting} ${vars.fullName},\n\n${t.congratulationsMessage}\n\n${t.summaryTitle}\n${t.amountLabel} ${vars.amount} €\n${t.recipientLabel} ${vars.recipient}\n${t.ibanLabel} ${vars.recipientIban}\n${t.referenceLabel} ${vars.transferId}\n\n${t.availabilityTitle}\n${t.availabilityMessage}\n\n${t.supportTitle}\n${t.supportMessage}\n${t.supportEmail} ${vars.supportEmail}\n\n${t.thanksMessage}\n\nALTUS FINANCES GROUP`;
+  const html = getEmailWrapper(emailContent, lang);
+
+  const text = `${t.greeting} ${vars.fullName},
+
+${t.congratulationsMessage}
+
+${t.summaryTitle}
+${t.amountLabel} ${vars.amount} EUR
+${t.recipientLabel} ${vars.recipient}
+${t.ibanLabel} ${vars.recipientIban}
+${t.referenceLabel} ${vars.transferId}
+
+${t.availabilityTitle}
+${t.availabilityMessage}
+
+${t.supportTitle}
+${t.supportMessage}
+${t.supportEmail} ${vars.supportEmail}
+
+${t.thanksMessage}
+
+ALTUS FINANCES GROUP`;
 
   return { subject: t.subject, html, text };
 }
 
 function getTransferCompletedAdminTemplate(lang: Language, vars: TransferCompletedAdminVariables): EmailTemplate {
   const t = (translations as any)[lang]?.transferCompletedAdmin || translations.fr.transferCompletedAdmin;
-  const currentYear = new Date().getFullYear();
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-        .info-section { background: white; border-left: 4px solid #667eea; padding: 15px; margin: 20px 0; }
-        .button { display: inline-block; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">${t.headerTitle}</h1>
-        </div>
-        <div class="content">
-          <p>${t.message}</p>
-          <h3>${t.userInfoTitle}</h3>
-          <div class="info-section">
-            <p style="margin: 5px 0;"><strong>${t.userLabel}</strong> ${escapeHtml(vars.fullName)}</p>
-            <p style="margin: 5px 0;"><strong>${t.emailLabel}</strong> ${escapeHtml(vars.email)}</p>
-            <p style="margin: 5px 0;"><strong>${t.userIdLabel}</strong> ${escapeHtml(vars.userId)}</p>
-          </div>
-          <h3>${t.transferInfoTitle}</h3>
-          <div class="info-section">
-            <p style="margin: 5px 0;"><strong>${t.amountLabel}</strong> ${escapeHtml(vars.amount)} €</p>
-            <p style="margin: 5px 0;"><strong>${t.recipientLabel}</strong> ${escapeHtml(vars.recipient)}</p>
-            <p style="margin: 5px 0;"><strong>${t.ibanLabel}</strong> ${escapeHtml(vars.recipientIban)}</p>
-            <p style="margin: 5px 0;"><strong>${t.transferIdLabel}</strong> ${escapeHtml(vars.transferId)}</p>
-          </div>
-          <h3>${t.progressTitle}</h3>
-          <div class="info-section">
-            <p style="margin: 5px 0;"><strong>${t.validationsLabel}</strong> ${vars.totalValidations}</p>
-            <p style="margin: 5px 0;"><strong>${t.completedAtLabel}</strong> ${escapeHtml(vars.completedAt)}</p>
-          </div>
-          <a href="${vars.reviewUrl}" class="button">${t.actionButton}</a>
-        </div>
-        <div class="footer">
-          <p>&copy; ${currentYear} ALTUS FINANCES GROUP. ${t.footer}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #667eea 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${t.message}</p>
+        
+        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.userInfoTitle}</h3>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.userLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.fullName)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.emailLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.email)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;"><strong style="color: #6b7280;">${t.userIdLabel}</strong></td>
+            <td style="padding: 15px; color: #1f2937;">${escapeHtml(vars.userId)}</td>
+          </tr>
+        </table>
+        
+        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.transferInfoTitle}</h3>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.amountLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.amount)} EUR</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.recipientLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.recipient)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.ibanLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${escapeHtml(vars.recipientIban)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;"><strong style="color: #6b7280;">${t.transferIdLabel}</strong></td>
+            <td style="padding: 15px; color: #1f2937;">${escapeHtml(vars.transferId)}</td>
+          </tr>
+        </table>
+        
+        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px;">${t.progressTitle}</h3>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #6b7280;">${t.validationsLabel}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; color: #1f2937;">${vars.totalValidations}</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;"><strong style="color: #6b7280;">${t.completedAtLabel}</strong></td>
+            <td style="padding: 15px; color: #1f2937;">${escapeHtml(vars.completedAt)}</td>
+          </tr>
+        </table>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td align="center" style="padding: 0 0 25px 0;">
+              <a href="${vars.reviewUrl}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; font-family: Arial, sans-serif;">${t.actionButton}</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
 
-  const text = `${t.headerTitle}\n\n${t.message}\n\n${t.userInfoTitle}\n${t.userLabel} ${vars.fullName}\n${t.emailLabel} ${vars.email}\n${t.userIdLabel} ${vars.userId}\n\n${t.transferInfoTitle}\n${t.amountLabel} ${vars.amount} €\n${t.recipientLabel} ${vars.recipient}\n${t.ibanLabel} ${vars.recipientIban}\n${t.transferIdLabel} ${vars.transferId}\n\n${t.progressTitle}\n${t.validationsLabel} ${vars.totalValidations}\n${t.completedAtLabel} ${vars.completedAt}\n\n${t.actionButton}: ${vars.reviewUrl}\n\nALTUS FINANCES GROUP`;
+  const html = getEmailWrapper(emailContent, lang);
+
+  const text = `${t.headerTitle}
+
+${t.message}
+
+${t.userInfoTitle}
+${t.userLabel} ${vars.fullName}
+${t.emailLabel} ${vars.email}
+${t.userIdLabel} ${vars.userId}
+
+${t.transferInfoTitle}
+${t.amountLabel} ${vars.amount} EUR
+${t.recipientLabel} ${vars.recipient}
+${t.ibanLabel} ${vars.recipientIban}
+${t.transferIdLabel} ${vars.transferId}
+
+${t.progressTitle}
+${t.validationsLabel} ${vars.totalValidations}
+${t.completedAtLabel} ${vars.completedAt}
+
+${t.actionButton}: ${vars.reviewUrl}
+
+ALTUS FINANCES GROUP`;
 
   return { subject: t.subject, html, text };
 }
@@ -2696,58 +2790,38 @@ export function getOtpEmailTemplate(
 ): EmailTemplate {
   const t = (translations as any)[language]?.otp || translations.fr.otp;
 
-  const html = `
-    <!DOCTYPE html>
-    <html lang="${language}">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <style>
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 8px; overflow: hidden; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; padding: 40px 20px; text-align: center; }
-        .header-title { margin: 0; font-size: 24px; font-weight: bold; }
-        .content { padding: 40px 30px; }
-        .greeting { font-size: 18px; color: #333333; margin-bottom: 20px; }
-        .code-section { background: #f8f9fa; border: 2px solid #667eea; border-radius: 8px; padding: 30px; text-align: center; margin: 30px 0; }
-        .code-title { color: #667eea; font-size: 14px; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        .code { font-size: 42px; font-weight: bold; color: #667eea; letter-spacing: 8px; font-family: 'Courier New', monospace; }
-        .expiration { color: #666666; font-size: 14px; margin-top: 15px; }
-        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .warning-text { color: #856404; font-size: 14px; margin: 0; }
-        .not-you { color: #666666; font-size: 14px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0; }
-        .footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666666; font-size: 12px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 class="header-title">${escapeHtml(t.headerTitle)}</h1>
-        </div>
-        <div class="content">
-          <p class="greeting">${escapeHtml(t.greeting)} ${escapeHtml(vars.fullName)},</p>
-          <p>${escapeHtml(t.instruction)}</p>
-          
-          <div class="code-section">
-            <div class="code-title">${escapeHtml(t.codeTitle)}</div>
-            <div class="code">${escapeHtml(vars.otpCode)}</div>
-            <div class="expiration">${escapeHtml(t.expirationText)}</div>
-          </div>
-          
-          <div class="warning">
-            <p class="warning-text">${escapeHtml(t.securityWarning)}</p>
-          </div>
-          
-          <p class="not-you">${escapeHtml(t.notYouText)}</p>
-        </div>
-        <div class="footer">
-          <p>ALTUS FINANCES GROUP</p>
-          <p>${escapeHtml(t.footer)}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #667eea 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <p style="font-size: 18px; color: #333333; margin: 0 0 20px 0; font-family: Arial, sans-serif;">${escapeHtml(t.greeting)} ${escapeHtml(vars.fullName)},</p>
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${escapeHtml(t.instruction)}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f8fafc; border: 2px solid #2563eb; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td align="center" style="padding: 30px;">
+              <p style="color: #2563eb; font-size: 14px; font-weight: 600; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px;">${escapeHtml(t.codeTitle)}</p>
+              <p style="font-size: 42px; font-weight: bold; color: #2563eb; letter-spacing: 8px; font-family: 'Courier New', monospace; margin: 0 0 15px 0;">${escapeHtml(vars.otpCode)}</p>
+              <p style="color: #666666; font-size: 14px; margin: 0;">${escapeHtml(t.expirationText)}</p>
+            </td>
+          </tr>
+        </table>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fff3cd; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-left: 4px solid #ffc107;">
+              <p style="color: #856404; font-size: 14px; margin: 0;">${escapeHtml(t.securityWarning)}</p>
+            </td>
+          </tr>
+        </table>
+        
+        <p style="color: #666666; font-size: 14px; margin: 0; padding-top: 20px; border-top: 1px solid #e0e0e0;">${escapeHtml(t.notYouText)}</p>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
+
+  const html = getEmailWrapper(emailContent, language);
 
   const text = `
 ${t.greeting} ${vars.fullName},
@@ -2785,94 +2859,71 @@ export function getTransferCodesAdminTemplate(
   const codesTableRows = vars.codes
     .map(code => `
       <tr>
-        <td style="padding: 12px; border: 1px solid #d1d5db;">${code.sequence}/${totalCodes}</td>
-        <td style="padding: 12px; border: 1px solid #d1d5db;"><strong>${escapeHtml(code.code)}</strong></td>
-        <td style="padding: 12px; border: 1px solid #d1d5db;">${code.pausePercent}%</td>
-        <td style="padding: 12px; border: 1px solid #d1d5db;">${escapeHtml(code.context)}</td>
+        <td style="padding: 12px; border: 1px solid #d1d5db; color: #374151;">${code.sequence}/${totalCodes}</td>
+        <td style="padding: 12px; border: 1px solid #d1d5db;"><strong style="color: #2563eb;">${escapeHtml(code.code)}</strong></td>
+        <td style="padding: 12px; border: 1px solid #d1d5db; color: #374151;">${code.pausePercent}%</td>
+        <td style="padding: 12px; border: 1px solid #d1d5db; color: #374151;">${escapeHtml(code.context)}</td>
       </tr>
     `).join('');
 
-  const html = `
-    <!DOCTYPE html>
-    <html lang="${language}">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <style>
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
-        .container { max-width: 650px; margin: 30px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .header { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: #ffffff; padding: 30px; text-align: center; }
-        .header-title { font-size: 24px; font-weight: bold; margin: 0; }
-        .content { padding: 30px; }
-        .info-section { background: #f8f9fa; border-left: 4px solid #2563eb; padding: 15px; margin: 20px 0; }
-        .info-row { margin: 8px 0; }
-        .label { font-weight: bold; color: #1f2937; }
-        .value { color: #374151; }
-        .codes-title { font-size: 18px; font-weight: bold; color: #1e40af; margin: 25px 0 15px; }
-        .instruction { background: #dbeafe; border-left: 4px solid #3b82f6; padding: 12px; margin: 15px 0; color: #1e40af; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th { background: #2563eb; color: white; padding: 12px; text-align: left; font-weight: bold; }
-        td { padding: 12px; border: 1px solid #d1d5db; }
-        tr:nth-child(even) { background-color: #f9fafb; }
-        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .warning-title { color: #856404; font-weight: bold; margin-bottom: 8px; }
-        .warning-text { color: #856404; font-size: 14px; margin: 0; }
-        .footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666666; font-size: 12px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 class="header-title">${escapeHtml(t.headerTitle)}</h1>
-        </div>
-        <div class="content">
-          <p>${escapeHtml(t.message)}</p>
-          
-          <div class="info-section">
-            <div class="info-row">
-              <span class="label">${escapeHtml(t.userLabel)}</span>
-              <span class="value">${escapeHtml(vars.fullName)}</span>
-            </div>
-            <div class="info-row">
-              <span class="label">${escapeHtml(t.amountLabel)}</span>
-              <span class="value">${escapeHtml(vars.amount)} EUR</span>
-            </div>
-            <div class="info-row">
-              <span class="label">${escapeHtml(t.loanIdLabel)}</span>
-              <span class="value">${escapeHtml(vars.loanId)}</span>
-            </div>
-          </div>
+  const emailContent = `
+    ${getEmailHeader({ title: t.headerTitle, gradientColors: 'linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #c9a227 100%)' })}
+    <tr>
+      <td class="content-padding" style="padding: 40px 30px;">
+        <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">${escapeHtml(t.message)}</p>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #eff6ff; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px; border-left: 4px solid #2563eb;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td style="padding: 5px 0;"><strong style="color: #1f2937;">${escapeHtml(t.userLabel)}</strong> <span style="color: #374151;">${escapeHtml(vars.fullName)}</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 0;"><strong style="color: #1f2937;">${escapeHtml(t.amountLabel)}</strong> <span style="color: #374151;">${escapeHtml(vars.amount)} EUR</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 0;"><strong style="color: #1f2937;">${escapeHtml(t.loanIdLabel)}</strong> <span style="color: #374151;">${escapeHtml(vars.loanId)}</span></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
 
-          <h2 class="codes-title">${escapeHtml(t.codesTitle)}</h2>
-          <div class="instruction">${escapeHtml(t.codeInstruction)}</div>
-          
-          <table>
-            <thead>
-              <tr>
-                <th>${escapeHtml(t.sequenceLabel)}</th>
-                <th>Code</th>
-                <th>${escapeHtml(t.pauseLabel)}</th>
-                <th>${escapeHtml(t.contextLabel)}</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${codesTableRows}
-            </tbody>
-          </table>
+        <h2 style="font-size: 18px; font-weight: bold; color: #1e40af; margin: 25px 0 15px 0;">${escapeHtml(t.codesTitle)}</h2>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #dbeafe; border-radius: 8px; margin-bottom: 20px;">
+          <tr>
+            <td style="padding: 12px; border-left: 4px solid #3b82f6; color: #1e40af;">
+              ${escapeHtml(t.codeInstruction)}
+            </td>
+          </tr>
+        </table>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; margin-bottom: 25px;">
+          <tr>
+            <th style="background: #2563eb; color: white; padding: 12px; text-align: left; font-weight: bold;">${escapeHtml(t.sequenceLabel)}</th>
+            <th style="background: #2563eb; color: white; padding: 12px; text-align: left; font-weight: bold;">Code</th>
+            <th style="background: #2563eb; color: white; padding: 12px; text-align: left; font-weight: bold;">${escapeHtml(t.pauseLabel)}</th>
+            <th style="background: #2563eb; color: white; padding: 12px; text-align: left; font-weight: bold;">${escapeHtml(t.contextLabel)}</th>
+          </tr>
+          ${codesTableRows}
+        </table>
 
-          <div class="warning">
-            <div class="warning-title">${escapeHtml(t.importantTitle)}</div>
-            <p class="warning-text">${escapeHtml(t.importantMessage)}</p>
-          </div>
-        </div>
-        <div class="footer">
-          <p>ALTUS FINANCES GROUP</p>
-          <p>${escapeHtml(t.footer)}</p>
-        </div>
-      </div>
-    </body>
-    </html>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fff3cd; border-radius: 8px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 15px; border-left: 4px solid #ffc107;">
+              <p style="color: #856404; font-weight: bold; margin: 0 0 8px 0;">${escapeHtml(t.importantTitle)}</p>
+              <p style="color: #856404; font-size: 14px; margin: 0;">${escapeHtml(t.importantMessage)}</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    ${getEmailFooter(t.footer)}
   `;
+
+  const html = getEmailWrapper(emailContent, language);
 
   const codesTextList = vars.codes
     .map(code => `  ${code.sequence}/${totalCodes}. Code: ${code.code} - ${t.pauseLabel} ${code.pausePercent}% - ${code.context}`)

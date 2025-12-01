@@ -174,6 +174,8 @@ export async function sendResetPasswordEmail(toEmail: string, fullName: string, 
     
     const resetUrl = `${getBaseUrl()}/reset-password/${token}`;
     const safeName = escapeHtml(fullName);
+    const logoUrl = `${getBaseUrl()}/logo.png`;
+    const currentYear = new Date().getFullYear();
     
     const subject = language === 'en' 
       ? 'Reset your password - ALTUS FINANCES GROUP'
@@ -181,23 +183,46 @@ export async function sendResetPasswordEmail(toEmail: string, fullName: string, 
     
     const html = `
 <!DOCTYPE html>
-<html>
+<html lang="${language}">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ALTUS FINANCES GROUP</title>
+  <style type="text/css">
+    body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    @media only screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .content-padding { padding: 20px 15px !important; }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
-  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f4f4f4; padding: 20px 0;">
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f4f4f4;">
     <tr>
-      <td align="center">
-        <table cellpadding="0" cellspacing="0" border="0" width="600" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <td align="center" style="padding: 20px 10px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
           <tr>
-            <td style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); padding: 40px 20px; text-align: center;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 28px;">${language === 'en' ? 'Password Reset' : 'Réinitialisation du mot de passe'}</h1>
+            <td align="center" style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #c9a227 100%); padding: 30px 20px;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 15px;">
+                    <img src="${logoUrl}" alt="Altus Finances Group" width="180" height="auto" style="display: block; max-width: 180px; height: auto;" />
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <h1 style="margin: 0; font-size: 24px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">${language === 'en' ? 'Password Reset' : 'Réinitialisation du mot de passe'}</h1>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
-            <td style="padding: 40px 30px;">
+            <td class="content-padding" style="padding: 40px 30px;">
               <p style="color: #374151; font-size: 16px; line-height: 1.5; margin: 0 0 20px 0;">
                 ${language === 'en' ? 'Hello' : 'Bonjour'} <strong>${safeName}</strong>,
               </p>
@@ -214,13 +239,13 @@ export async function sendResetPasswordEmail(toEmail: string, fullName: string, 
               <table cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr>
                   <td align="center" style="padding: 0 0 30px 0;">
-                    <a href="${resetUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 6px; font-size: 16px; font-weight: 600;">
+                    <a href="${resetUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 16px; font-weight: bold; font-family: Arial, sans-serif;">
                       ${language === 'en' ? 'Reset Password' : 'Réinitialiser mon mot de passe'}
                     </a>
                   </td>
                 </tr>
               </table>
-              <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0 0 20px 0;">
+              <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0 0 10px 0;">
                 ${language === 'en'
                   ? 'If the button doesn\'t work, copy and paste this link into your browser:'
                   : 'Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur :'}
@@ -228,22 +253,36 @@ export async function sendResetPasswordEmail(toEmail: string, fullName: string, 
               <p style="color: #2563eb; font-size: 14px; line-height: 1.5; margin: 0 0 30px 0; word-break: break-all;">
                 ${resetUrl}
               </p>
-              <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; margin: 0 0 20px 0;">
-                <p style="color: #92400e; font-size: 14px; line-height: 1.5; margin: 0;">
-                  <strong>${language === 'en' ? 'Important' : 'Important'} :</strong><br>
-                  ${language === 'en'
-                    ? 'This link will expire in 1 hour. If you didn\'t request a password reset, please ignore this email.'
-                    : 'Ce lien expirera dans 1 heure. Si vous n\'avez pas demandé de réinitialisation de mot de passe, veuillez ignorer cet email.'}
-                </p>
-              </div>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fef3c7; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 15px; border-left: 4px solid #f59e0b;">
+                    <p style="color: #92400e; font-size: 14px; line-height: 1.5; margin: 0;">
+                      <strong>${language === 'en' ? 'Important' : 'Important'} :</strong><br>
+                      ${language === 'en'
+                        ? 'This link will expire in 1 hour. If you didn\'t request a password reset, please ignore this email.'
+                        : 'Ce lien expirera dans 1 heure. Si vous n\'avez pas demandé de réinitialisation de mot de passe, veuillez ignorer cet email.'}
+                    </p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
-            <td style="background-color: #f9fafb; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="color: #6b7280; font-size: 14px; margin: 0;">
-                ALTUS FINANCES GROUP - ${language === 'en' ? 'Financing Solutions' : 'Solutions de financement'}<br>
-                ${new Date().getFullYear()} ${language === 'en' ? 'All rights reserved' : 'Tous droits réservés'}.
-              </p>
+            <td align="center" style="background-color: #f8fafc; padding: 30px 20px; border-top: 1px solid #e2e8f0;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 15px;">
+                    <img src="${logoUrl}" alt="Altus Finances Group" width="120" height="auto" style="display: block; max-width: 120px; height: auto; opacity: 0.8;" />
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <p style="margin: 0; font-size: 12px; color: #64748b; font-family: Arial, sans-serif;">
+                      &copy; ${currentYear} ALTUS FINANCES GROUP. ${language === 'en' ? 'All rights reserved' : 'Tous droits réservés'}.
+                    </p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
@@ -298,63 +337,100 @@ export async function sendContactFormEmail(name: string, email: string, phone: s
     const safeEmail = escapeHtml(email);
     const safePhone = escapeHtml(phone);
     const safeMessage = escapeHtml(message);
+    const logoUrl = `${getBaseUrl()}/logo.png`;
+    const currentYear = new Date().getFullYear();
     
     const subject = `Nouveau message de contact - ${safeName}`;
     
     const html = `
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ALTUS FINANCES GROUP</title>
+  <style type="text/css">
+    body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    @media only screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .content-padding { padding: 20px 15px !important; }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
-  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f4f4f4; padding: 20px 0;">
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f4f4f4;">
     <tr>
-      <td align="center">
-        <table cellpadding="0" cellspacing="0" border="0" width="600" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <td align="center" style="padding: 20px 10px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
           <tr>
-            <td style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); padding: 40px 20px; text-align: center;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Nouveau message de contact</h1>
+            <td align="center" style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #c9a227 100%); padding: 30px 20px;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 15px;">
+                    <img src="${logoUrl}" alt="Altus Finances Group" width="180" height="auto" style="display: block; max-width: 180px; height: auto;" />
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <h1 style="margin: 0; font-size: 24px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">Nouveau message de contact</h1>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
-            <td style="padding: 40px 30px;">
-              <h2 style="color: #1f2937; font-size: 20px; margin: 0 0 20px 0;">Informations du contact :</h2>
+            <td class="content-padding" style="padding: 40px 30px;">
+              <h2 style="color: #1f2937; font-size: 18px; margin: 0 0 20px 0; font-family: Arial, sans-serif;">Informations du contact :</h2>
               
-              <table cellpadding="8" cellspacing="0" border="0" width="100%" style="margin-bottom: 30px;">
+              <table cellpadding="10" cellspacing="0" border="0" width="100%" style="margin-bottom: 30px; background: #f8fafc; border-radius: 8px;">
                 <tr>
-                  <td style="color: #6b7280; font-weight: bold; width: 120px;">Nom :</td>
-                  <td style="color: #1f2937;">${safeName}</td>
+                  <td style="color: #6b7280; font-weight: bold; width: 120px; padding: 12px 15px; border-bottom: 1px solid #e2e8f0;">Nom :</td>
+                  <td style="color: #1f2937; padding: 12px 15px; border-bottom: 1px solid #e2e8f0;">${safeName}</td>
                 </tr>
                 <tr>
-                  <td style="color: #6b7280; font-weight: bold;">Email :</td>
-                  <td style="color: #1f2937;"><a href="mailto:${safeEmail}" style="color: #2563eb; text-decoration: none;">${safeEmail}</a></td>
+                  <td style="color: #6b7280; font-weight: bold; padding: 12px 15px; border-bottom: 1px solid #e2e8f0;">Email :</td>
+                  <td style="color: #1f2937; padding: 12px 15px; border-bottom: 1px solid #e2e8f0;"><a href="mailto:${safeEmail}" style="color: #2563eb; text-decoration: none;">${safeEmail}</a></td>
                 </tr>
                 <tr>
-                  <td style="color: #6b7280; font-weight: bold;">Téléphone :</td>
-                  <td style="color: #1f2937;">${safePhone || 'Non renseigné'}</td>
+                  <td style="color: #6b7280; font-weight: bold; padding: 12px 15px;">Téléphone :</td>
+                  <td style="color: #1f2937; padding: 12px 15px;">${safePhone || 'Non renseigné'}</td>
                 </tr>
               </table>
               
-              <h3 style="color: #1f2937; font-size: 18px; margin: 0 0 15px 0;">Message :</h3>
-              <div style="background-color: #f9fafb; border-left: 4px solid #2563eb; padding: 20px; border-radius: 4px;">
-                <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${safeMessage}</p>
-              </div>
+              <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 15px 0; font-family: Arial, sans-serif;">Message :</h3>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f9fafb; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 20px; border-left: 4px solid #2563eb;">
+                    <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${safeMessage}</p>
+                  </td>
+                </tr>
+              </table>
               
-              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-                <p style="color: #6b7280; font-size: 13px; margin: 0;">
-                  Ce message a été envoyé depuis le formulaire de contact du site Altus Finances Group.
-                </p>
-              </div>
+              <p style="color: #6b7280; font-size: 13px; margin: 30px 0 0 0; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                Ce message a été envoyé depuis le formulaire de contact du site Altus Finances Group.
+              </p>
             </td>
           </tr>
           <tr>
-            <td style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="color: #6b7280; font-size: 12px; margin: 0;">
-                ALTUS FINANCES GROUP<br>
-                ${new Date().getFullYear()} Tous droits réservés.
-              </p>
+            <td align="center" style="background-color: #f8fafc; padding: 30px 20px; border-top: 1px solid #e2e8f0;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 15px;">
+                    <img src="${logoUrl}" alt="Altus Finances Group" width="120" height="auto" style="display: block; max-width: 120px; height: auto; opacity: 0.8;" />
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <p style="margin: 0; font-size: 12px; color: #64748b; font-family: Arial, sans-serif;">
+                      &copy; ${currentYear} ALTUS FINANCES GROUP. Tous droits réservés.
+                    </p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
