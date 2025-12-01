@@ -7,8 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslations } from '@/lib/i18n';
 import LoanDetailsDialog from '@/components/LoanDetailsDialog';
-import AmortizationCalculator from '@/components/AmortizationCalculator';
-import { Wallet, Calculator, Clock, CheckCircle2, TrendingUp } from 'lucide-react';
+import { Wallet, Clock, CheckCircle2, TrendingUp } from 'lucide-react';
 import { SectionTitle, GlassPanel, DashboardCard, LOAN_STATUS_CONFIG } from '@/components/fintech';
 
 interface Loan {
@@ -92,30 +91,8 @@ export default function IndividualLoans() {
           subtitle={t.loan.pageDescription}
         />
 
-        <Tabs defaultValue="loans" className="w-full" data-testid="tabs-loans">
-          <GlassPanel className="p-1 overflow-x-auto">
-            <TabsList className="grid w-full grid-cols-2 min-w-fit bg-transparent gap-1">
-              <TabsTrigger 
-                value="loans" 
-                data-testid="tab-my-loans"
-                className="gap-2 data-[state=active]:bg-primary/90 data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all duration-300 data-[state=active]:-translate-y-0.5 rounded-md"
-              >
-                <Wallet className="h-4 w-4 flex-shrink-0" />
-                <span className="text-xs sm:text-sm whitespace-nowrap">{t.loan.tabMyLoans}</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="calculator" 
-                data-testid="tab-calculator"
-                className="gap-2 data-[state=active]:bg-primary/90 data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all duration-300 data-[state=active]:-translate-y-0.5 rounded-md"
-              >
-                <Calculator className="h-4 w-4 flex-shrink-0" />
-                <span className="text-xs sm:text-sm whitespace-nowrap">{t.loan.tabCalculator}</span>
-              </TabsTrigger>
-            </TabsList>
-          </GlassPanel>
-
-          <TabsContent value="loans" className="mt-6 space-y-6">
-            <Tabs defaultValue="active" className="w-full" data-testid="tabs-loan-status">
+        <div className="mt-6 space-y-6">
+          <Tabs defaultValue="active" className="w-full" data-testid="tabs-loan-status">
               <GlassPanel className="p-1 overflow-x-auto">
                 <TabsList className="grid w-full grid-cols-2 min-w-fit bg-transparent gap-1">
                   <TabsTrigger 
@@ -277,13 +254,8 @@ export default function IndividualLoans() {
                   </Card>
                 )}
               </TabsContent>
-            </Tabs>
-          </TabsContent>
-
-          <TabsContent value="calculator" className="mt-6 motion-safe:animate-in motion-safe:fade-in-50 motion-safe:slide-in-from-bottom-4 duration-300">
-            <AmortizationCalculator />
-          </TabsContent>
-        </Tabs>
+          </Tabs>
+        </div>
       </div>
 
       {selectedLoan && (

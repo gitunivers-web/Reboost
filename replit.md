@@ -4,6 +4,15 @@
 
 ALTUS is a multi-language professional loan management platform designed for business clients. It provides a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. The platform aims to foster trust, clarity, and data-driven decision-making with features like multi-language support (French, English, Spanish, Portuguese, Italian, German, Dutch), an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. Its primary purpose is to equip business professionals and enterprises with robust tools for loan financing and financial management, offering a robust and secure environment for financial operations.
 
+## Recent Changes (December 1, 2025)
+
+- **Removed Amortization Calculator from "Mes Prêts" Page:** Removed the calculator tab from the user loans page (`client/src/pages/IndividualLoans.tsx`):
+  - Removed "Calculateur" tab button and its associated TabsContent
+  - Removed imports for `Calculator` icon and `AmortizationCalculator` component
+  - Cleaned up structure to remove unnecessary outer Tabs wrapper
+  - User loans page now displays only "Prêts actifs" (Active Loans) and "Prêts en attente" (Pending Loans) tabs
+  - Component file reduced in complexity with simplified structure
+
 ## Recent Changes (November 29, 2025)
 
 - **Transfer Progress Animation Velocity (Production-Ready):** Implemented configurable progress bar animation speed for production deployment:
