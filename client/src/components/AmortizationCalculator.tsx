@@ -139,6 +139,7 @@ export default function AmortizationCalculator() {
         description: t.loan.requestSubmittedDesc,
       });
       queryClient.invalidateQueries({ queryKey: ['/api/loans'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/dashboard'] });
     },
     onError: () => {
       toast({

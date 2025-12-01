@@ -230,6 +230,7 @@ export function LoanRequestModal({ open, onOpenChange, user }: LoanRequestModalP
         title: t.requestSent,
         description: t.requestSentDescription,
       });
+      queryClient.invalidateQueries({ queryKey: ['/api/loans'] });
       queryClient.invalidateQueries({ queryKey: ['/api/dashboard'] });
       onOpenChange(false);
       form.reset();
