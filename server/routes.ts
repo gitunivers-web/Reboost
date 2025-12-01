@@ -5826,6 +5826,7 @@ ${urls.map(url => `  <url>
         x: 50,
         y: yPosition,
         size: 12,
+        font: helvetica,
         color: rgb(0.3, 0.3, 0.3),
       });
       
@@ -5834,6 +5835,7 @@ ${urls.map(url => `  <url>
         x: 50,
         y: yPosition,
         size: 11,
+        font: helvetica,
         color: rgb(0.3, 0.3, 0.3),
       });
       
@@ -5842,6 +5844,7 @@ ${urls.map(url => `  <url>
         x: 50,
         y: yPosition,
         size: 11,
+        font: helvetica,
         color: rgb(0.3, 0.3, 0.3),
       });
       
@@ -5872,11 +5875,11 @@ ${urls.map(url => `  <url>
       });
       
       // Table headers (drawn AFTER the background so they appear on top)
-      page.drawText('Mois', { x: 55, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-      page.drawText('Paiement', { x: 140, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-      page.drawText('Intérêts', { x: 240, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-      page.drawText('Principal', { x: 340, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-      page.drawText('Solde', { x: 450, y: yPosition, size: 10, color: rgb(1, 1, 1) });
+      page.drawText('Mois', { x: 55, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+      page.drawText('Paiement', { x: 140, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+      page.drawText('Intérêts', { x: 240, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+      page.drawText('Principal', { x: 340, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+      page.drawText('Solde', { x: 450, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
       
       yPosition -= 30;
       
@@ -5901,11 +5904,11 @@ ${urls.map(url => `  <url>
             color: rgb(0.2, 0.3, 0.6),
           });
           
-          currentPage.drawText('Mois', { x: 55, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-          currentPage.drawText('Paiement', { x: 140, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-          currentPage.drawText('Intérêts', { x: 240, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-          currentPage.drawText('Principal', { x: 340, y: yPosition, size: 10, color: rgb(1, 1, 1) });
-          currentPage.drawText('Solde', { x: 450, y: yPosition, size: 10, color: rgb(1, 1, 1) });
+          currentPage.drawText('Mois', { x: 55, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+          currentPage.drawText('Paiement', { x: 140, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+          currentPage.drawText('Intérêts', { x: 240, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+          currentPage.drawText('Principal', { x: 340, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
+          currentPage.drawText('Solde', { x: 450, y: yPosition, size: 10, font: helveticaBold, color: rgb(1, 1, 1) });
           
           yPosition -= 30;
         }
@@ -5931,11 +5934,11 @@ ${urls.map(url => `  <url>
         const principalText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(principalPayment);
         const balanceText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(remainingBalance);
         
-        currentPage.drawText(rowText, { x: 55, y: yPosition, size: 9, color: rgb(0.2, 0.2, 0.2) });
-        currentPage.drawText(paymentText, { x: 130, y: yPosition, size: 9, color: rgb(0.2, 0.2, 0.2) });
-        currentPage.drawText(interestText, { x: 230, y: yPosition, size: 9, color: rgb(0.2, 0.2, 0.2) });
-        currentPage.drawText(principalText, { x: 330, y: yPosition, size: 9, color: rgb(0.2, 0.2, 0.2) });
-        currentPage.drawText(balanceText, { x: 440, y: yPosition, size: 9, color: rgb(0.2, 0.2, 0.2) });
+        currentPage.drawText(rowText, { x: 55, y: yPosition, size: 9, font: helvetica, color: rgb(0.2, 0.2, 0.2) });
+        currentPage.drawText(paymentText, { x: 130, y: yPosition, size: 9, font: helvetica, color: rgb(0.2, 0.2, 0.2) });
+        currentPage.drawText(interestText, { x: 230, y: yPosition, size: 9, font: helvetica, color: rgb(0.2, 0.2, 0.2) });
+        currentPage.drawText(principalText, { x: 330, y: yPosition, size: 9, font: helvetica, color: rgb(0.2, 0.2, 0.2) });
+        currentPage.drawText(balanceText, { x: 440, y: yPosition, size: 9, font: helvetica, color: rgb(0.2, 0.2, 0.2) });
         
         yPosition -= rowHeight;
       }
@@ -5960,10 +5963,10 @@ ${urls.map(url => `  <url>
         borderWidth: 1,
       });
       
-      currentPage.drawText('RÉSUMÉ', { x: 55, y: yPosition - 5, size: 12, color: rgb(0.2, 0.3, 0.6) });
-      currentPage.drawText(`Total des intérêts: ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(totalInterest)}`, { x: 55, y: yPosition - 22, size: 10, color: rgb(0.3, 0.3, 0.3) });
-      currentPage.drawText(`Coût total du crédit: ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(totalPayment)}`, { x: 55, y: yPosition - 38, size: 10, color: rgb(0.3, 0.3, 0.3) });
-      currentPage.drawText(`Mensualité: ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(monthlyPayment)}`, { x: 300, y: yPosition - 22, size: 10, color: rgb(0.3, 0.3, 0.3) });
+      currentPage.drawText('RÉSUMÉ', { x: 55, y: yPosition - 5, size: 12, font: helveticaBold, color: rgb(0.2, 0.3, 0.6) });
+      currentPage.drawText(`Total des intérêts: ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(totalInterest)}`, { x: 55, y: yPosition - 22, size: 10, font: helvetica, color: rgb(0.3, 0.3, 0.3) });
+      currentPage.drawText(`Coût total du crédit: ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(totalPayment)}`, { x: 55, y: yPosition - 38, size: 10, font: helvetica, color: rgb(0.3, 0.3, 0.3) });
+      currentPage.drawText(`Mensualité: ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(monthlyPayment)}`, { x: 300, y: yPosition - 22, size: 10, font: helvetica, color: rgb(0.3, 0.3, 0.3) });
       
       const pdfBytes = await pdfDoc.save();
       res.contentType('application/pdf');
