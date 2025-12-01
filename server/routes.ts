@@ -5986,7 +5986,7 @@ ${urls.map(url => `  <url>
       const pdfBytes = await pdfDoc.save();
       res.contentType('application/pdf');
       res.setHeader('Content-Disposition', `attachment; filename="${t.filename}-${loanReference}.pdf"`);
-      res.send(Buffer.from(pdfBytes));
+      res.end(Buffer.from(pdfBytes), 'binary');
     } catch (error: any) {
       console.error('Amortization PDF generation error:', error);
       res.status(500).json({ error: 'Erreur lors de la génération du tableau d\'amortissement' });
@@ -6106,7 +6106,7 @@ ${urls.map(url => `  <url>
       const pdfBytes = await pdfDoc.save();
       res.contentType('application/pdf');
       res.setHeader('Content-Disposition', `attachment; filename="statement_${now.getFullYear()}_${String(now.getMonth() + 1).padStart(2, '0')}.pdf"`);
-      res.send(Buffer.from(pdfBytes));
+      res.end(Buffer.from(pdfBytes), 'binary');
     } catch (error: any) {
       console.error('Statement PDF generation error:', error);
       res.status(500).json({ error: 'Erreur lors de la génération du relevé de compte' });
