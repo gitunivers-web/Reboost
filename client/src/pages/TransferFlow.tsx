@@ -1557,7 +1557,7 @@ export default function TransferFlow() {
                     <span className="text-sm text-muted-foreground">{t.transferFlow.complete.reference}</span>
                   </div>
                   <span className="font-mono text-xs text-foreground" data-testid="text-reference">
-                    {transfer?.id || '-'}
+                    {transfer ? getTransferReferenceNumber(transfer) : '-'}
                   </span>
                 </div>
 
