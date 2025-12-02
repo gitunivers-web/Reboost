@@ -33,6 +33,7 @@ import { SignedContractUpload } from '@/components/SignedContractUpload';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { DashboardCard, SectionTitle, UserStat, PremiumIcon } from '@/components/fintech';
+import { getApiUrl } from '@/lib/queryClient';
 
 function getContractsNotificationText(language: string) {
   const translations: Record<string, { title: string; messageSingular: string; messagePlural: string; buttonLabel: string }> = {
@@ -666,7 +667,7 @@ export default function Dashboard() {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 try {
-                                  const response = await fetch(`/api/loans/${loan.id}/download-amortization?lang=${language}`, { 
+                                  const response = await fetch(getApiUrl(`/api/loans/${loan.id}/download-amortization?lang=${language}`), { 
                                     method: 'GET',
                                     credentials: 'include',
                                     headers: {
