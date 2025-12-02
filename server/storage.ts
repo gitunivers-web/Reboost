@@ -1900,18 +1900,27 @@ export class DatabaseStorage implements IStorage {
     const userFees = await this.getUserFees(userId);
     const userTransactions = await this.getUserTransactions(userId);
 
-    // Include all non-terminal loans in the balance calculation
     // Terminal statuses: rejected, cancelled, completed, closed, repaid, defaulted, written_off
     const terminalStatuses = ['rejected', 'cancelled', 'completed', 'closed', 'repaid', 'defaulted', 'written_off'];
     const nonTerminalLoans = userLoans.filter(loan => !terminalStatuses.includes(loan.status));
+    
+    // Total emprunté: sum of ALL non-terminal loans (pending_review, approved, signed, active, etc.)
     const totalBorrowed = nonTerminalLoans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0);
-    const totalRepaid = nonTerminalLoans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0);
+    
+    // SOLDE TOTAL (Balance): ONLY include loans where funds have been released by admin
+    // Funds are released when status is 'active' OR fundsAvailabilityStatus is 'available'
+    const activeLoans = nonTerminalLoans.filter(loan => 
+      loan.status === 'active' || loan.fundsAvailabilityStatus === 'available'
+    );
+    const activeLoanAmount = activeLoans.reduce((sum, loan) => sum + parseFloat(loan.amount), 0);
+    const totalRepaid = activeLoans.reduce((sum, loan) => sum + parseFloat(loan.totalRepaid), 0);
     
     const completedTransfers = userTransfers
       .filter(transfer => transfer.status === 'completed')
       .reduce((sum, transfer) => sum + parseFloat(transfer.amount), 0);
     
-    const balance = totalBorrowed - totalRepaid - completedTransfers;
+    // Balance is only from ACTIVE loans (funds released) minus repayments and transfers
+    const balance = activeLoanAmount - totalRepaid - completedTransfers;
 
     return {
       user,
