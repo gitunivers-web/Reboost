@@ -10,6 +10,13 @@ Preferred communication style: Simple, everyday language. High standards for sec
 
 ## Recent Changes (December 2, 2025)
 
+- **Tier-Based Borrowing Capacity:** Enhanced the TIER system to include borrowing capacity limits based on user tier:
+  - Bronze: 500,000€ max, 1 active loan
+  - Silver: 750,000€ max, 2 active loans
+  - Gold: 1,000,000€ max, 3 active loans
+  - Business/Professional accounts: Always 2,000,000€ regardless of tier
+  - Formula: Available = Max capacity of TIER - Total of non-terminal loans
+  - Terminal statuses (that free capacity): rejected, cancelled, completed, closed, repaid, defaulted, written_off
 - **Loan Visibility Fix:** Fixed bug where loans disappeared after admin approval. Loans now remain visible in "pending" tab until funds are released and available for transfer. Only then do they move to "active" status.
 - **Loan Filtering Logic:** Updated IndividualLoans.tsx, ActiveLoans.tsx, and AppSidebar.tsx to use consistent filtering:
   - Active loans: Only shows loans with status 'active' (funds released)
