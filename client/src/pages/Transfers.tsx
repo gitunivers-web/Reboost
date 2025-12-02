@@ -61,11 +61,11 @@ export default function Transfers() {
 
   const getStatusBadge = (status: string) => {
     const statusMap: Record<string, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
-      pending: { label: 'Transfert en cours', variant: 'secondary' },
-      'in-progress': { label: 'Transfert en cours', variant: 'default' },
-      completed: { label: 'Transfert Terminé', variant: 'outline' },
-      suspended: { label: 'Suspendu', variant: 'destructive' },
-      rejected: { label: 'Rejeté', variant: 'destructive' },
+      pending: { label: t.transfer.pendingStatus || 'Initialisé', variant: 'secondary' },
+      'in-progress': { label: t.transfer.processingStatus || 'En traitement', variant: 'default' },
+      completed: { label: t.transfer.completedStatus || 'Terminé', variant: 'outline' },
+      suspended: { label: t.transfer.suspended || 'Suspendu', variant: 'destructive' },
+      rejected: { label: t.transfer.rejected || 'Rejeté', variant: 'destructive' },
     };
 
     const config = statusMap[status] || { label: status, variant: 'outline' };
@@ -76,7 +76,16 @@ export default function Transfers() {
     const referenceNumber = getTransferReferenceNumber(transfer);
     const matchesSearch = transfer.recipient.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           referenceNumber.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || transfer.status === statusFilter;
+    
+    let matchesStatus = false;
+    if (statusFilter === 'all') {
+      matchesStatus = true;
+    } else if (statusFilter === 'active') {
+      matchesStatus = transfer.status === 'pending' || transfer.status === 'in-progress';
+    } else {
+      matchesStatus = transfer.status === statusFilter;
+    }
+    
     return matchesSearch && matchesStatus;
   });
 
@@ -123,21 +132,21 @@ export default function Transfers() {
           <DashboardCard className="bg-gradient-to-br from-primary/5 via-background to-background border-primary/10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               <UserStat
-                label="Total des transferts"
+                label={t.transfer.totalTransfers || "Total des transferts"}
                 value={transfers.length}
                 icon={TrendingUp}
                 testId="stat-total-transfers"
               />
-              <div className="space-y-1 sm:space-y-2" data-testid="stat-in-progress-transfers-alt">
-                <p className="text-xs sm:text-sm font-medium text-muted-foreground">Initialisés</p>
+              <div className="space-y-1 sm:space-y-2" data-testid="stat-initialized-transfers">
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">{t.transfer.initialized || "Initialisés"}</p>
                 <p className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">{pendingCount + inProgressCount}</p>
               </div>
               <div className="space-y-1 sm:space-y-2" data-testid="stat-in-progress-transfers">
-                <p className="text-xs sm:text-sm font-medium text-muted-foreground">En cours</p>
-                <p className="text-2xl sm:text-3xl font-bold text-primary tracking-tight">{inProgressCount}</p>
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">{t.transfer.inProgress || "En cours"}</p>
+                <p className="text-2xl sm:text-3xl font-bold text-primary tracking-tight">{pendingCount + inProgressCount}</p>
               </div>
               <div className="space-y-1 sm:space-y-2" data-testid="stat-completed-transfers">
-                <p className="text-xs sm:text-sm font-medium text-muted-foreground">Terminés</p>
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">{t.transfer.completedLabel || "Terminés"}</p>
                 <p className="text-2xl sm:text-3xl font-bold text-accent tracking-tight">{completedCount}</p>
               </div>
             </div>
@@ -159,13 +168,15 @@ export default function Transfers() {
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-full md:w-[200px] border-border/50" data-testid="select-status-filter">
-                <SelectValue placeholder={t.loan.status} />
+                <SelectValue placeholder={t.transfer.filterByStatus || "Filtrer par statut"} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">{t.transfer.allStatuses}</SelectItem>
-                <SelectItem value="in-progress">Transfert en cours</SelectItem>
-                <SelectItem value="completed">Transfert Terminé</SelectItem>
-                <SelectItem value="suspended">{t.transfer.suspended}</SelectItem>
+                <SelectItem value="all">{t.transfer.allStatuses || "Tous les statuts"}</SelectItem>
+                <SelectItem value="active">{t.transfer.activeTransfers || "En cours"}</SelectItem>
+                <SelectItem value="pending">{t.transfer.pendingStatus || "Initialisé"}</SelectItem>
+                <SelectItem value="in-progress">{t.transfer.processingStatus || "En traitement"}</SelectItem>
+                <SelectItem value="completed">{t.transfer.completedStatus || "Terminé"}</SelectItem>
+                <SelectItem value="suspended">{t.transfer.suspended || "Suspendu"}</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -398,6 +398,14 @@ type TranslationKeys = {
     onHold: string;
     processing: string;
     processingComplete: string;
+    totalTransfers: string;
+    initialized: string;
+    completedLabel: string;
+    filterByStatus: string;
+    activeTransfers: string;
+    pendingStatus: string;
+    processingStatus: string;
+    completedStatus: string;
   };
   history: {
     pageTitle: string;
@@ -2778,6 +2786,14 @@ export const translations: Record<Language, TranslationKeys> = {
       onHold: 'Transfert en pause',
       processing: 'Transfert en cours',
       processingComplete: 'Transfert complété',
+      totalTransfers: 'Total des transferts',
+      initialized: 'Initialisés',
+      completedLabel: 'Terminés',
+      filterByStatus: 'Filtrer par statut',
+      activeTransfers: 'En cours',
+      pendingStatus: 'Initialisé',
+      processingStatus: 'En traitement',
+      completedStatus: 'Terminé',
     },
     history: {
       pageTitle: 'Historique des transactions',
@@ -5537,6 +5553,14 @@ export const translations: Record<Language, TranslationKeys> = {
       onHold: 'Transfer on hold',
       processing: 'Transfer in progress',
       processingComplete: 'Transfer completed',
+      totalTransfers: 'Total transfers',
+      initialized: 'Initialized',
+      completedLabel: 'Completed',
+      filterByStatus: 'Filter by status',
+      activeTransfers: 'In progress',
+      pendingStatus: 'Initialized',
+      processingStatus: 'Processing',
+      completedStatus: 'Completed',
     },
     history: {
       pageTitle: 'Transaction History',
@@ -8294,6 +8318,14 @@ export const translations: Record<Language, TranslationKeys> = {
       onHold: 'Transferencia en pausa',
       processing: 'Transferencia en curso',
       processingComplete: 'Transferencia completada',
+      totalTransfers: 'Total de transferencias',
+      initialized: 'Inicializadas',
+      completedLabel: 'Completadas',
+      filterByStatus: 'Filtrar por estado',
+      activeTransfers: 'En curso',
+      pendingStatus: 'Inicializada',
+      processingStatus: 'En proceso',
+      completedStatus: 'Completada',
     },
     history: {
       pageTitle: 'Historial de Transacciones',
@@ -11014,6 +11046,14 @@ export const translations: Record<Language, TranslationKeys> = {
       onHold: 'Transferência em pausa',
       processing: 'Transferência em andamento',
       processingComplete: 'Transferência concluída',
+      totalTransfers: 'Total de transferências',
+      initialized: 'Inicializadas',
+      completedLabel: 'Concluídas',
+      filterByStatus: 'Filtrar por estado',
+      activeTransfers: 'Em curso',
+      pendingStatus: 'Inicializada',
+      processingStatus: 'Em processamento',
+      completedStatus: 'Concluída',
     },
     history: {
       pageTitle: 'Histórico de Transações',
@@ -13553,6 +13593,14 @@ export const translations: Record<Language, TranslationKeys> = {
       onHold: 'Trasferimento in pausa',
       processing: 'Trasferimento in corso',
       processingComplete: 'Trasferimento completato',
+      totalTransfers: 'Trasferimenti totali',
+      initialized: 'Inizializzati',
+      completedLabel: 'Completati',
+      filterByStatus: 'Filtra per stato',
+      activeTransfers: 'In corso',
+      pendingStatus: 'Inizializzato',
+      processingStatus: 'In elaborazione',
+      completedStatus: 'Completato',
     },
     history: {
       pageTitle: 'Storico transazioni',
@@ -16221,6 +16269,14 @@ export const translations: Record<Language, TranslationKeys> = {
       onHold: 'Überweisung pausiert',
       processing: 'Überweisung wird verarbeitet',
       processingComplete: 'Überweisung abgeschlossen',
+      totalTransfers: 'Überweisungen gesamt',
+      initialized: 'Initialisiert',
+      completedLabel: 'Abgeschlossen',
+      filterByStatus: 'Nach Status filtern',
+      activeTransfers: 'In Bearbeitung',
+      pendingStatus: 'Initialisiert',
+      processingStatus: 'Wird verarbeitet',
+      completedStatus: 'Abgeschlossen',
     },
     history: {
       pageTitle: 'Transaktionsverlauf',
@@ -18889,6 +18945,14 @@ export const translations: Record<Language, TranslationKeys> = {
       onHold: 'Overschrijving gepauzeerd',
       processing: 'Overschrijving wordt verwerkt',
       processingComplete: 'Overschrijving voltooid',
+      totalTransfers: 'Totaal overschrijvingen',
+      initialized: 'Geïnitialiseerd',
+      completedLabel: 'Voltooid',
+      filterByStatus: 'Filteren op status',
+      activeTransfers: 'In behandeling',
+      pendingStatus: 'Geïnitialiseerd',
+      processingStatus: 'Wordt verwerkt',
+      completedStatus: 'Voltooid',
     },
     history: {
       pageTitle: 'Transactiegeschiedenis',
