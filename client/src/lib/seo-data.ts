@@ -4,7 +4,7 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "FinancialService",
   "name": seoConfig.siteName,
-  "description": "Professional loan solutions for individuals and businesses with competitive rates and a transparent process",
+  "description": "Solutions de crédit sur mesure pour les particuliers et les entreprises avec des conditions avantageuses et un processus clair",
   "url": seoConfig.siteUrl,
   "logo": {
     "@type": "ImageObject",
@@ -62,7 +62,7 @@ export const breadcrumbSchema = (items: Array<{name: string, path: string}>) => 
 
 export const loanProductSchema = (locale: string = 'fr') => {
   const loanNames = {
-    fr: "Prêt Professionnel Solventus Group",
+    fr: "Financement Entreprise Solventus Group",
     en: "Solventus Group Professional Loan",
     es: "Préstamo Profesional Solventus Group",
     pt: "Empréstimo Profissional Solventus Group",
@@ -71,7 +71,7 @@ export const loanProductSchema = (locale: string = 'fr') => {
   };
 
   const loanDescriptions = {
-    fr: "Prêt professionnel flexible avec des taux compétitifs",
+    fr: "Solution de financement adaptable pour professionnels avec des tarifs attractifs",
     en: "Flexible professional loan with competitive rates",
     es: "Préstamo profesional flexible con tasas competitivas",
     pt: "Empréstimo profissional flexível com taxas competitivas",

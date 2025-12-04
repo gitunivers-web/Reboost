@@ -1,9 +1,9 @@
 export const seoConfig = {
   siteUrl: import.meta.env.VITE_SITE_URL || 'http://localhost:5000',
   siteName: 'Solventus Group',
-  defaultTitle: 'Solventus Group - Professional Loan Solutions | Business Financing',
-  defaultDescription: 'Solventus Group offers professional loan solutions tailored to your business. Quickly access funds with competitive rates and a transparent approval process.',
-  defaultKeywords: 'business loan, enterprise financing, professional loan, quick loan, competitive rate, SME financing, business credit, financing solution, personal loan, car loan, mortgage, student loan, consumer credit, renovation loan, revolving credit, no doc loan, professional financing, enterprise funding',
+  defaultTitle: 'Solventus Group - Solutions de Financement | Crédits Professionnels et Particuliers',
+  defaultDescription: 'Solventus Group propose des solutions de crédit adaptées à vos projets personnels et professionnels. Accédez rapidement à des fonds avec des taux avantageux et un processus de validation transparent.',
+  defaultKeywords: 'crédit professionnel, financement entreprise, prêt personnel, emprunt rapide, taux avantageux, financement PME, crédit société, solution de financement, prêt particulier, crédit auto, prêt immobilier, crédit étudiant, crédit consommation, prêt travaux, crédit renouvelable, prêt sans justificatif, financement pro',
   defaultImage: '/og-image.jpg',
   twitterHandle: '@solventusgroup',
   themeColor: '#0066cc',

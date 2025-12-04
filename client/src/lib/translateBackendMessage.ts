@@ -6,87 +6,87 @@ import { Language, translations } from './i18n';
  */
 const messageMapping: Record<string, { key: string; path: string[] }> = {
   // Auth - Signup
-  'Inscription réussie ! Veuillez vérifier votre email pour activer votre compte.': {
+  'Votre compte a été créé avec succès. Un lien de confirmation vous a été envoyé par courriel.': {
     key: 'signupSuccessDesc',
     path: ['auth']
   },
-  'Impossible de créer le compte. Veuillez vérifier vos informations.': {
+  'La création du compte n\'a pas abouti. Merci de vérifier les données saisies.': {
     key: 'accountCreationError',
     path: ['auth']
   },
-  'Un compte avec cet email existe déjà. Veuillez vous connecter ou utiliser une autre adresse email.': {
+  'Cette adresse électronique est déjà associée à un compte existant. Connectez-vous ou utilisez une autre adresse.': {
     key: 'emailAlreadyExists',
     path: ['auth']
   },
-  'Le domaine de l\'adresse email n\'existe pas. Veuillez vérifier votre email.': {
+  'Le domaine de messagerie indiqué n\'est pas reconnu. Vérifiez votre adresse électronique.': {
     key: 'invalidEmailDomain',
     path: ['auth']
   },
   
   // Auth - Login
-  'Identifiants invalides': {
+  'Les informations d\'identification fournies sont incorrectes': {
     key: 'invalidCredentials',
     path: ['auth']
   },
-  'Veuillez vérifier votre email avant de vous connecter': {
+  'Confirmez votre adresse électronique avant d\'accéder à votre espace': {
     key: 'pleaseVerifyEmail',
     path: ['auth']
   },
-  'Email non vérifié. Veuillez vérifier votre email avant de continuer.': {
+  'Adresse non confirmée. Validez votre courriel pour poursuivre.': {
     key: 'emailNotVerifiedDesc',
     path: ['auth']
   },
   
   // Auth - 2FA
-  'Authentification à deux facteurs activée avec succès': {
+  'La double authentification est désormais active sur votre compte': {
     key: 'twoFactorEnabledSuccess',
     path: ['auth']
   },
-  'Authentification à deux facteurs désactivée': {
+  'La double authentification a été retirée de votre compte': {
     key: 'twoFactorDisabledSuccess',
     path: ['auth']
   },
   
   // Auth - Password Reset
-  'Mot de passe réinitialisé avec succès. Vous pouvez maintenant vous connecter.': {
+  'Votre nouveau code d\'accès a été enregistré. Vous pouvez à présent vous identifier.': {
     key: 'passwordResetSuccess',
     path: ['auth']
   },
   
   // Auth - Verification
-  'Email de vérification renvoyé avec succès': {
+  'Un nouveau lien de confirmation vous a été transmis': {
     key: 'verificationEmailResent',
     path: ['auth']
   },
   
   // Auth - Logout
-  'Déconnexion réussie': {
+  'Vous avez été déconnecté de votre espace': {
     key: 'logoutSuccess',
     path: ['auth']
   },
   
   // Session & Auth errors
-  'Authentification requise': {
+  'Une identification est nécessaire pour accéder à cette ressource': {
     key: 'authRequired',
     path: ['auth']
   },
-  'Session invalide': {
+  'Votre session n\'est plus valide': {
     key: 'invalidSession',
     path: ['auth']
   },
-  'Votre compte est connecté sur un autre appareil. Veuillez vous reconnecter.': {
+  'Une connexion active existe sur un autre terminal. Veuillez vous authentifier à nouveau.': {
     key: 'sessionDuplicateError',
     path: ['auth']
   },
-  'Compte bloqué. Veuillez contacter le support.': {
+  'Votre compte est temporairement suspendu. Contactez notre service clientèle.': {
     key: 'accountBlocked',
     path: ['auth']
   },
-  'Compte suspendu': {
+  'Compte en attente de régularisation': {
     key: 'accountSuspended',
     path: ['auth']
   },
-  'Compte inactif': {
+  'Compte non activé': {
     key: 'accountInactive',
     path: ['auth']
   },
