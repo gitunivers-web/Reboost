@@ -62,12 +62,12 @@ export const breadcrumbSchema = (items: Array<{name: string, path: string}>) => 
 
 export const loanProductSchema = (locale: string = 'fr') => {
   const loanNames = {
-    fr: "Financement Entreprise Solventus Group",
-    en: "Solventus Group Professional Loan",
-    es: "Préstamo Profesional Solventus Group",
-    pt: "Empréstimo Profissional Solventus Group",
-    it: "Prestito Professionale Solventus Group",
-    de: "Solventus Group Geschäftskredit"
+    fr: "Financement Entreprise Solventis Group",
+    en: "Solventis Group Professional Loan",
+    es: "Préstamo Profesional Solventis Group",
+    pt: "Empréstimo Profissional Solventis Group",
+    it: "Prestito Professionale Solventis Group",
+    de: "Solventis Group Geschäftskredit"
   };
 
   const loanDescriptions = {
@@ -109,7 +109,7 @@ export const faqSchema = (faqs: Array<{question: string, answer: string}>) => ({
 
 export const contactPageSchema = {
   "@type": "ContactPage",
-  "name": "Contact Solventus Group",
+  "name": "Contact Solventis Group",
   "description": "Contact us for all your questions about our financing solutions",
   "url": `${seoConfig.siteUrl}/contact`
 };

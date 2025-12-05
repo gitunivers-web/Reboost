@@ -94,10 +94,10 @@ export default function AppSidebar() {
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar backdrop-blur-xl">
       <SidebarContent className="px-3 py-4">
-        {/* Logo Section - Official Solventus Branding */}
+        {/* Logo Section - Official Solventis Branding */}
         <div className="px-2 py-4 mb-6" data-testid="sidebar-logo">
           <div className="flex flex-col items-center gap-3">
-            {/* Solventus Official Logo SVG - Professional Design */}
+            {/* Solventis Official Logo SVG - Professional Design */}
             <svg viewBox="0 0 300 320" className="w-28 h-auto drop-shadow-md hover:drop-shadow-lg transition-all duration-300" xmlns="http://www.w3.org/2000/svg">
               {/* Gold Triangle A */}
               <polygon points="150,50 240,190 200,190" fill="#D4A85A" />
@@ -106,8 +106,8 @@ export default function AppSidebar() {
               {/* Navy Blue Wave Arc */}
               <path d="M 120 160 Q 150 140 180 160" stroke="#003366" strokeWidth="24" fill="none" strokeLinecap="round" />
               
-              {/* Solventus Text */}
-              <text x="150" y="250" fontSize="52" fontWeight="bold" textAnchor="middle" fill="#003366" fontFamily="Arial, sans-serif">Solventus</text>
+              {/* Solventis Text */}
+              <text x="150" y="250" fontSize="52" fontWeight="bold" textAnchor="middle" fill="#003366" fontFamily="Arial, sans-serif">Solventis</text>
               
               {/* Finance Group Subtitle */}
               <text x="150" y="285" fontSize="20" textAnchor="middle" fill="#666666" fontFamily="Arial, sans-serif" fontWeight="500" letterSpacing="2">FINANCE GROUP</text>

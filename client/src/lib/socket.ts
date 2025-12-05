@@ -13,7 +13,7 @@ const isDevelopment = typeof window !== 'undefined' &&
 const SOCKET_URL = typeof window !== 'undefined'
   ? (isDevelopment 
       ? window.location.origin
-      : (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || 'https://api.solventusgroup.com'))
+      : (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || 'https://api.solventisgroup.org'))
   : '/';
 
 export interface ChatEvents {

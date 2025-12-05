@@ -19,6 +19,6 @@ export function getFileUrl(fileUrl?: string | null): string | undefined {
   // "UUID_filename" -> "UUID_filename"
   const filename = fileUrl.includes('/') ? fileUrl.split('/').pop() : fileUrl;
   
-  // ALWAYS use: https://api.solventusgroup.com/api/chat/file/{filename}
+  // ALWAYS use: https://api.solventisgroup.org/api/chat/file/{filename}
   return getApiUrl(`/api/chat/file/${filename}`);
 }

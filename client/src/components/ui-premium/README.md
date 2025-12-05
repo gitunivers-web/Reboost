@@ -1,6 +1,6 @@
-# Composants UI Premium Solventus 2025
+# Composants UI Premium Solventis 2025
 
-Bibliothèque de composants UI premium pour Solventus Group, conçue avec un design niveau banque privée 2025.
+Bibliothèque de composants UI premium pour Solventis Group, conçue avec un design niveau banque privée 2025.
 
 ## Installation
 
@@ -21,10 +21,10 @@ import {
 
 Les variables CSS et couleurs sont définies dans `client/src/styles/theme.css` :
 
-- `--solventus-indigo`: #5b21b6 (couleur principale)
-- `--solventus-royal`: #3b82f6 (couleur secondaire)
-- `--solventus-ink`: #0f172a (texte principal)
-- `--solventus-muted`: #6b7280 (texte secondaire)
+- `--solventis-indigo`: #5b21b6 (couleur principale)
+- `--solventis-royal`: #3b82f6 (couleur secondaire)
+- `--solventis-ink`: #0f172a (texte principal)
+- `--solventis-muted`: #6b7280 (texte secondaire)
 - `--soft-shadow`: 0 6px 30px rgba(11, 15, 30, 0.06)
 
 ## Composants
@@ -132,10 +132,10 @@ Tous les composants incluent :
 Nouvelles couleurs disponibles :
 
 ```tsx
-className="bg-solventus-indigo text-white"
-className="text-solventus-royal"
-className="text-solventus-ink"
-className="text-solventus-muted"
+className="bg-solventis-indigo text-white"
+className="text-solventis-royal"
+className="text-solventis-ink"
+className="text-solventis-muted"
 className="shadow-soft-2025"
 className="rounded-xl-3"
 ```

@@ -833,7 +833,7 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
       });
       
       if (process.env.NODE_ENV === 'production') {
-        const cookieDomain = process.env.COOKIE_DOMAIN || '.solventusgroup.com';
+        const cookieDomain = process.env.COOKIE_DOMAIN || '.solventisgroup.org';
         console.log(`[AUTH SUCCESS] User authenticated successfully`);
         console.log(`[AUTH SUCCESS] Session created and will be sent as cookie`);
         console.log(`[AUTH SUCCESS] Cookie domain: ${cookieDomain}`);
@@ -907,7 +907,7 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
       });
       
       if (process.env.NODE_ENV === 'production') {
-        const cookieDomain = process.env.COOKIE_DOMAIN || '.solventusgroup.com';
+        const cookieDomain = process.env.COOKIE_DOMAIN || '.solventisgroup.org';
         console.log(`[AUTH SUCCESS] User authenticated successfully`);
         console.log(`[AUTH SUCCESS] Session created and will be sent as cookie`);
         console.log(`[AUTH SUCCESS] Cookie domain: ${cookieDomain}`);
@@ -1331,7 +1331,7 @@ export async function registerRoutes(app: Express, sessionMiddleware: any): Prom
       });
       
       if (process.env.NODE_ENV === 'production') {
-        const cookieDomain = process.env.COOKIE_DOMAIN || '.solventusgroup.com';
+        const cookieDomain = process.env.COOKIE_DOMAIN || '.solventisgroup.org';
         console.log(`[EMAIL VERIFY SUCCESS] Email verified and user auto-logged in`);
         console.log(`[EMAIL VERIFY SUCCESS] Session created and will be sent as cookie`);
         console.log(`[EMAIL VERIFY SUCCESS] Cookie domain: ${cookieDomain}`);
@@ -5074,14 +5074,14 @@ Disallow: /settings
 Disallow: /transfers
 Disallow: /loans/request
 
-Sitemap: ${process.env.VITE_SITE_URL || 'https://www.solventusgroup.com'}/sitemap.xml`;
+Sitemap: ${process.env.VITE_SITE_URL || 'https://www.solventisgroup.org'}/sitemap.xml`;
     
     res.type('text/plain');
     res.send(robots);
   });
 
   app.get("/sitemap.xml", (req, res) => {
-    const baseUrl = process.env.VITE_SITE_URL || 'https://www.solventusgroup.com';
+    const baseUrl = process.env.VITE_SITE_URL || 'https://www.solventisgroup.org';
     const currentDate = new Date().toISOString().split('T')[0];
     
     const urls = [
@@ -5294,11 +5294,11 @@ ${urls.map(url => `  <url>
       // Allow embedding in iframe from frontend domains
       res.setHeader(
         "Content-Security-Policy",
-        "frame-ancestors https://solventusgroup.com https://www.solventusgroup.com https://dashboard.solventusgroup.com"
+        "frame-ancestors https://solventisgroup.org https://www.solventisgroup.org https://dashboard.solventisgroup.org"
       );
       
       // CORS headers for cross-origin requests
-      res.setHeader("Access-Control-Allow-Origin", "https://solventusgroup.com");
+      res.setHeader("Access-Control-Allow-Origin", "https://solventisgroup.org");
       res.setHeader("Access-Control-Allow-Credentials", "true");
       
       // Security: ensure the file is within the chat upload directory (prevent path traversal)

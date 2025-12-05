@@ -34,7 +34,7 @@ export default function LoanDetail() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{loanContent.hero.title} - Solventus Group</title>
+        <title>{loanContent.hero.title} - Solventis Group</title>
         <meta name="description" content={loanContent.hero.subtitle} />
       </Helmet>
       

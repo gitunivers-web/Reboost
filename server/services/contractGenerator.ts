@@ -52,12 +52,12 @@ interface ContractTranslations {
   signatureSection: string;
   madeInDuplicates: string;
   inLuxembourg: string;
-  forSolventus: string;
+  forSolventis: string;
   lender: string;
   borrower: string;
   preSigned: string;
   management: string;
-  solventusStamp: string;
+  solventisStamp: string;
   luxembourg: string;
   electronicSignature: string;
   date: string;
@@ -117,12 +117,12 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     signatureSection: 'Signatures',
     madeInDuplicates: 'Fait en deux exemplaires originaux',
     inLuxembourg: 'À Luxembourg, le',
-    forSolventus: 'Pour SOLVENTUS GROUP',
+    forSolventis: 'Pour SOLVENTUS GROUP',
     lender: 'Le Prêteur',
     borrower: "L'Emprunteur",
     preSigned: '✓ Document pré-signé et validé',
     management: 'Direction Générale',
-    solventusStamp: 'SOLVENTUS\nGROUP',
+    solventisStamp: 'SOLVENTUS\nGROUP',
     luxembourg: 'Luxembourg',
     electronicSignature: 'Signature électronique certifiée',
     date: 'Date',
@@ -193,12 +193,12 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     signatureSection: 'Signatures',
     madeInDuplicates: 'Made in two original copies',
     inLuxembourg: 'In Luxembourg, on',
-    forSolventus: 'For SOLVENTUS GROUP',
+    forSolventis: 'For SOLVENTUS GROUP',
     lender: 'The Lender',
     borrower: 'The Borrower',
     preSigned: '✓ Pre-signed and validated document',
     management: 'General Management',
-    solventusStamp: 'SOLVENTUS\nGROUP',
+    solventisStamp: 'SOLVENTUS\nGROUP',
     luxembourg: 'Luxembourg',
     electronicSignature: 'Certified electronic signature',
     date: 'Date',
@@ -269,12 +269,12 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     signatureSection: 'Unterschriften',
     madeInDuplicates: 'In zwei Originalexemplaren erstellt',
     inLuxembourg: 'In Luxemburg, am',
-    forSolventus: 'Für SOLVENTUS GROUP',
+    forSolventis: 'Für SOLVENTUS GROUP',
     lender: 'Der Darlehensgeber',
     borrower: 'Der Darlehensnehmer',
     preSigned: '✓ Vorab unterzeichnetes und validiertes Dokument',
     management: 'Geschäftsführung',
-    solventusStamp: 'SOLVENTUS\nGROUP',
+    solventisStamp: 'SOLVENTUS\nGROUP',
     luxembourg: 'Luxemburg',
     electronicSignature: 'Zertifizierte elektronische Signatur',
     date: 'Datum',
@@ -345,12 +345,12 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     signatureSection: 'Assinaturas',
     madeInDuplicates: 'Feito em dois originais',
     inLuxembourg: 'No Luxemburgo, em',
-    forSolventus: 'Por SOLVENTUS GROUP',
+    forSolventis: 'Por SOLVENTUS GROUP',
     lender: 'O Mutuante',
     borrower: 'O Mutuário',
     preSigned: '✓ Documento pré-assinado e validado',
     management: 'Direção Geral',
-    solventusStamp: 'SOLVENTUS\nGROUP',
+    solventisStamp: 'SOLVENTUS\nGROUP',
     luxembourg: 'Luxemburgo',
     electronicSignature: 'Assinatura eletrónica certificada',
     date: 'Data',
@@ -421,12 +421,12 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     signatureSection: 'Firmas',
     madeInDuplicates: 'Hecho en dos originales',
     inLuxembourg: 'En Luxemburgo, el',
-    forSolventus: 'Por SOLVENTUS GROUP',
+    forSolventis: 'Por SOLVENTUS GROUP',
     lender: 'El Prestamista',
     borrower: 'El Prestatario',
     preSigned: '✓ Documento pre-firmado y validado',
     management: 'Dirección General',
-    solventusStamp: 'SOLVENTUS\nGROUP',
+    solventisStamp: 'SOLVENTUS\nGROUP',
     luxembourg: 'Luxemburgo',
     electronicSignature: 'Firma electrónica certificada',
     date: 'Fecha',
@@ -497,12 +497,12 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     signatureSection: 'Firme',
     madeInDuplicates: 'Fatto in due originali',
     inLuxembourg: 'A Lussemburgo, il',
-    forSolventus: 'Per SOLVENTUS GROUP',
+    forSolventis: 'Per SOLVENTUS GROUP',
     lender: 'Il Prestatore',
     borrower: 'Il Mutuatario',
     preSigned: '✓ Documento pre-firmato e convalidato',
     management: 'Direzione Generale',
-    solventusStamp: 'SOLVENTUS\nGROUP',
+    solventisStamp: 'SOLVENTUS\nGROUP',
     luxembourg: 'Lussemburgo',
     electronicSignature: 'Firma elettronica certificata',
     date: 'Data',
@@ -573,12 +573,12 @@ const contractTranslations: Record<ContractLanguage, ContractTranslations> = {
     signatureSection: 'Handtekeningen',
     madeInDuplicates: 'Opgesteld in twee originelen',
     inLuxembourg: 'In Luxemburg, op',
-    forSolventus: 'Voor SOLVENTUS GROUP',
+    forSolventis: 'Voor SOLVENTUS GROUP',
     lender: 'De Kredietgever',
     borrower: 'De Lener',
     preSigned: '✓ Vooraf ondertekend en gevalideerd document',
     management: 'Algemeen Bestuur',
-    solventusStamp: 'SOLVENTUS\nGROUP',
+    solventisStamp: 'SOLVENTUS\nGROUP',
     luxembourg: 'Luxemburg',
     electronicSignature: 'Gecertificeerde elektronische handtekening',
     date: 'Datum',
@@ -941,8 +941,8 @@ const getContractTemplate = (data: ContractData): string => {
         <span class="contact-line"><strong>Siège:</strong> 19 Rue Sigismond, L-2537 Luxembourg</span>
         <span class="contact-line"><strong>RCS:</strong> Luxembourg B123456</span>
         <span class="contact-line"><strong>Tél:</strong> +352 40 63 48</span>
-        <span class="contact-line"><strong>Email:</strong> contact@solventusgroup.com</span>
-        <span class="contact-line"><strong>Web:</strong> www.solventusgroup.com</span>
+        <span class="contact-line"><strong>Email:</strong> contact@solventisgroup.org</span>
+        <span class="contact-line"><strong>Web:</strong> www.solventisgroup.org</span>
       </div>
     </div>
     <div style="text-align: center;">
@@ -1061,7 +1061,7 @@ const getContractTemplate = (data: ContractData): string => {
 
     <div class="signature-box">
       <div class="signature-item">
-        <div class="signature-header">${t.forSolventus}</div>
+        <div class="signature-header">${t.forSolventis}</div>
         <div class="signature-role">${t.lender}</div>
         <div class="pre-signed">
           <p style="font-style: italic; font-size: 10pt; color: #2563eb; margin-bottom: 10px;">
@@ -1106,8 +1106,8 @@ const getContractTemplate = (data: ContractData): string => {
     <p style="margin: 8px 0;">
       ${t.shareCapital}: 1 000 000 € • RCS Luxembourg B123456<br>
       ${t.headquarters}: 19 Rue Sigismond, L-2537 Luxembourg<br>
-      ${t.tel}: +352 40 63 48 • Email: infos@solventusgroup.com<br>
-      www.solventusgroup.com
+      ${t.tel}: +352 40 63 48 • Email: infos@solventisgroup.org<br>
+      www.solventisgroup.org
     </p>
     <p style="margin-top: 15px; font-size: 8pt; font-style: italic;">
       ${t.confidentialNotice}

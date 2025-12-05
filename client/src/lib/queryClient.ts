@@ -63,7 +63,7 @@ function getErrorMessage(status: number): string {
 }
 
 // API URL configuration
-// Production: Use the dedicated API subdomain (https://api.solventusgroup.com)
+// Production: Use the dedicated API subdomain (https://api.solventisgroup.org)
 // Development (Replit/localhost): Use empty string to proxy via Vite to same port
 const API_BASE_URL = 
   typeof window !== 'undefined' && (
@@ -72,7 +72,7 @@ const API_BASE_URL =
     window.location.hostname.includes('replit.dev')
   )
     ? '' 
-    : 'https://api.solventusgroup.com';
+    : 'https://api.solventisgroup.org';
 
 export function getApiUrl(path: string): string {
   if (!path.startsWith('/')) {

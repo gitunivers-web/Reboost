@@ -1,6 +1,6 @@
 {
-  "name": "Solventus Group - Professional Loan Platform",
-  "short_name": "Solventus Group",
+  "name": "Solventis Group - Professional Loan Platform",
+  "short_name": "Solventis Group",
   "description": "Professional and secure financing solutions to support your growth",
   "start_url": "/",
   "display": "standalone",
@@ -42,7 +42,7 @@
   "categories": ["finance", "business"],
   "screenshots": [
     {
-      "src": "/logo-solventus-official.png",
+      "src": "/logo-solventis-official.png",
       "sizes": "540x720",
       "type": "image/png",
       "form_factor": "narrow"

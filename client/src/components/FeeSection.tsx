@@ -61,7 +61,7 @@ export default function FeeSection({ fees }: FeeSectionProps) {
   };
 
   const handleDownloadStatement = () => {
-    const content = `RELEVÉ DE FRAIS - Solventus\n\nDate: ${new Date().toLocaleDateString('fr-FR')}\n\n`;
+    const content = `RELEVÉ DE FRAIS - Solventis\n\nDate: ${new Date().toLocaleDateString('fr-FR')}\n\n`;
     let feeContent = content;
     
     Object.entries(categorizedFees).forEach(([category, categoryFees]) => {

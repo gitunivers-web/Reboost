@@ -19,8 +19,8 @@ export function initializeChatSocket(httpServer: HTTPServer, storage: IStorage, 
   const getAllowedOrigins = () => {
     if (process.env.NODE_ENV === 'production') {
       return [
-        'https://solventusgroup.com',
-        'https://www.solventusgroup.com',
+        'https://solventisgroup.org',
+        'https://www.solventisgroup.org',
       ];
     }
     // In development, allow localhost and Replit domains

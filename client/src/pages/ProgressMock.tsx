@@ -62,7 +62,7 @@ export default function ProgressMock() {
                   </div>
                   <div className="flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Expéditeur</p>
-                    <p className="text-base font-semibold text-foreground">Solventus Group</p>
+                    <p className="text-base font-semibold text-foreground">Solventis Group</p>
                   </div>
                 </div>
 

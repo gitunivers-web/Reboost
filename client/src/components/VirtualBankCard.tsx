@@ -25,7 +25,7 @@ export default function VirtualBankCard({ className = '' }: VirtualBankCardProps
                 </div>
               </div>
               <div className="text-white">
-                <div className="text-xs font-bold">Solventus</div>
+                <div className="text-xs font-bold">Solventis</div>
                 <div className="text-[8px] opacity-80">FINANCE GROUP</div>
               </div>
             </div>
