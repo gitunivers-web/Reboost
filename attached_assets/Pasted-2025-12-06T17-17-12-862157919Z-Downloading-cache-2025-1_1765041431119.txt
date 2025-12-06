@@ -1,0 +1,23 @@
+2025-12-06T17:17:12.862157919Z ==> Downloading cache...
+2025-12-06T17:17:12.905717505Z ==> Cloning from https://github.com/gitunivers-web/Reboost
+2025-12-06T17:17:25.05162133Z ==> Checking out commit 629ac6db0fd3b4c3dd5068a0128485e8c751f437 in branch main
+2025-12-06T17:17:29.255010091Z ==> Downloaded 268MB in 3s. Extraction took 3s.
+2025-12-06T17:17:37.441601947Z ==> Using Node.js version 22.16.0 (default)
+2025-12-06T17:17:37.468856329Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2025-12-06T17:17:37.620924636Z ==> Running build command 'rm -rf dist node_modules/.cache node_modules/.vite && npm ci && npm run build:backend'...
+2025-12-06T17:18:02.344902615Z npm error code 1
+2025-12-06T17:18:02.344936597Z npm error path /opt/render/project/src/node_modules/tsx/node_modules/esbuild
+2025-12-06T17:18:02.344977651Z npm error command failed
+2025-12-06T17:18:02.345125061Z npm error command sh -c node install.js
+2025-12-06T17:18:02.345320216Z npm error /opt/render/project/src/node_modules/tsx/node_modules/esbuild/install.js:136
+2025-12-06T17:18:02.345326116Z npm error     throw new Error(`Expected ${JSON.stringify(versionFromPackageJSON)} but got ${JSON.stringify(stdout)}`);
+2025-12-06T17:18:02.345330226Z npm error           ^
+2025-12-06T17:18:02.345333867Z npm error
+2025-12-06T17:18:02.345338307Z npm error Error: Expected "0.27.1" but got "0.25.12"
+2025-12-06T17:18:02.345341707Z npm error     at validateBinaryVersion (/opt/render/project/src/node_modules/tsx/node_modules/esbuild/install.js:136:11)
+2025-12-06T17:18:02.345344407Z npm error     at /opt/render/project/src/node_modules/tsx/node_modules/esbuild/install.js:287:5
+2025-12-06T17:18:02.345347118Z npm error
+2025-12-06T17:18:02.345350318Z npm error Node.js v22.16.0
+2025-12-06T17:18:02.346509874Z npm error A complete log of this run can be found in: /opt/render/.cache/_logs/2025-12-06T17_17_37_695Z-debug-0.log
+2025-12-06T17:18:02.509354795Z ==> Build failed 😞
+2025-12-06T17:18:02.509376187Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
