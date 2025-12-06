@@ -57,7 +57,7 @@ import {
   getOrGenerateLoanReference,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
-import { db } from "./db";
+import { db, withRetry } from "./db";
 import { eq, desc, and, or, isNull, notExists, inArray, sql, sql as sqlDrizzle } from "drizzle-orm";
 import path from "path";
 import fs from "fs";
@@ -1311,13 +1311,17 @@ export class DatabaseStorage implements IStorage {
   }
 
   private async seedData() {
-    const existingUsers = await db.select().from(users).limit(1);
-    if (existingUsers.length > 0) {
-      return;
-    }
+    try {
+      const existingUsers = await withRetry(() => db.select().from(users).limit(1));
+      if (existingUsers.length > 0) {
+        console.log('[Seed] Database already seeded, skipping...');
+        return;
+      }
 
-    const existingSettings = await db.select().from(adminSettings).limit(1);
-    const needsSettings = existingSettings.length === 0;
+      const existingSettings = await withRetry(() => db.select().from(adminSettings).limit(1));
+      const needsSettings = existingSettings.length === 0;
+      
+      console.log('[Seed] Seeding database with demo data...');
 
     const demoUserId = "demo-user-001";
     
@@ -1640,6 +1644,11 @@ export class DatabaseStorage implements IStorage {
         createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
       },
     ]);
+      
+      console.log('[Seed] Database seeded successfully');
+    } catch (error) {
+      console.error('[Seed] Error seeding database:', error);
+    }
   }
 
   async getUser(id: string): Promise<User | undefined> {
