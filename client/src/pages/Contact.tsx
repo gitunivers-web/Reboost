@@ -70,7 +70,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: t.contact.emailLabel,
-      value: "infos@solventisgroup.org",
+      value: "infos@altusfinancesgroup.org",
       detail: t.contact.responseTime,
       color: "from-blue-500 to-indigo-600"
     },
@@ -95,7 +95,7 @@ export default function Contact() {
       <SEO
         title={t.seo.contact.title}
         description={t.seo.contact.description}
-        keywords="contact Solventis Group, contact us, loan customer service, business financing help, Solventis customer support"
+        keywords="contact Altus Finances Group, contact us, loan customer service, business financing help, Altus Finances customer support"
         path="/contact"
         structuredData={[contactPageSchema, contactBreadcrumb]}
       />

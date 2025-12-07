@@ -101,7 +101,7 @@ export default function Header() {
               <div className="relative flex-shrink-0">
                 <img 
                   src="/logo-cropped.png" 
-                  alt="Solventis Group" 
+                  alt="Altus Finances Group" 
                   className={`transition-all duration-300 object-contain ${
                     scrolled ? 'h-10' : 'h-12'
                   }`} 
@@ -109,7 +109,7 @@ export default function Header() {
               </div>
               <div className="hidden lg:block">
                 <span className="font-bold text-lg bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent group-hover:from-primary group-hover:via-primary/80 group-hover:to-primary transition-all duration-300">
-                  Solventis Group
+                  Altus Finances Group
                 </span>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground/70 font-medium">
                   <Sparkles className="w-3 h-3" />

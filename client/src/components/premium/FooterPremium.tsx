@@ -36,7 +36,7 @@ export default function FooterPremium() {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <div className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">
-              Solventis Group
+              Altus Finances Group
             </div>
             <p className="text-slate-400 mb-6 leading-relaxed max-w-md">
               {t.footer.description}
@@ -46,8 +46,8 @@ export default function FooterPremium() {
             <div className="space-y-3 text-sm text-slate-400">
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-blue-400" />
-                <a href="mailto:infos@solventisgroup.org" className="hover:text-white transition-colors" data-testid="link-footer-email">
-                  infos@solventisgroup.org
+                <a href="mailto:infos@altusfinancesgroup.org" className="hover:text-white transition-colors" data-testid="link-footer-email">
+                  infos@altusfinancesgroup.org
                 </a>
               </div>
               <div className="flex items-center gap-3">

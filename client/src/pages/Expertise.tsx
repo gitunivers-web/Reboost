@@ -20,7 +20,7 @@ export default function Expertise() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <SEO
-        title={`${t.premium.expertises.title} | Solventis Group`}
+        title={`${t.premium.expertises.title} | Altus Finances Group`}
         description={t.premium.expertises.subtitle}
         path="/expertise"
       />
@@ -124,7 +124,7 @@ export default function Expertise() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Pourquoi choisir Solventis ?
+              Pourquoi choisir Altus Finances ?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Une approche personnalisée, des experts à votre écoute, et des solutions adaptées à vos besoins

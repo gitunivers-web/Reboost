@@ -62,7 +62,7 @@ export function AppSidebarAdmin() {
     <Sidebar className="border-r border-gray-200 bg-[#F8F9FF]">
       <SidebarContent>
         <div className="p-6 font-bold text-xl tracking-tight text-indigo-600" data-testid="text-admin-logo">
-          SOLVENTIS ADMIN
+          ALTUS FINANCES ADMIN
         </div>
 
         <SidebarGroup>

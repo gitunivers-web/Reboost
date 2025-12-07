@@ -199,7 +199,7 @@ if (!sessionStore && process.env.NODE_ENV === 'production') {
 
 const sessionMiddleware = session({
   store: sessionStore,
-  secret: process.env.SESSION_SECRET || 'solventis-group-secret-key-dev-only',
+  secret: process.env.SESSION_SECRET || 'altusfinances-group-secret-key-dev-only',
   resave: false,
   saveUninitialized: false,
   cookie: {

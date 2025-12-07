@@ -1,18 +1,18 @@
 :root {
-  --solventis-indigo: #1e40af;
-  --solventis-royal: #3b82f6;
-  --solventis-slate: #1e293b;
-  --solventis-ink: #0f172a;
-  --solventis-muted: #64748b;
-  --solventis-bg: #ffffff;
+  --altusfinances-indigo: #1e40af;
+  --altusfinances-royal: #3b82f6;
+  --altusfinances-slate: #1e293b;
+  --altusfinances-ink: #0f172a;
+  --altusfinances-muted: #64748b;
+  --altusfinances-bg: #ffffff;
   --glass-bg: rgba(255,255,255,0.7);
   --glass-border: rgba(255,255,255,0.5);
   --soft-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
 }
 
 body {
-  background: var(--solventis-bg);
-  color: var(--solventis-ink);
+  background: var(--altusfinances-bg);
+  color: var(--altusfinances-ink);
 }
 
 /* Premium Component Animations */

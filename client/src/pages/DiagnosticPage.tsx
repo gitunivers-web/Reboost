@@ -24,7 +24,7 @@ export default function DiagnosticPage() {
   };
 
   const hasApiUrl = !!apiUrl;
-  const isApiUrlCorrect = apiUrl === 'https://api.solventisgroup.org';
+  const isApiUrlCorrect = apiUrl === 'https://api.altusfinancesgroup.org';
 
   const copyToClipboard = () => {
     const text = Object.entries(diagnostics)
@@ -75,7 +75,7 @@ export default function DiagnosticPage() {
                 <div className="bg-muted/50 rounded-lg p-4 space-y-2">
                   <p className="font-medium text-sm">Valeur attendue:</p>
                   <code className="block bg-background px-3 py-2 rounded text-sm">
-                    https://api.solventisgroup.org
+                    https://api.altusfinancesgroup.org
                   </code>
                   
                   {!hasApiUrl && (
@@ -156,7 +156,7 @@ export default function DiagnosticPage() {
               <p className="text-sm font-medium mt-3 mb-2">Si vous voyez une erreur:</p>
               <ul className="text-sm space-y-1 ml-4 list-disc">
                 <li>CORS error → Vérifier FRONTEND_URL et COOKIE_DOMAIN dans le backend</li>
-                <li>Failed to fetch → Vérifier que api.solventisgroup.org est accessible</li>
+                <li>Failed to fetch → Vérifier que api.altusfinancesgroup.org est accessible</li>
                 <li>HTML au lieu de JSON → VITE_API_URL n'est pas injectée (cette page)</li>
               </ul>
             </div>
@@ -179,7 +179,7 @@ export default function DiagnosticPage() {
                     Vercel → Votre projet → Settings → Environment Variables
                   </p>
                   <code className="block mt-1 bg-background px-2 py-1 rounded text-xs">
-                    VITE_API_URL = https://api.solventisgroup.org
+                    VITE_API_URL = https://api.altusfinancesgroup.org
                   </code>
                 </div>
               </li>

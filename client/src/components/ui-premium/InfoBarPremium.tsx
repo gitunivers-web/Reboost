@@ -3,10 +3,10 @@ import { CreditCard, Shield, FileText, Briefcase } from "lucide-react";
 
 export default function InfoBarPremium() {
   const messages = [
-    { icon: CreditCard, text: "Les virements Solventis sont désormais traités sous 24h ouvrées." },
+    { icon: CreditCard, text: "Les virements Altus Finances sont désormais traités sous 24h ouvrées." },
     { icon: Shield, text: "Vos opérations sont protégées par une authentification renforcée." },
     { icon: FileText, text: "Votre contrat numérique est disponible dans votre espace sécurisé." },
-    { icon: Briefcase, text: "Solventis Group – Solutions professionnelles haut de gamme." }
+    { icon: Briefcase, text: "Altus Finances Group – Solutions professionnelles haut de gamme." }
   ];
 
   const [index, setIndex] = useState(0);
@@ -22,7 +22,7 @@ export default function InfoBarPremium() {
   const Icon = currentMessage.icon;
 
   return (
-    <div className="w-full bg-gradient-to-r from-solventis-indigo via-solventis-royal to-solventis-indigo text-white shadow-md">
+    <div className="w-full bg-gradient-to-r from-altusfinances-indigo via-altusfinances-royal to-altusfinances-indigo text-white shadow-md">
       <div className="max-w-[1400px] mx-auto py-2 px-4 text-center">
         <div
           key={index}

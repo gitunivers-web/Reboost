@@ -13,9 +13,9 @@ export default function ButtonPremium({ variant="solid", size="md", children, ..
     lg: "px-6 py-4 text-lg"
   };
   const styles = {
-    solid: "bg-solventis-indigo text-white shadow-soft-2025 hover:brightness-105",
-    ghost: "bg-transparent text-solventis-indigo border border-solventis-indigo/10",
-    outline: "bg-white border border-gray-200 text-solventis-ink"
+    solid: "bg-altusfinances-indigo text-white shadow-soft-2025 hover:brightness-105",
+    ghost: "bg-transparent text-altusfinances-indigo border border-altusfinances-indigo/10",
+    outline: "bg-white border border-gray-200 text-altusfinances-ink"
   };
   
   return (

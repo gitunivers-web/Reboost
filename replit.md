@@ -1,8 +1,8 @@
-# Solventis Group - Professional Loan Platform
+# Altus Finances Group - Professional Loan Platform
 
 ## Overview
 
-Solventis Group is a multi-language professional loan management platform for business clients, offering a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. It supports multiple languages (French, English, Spanish, Portuguese, Italian, German, Dutch) and includes features like an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. The platform aims to provide robust tools for loan financing and financial management, ensuring a secure environment for financial operations.
+Altus Finances Group is a multi-language professional loan management platform for business clients, offering a comprehensive dashboard for managing loans, transfers, fees, and financial transactions. It supports multiple languages (French, English, Spanish, Portuguese, Italian, German, Dutch) and includes features like an interactive amortization calculator, real-time transfer tracking, external bank account management, KYC document upload, and financial analytics. The platform aims to provide robust tools for loan financing and financial management, ensuring a secure environment for financial operations.
 
 ## User Preferences
 
@@ -10,11 +10,11 @@ Preferred communication style: Simple, everyday language. High standards for sec
 
 ## Recent Changes (December 5, 2025)
 
-- **Complete Rebranding to Solventis Group:** Finished the migration from "Altus Finances Group" to "Solventis Group":
+- **Complete Rebranding to Altus Finances Group:** Finished the migration from "Altus Finances Group" to "Altus Finances Group":
   - Server configuration files (server/index.ts, server/routes.ts, server/chat-socket.ts)
-  - Cookie domains and CORS origins updated to solventisgroup.org
+  - Cookie domains and CORS origins updated to altusfinancesgroup.org
   - Contract generator HTML templates and stamps updated
-  - CSS variables renamed from altus-* to solventus-* (theme.css)
+  - CSS variables renamed from altus-* to altusfinances-* (theme.css)
   - Tailwind utility classes updated across all frontend components
   - Premium UI components (ButtonPremium, TopbarPremium, InfoBarPremium)
   - Authentication page (Auth.tsx) styling updated
@@ -23,7 +23,7 @@ Preferred communication style: Simple, everyday language. High standards for sec
 
 ## Recent Changes (December 4, 2025)
 
-- **Brand Renaming:** Renamed "Altus Finances Group" to "Solventis Group" across all visible text (535 replacements):
+- **Brand Renaming:** Renamed "Altus Finances Group" to "Altus Finances Group" across all visible text (535 replacements):
   - i18n translations (Hero section, testimonials, FAQ, terms, etc.)
   - Contact and Settings pages
   - Email templates
@@ -92,7 +92,7 @@ Preferred communication style: Simple, everyday language. High standards for sec
 - Automatic visual transfer progression with pause checkpoints for validation codes.
 - Multi-channel notification system (banners, bell, email).
 - Admin messages with real-time WebSocket chat.
-- Dashboard sidebar with Solventis Group brand SVG logo.
+- Dashboard sidebar with Altus Finances Group brand SVG logo.
 - Optimized navigation flow: Discover → Learn → Understand → Apply.
 - Real-time chat with file attachments (images, PDFs), and unread badges.
 - Favicon and PWA implementation.

@@ -3,7 +3,7 @@
   DEVELOPMENT sitemap - uses localhost
   
   For PRODUCTION: Set VITE_SITE_URL environment variable to your domain
-  Example: VITE_SITE_URL=https://www.solventisgroup.org
+  Example: VITE_SITE_URL=https://www.altusfinancesgroup.org
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"

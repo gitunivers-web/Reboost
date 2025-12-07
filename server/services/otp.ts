@@ -51,7 +51,7 @@ export async function generateAndSendOTP(userId: string, userEmail: string, full
     sendSmtpEmail.subject = template.subject;
     sendSmtpEmail.htmlContent = template.html;
     sendSmtpEmail.textContent = template.text;
-    sendSmtpEmail.sender = { email: fromEmail, name: 'SOLVENTUS GROUP' };
+    sendSmtpEmail.sender = { email: fromEmail, name: 'ALTUS FINANCES GROUP' };
     sendSmtpEmail.to = [{ email: userEmail }];
 
     await client.sendTransacEmail(sendSmtpEmail);

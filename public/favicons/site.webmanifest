@@ -1,6 +1,6 @@
 {
-  "name": "Solventis Group - Professional Loan Platform",
-  "short_name": "Solventis Group",
+  "name": "Altus Finances Group - Professional Loan Platform",
+  "short_name": "Altus Finances Group",
   "description": "Professional and secure financing solutions to support your growth",
   "start_url": "/",
   "display": "standalone",
@@ -42,7 +42,7 @@
   "categories": ["finance", "business"],
   "screenshots": [
     {
-      "src": "/logo-solventis-official.png",
+      "src": "/logo-altusfinances-official.png",
       "sizes": "540x720",
       "type": "image/png",
       "form_factor": "narrow"

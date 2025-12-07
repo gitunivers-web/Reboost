@@ -22,7 +22,7 @@ export function UserLayout({
   return (
     <>
       <Helmet>
-        <title>{title} - Solventis Group</title>
+        <title>{title} - Altus Finances Group</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
 

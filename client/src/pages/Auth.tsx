@@ -261,8 +261,8 @@ export default function Auth() {
     <div className="relative flex items-center justify-center min-h-screen bg-white dark:bg-slate-950 overflow-hidden">
       
       {/* ANIMATED BACKGROUND BUBBLES */}
-      <div className="absolute w-[500px] h-[500px] bg-gradient-to-br from-solventis-purple to-solventis-blue opacity-20 dark:opacity-10 rounded-full blur-3xl animate-float top-10 left-10" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-solventis-blue to-solventis-purple opacity-20 dark:opacity-10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-9s' }} />
+      <div className="absolute w-[500px] h-[500px] bg-gradient-to-br from-altusfinances-purple to-altusfinances-blue opacity-20 dark:opacity-10 rounded-full blur-3xl animate-float top-10 left-10" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-altusfinances-blue to-altusfinances-purple opacity-20 dark:opacity-10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-9s' }} />
 
       {/* AUTH CARD */}
       <div className="relative z-10 w-full max-w-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-gray-200 dark:border-slate-700 shadow-2xl rounded-2xl p-8 sm:p-10 mx-4">
@@ -272,7 +272,7 @@ export default function Auth() {
           <div className="flex-1 text-center">
             <img 
               src="/logo.png" 
-              alt="SOLVENTIS GROUP" 
+              alt="ALTUS FINANCES GROUP" 
               className="mx-auto h-44 w-auto mb-3"
               data-testid="img-logo-auth"
             />
@@ -291,7 +291,7 @@ export default function Auth() {
             onClick={() => setActiveTab('login')}
             className={`py-3 font-semibold transition-all ${
               activeTab === 'login' 
-                ? 'bg-solventis-blue text-white' 
+                ? 'bg-altusfinances-blue text-white' 
                 : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-400'
             }`}
             data-testid="tab-login"
@@ -303,7 +303,7 @@ export default function Auth() {
             onClick={() => setActiveTab('signup')}
             className={`py-3 font-semibold transition-all ${
               activeTab === 'signup' 
-                ? 'bg-solventis-blue text-white' 
+                ? 'bg-altusfinances-blue text-white' 
                 : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-400'
             }`}
             data-testid="tab-signup"
@@ -386,7 +386,7 @@ export default function Auth() {
                 <Link href="/forgot-password">
                   <button
                     type="button"
-                    className="text-sm text-solventis-blue hover:text-solventis-purple font-medium transition-colors"
+                    className="text-sm text-altusfinances-blue hover:text-altusfinances-purple font-medium transition-colors"
                     data-testid="link-forgot-password"
                   >
                     {t.auth.forgotPasswordLink}
@@ -397,7 +397,7 @@ export default function Auth() {
               <Button
                 type="submit"
                 disabled={loginMutation.isPending}
-                className="w-full bg-solventis-blue hover:bg-solventis-purple text-white py-3 rounded-lg font-bold relative overflow-hidden group transition-all"
+                className="w-full bg-altusfinances-blue hover:bg-altusfinances-purple text-white py-3 rounded-lg font-bold relative overflow-hidden group transition-all"
                 data-testid="button-submit-login"
               >
                 <span className="relative z-10">
@@ -450,10 +450,10 @@ export default function Auth() {
                           />
                           <Label
                             htmlFor="personal"
-                            className="flex flex-col items-center justify-center border-2 border-gray-300 dark:border-slate-600 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 cursor-pointer transition-all peer-data-[state=checked]:border-solventis-blue peer-data-[state=checked]:bg-solventis-blue/10 dark:peer-data-[state=checked]:bg-solventis-blue/20"
+                            className="flex flex-col items-center justify-center border-2 border-gray-300 dark:border-slate-600 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 cursor-pointer transition-all peer-data-[state=checked]:border-altusfinances-blue peer-data-[state=checked]:bg-altusfinances-blue/10 dark:peer-data-[state=checked]:bg-altusfinances-blue/20"
                             data-testid="label-personal"
                           >
-                            <FaUser className="text-3xl mb-2 text-solventis-blue" />
+                            <FaUser className="text-3xl mb-2 text-altusfinances-blue" />
                             <span className="font-semibold text-gray-900 dark:text-white">{t.auth.personal}</span>
                             <span className="text-xs text-gray-600 dark:text-gray-400 text-center mt-1">{t.auth.personalLoan}</span>
                           </Label>
@@ -468,10 +468,10 @@ export default function Auth() {
                           />
                           <Label
                             htmlFor="business"
-                            className="flex flex-col items-center justify-center border-2 border-gray-300 dark:border-slate-600 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 cursor-pointer transition-all peer-data-[state=checked]:border-solventis-blue peer-data-[state=checked]:bg-solventis-blue/10 dark:peer-data-[state=checked]:bg-solventis-blue/20"
+                            className="flex flex-col items-center justify-center border-2 border-gray-300 dark:border-slate-600 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 cursor-pointer transition-all peer-data-[state=checked]:border-altusfinances-blue peer-data-[state=checked]:bg-altusfinances-blue/10 dark:peer-data-[state=checked]:bg-altusfinances-blue/20"
                             data-testid="label-business"
                           >
-                            <FaBuilding className="text-3xl mb-2 text-solventis-blue" />
+                            <FaBuilding className="text-3xl mb-2 text-altusfinances-blue" />
                             <span className="font-semibold text-gray-900 dark:text-white">{t.auth.business}</span>
                             <span className="text-xs text-gray-600 dark:text-gray-400 text-center mt-1">{t.auth.businessLoan}</span>
                           </Label>
@@ -530,7 +530,7 @@ export default function Auth() {
 
               {/* BUSINESS FIELDS */}
               {accountType === 'business' && (
-                <div className="space-y-4 p-4 bg-solventis-blue/5 dark:bg-solventis-blue/10 rounded-lg border border-solventis-blue/30 dark:border-solventis-blue/30">
+                <div className="space-y-4 p-4 bg-altusfinances-blue/5 dark:bg-altusfinances-blue/10 rounded-lg border border-altusfinances-blue/30 dark:border-altusfinances-blue/30">
                   <FormField
                     control={signupForm.control}
                     name="companyName"
@@ -667,7 +667,7 @@ export default function Auth() {
               <Button
                 type="submit"
                 disabled={signupMutation.isPending}
-                className="w-full bg-solventis-blue hover:bg-solventis-purple text-white py-3 rounded-lg font-bold relative overflow-hidden group transition-all"
+                className="w-full bg-altusfinances-blue hover:bg-altusfinances-purple text-white py-3 rounded-lg font-bold relative overflow-hidden group transition-all"
                 data-testid="button-submit-signup"
               >
                 <span className="relative z-10">

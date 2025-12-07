@@ -419,7 +419,7 @@ export default function Settings() {
               <div className="relative group">
                 <img 
                   src="/logo.png" 
-                  alt="Solventis Group" 
+                  alt="Altus Finances Group" 
                   className="h-16 w-auto opacity-90 dark:opacity-80 transition-all duration-300 group-hover:opacity-100"
                 />
                 <div className="absolute -inset-2 bg-gradient-to-r from-primary/10 to-transparent rounded-lg opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />

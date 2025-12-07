@@ -66,7 +66,7 @@ export default function BankingMock() {
                   </div>
                   <div className="flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Compte Émetteur</p>
-                    <p className="font-semibold text-foreground">Solventis Group</p>
+                    <p className="font-semibold text-foreground">Altus Finances Group</p>
                     <p className="text-sm text-muted-foreground mt-1">Société Générale • Luxembourg</p>
                     <p className="font-mono text-xs text-muted-foreground mt-2">LU76 1234 5678 9012 3456 7890 123</p>
                   </div>
@@ -296,7 +296,7 @@ export default function BankingMock() {
 
         {/* Footer */}
         <div className="text-center text-xs text-muted-foreground">
-          <p>Progression de transfert bancaire professionnel • Solventis Group</p>
+          <p>Progression de transfert bancaire professionnel • Altus Finances Group</p>
           <p className="mt-1">Données affichées à titre de démonstration</p>
         </div>
       </div>

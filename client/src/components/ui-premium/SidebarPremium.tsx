@@ -14,7 +14,7 @@ type Props = {
 export default function SidebarPremium({ items, onSelect }: Props) {
   return (
     <aside className="w-72 hidden lg:block border-r bg-white h-full py-6 px-4">
-      <img src="/logo-solventis.png" className="h-10 mb-6" alt="Solventis Group" data-testid="img-sidebar-logo" />
+      <img src="/logo-altusfinances.png" className="h-10 mb-6" alt="Altus Finances Group" data-testid="img-sidebar-logo" />
 
       <nav className="flex flex-col gap-2">
         {items.map(i => (
