@@ -288,13 +288,27 @@ export function LoanRequestModal({ open, onOpenChange, user }: LoanRequestModalP
     }
 
     const documentUrls: Record<string, string> = {};
-    for (const [docId, file] of Object.entries(uploadedDocuments)) {
-      const reader = new FileReader();
-      const base64 = await new Promise<string>((resolve) => {
-        reader.onload = () => resolve(reader.result as string);
+    const entries = Object.entries(uploadedDocuments);
+    
+    for (let i = 0; i < entries.length; i++) {
+      const [docId, file] = entries[i];
+      
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          resolve(reader.result as string);
+        };
+        reader.onerror = () => {
+          reject(new Error(`Failed to read file: ${file.name}`));
+        };
         reader.readAsDataURL(file);
       });
+      
       documentUrls[docId] = base64;
+      
+      if (i < entries.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
     }
 
     createLoanMutation.mutate({
