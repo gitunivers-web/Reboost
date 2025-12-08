@@ -8,6 +8,16 @@ Altus Finances Group is a multi-language professional loan management platform f
 
 Preferred communication style: Simple, everyday language. High standards for security, SEO, and code quality - all implementations must be production-ready.
 
+## Recent Changes (December 8, 2025)
+
+- **Production Synchronization:** Synchronized development version with production (altusfinancesgroup.com):
+  - Downloaded and replaced Hero carousel images with exact production images (hero-1.png, hero-2.png, hero-3.png)
+  - Luxury banking office interior, Executive boardroom, Financial district skyline
+  - Updated HeroCarousel.tsx to use production image paths
+- **Logo Update:** Replaced logo across all components with new "Altus Finance Group" branding (logo-altus-new.png):
+  - Header.tsx, Auth.tsx, AppSidebar.tsx, AppSidebarAdmin.tsx
+  - TopbarPremium.tsx, SidebarPremium.tsx
+
 ## Recent Changes (December 5, 2025)
 
 - **Complete Rebranding to Altus Finances Group:** Finished the migration from "Altus Finances Group" to "Altus Finances Group":
