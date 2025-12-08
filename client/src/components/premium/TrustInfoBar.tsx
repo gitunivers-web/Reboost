@@ -40,11 +40,8 @@ export function TrustInfoBar() {
   const Icon = currentBadge.icon;
 
   return (
-    <div className="fixed top-[37px] left-0 right-0 w-full bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 overflow-hidden z-[10000]" data-testid="trust-info-bar">
-      {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-800/0 via-white/5 to-slate-800/0 animate-shimmer" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+    <div className="fixed top-[40px] left-0 right-0 w-full bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 overflow-hidden z-[10000]" data-testid="trust-info-bar">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           {/* Left side: Rotating badge info */}
           <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -58,14 +55,14 @@ export function TrustInfoBar() {
                 className="flex items-center gap-3"
                 data-testid={`badge-${currentIndex}`}
               >
-                <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-500/20 backdrop-blur-sm flex items-center justify-center border border-blue-400/20">
-                  <Icon className="w-4 h-4 text-blue-300" />
+                <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-700">
+                  <Icon className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-sm font-bold text-white truncate">
+                  <div className="text-sm font-bold text-slate-900 dark:text-white truncate">
                     {currentBadge.title}
                   </div>
-                  <div className="text-xs text-white/90 truncate hidden sm:block">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 truncate hidden sm:block">
                     {currentBadge.desc}
                   </div>
                 </div>
@@ -80,8 +77,8 @@ export function TrustInfoBar() {
                   onClick={() => setCurrentIndex(index)}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? 'w-6 bg-white'
-                      : 'w-1.5 bg-white/40 hover:bg-white/60'
+                      ? 'w-6 bg-slate-800 dark:bg-white'
+                      : 'w-1.5 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500'
                   }`}
                   data-testid={`dot-${index}`}
                   aria-label={`View badge ${index + 1}`}
@@ -95,30 +92,20 @@ export function TrustInfoBar() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex items-center gap-2 bg-emerald-500/15 backdrop-blur-sm rounded-full px-4 py-1.5 border border-emerald-400/25"
+            className="flex items-center gap-2 bg-emerald-500 rounded-full px-4 py-1.5"
             data-testid="protection-badge"
           >
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <div className="text-xs text-emerald-100/90 hidden sm:block">
+            <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+            <div className="text-xs text-white hidden sm:block">
               {t.trustBar.protectionLabel}:
             </div>
-            <div className="text-sm font-bold text-emerald-50">
+            <div className="text-sm font-bold text-white">
               {t.trustBar.protectionValue}
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Subtle shimmer animation */}
-      <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        .animate-shimmer {
-          animation: shimmer 3s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 }

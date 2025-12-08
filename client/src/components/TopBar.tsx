@@ -11,14 +11,14 @@ export default function TopBar() {
   ];
 
   return (
-    <div className="fixed top-0 left-0 right-0 w-full bg-primary text-primary-foreground overflow-hidden z-[10001] h-10" data-testid="top-bar">
+    <div className="fixed top-0 left-0 right-0 w-full bg-[#1e293b] text-white overflow-hidden z-[10001] h-10" data-testid="top-bar">
       <div className="container mx-auto px-4 h-full">
         <div className="flex items-center justify-center md:justify-between py-1.5 text-xs md:text-sm h-full">
-          <div className="hidden md:flex items-center justify-center gap-6 w-full">
+          <div className="hidden md:flex items-center justify-center gap-8 w-full">
             {items.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-1.5 whitespace-nowrap"
+                className="flex items-center gap-2 whitespace-nowrap text-white/90"
                 data-testid={`topbar-item-${index}`}
               >
                 <span>{item}</span>
@@ -31,7 +31,7 @@ export default function TopBar() {
               {items.concat(items).map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-1.5 whitespace-nowrap"
+                  className="flex items-center gap-2 whitespace-nowrap text-white/90"
                 >
                   <span>{item}</span>
                 </div>
