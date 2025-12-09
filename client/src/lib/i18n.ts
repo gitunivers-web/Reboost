@@ -7676,7 +7676,7 @@ export const translations: Record<Language, TranslationKeys> = {
             duration: '24h',
           },
           {
-            title: 'Validation du contrat',
+            title: 'Signature',
             description: 'Secure electronic signature of your contract. Compliant and traceable.',
             duration: 'Immediate',
           },
@@ -7758,7 +7758,7 @@ export const translations: Record<Language, TranslationKeys> = {
         certifications: {
           iso27001: 'ISO 27001 Certified',
           gdpr: 'GDPR Compliant',
-          pciDss: 'Norme PCI DSS',
+          pciDss: 'PCI DSS Level 1',
         },
       },
       finalCTA: {
@@ -15490,7 +15490,7 @@ export const translations: Record<Language, TranslationKeys> = {
         certifications: {
           iso27001: 'ISO 27001 Certificato',
           gdpr: 'GDPR Conforme',
-          pciDss: 'Norme PCI DSS',
+          pciDss: 'PCI DSS Livello 1',
         },
       },
       finalCTA: {
@@ -17928,7 +17928,7 @@ export const translations: Record<Language, TranslationKeys> = {
         certifications: {
           iso27001: 'ISO 27001-zertifiziert',
           gdpr: 'DSGVO-konform',
-          pciDss: 'Norme PCI DSS',
+          pciDss: 'PCI DSS Stufe 1',
         },
       },
       finalCTA: {
@@ -20470,7 +20470,7 @@ export const translations: Record<Language, TranslationKeys> = {
         certifications: {
           iso27001: 'ISO 27001-gecertificeerd',
           gdpr: 'AVG-conform',
-          pciDss: 'Norme PCI DSS',
+          pciDss: 'PCI DSS Niveau 1',
         },
       },
       finalCTA: {
