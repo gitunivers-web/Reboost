@@ -46,8 +46,8 @@ export default function FooterPremium() {
             <div className="space-y-3 text-sm text-slate-400">
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-blue-400" />
-                <a href="mailto:infos@altusfinancesgroup.org" className="hover:text-white transition-colors" data-testid="link-footer-email">
-                  infos@altusfinancesgroup.org
+                <a href="mailto:infos@altusfinancesgroup.com" className="hover:text-white transition-colors" data-testid="link-footer-email">
+                  infos@altusfinancesgroup.com
                 </a>
               </div>
               <div className="flex items-center gap-3">

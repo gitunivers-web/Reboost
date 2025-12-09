@@ -70,7 +70,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: t.contact.emailLabel,
-      value: "infos@altusfinancesgroup.org",
+      value: "infos@altusfinancesgroup.com",
       detail: t.contact.responseTime,
       color: "from-blue-500 to-indigo-600"
     },
