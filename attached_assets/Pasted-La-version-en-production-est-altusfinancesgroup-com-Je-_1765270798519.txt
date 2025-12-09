@@ -1,0 +1,50 @@
+La version en production est: altusfinancesgroup.com
+Je veux que tu compares **tout le contenu textuel** de la version en production https://altusfinancesgroup.com avec la version actuellement en développement (dans ce projet).
+
+OBJECTIF :
+La version DEV doit devenir **100 % conforme** à la version PRODUCTION au niveau :
+- des textes,
+- des phrases,
+- des titres,
+- des sous-titres,
+- des labels de boutons,
+- des paragraphes,
+- des informations légales,
+- des descriptions de sections,
+- et des listes.
+
+INSTRUCTIONS PRÉCISES :
+
+1. Parcours l’ensemble du site en PRODUCTION (toutes les pages accessibles).
+2. Parcours l’ensemble des fichiers et composants de la version DEV.
+3. Identifie chaque différence textuelle entre DEV et PRODUCTION.
+
+4. Pour chaque différence :
+   - Si le texte PRODUCTION est correct → **remplace en DEV par le texte PRODUCTION**.
+   - Si le texte DEV est incorrect, tronqué, modifié ou traduit différemment → **corrige-le pour correspondre exactement à la version PRODUCTION**.
+
+5. IMPORTANT :
+   - Ne change pas le design, le layout, le CSS, les couleurs ou les composants.
+   - Ne modifie pas les images ni les icônes.
+   - Ne change ni la structure, ni les classes, ni les balises HTML/JSX.
+   - Ne modifie que **le texte**, et rien d’autre.
+
+6. Le texte doit être reproduit **à l’identique**, caractère pour caractère :
+   - même ponctuation
+   - même majuscules/minuscules
+   - mêmes emojis éventuels
+   - mêmes espacements visibles
+
+7. S’il existe des endroits où la version DEV a du texte en portugais ou dans une autre langue alors que la production est en français, **corrige pour exactement refléter la langue et le texte de la production**.
+
+8. Après toutes les corrections :
+   - Fournis la liste des FICHIERS que tu as modifiés.
+   - Pour chaque fichier, montre :
+       a) le texte avant
+       b) le texte corrigé
+     uniquement pour les sections où une correction a été apportée.
+
+9. Ne propose aucun texte alternatif : tu dois **strictement copier** le texte de la version PRODUCTION, rien d’autre.
+
+10. À la toute fin, confirme que la version DEV est maintenant textuellement identique à la PRODUCTION.
+
