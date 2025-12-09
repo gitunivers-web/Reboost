@@ -440,6 +440,7 @@ type TranslationKeys = {
     noData: string;
     months: string;
     years: string;
+    confirm: string;
   };
   settings: {
     title: string;
@@ -2812,6 +2813,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noData: 'Aucune donnée disponible',
       months: 'mois',
       years: 'ans',
+      confirm: 'Oui',
     },
     settings: {
       title: 'Paramètres',
@@ -5527,6 +5529,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noData: 'No data available',
       months: 'months',
       years: 'years',
+      confirm: 'Yes',
     },
     about: {
       title: 'About Altus Finances Group',
@@ -8217,6 +8220,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noData: 'No hay datos disponibles',
       months: 'meses',
       years: 'años',
+      confirm: 'Sí',
     },
     about: {
       title: 'Acerca de Altus Finances Group',
@@ -10888,6 +10892,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noData: 'Sem dados disponíveis',
       months: 'meses',
       years: 'anos',
+      confirm: 'Sim',
     },
     userMessages: {
       title: 'Mensagens',
@@ -13391,6 +13396,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noData: 'Nessun dato disponibile',
       months: 'mesi',
       years: 'anni',
+      confirm: 'Sì',
     },
     settings: {
       title: 'Impostazioni',
@@ -15980,6 +15986,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noData: 'Keine Daten verfügbar',
       months: 'Monate',
       years: 'Jahre',
+      confirm: 'Ja',
     },
     settings: {
       title: 'Einstellungen',
@@ -18569,6 +18576,7 @@ export const translations: Record<Language, TranslationKeys> = {
       noData: 'Geen gegevens beschikbaar',
       months: 'maanden',
       years: 'jaren',
+      confirm: 'Ja',
     },
     settings: {
       title: 'Instellingen',

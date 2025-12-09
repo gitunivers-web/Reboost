@@ -457,7 +457,7 @@ export default function Contracts() {
               onClick={performDownload}
               data-testid="button-confirm-download"
             >
-              {t.common?.confirm || 'Oui'}
+              {t.common.confirm}
             </AlertDialogAction>
           </div>
         </AlertDialogContent>
