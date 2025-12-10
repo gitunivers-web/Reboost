@@ -10,6 +10,10 @@ const messageMapping: Record<string, { key: string; path: string[] }> = {
     key: 'signupSuccessDesc',
     path: ['auth']
   },
+  'Inscription réussie ! Veuillez vérifier votre email pour activer votre compte.': {
+    key: 'signupSuccessDesc',
+    path: ['auth']
+  },
   'La création du compte n\'a pas abouti. Merci de vérifier les données saisies.': {
     key: 'accountCreationError',
     path: ['auth']
