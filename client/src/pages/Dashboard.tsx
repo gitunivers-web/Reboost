@@ -1,4 +1,5 @@
 import { useTranslations, useLanguage } from '@/lib/i18n';
+import { translateBackendMessage } from '@/lib/translateBackendMessage';
 import { useDashboard, useUpcomingRepaymentsChart } from '@/hooks/use-dashboard';
 import { useUserStats } from '@/hooks/use-user-stats';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -750,9 +751,10 @@ export default function Dashboard() {
                                     window.URL.revokeObjectURL(url);
                                   } catch (error) {
                                     console.error('Download amortization error:', error);
+                                    const errorMsg = error instanceof Error ? translateBackendMessage(error.message, language) : 'Unknown error';
                                     toast({
                                       title: amortT.errorTitle,
-                                      description: `${amortT.errorDescription}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+                                      description: `${amortT.errorDescription}: ${errorMsg}`,
                                       variant: 'destructive'
                                     });
                                   }

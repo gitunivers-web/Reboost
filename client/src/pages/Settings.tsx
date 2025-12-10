@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { User, Bell, Shield, Palette, Camera, Mail, Phone, Building2, CheckCircle2, Loader2, KeyRound, QrCode, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage, useTranslations } from '@/lib/i18n';
+import { translateBackendMessage } from '@/lib/translateBackendMessage';
 import { useTheme } from '@/hooks/use-theme';
 import { useUser, getUserInitials, useUserProfilePhotoUrl } from '@/hooks/use-user';
 import { useMutation } from '@tanstack/react-query';
@@ -88,7 +89,7 @@ export default function Settings() {
       toast({
         variant: 'destructive',
         title: t.common.error,
-        description: error.message || t.settingsMessages.errorUpdatingProfile,
+        description: translateBackendMessage(error.message, language) || t.settingsMessages.errorUpdatingProfile,
       });
     },
   });
@@ -114,7 +115,7 @@ export default function Settings() {
       toast({
         variant: 'destructive',
         title: t.common.error,
-        description: error.message || t.settingsMessages.errorUpdatingPreferences,
+        description: translateBackendMessage(error.message, language) || t.settingsMessages.errorUpdatingPreferences,
       });
     },
   });
@@ -139,7 +140,7 @@ export default function Settings() {
       toast({
         variant: 'destructive',
         title: t.common.error,
-        description: error.message || t.settingsMessages.errorChangingPassword,
+        description: translateBackendMessage(error.message, language) || t.settingsMessages.errorChangingPassword,
       });
     },
   });
@@ -162,7 +163,7 @@ export default function Settings() {
       toast({
         variant: 'destructive',
         title: t.common.error,
-        description: error.message || t.twoFactorAuth.setup.errorMessage,
+        description: translateBackendMessage(error.message, language) || t.twoFactorAuth.setup.errorMessage,
       });
     },
   });
@@ -189,7 +190,7 @@ export default function Settings() {
       toast({
         variant: 'destructive',
         title: t.common.error,
-        description: error.message || t.twoFactorAuth.settings.invalidCode,
+        description: translateBackendMessage(error.message, language) || t.twoFactorAuth.settings.invalidCode,
       });
     },
   });
@@ -210,7 +211,7 @@ export default function Settings() {
       toast({
         variant: 'destructive',
         title: t.common.error,
-        description: error.message || t.twoFactorAuth.disable.errorMessage,
+        description: translateBackendMessage(error.message, language) || t.twoFactorAuth.disable.errorMessage,
       });
     },
   });

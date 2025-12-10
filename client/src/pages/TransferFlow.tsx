@@ -14,6 +14,7 @@ import SuccessAnimation from '@/components/SuccessAnimation';
 import type { TransferDetailsResponse, ExternalAccount, TransferCodeMetadata } from '@shared/schema';
 import { getTransferReferenceNumber } from '@shared/schema';
 import { useTranslations, useLanguage } from '@/lib/i18n';
+import { translateBackendMessage } from '@/lib/translateBackendMessage';
 import { DashboardCard, SectionTitle } from '@/components/fintech';
 import CircularTransferProgress from '@/components/CircularTransferProgress';
 import { 
@@ -509,7 +510,7 @@ export default function TransferFlow() {
       toast({
         variant: 'destructive',
         title: t.transferFlow.toast.error,
-        description: error.message || t.transferFlow.toast.errorInitiation,
+        description: translateBackendMessage(error.message, language) || t.transferFlow.toast.errorInitiation,
       });
     },
   });

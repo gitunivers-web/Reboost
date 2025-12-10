@@ -146,6 +146,60 @@ const messageMapping: Record<string, { key: string; path: string[] }> = {
   },
 };
 
+interface DynamicPatternConfig {
+  pattern: RegExp;
+  key: string;
+  path: string[];
+  extractValues: (match: RegExpMatchArray) => Record<string, string>;
+}
+
+const dynamicPatterns: DynamicPatternConfig[] = [
+  {
+    pattern: /Le montant demandé dépasse votre plafond de financement autorisé\. Montant cumulé actuel: ([0-9\s\u00a0,.]+)€\. Plafond maximum: ([0-9\s\u00a0,.]+)€\. Capacité restante: ([0-9\s\u00a0,.]+)€\./,
+    key: 'cumulativeLimitMessage',
+    path: ['loanOffers'],
+    extractValues: (match) => ({
+      current: match[1].trim(),
+      max: match[2].trim(),
+      remaining: match[3].trim()
+    })
+  }
+];
+
+function translateDynamicMessage(message: string, language: Language): string | null {
+  for (const config of dynamicPatterns) {
+    const match = message.match(config.pattern);
+    if (match) {
+      try {
+        let translation: any = translations[language];
+        
+        for (const key of config.path) {
+          translation = translation[key];
+          if (!translation) {
+            return null;
+          }
+        }
+        
+        let template = translation[config.key];
+        if (typeof template !== 'string') {
+          return null;
+        }
+        
+        const values = config.extractValues(match);
+        for (const [placeholder, value] of Object.entries(values)) {
+          template = template.replace(`{${placeholder}}`, value);
+        }
+        
+        return template;
+      } catch (error) {
+        console.error('Error translating dynamic message:', error);
+        return null;
+      }
+    }
+  }
+  return null;
+}
+
 /**
  * Traduit un message du backend dans la langue sélectionnée
  * @param message - Le message en français renvoyé par le backend
@@ -158,7 +212,13 @@ export function translateBackendMessage(
 ): string {
   if (!message) return '';
   
-  // Cherche le message dans le mapping
+  // Try dynamic pattern matching first (for messages with variables)
+  const dynamicTranslation = translateDynamicMessage(message, language);
+  if (dynamicTranslation) {
+    return dynamicTranslation;
+  }
+  
+  // Cherche le message dans le mapping statique
   const mapping = messageMapping[message];
   
   if (!mapping) {

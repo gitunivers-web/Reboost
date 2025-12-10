@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useTranslations } from '@/lib/i18n';
+import { useTranslations, useLanguage } from '@/lib/i18n';
+import { translateBackendMessage } from '@/lib/translateBackendMessage';
 import { useToast } from '@/hooks/use-toast';
 import { AlertCircle, Upload, FileText, CheckCircle2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -39,6 +40,7 @@ const getBusinessLoanTypes = (t: any) => ({
 
 export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps) {
   const t = useTranslations();
+  const { language } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -147,6 +149,9 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
           ?.replace('{current}', formatNumber(currentCumulative || 0))
           .replace('{max}', formatNumber(maxAllowed || 0))
           .replace('{remaining}', formatNumber(remainingCapacity || 0)) || errorMessage;
+      } else {
+        // Fallback: translate any French backend message to the user's language
+        errorMessage = translateBackendMessage(errorMessage, language);
       }
       
       toast({
