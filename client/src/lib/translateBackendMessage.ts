@@ -163,6 +163,16 @@ const dynamicPatterns: DynamicPatternConfig[] = [
       max: match[2].trim(),
       remaining: match[3].trim()
     })
+  },
+  {
+    pattern: /Vous avez atteint le nombre maximum de prêts actifs pour votre tier (\w+) \((\d+)\/(\d+)\)\. Complétez un prêt pour en demander un nouveau\./,
+    key: 'maxLoansMessage',
+    path: ['loanOffers'],
+    extractValues: (match) => ({
+      tier: match[1].trim(),
+      current: match[2].trim(),
+      max: match[3].trim()
+    })
   }
 ];
 
