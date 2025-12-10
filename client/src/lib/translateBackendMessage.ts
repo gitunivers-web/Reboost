@@ -155,16 +155,21 @@ interface DynamicPatternConfig {
 
 const dynamicPatterns: DynamicPatternConfig[] = [
   {
-    pattern: /Le montant demandé dépasse votre plafond de financement autorisé\. Montant cumulé actuel: ([0-9\s\u00a0,.]+)€\. Plafond maximum: ([0-9\s\u00a0,.]+)€\. Capacité restante: ([0-9\s\u00a0,.]+)€\./,
+    // Pattern for cumulative financing limit error
+    // Includes U+00A0 (non-breaking space) and U+202F (narrow non-breaking space) 
+    // used by French locale number formatting
+    // Also allows optional space before € symbol
+    pattern: /Le montant demandé dépasse votre plafond de financement autorisé\. Montant cumulé actuel: ([0-9\s\u00a0\u202f,.]+)[\s\u00a0\u202f]?€\. Plafond maximum: ([0-9\s\u00a0\u202f,.]+)[\s\u00a0\u202f]?€\. Capacité restante: ([0-9\s\u00a0\u202f,.]+)[\s\u00a0\u202f]?€\./,
     key: 'cumulativeLimitMessage',
     path: ['loanOffers'],
     extractValues: (match) => ({
-      current: match[1].trim(),
-      max: match[2].trim(),
-      remaining: match[3].trim()
+      current: match[1].replace(/[\u00a0\u202f]/g, ' ').trim(),
+      max: match[2].replace(/[\u00a0\u202f]/g, ' ').trim(),
+      remaining: match[3].replace(/[\u00a0\u202f]/g, ' ').trim()
     })
   },
   {
+    // Pattern for max active loans error
     pattern: /Vous avez atteint le nombre maximum de prêts actifs pour votre tier (\w+) \((\d+)\/(\d+)\)\. Complétez un prêt pour en demander un nouveau\./,
     key: 'maxLoansMessage',
     path: ['loanOffers'],
