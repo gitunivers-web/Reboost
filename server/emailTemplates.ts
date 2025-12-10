@@ -17,8 +17,9 @@ function getEmailBaseUrl(): string {
 }
 
 function getEmailLogoUrl(): string {
-  // Always use the official Altus Finances Group logo URL
-  return 'https://altusfinancesgroup.com/logo.png';
+  // Use the official Altus Finance Group logo
+  const baseUrl = getEmailBaseUrl();
+  return `${baseUrl}/logo-email.png`;
 }
 
 interface EmailHeaderOptions {
