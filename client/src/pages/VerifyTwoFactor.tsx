@@ -9,10 +9,12 @@ import { useToast } from '@/hooks/use-toast';
 import { queryClient, apiRequest, clearCsrfToken } from '@/lib/queryClient';
 import { Loader2, Shield } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { useTranslations } from '@/lib/i18n';
+import { useLanguage, useTranslations } from '@/lib/i18n';
+import { translateBackendMessage } from '@/lib/translateBackendMessage';
 
 export default function VerifyTwoFactor() {
   const t = useTranslations();
+  const { language } = useLanguage();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [verificationCode, setVerificationCode] = useState('');
@@ -39,7 +41,7 @@ export default function VerifyTwoFactor() {
     onError: (error: any) => {
       toast({
         title: t.twoFactorAuth.login.errorTitle,
-        description: error.message || t.twoFactorAuth.login.errorMessage,
+        description: translateBackendMessage(error.message, language) || t.twoFactorAuth.login.errorMessage,
         variant: 'destructive',
       });
       setVerificationCode('');

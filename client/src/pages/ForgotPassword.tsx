@@ -9,10 +9,12 @@ import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { Loader2, Mail, ArrowLeft, CheckCircle } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { useTranslations } from '@/lib/i18n';
+import { useLanguage, useTranslations } from '@/lib/i18n';
+import { translateBackendMessage } from '@/lib/translateBackendMessage';
 
 export default function ForgotPassword() {
   const t = useTranslations();
+  const { language } = useLanguage();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
@@ -33,7 +35,7 @@ export default function ForgotPassword() {
     onError: (error: any) => {
       toast({
         title: t.forgotPassword.error,
-        description: error.message || t.forgotPassword.errorDesc,
+        description: translateBackendMessage(error.message, language) || t.forgotPassword.errorDesc,
         variant: 'destructive',
       });
     },

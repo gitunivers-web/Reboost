@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRoute, useLocation } from "wouter";
 import { useLanguage, useTranslations } from "@/lib/i18n";
+import { translateBackendMessage } from "@/lib/translateBackendMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -48,7 +49,7 @@ export default function VerifyOtp() {
       toast({
         variant: "destructive",
         title: t.common.error,
-        description: error.message || t.auth.invalidOtp || "Code invalide ou expiré",
+        description: translateBackendMessage(error.message, language) || t.auth.invalidOtp,
       });
       setCode(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
@@ -102,10 +103,10 @@ export default function VerifyOtp() {
             <ShieldCheck className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold">
-            {t.auth.twoFactorAuth || "Authentification à deux facteurs"}
+            {t.auth.twoFactorAuth}
           </CardTitle>
           <CardDescription className="text-base">
-            {t.auth.enterOtpCode || "Entrez le code à 6 chiffres envoyé à votre email"}
+            {t.auth.enterOtpCode}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -113,7 +114,7 @@ export default function VerifyOtp() {
             {code.map((digit, index) => (
               <input
                 key={index}
-                ref={(el) => (inputRefs.current[index] = el)}
+                ref={(el) => { inputRefs.current[index] = el; }}
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
@@ -131,13 +132,13 @@ export default function VerifyOtp() {
           {verifyMutation.isPending && (
             <div className="flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <Loader2 className="w-4 h-4 animate-spin" />
-              <span>{t.common.verifying || "Vérification en cours..."}</span>
+              <span>{t.auth.verificationInProgress}...</span>
             </div>
           )}
 
           <div className="text-center space-y-4">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {t.auth.otpExpiresIn || "Le code expire dans 10 minutes"}
+              {t.auth.otpExpiresIn}
             </p>
             
             <Button
@@ -148,7 +149,7 @@ export default function VerifyOtp() {
               data-testid="button-back-to-login"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              {t.auth.backToLogin || "Retour à la connexion"}
+              {t.auth.backToLogin}
             </Button>
           </div>
         </CardContent>
