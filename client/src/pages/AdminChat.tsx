@@ -24,9 +24,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ChatWindow } from "@/components/chat/ChatWindow";
-import { useAdminConversations, useAssignConversation, useCloseConversation, useDeleteConversation } from "@/lib/chatQueries";
+import { useAdminConversations, useAssignConversation, useCloseConversation, useDeleteConversation, useCreateConversation } from "@/lib/chatQueries";
 import { useUser } from "@/hooks/use-user";
 import { useToast } from "@/hooks/use-toast";
+import { queryClient } from "@/lib/queryClient";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -45,7 +46,9 @@ export default function AdminChat() {
   const assignConversationMutation = useAssignConversation();
   const closeConversationMutation = useCloseConversation();
   const deleteConversationMutation = useDeleteConversation();
+  const createConversationMutation = useCreateConversation();
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [isCreatingConversation, setIsCreatingConversation] = useState(false);
 
   const filteredConversations = allConversations.filter((conv) => {
     if (statusFilter !== "all" && conv.status !== statusFilter) return false;
@@ -61,8 +64,68 @@ export default function AdminChat() {
     return true;
   });
 
+  const handleSelectConversation = (conversation: any) => {
+    // For virtual conversations, just select them (don't create yet)
+    // The actual creation happens when admin clicks "Démarrer une conversation"
+    setSelectedConversationId(conversation.id);
+  };
+
+  const handleStartConversation = async (conversation: any) => {
+    // Only for virtual conversations - create a real conversation
+    if (!conversation.id.startsWith('virtual-')) return;
+    
+    const userId = conversation.userId;
+    
+    // Check if conversation was already created (might be in the list now)
+    const existingConv = allConversations.find(
+      (c) => c.userId === userId && !c.id.startsWith('virtual-')
+    );
+    
+    if (existingConv) {
+      setSelectedConversationId(existingConv.id);
+      return;
+    }
+    
+    // Prevent duplicate creation
+    if (isCreatingConversation) return;
+    
+    // Create a new conversation for this user
+    setIsCreatingConversation(true);
+    try {
+      const newConversation = await createConversationMutation.mutateAsync({
+        userId: userId,
+        subject: 'Support',
+        status: 'open',
+        assignedAdminId: user?.id || null,
+      });
+      
+      // Invalidate and refetch conversations
+      await queryClient.invalidateQueries({ queryKey: ['chat', 'conversations', 'admin'] });
+      
+      // Select the new conversation
+      setSelectedConversationId(newConversation.id);
+      
+      toast({
+        title: "Conversation créée",
+        description: `Vous pouvez maintenant envoyer un message à ${conversation.userName}`,
+      });
+    } catch (error) {
+      console.error("Failed to create conversation:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de créer la conversation.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCreatingConversation(false);
+    }
+  };
+
   const handleAssignToMe = async (conversationId: string) => {
     if (!user?.id) return;
+    
+    // Don't try to assign virtual conversations
+    if (conversationId.startsWith('virtual-')) return;
 
     try {
       await assignConversationMutation.mutateAsync({
@@ -230,9 +293,12 @@ export default function AdminChat() {
                     key={conversation.id}
                     conversation={conversation}
                     isSelected={selectedConversationId === conversation.id}
-                    onClick={() => setSelectedConversationId(conversation.id)}
+                    onClick={() => handleSelectConversation(conversation)}
                     onAssign={() => handleAssignToMe(conversation.id)}
+                    onStartConversation={() => handleStartConversation(conversation)}
                     currentAdminId={user?.id}
+                    isVirtual={conversation.id.startsWith('virtual-')}
+                    isCreating={isCreatingConversation}
                   />
                 ))}
               </div>
@@ -254,7 +320,7 @@ export default function AdminChat() {
             <ArrowLeft className="h-5 w-5" />
           </Button>
 
-          {selectedConversation && (
+          {selectedConversation && !selectedConversation.id.startsWith('virtual-') && (
             <div className="flex gap-2">
               {selectedConversation.status === "open" && (
                 <Button
@@ -285,15 +351,39 @@ export default function AdminChat() {
         </div>
 
         {selectedConversation ? (
-          <ChatWindow
-            conversationId={selectedConversation.id}
-            currentUserId={user?.id || ""}
-            title={`Conversation avec ${(selectedConversation as any).userName || selectedConversation.userId}`}
-            subtitle={`${(selectedConversation as any).userEmail ? `(${(selectedConversation as any).userEmail}) - ` : ''}Créée ${formatDistanceToNow(new Date(selectedConversation.createdAt), {
-              addSuffix: true,
-              locale: fr,
-            })}`}
-          />
+          selectedConversation.id.startsWith('virtual-') ? (
+            <div className="flex-1 flex items-center justify-center text-muted-foreground" data-testid="virtual-user-selected">
+              <div className="text-center max-w-md">
+                <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p className="text-lg font-medium mb-2">
+                  {(selectedConversation as any).userName || 'Utilisateur'}
+                </p>
+                {(selectedConversation as any).userEmail && (
+                  <p className="text-sm mb-4">{(selectedConversation as any).userEmail}</p>
+                )}
+                <p className="text-sm mb-4">
+                  Cet utilisateur n'a pas encore de conversation. Cliquez sur le bouton ci-dessous pour démarrer une conversation.
+                </p>
+                <Button
+                  onClick={() => handleStartConversation(selectedConversation)}
+                  disabled={isCreatingConversation}
+                  data-testid="button-start-conversation-main"
+                >
+                  {isCreatingConversation ? "Création en cours..." : "Démarrer une conversation"}
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <ChatWindow
+              conversationId={selectedConversation.id}
+              currentUserId={user?.id || ""}
+              title={`Conversation avec ${(selectedConversation as any).userName || selectedConversation.userId}`}
+              subtitle={`${(selectedConversation as any).userEmail ? `(${(selectedConversation as any).userEmail}) - ` : ''}Créée ${formatDistanceToNow(new Date(selectedConversation.createdAt), {
+                addSuffix: true,
+                locale: fr,
+              })}`}
+            />
+          )
         ) : (
           <div className="flex-1 flex items-center justify-center text-muted-foreground" data-testid="no-conversation-selected">
             <div className="text-center">
@@ -314,7 +404,10 @@ interface ConversationCardProps {
   isSelected: boolean;
   onClick: () => void;
   onAssign: () => void;
+  onStartConversation: () => void;
   currentAdminId?: string;
+  isVirtual?: boolean;
+  isCreating?: boolean;
 }
 
 function ConversationCard({
@@ -322,7 +415,10 @@ function ConversationCard({
   isSelected,
   onClick,
   onAssign,
+  onStartConversation,
   currentAdminId,
+  isVirtual = false,
+  isCreating = false,
 }: ConversationCardProps) {
   const isAssignedToMe = conversation.assignedAdminId === currentAdminId;
 
@@ -330,7 +426,8 @@ function ConversationCard({
     <Card
       className={cn(
         "cursor-pointer hover-elevate active-elevate-2 transition-all",
-        isSelected && "border-primary"
+        isSelected && "border-primary",
+        isVirtual && "opacity-80 border-dashed"
       )}
       onClick={onClick}
       data-testid={`conversation-card-${conversation.id}`}
@@ -346,7 +443,11 @@ function ConversationCard({
                 {(conversation as any).userEmail}
               </p>
             )}
-            {conversation.lastMessageAt && (
+            {isVirtual ? (
+              <p className="text-xs text-muted-foreground italic">
+                Aucun message
+              </p>
+            ) : conversation.lastMessageAt && (
               <p className="text-xs text-muted-foreground">
                 {formatDistanceToNow(new Date(conversation.lastMessageAt), {
                   addSuffix: true,
@@ -362,19 +463,37 @@ function ConversationCard({
                 {(conversation as any).unreadCount > 99 ? "99+" : (conversation as any).unreadCount}
               </Badge>
             )}
-            <Badge variant={conversation.status === "open" ? "default" : "secondary"}>
-              {conversation.status === "open" ? "Ouverte" : "Fermée"}
-            </Badge>
+            {isVirtual ? (
+              <Badge variant="outline">Nouveau</Badge>
+            ) : (
+              <Badge variant={conversation.status === "open" ? "default" : "secondary"}>
+                {conversation.status === "open" ? "Ouverte" : "Fermée"}
+              </Badge>
+            )}
           </div>
         </div>
 
-        {conversation.assignedAdminId && (
+        {!isVirtual && conversation.assignedAdminId && (
           <div className="text-xs text-muted-foreground mb-2">
             {isAssignedToMe ? "Assignée à vous" : `Assignée à ${conversation.assignedAdminId}`}
           </div>
         )}
 
-        {!isAssignedToMe && conversation.status === "open" && (
+        {isVirtual ? (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={(e) => {
+              e.stopPropagation();
+              onStartConversation();
+            }}
+            className="w-full"
+            disabled={isCreating}
+            data-testid="button-start-conversation"
+          >
+            {isCreating ? "Création..." : "Démarrer une conversation"}
+          </Button>
+        ) : !isAssignedToMe && conversation.status === "open" && (
           <Button
             size="sm"
             variant="outline"

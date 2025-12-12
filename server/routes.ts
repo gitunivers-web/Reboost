@@ -5363,11 +5363,51 @@ ${urls.map(url => `  <url>
             userEmail: userData?.email || '',
             userPhone: userData?.phone || '',
             unreadCount: unreadCount,
+            hasConversation: true,
           };
         })
       );
 
-      res.json(enrichedConversations);
+      // Récupérer tous les utilisateurs non-admin qui n'ont pas encore de conversation
+      const allUsers = await storage.getAllUsers();
+      const usersWithConversations = new Set(conversations.map(c => c.userId));
+      
+      const usersWithoutConversations = allUsers
+        .filter(u => u.role !== 'admin' && !usersWithConversations.has(u.id))
+        .map(u => ({
+          id: `virtual-${u.id}`,
+          userId: u.id,
+          subject: 'Nouvelle conversation',
+          status: 'open',
+          assignedAdminId: null,
+          lastMessageAt: u.createdAt,
+          createdAt: u.createdAt,
+          updatedAt: u.createdAt,
+          userName: u.fullName || u.email,
+          userEmail: u.email || '',
+          userPhone: u.phone || '',
+          unreadCount: 0,
+          hasConversation: false,
+        }));
+
+      // Combiner et trier : conversations avec messages d'abord, puis utilisateurs sans conversation
+      const allConversations = [...enrichedConversations, ...usersWithoutConversations];
+      
+      // Trier par date du dernier message (conversations actives en premier)
+      allConversations.sort((a, b) => {
+        // Les conversations avec messages non lus en premier
+        if (a.unreadCount > 0 && b.unreadCount === 0) return -1;
+        if (b.unreadCount > 0 && a.unreadCount === 0) return 1;
+        // Puis par hasConversation (vraies conversations d'abord)
+        if (a.hasConversation && !b.hasConversation) return -1;
+        if (!a.hasConversation && b.hasConversation) return 1;
+        // Puis par date
+        const dateA = new Date(a.lastMessageAt || a.createdAt).getTime();
+        const dateB = new Date(b.lastMessageAt || b.createdAt).getTime();
+        return dateB - dateA;
+      });
+
+      res.json(allConversations);
     } catch (error: any) {
       console.error('[CHAT] Erreur récupération conversations admin:', error);
       res.status(500).json({ error: 'Erreur lors de la récupération des conversations' });
