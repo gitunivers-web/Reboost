@@ -134,12 +134,6 @@ export default function NewLoanDialog({ open, onOpenChange }: NewLoanDialogProps
       resetForm();
     },
     onError: (error: any) => {
-      console.log('[NewLoanDialog] onError triggered:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
-      console.log('[NewLoanDialog] error.code:', error?.code);
-      console.log('[NewLoanDialog] error.message:', error?.message);
-      console.log('[NewLoanDialog] error.details:', error?.details);
-      console.log('[NewLoanDialog] t.dialogs.newLoan.error.loanError:', t.dialogs.newLoan.error.loanError);
-      
       let errorMessage = t.dialogs.newLoan.error.loanErrorDesc;
       
       const errorCode = error?.code || '';

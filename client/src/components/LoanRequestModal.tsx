@@ -239,9 +239,51 @@ export function LoanRequestModal({ open, onOpenChange, user }: LoanRequestModalP
       setSelectedLoanType(null);
     },
     onError: (error: any) => {
+      let errorMessage = translateBackendMessage(error.message, language) || t.errorDescription;
+      
+      const errorCode = error?.code || '';
+      const errorMsg = error?.message || '';
+      const errorDetails = error?.details || {};
+      
+      const isMaxLoansError = errorCode === 'MAX_ACTIVE_LOANS_REACHED' || errorMsg === 'loan.tierMaxLoansReached';
+      const isLimitExceededError = errorCode === 'CUMULATIVE_LIMIT_EXCEEDED' || errorMsg === 'loan.limitExceeded';
+      
+      if (isMaxLoansError) {
+        const { tier, currentActive, maxAllowed } = errorDetails;
+        if (tier !== undefined || currentActive !== undefined || maxAllowed !== undefined) {
+          const detailedMessage = translations.loanOffers?.maxLoansMessage
+            ?.replace('{tier}', tier || 'bronze')
+            .replace('{current}', String(currentActive || 0))
+            .replace('{max}', String(maxAllowed || 1));
+          if (detailedMessage) {
+            errorMessage = detailedMessage;
+          } else {
+            errorMessage = translations.loanOffers?.maxLoansMessageFallback || errorMessage;
+          }
+        } else {
+          errorMessage = translations.loanOffers?.maxLoansMessageFallback || errorMessage;
+        }
+      } else if (isLimitExceededError) {
+        const { currentCumulative, maxAllowed, remainingCapacity } = errorDetails;
+        if (currentCumulative !== undefined || maxAllowed !== undefined || remainingCapacity !== undefined) {
+          const formatNumber = (n: number) => n?.toLocaleString?.() || String(n || 0);
+          const detailedMessage = translations.loanOffers?.cumulativeLimitMessage
+            ?.replace('{current}', formatNumber(currentCumulative || 0))
+            .replace('{max}', formatNumber(maxAllowed || 0))
+            .replace('{remaining}', formatNumber(remainingCapacity || 0));
+          if (detailedMessage) {
+            errorMessage = detailedMessage;
+          } else {
+            errorMessage = translations.loanOffers?.limitExceededFallback || errorMessage;
+          }
+        } else {
+          errorMessage = translations.loanOffers?.limitExceededFallback || errorMessage;
+        }
+      }
+      
       toast({
         title: t.error,
-        description: translateBackendMessage(error.message, language) || t.errorDescription,
+        description: errorMessage,
         variant: 'destructive',
       });
     },
