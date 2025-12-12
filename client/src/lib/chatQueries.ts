@@ -134,8 +134,14 @@ export const useCreateConversation = () => {
       return await res.json() as ChatConversation;
     },
     onSuccess: (newConversation) => {
+      // Invalidate user's conversations
       queryClient.invalidateQueries({ 
         queryKey: ['chat', 'conversations', 'user', newConversation.userId] 
+      });
+      // Invalidate admin conversations list (for admin panel refresh)
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'conversations', 'admin'],
+        exact: false,
       });
     },
   });

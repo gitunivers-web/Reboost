@@ -163,11 +163,25 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
       }
     };
 
+    // Handler for when admin creates a conversation for a user
+    const handleConversationCreated = async (data: { 
+      conversationId: string; 
+      createdBy: string;
+    }) => {
+      console.log('[CHAT NOTIFICATIONS] Socket conversation:created received:', data);
+      
+      // Refetch user's conversations to show the new conversation created by admin
+      await queryClient.refetchQueries({
+        queryKey: ['chat', 'conversations', 'user', userId],
+      });
+    };
+
     socket.on("chat:new-message", handleNewMessage);
     socket.on("chat:read-receipt", handleMessageRead);
     socket.on("chat:unread-count", handleUnreadCountUpdate);
     socket.on("unread_sync_required", handleUnreadSync);
     socket.on("conversation_assigned", handleConversationAssigned);
+    socket.on("conversation:created", handleConversationCreated);
 
     return () => {
       socket.off("chat:new-message", handleNewMessage);
@@ -175,6 +189,7 @@ export function useChatNotifications(userId: string): UseChatNotificationsReturn
       socket.off("chat:unread-count", handleUnreadCountUpdate);
       socket.off("unread_sync_required", handleUnreadSync);
       socket.off("conversation_assigned", handleConversationAssigned);
+      socket.off("conversation:created", handleConversationCreated);
     };
   }, [socket, connected, userId, queryClient]);
 
