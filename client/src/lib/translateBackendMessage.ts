@@ -40,6 +40,14 @@ const messageMapping: Record<string, { key: string; path: string[] }> = {
     key: 'pleaseVerifyEmail',
     path: ['auth']
   },
+  'Veuillez vérifier votre email avant de vous connecter': {
+    key: 'pleaseVerifyEmail',
+    path: ['auth']
+  },
+  'Email non vérifié. Veuillez vérifier votre email avant de continuer.': {
+    key: 'pleaseVerifyEmail',
+    path: ['auth']
+  },
   'Adresse non confirmée. Validez votre courriel pour poursuivre.': {
     key: 'emailNotVerifiedDesc',
     path: ['auth']
