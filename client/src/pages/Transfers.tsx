@@ -243,7 +243,7 @@ export default function Transfers() {
                           {formatCurrency(transfer.amount)}
                         </p>
                         <p className="text-xs text-muted-foreground font-medium">
-                          Étape {transfer.currentStep}
+                          {t.transfer.step || 'Étape'} {transfer.currentStep}
                         </p>
                       </div>
                     </div>
@@ -254,7 +254,7 @@ export default function Transfers() {
                     <div className="w-full sm:flex-1 sm:max-w-[200px] order-last sm:order-none">
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
                         <span className="font-medium">
-                          {transfer.status === 'completed' ? 'Terminé' : 'Progression'}
+                          {transfer.status === 'completed' ? (t.transfer.completedStatus || 'Terminé') : (t.transfer.progression || 'Progression')}
                         </span>
                         <span className={`font-semibold ${transfer.status === 'completed' ? 'text-accent' : 'text-primary'}`}>
                           {transfer.status === 'completed' ? '100' : transfer.progressPercent}%
@@ -282,7 +282,7 @@ export default function Transfers() {
                         {formatCurrency(transfer.amount)}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1 font-medium">
-                        Étape {transfer.currentStep}
+                        {t.transfer.step || 'Étape'} {transfer.currentStep}
                       </p>
                     </div>
                     <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
