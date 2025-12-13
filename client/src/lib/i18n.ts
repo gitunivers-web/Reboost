@@ -366,6 +366,8 @@ type TranslationKeys = {
     pageDescription: string;
     searchPlaceholder: string;
     allStatuses: string;
+    activeTransfers: string;
+    pendingStatus: string;
     filterTitle: string;
     filterDescription: string;
     noTransfersFound: string;
@@ -2756,6 +2758,8 @@ export const translations: Record<Language, TranslationKeys> = {
       pageDescription: 'Gérez et suivez tous vos transferts de fonds',
       searchPlaceholder: 'Rechercher par destinataire ou ID...',
       allStatuses: 'Tous les statuts',
+      activeTransfers: 'En cours',
+      pendingStatus: 'Initialisé',
       filterTitle: 'Filtres et recherche',
       filterDescription: 'Affinez votre liste de transferts',
       noTransfersFound: 'Aucun transfert trouvé',
@@ -5489,6 +5493,8 @@ export const translations: Record<Language, TranslationKeys> = {
       pageDescription: 'Manage and track all your fund transfers',
       searchPlaceholder: 'Search by recipient or ID...',
       allStatuses: 'All statuses',
+      activeTransfers: 'In Progress',
+      pendingStatus: 'Pending',
       filterTitle: 'Filters and search',
       filterDescription: 'Refine your transfer list',
       noTransfersFound: 'No transfers found',
@@ -8199,6 +8205,8 @@ export const translations: Record<Language, TranslationKeys> = {
       allStatuses: 'Todos los estados',
       filterTitle: 'Filtros y búsqueda',
       filterDescription: 'Refine su lista de transferencias',
+      activeTransfers: 'En curso',
+      pendingStatus: 'Pendiente',
       noTransfersFound: 'No se encontraron transferencias',
       noTransfersMessage: 'Aún no ha realizado ninguna transferencia',
       createTransfer: 'Crear una transferencia',
@@ -10888,6 +10896,8 @@ export const translations: Record<Language, TranslationKeys> = {
       allStatuses: 'Todos os status',
       filterTitle: 'Filtros e busca',
       filterDescription: 'Refine sua lista de transferências',
+      activeTransfers: 'Em Andamento',
+      pendingStatus: 'Pendente',
       noTransfersFound: 'Nenhuma transferência encontrada',
       noTransfersMessage: 'Você ainda não fez nenhuma transferência',
       createTransfer: 'Criar transferência',
@@ -13409,6 +13419,8 @@ export const translations: Record<Language, TranslationKeys> = {
       allStatuses: 'Tutti gli stati',
       filterTitle: 'Filtri e ricerca',
       filterDescription: 'Affina la tua lista di trasferimenti',
+      activeTransfers: 'In corso',
+      pendingStatus: 'In attesa',
       noTransfersFound: 'Nessun trasferimento trovato',
       noTransfersMessage: 'Non hai ancora effettuato trasferimenti',
       createTransfer: 'Crea trasferimento',
@@ -16016,6 +16028,8 @@ export const translations: Record<Language, TranslationKeys> = {
       allStatuses: 'Alle Status',
       filterTitle: 'Filter und Suche',
       filterDescription: 'Verfeinern Sie Ihre Überweisungsliste',
+      activeTransfers: 'In Bearbeitung',
+      pendingStatus: 'Ausstehend',
       noTransfersFound: 'Keine Überweisungen gefunden',
       noTransfersMessage: 'Sie haben noch keine Überweisungen getätigt',
       createTransfer: 'Überweisung erstellen',
@@ -18623,6 +18637,8 @@ export const translations: Record<Language, TranslationKeys> = {
       allStatuses: 'Alle statussen',
       filterTitle: 'Filters en zoeken',
       filterDescription: 'Verfijn uw overschrijvingslijst',
+      activeTransfers: 'In behandeling',
+      pendingStatus: 'In afwachting',
       noTransfersFound: 'Geen overschrijvingen gevonden',
       noTransfersMessage: 'U heeft nog geen overschrijvingen gedaan',
       createTransfer: 'Overschrijving maken',
