@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Search, TrendingUp, TrendingDown, Receipt, ArrowUpRight, ArrowDownLeft, FileText, Download } from 'lucide-react';
-import { useTranslations } from '@/lib/i18n';
+import { useTranslations, useLanguage } from '@/lib/i18n';
 import { DashboardCard, SectionTitle } from '@/components/fintech';
 
 interface Transaction {
@@ -36,18 +36,31 @@ function HistorySkeleton() {
   );
 }
 
+const localeMap: Record<string, string> = {
+  fr: 'fr-FR',
+  en: 'en-GB',
+  es: 'es-ES',
+  pt: 'pt-PT',
+  it: 'it-IT',
+  de: 'de-DE',
+  nl: 'nl-NL',
+};
+
 export default function History() {
   const t = useTranslations();
+  const { language } = useLanguage();
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
+
+  const locale = localeMap[language] || 'fr-FR';
 
   const { data: transactions, isLoading } = useQuery<Transaction[]>({
     queryKey: ['/api/transactions'],
   });
 
   const formatCurrency = (amount: string) => {
-    return new Intl.NumberFormat('fr-FR', {
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: 'EUR',
       minimumFractionDigits: 2,
@@ -62,11 +75,11 @@ export default function History() {
     yesterday.setDate(yesterday.getDate() - 1);
     
     if (d.toDateString() === today.toDateString()) {
-      return `Aujourd'hui à ${d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${t.history.todayAt} ${d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}`;
     } else if (d.toDateString() === yesterday.toDateString()) {
-      return `Hier à ${d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${t.history.yesterdayAt} ${d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}`;
     } else {
-      return d.toLocaleDateString('fr-FR', {
+      return d.toLocaleDateString(locale, {
         day: 'numeric',
         month: 'short',
         year: d.getFullYear() !== today.getFullYear() ? 'numeric' : undefined,
@@ -122,13 +135,13 @@ export default function History() {
   const handleExportCSV = () => {
     if (!filteredTransactions) return;
     
-    const headers = ['ID', 'Date', 'Type', 'Description', 'Montant (€)'];
-    const rows = filteredTransactions.map(t => [
-      t.id,
-      new Date(t.createdAt).toLocaleDateString('fr-FR'),
-      t.type,
-      t.description,
-      t.amount
+    const headers = ['ID', 'Date', 'Type', 'Description', 'Amount (EUR)'];
+    const rows = filteredTransactions.map(tx => [
+      tx.id,
+      new Date(tx.createdAt).toLocaleDateString(locale),
+      tx.type,
+      tx.description,
+      tx.amount
     ]);
     
     const csvContent = [
@@ -201,7 +214,7 @@ export default function History() {
                 <Receipt className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-muted-foreground">Solde net</p>
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">{t.history.netBalance}</p>
               </div>
             </div>
             <p className={`text-xl sm:text-2xl md:text-3xl font-bold tracking-tight break-all ${netBalance >= 0 ? 'text-accent' : 'text-destructive'}`} data-testid="text-net-balance">
@@ -345,7 +358,7 @@ export default function History() {
         {filteredTransactions && filteredTransactions.length > 0 && (
           <div className="text-center pt-2">
             <p className="text-sm text-muted-foreground font-medium" data-testid="text-total-transactions">
-              {filteredTransactions.length} transaction{filteredTransactions.length > 1 ? 's' : ''} affichée{filteredTransactions.length > 1 ? 's' : ''}
+              {filteredTransactions.length} {t.history.transactionsDisplayed}
             </p>
           </div>
         )}

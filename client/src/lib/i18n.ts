@@ -415,6 +415,11 @@ type TranslationKeys = {
     noTransactionsFound: string;
     noTransactionsFoundFiltered: string;
     noTransactionsYet: string;
+    todayAt: string;
+    yesterdayAt: string;
+    transactionsDisplayed: string;
+    netBalance: string;
+    exportCSV: string;
   };
   transactionTypes: {
     loanDisbursement: string;
@@ -2807,6 +2812,11 @@ export const translations: Record<Language, TranslationKeys> = {
       noTransactionsFound: 'Aucune transaction trouvée',
       noTransactionsFoundFiltered: 'Essayez de modifier vos critères de recherche',
       noTransactionsYet: 'Vous n\'avez pas encore de transactions',
+      todayAt: "Aujourd'hui à",
+      yesterdayAt: 'Hier à',
+      transactionsDisplayed: 'transaction(s) affichée(s)',
+      netBalance: 'Solde net',
+      exportCSV: 'Exporter CSV',
     },
     transactionTypes: {
       loanDisbursement: 'Décaissement du prêt #{loanRef}',
@@ -5542,6 +5552,11 @@ export const translations: Record<Language, TranslationKeys> = {
       noTransactionsFound: 'No transactions found',
       noTransactionsFoundFiltered: 'Try modifying your search criteria',
       noTransactionsYet: 'You don\'t have any transactions yet',
+      todayAt: 'Today at',
+      yesterdayAt: 'Yesterday at',
+      transactionsDisplayed: 'transaction(s) displayed',
+      netBalance: 'Net balance',
+      exportCSV: 'Export CSV',
     },
     transactionTypes: {
       loanDisbursement: 'Loan disbursement #{loanRef}',
@@ -8255,6 +8270,11 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     transactionTypes: {
       loanDisbursement: 'Desembolso del préstamo #{loanRef}',
+      todayAt: 'Hoy a las',
+      yesterdayAt: 'Ayer a las',
+      transactionsDisplayed: 'transacción(es) mostrada(s)',
+      netBalance: 'Saldo neto',
+      exportCSV: 'Exportar CSV',
       transferCompleted: 'Transferencia a {recipient}',
       monthlyPayment: 'Pago mensual préstamo #{loanRef}',
       feePayment: 'Comisión: {feeType}',
@@ -10949,6 +10969,11 @@ export const translations: Record<Language, TranslationKeys> = {
       monthlyPayment: 'Pagamento mensal empréstimo #{loanRef}',
       feePayment: 'Taxa: {feeType}',
     },
+      todayAt: 'Hoje às',
+      yesterdayAt: 'Ontem às',
+      transactionsDisplayed: 'transação(ões) exibida(s)',
+      netBalance: 'Saldo líquido',
+      exportCSV: 'Exportar CSV',
     },
     fee: {
       type: 'Tipo de Taxa',
@@ -13475,6 +13500,11 @@ export const translations: Record<Language, TranslationKeys> = {
     },
     fee: {
       type: 'Tipo di commissione',
+      todayAt: 'Oggi alle',
+      yesterdayAt: 'Ieri alle',
+      transactionsDisplayed: 'transazione(i) visualizzata(e)',
+      netBalance: 'Saldo netto',
+      exportCSV: 'Esporta CSV',
       reason: 'Motivo',
       amount: 'Importo',
       date: 'Data',
@@ -16087,6 +16117,11 @@ export const translations: Record<Language, TranslationKeys> = {
       reason: 'Grund',
       amount: 'Betrag',
       date: 'Datum',
+      todayAt: 'Heute um',
+      yesterdayAt: 'Gestern um',
+      transactionsDisplayed: 'Transaktion(en) angezeigt',
+      netBalance: 'Nettosaldo',
+      exportCSV: 'CSV exportieren',
       downloadStatement: 'Kontoauszug herunterladen',
       loanFees: 'Kreditgebühren',
       transferFees: 'Überweisungsgebühren',
@@ -18699,6 +18734,11 @@ export const translations: Record<Language, TranslationKeys> = {
       downloadStatement: 'Afschrift downloaden',
       loanFees: 'Leningkosten',
       transferFees: 'Overschrijvingskosten',
+      todayAt: 'Vandaag om',
+      yesterdayAt: 'Gisteren om',
+      transactionsDisplayed: 'transactie(s) weergegeven',
+      netBalance: 'Nettosaldo',
+      exportCSV: 'Exporteer CSV',
       accountFees: 'Rekeningkosten',
       feesToPay: 'Te betalen kosten',
       unpaidFeesCount: 'onbetaalde kosten',
