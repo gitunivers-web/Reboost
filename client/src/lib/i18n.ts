@@ -389,6 +389,12 @@ type TranslationKeys = {
     onHold: string;
     processing: string;
     processingComplete: string;
+    totalTransfers: string;
+    initialized: string;
+    completedLabel: string;
+    completedStatus: string;
+    step: string;
+    progression: string;
   };
   history: {
     pageTitle: string;
@@ -2774,6 +2780,12 @@ export const translations: Record<Language, TranslationKeys> = {
       processing: 'Transfert en cours',
       processingComplete: 'Transfert complété',
     },
+      totalTransfers: 'Total des transferts',
+      initialized: 'Initialisés',
+      completedLabel: 'Terminés',
+      completedStatus: 'Terminé',
+      step: 'Étape',
+      progression: 'Progression',
     history: {
       pageTitle: 'Historique des transactions',
       pageDescription: 'Consultez l\'historique complet de toutes vos transactions',
@@ -5501,6 +5513,12 @@ export const translations: Record<Language, TranslationKeys> = {
       processing: 'Transfer in progress',
       processingComplete: 'Transfer completed',
     },
+      totalTransfers: 'Total transfers',
+      initialized: 'Initialized',
+      completedLabel: 'Completed',
+      completedStatus: 'Completed',
+      step: 'Step',
+      progression: 'Progress',
     history: {
       pageTitle: 'Transaction History',
       pageDescription: 'View the complete history of all your transactions',
@@ -8203,6 +8221,12 @@ export const translations: Record<Language, TranslationKeys> = {
       processing: 'Transferencia en curso',
       processingComplete: 'Transferencia completada',
     },
+      totalTransfers: 'Total de transferencias',
+      initialized: 'Inicializadas',
+      completedLabel: 'Completadas',
+      completedStatus: 'Completada',
+      step: 'Paso',
+      progression: 'Progreso',
     history: {
       pageTitle: 'Historial de Transacciones',
       pageDescription: 'Consulte el historial completo de todas sus transacciones',
@@ -10886,6 +10910,12 @@ export const translations: Record<Language, TranslationKeys> = {
       processing: 'Transferência em andamento',
       processingComplete: 'Transferência concluída',
     },
+      totalTransfers: 'Total de transferências',
+      initialized: 'Inicializadas',
+      completedLabel: 'Concluídas',
+      completedStatus: 'Concluída',
+      step: 'Passo',
+      progression: 'Progresso',
     history: {
       pageTitle: 'Histórico de Transações',
       pageDescription: 'Consulte o histórico completo de todas as suas transações',
@@ -13401,6 +13431,12 @@ export const translations: Record<Language, TranslationKeys> = {
       processing: 'Trasferimento in corso',
       processingComplete: 'Trasferimento completato',
     },
+      totalTransfers: 'Totale trasferimenti',
+      initialized: 'Inizializzati',
+      completedLabel: 'Completati',
+      completedStatus: 'Completato',
+      step: 'Passo',
+      progression: 'Progresso',
     history: {
       pageTitle: 'Storico transazioni',
       pageDescription: 'Consulta lo storico completo di tutte le tue transazioni',
@@ -16002,6 +16038,12 @@ export const translations: Record<Language, TranslationKeys> = {
       processing: 'Überweisung wird verarbeitet',
       processingComplete: 'Überweisung abgeschlossen',
     },
+      totalTransfers: 'Gesamtüberweisungen',
+      initialized: 'Initialisiert',
+      completedLabel: 'Abgeschlossen',
+      completedStatus: 'Abgeschlossen',
+      step: 'Schritt',
+      progression: 'Fortschritt',
     history: {
       pageTitle: 'Transaktionsverlauf',
       pageDescription: 'Vollständigen Verlauf aller Ihrer Transaktionen anzeigen',
@@ -18603,6 +18645,12 @@ export const translations: Record<Language, TranslationKeys> = {
       processing: 'Overschrijving wordt verwerkt',
       processingComplete: 'Overschrijving voltooid',
     },
+      totalTransfers: 'Totaal overschrijvingen',
+      initialized: 'Geïnitialiseerd',
+      completedLabel: 'Voltooid',
+      completedStatus: 'Voltooid',
+      step: 'Stap',
+      progression: 'Voortgang',
     history: {
       pageTitle: 'Transactiegeschiedenis',
       pageDescription: 'Bekijk de volledige geschiedenis van al uw transacties',
