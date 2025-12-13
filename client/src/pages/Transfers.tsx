@@ -49,6 +49,7 @@ export default function Transfers() {
       case 'pending':
         return <Clock className="w-5 h-5 text-muted-foreground" />;
       case 'in-progress':
+      case 'in_progress':
         return <Send className="w-5 h-5 text-primary" />;
       case 'suspended':
         return <Pause className="w-5 h-5 text-destructive" />;
@@ -63,6 +64,7 @@ export default function Transfers() {
     const statusMap: Record<string, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
       pending: { label: t.transfer.pendingStatus || 'Initialisé', variant: 'secondary' },
       'in-progress': { label: t.transfer.processingStatus || 'En traitement', variant: 'default' },
+      'in_progress': { label: t.transfer.processingStatus || 'En traitement', variant: 'default' },
       completed: { label: t.transfer.completedStatus || 'Terminé', variant: 'outline' },
       suspended: { label: t.transfer.suspended || 'Suspendu', variant: 'destructive' },
       rejected: { label: t.transfer.rejected || 'Rejeté', variant: 'destructive' },
@@ -81,7 +83,7 @@ export default function Transfers() {
     if (statusFilter === 'all') {
       matchesStatus = true;
     } else if (statusFilter === 'active') {
-      matchesStatus = transfer.status === 'pending' || transfer.status === 'in-progress';
+      matchesStatus = transfer.status === 'pending' || transfer.status === 'in-progress' || transfer.status === 'in_progress';
     } else {
       matchesStatus = transfer.status === statusFilter;
     }
@@ -91,7 +93,7 @@ export default function Transfers() {
 
   const totalAmount = transfers?.reduce((sum, t) => sum + parseFloat(t.amount), 0) || 0;
   const pendingCount = transfers?.filter(t => t.status === 'pending').length || 0;
-  const inProgressCount = transfers?.filter(t => t.status === 'in-progress').length || 0;
+  const inProgressCount = transfers?.filter(t => t.status === 'in-progress' || t.status === 'in_progress').length || 0;
   const completedCount = transfers?.filter(t => t.status === 'completed').length || 0;
 
   if (isLoading) {
